@@ -1,0 +1,9 @@
+{
+    "git.showPushSuccessNotification": true,
+    "git.pullBeforeCheckout": true,
+    "git.followTagsWhenSync": true,
+    "git.supportCancellation": true,
+    "git.terminalGitEditor": true,
+    "inlineChat.notebookAgent": true,
+    "chat.tools.terminal.autoReplyToPrompts": true
+}

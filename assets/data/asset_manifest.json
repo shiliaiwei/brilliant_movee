@@ -1,0 +1,109 @@
+{
+    "piece_sets": [
+        {
+            "id": "cburnett",
+            "name": "CBurnett",
+            "preview": "assets/pieces/cburnett/wK.png"
+        },
+        {
+            "id": "alpha",
+            "name": "Alpha",
+            "preview": "assets/pieces/alpha/wK.png"
+        },
+        {
+            "id": "merida",
+            "name": "Merida",
+            "preview": "assets/pieces/merida/wK.png"
+        },
+        {
+            "id": "maestro",
+            "name": "Maestro",
+            "preview": "assets/pieces/maestro/wK.png"
+        },
+        {
+            "id": "tatiana",
+            "name": "Tatiana",
+            "preview": "assets/pieces/tatiana/wK.png"
+        },
+        {
+            "id": "staunty",
+            "name": "Staunty",
+            "preview": "assets/pieces/staunty/wK.png"
+        },
+        {
+            "id": "california",
+            "name": "California",
+            "preview": "assets/pieces/california/wK.png"
+        },
+        {
+            "id": "pirouetti",
+            "name": "Pirouetti",
+            "preview": "assets/pieces/pirouetti/wK.png"
+        }
+    ],
+    "board_themes": [
+        {
+            "id": "blue2",
+            "name": "Blue",
+            "file": "assets/boards/blue2.jpg"
+        },
+        {
+            "id": "grey",
+            "name": "Grey",
+            "file": "assets/boards/grey.jpg"
+        },
+        {
+            "id": "maple",
+            "name": "Maple",
+            "file": "assets/boards/maple.jpg"
+        },
+        {
+            "id": "olive",
+            "name": "Olive",
+            "file": "assets/boards/olive.jpg"
+        },
+        {
+            "id": "wood",
+            "name": "Wood",
+            "file": "assets/boards/wood.jpg"
+        },
+        {
+            "id": "wood2",
+            "name": "Wood 2",
+            "file": "assets/boards/wood2.jpg"
+        },
+        {
+            "id": "wood4",
+            "name": "Wood 4",
+            "file": "assets/boards/wood4.jpg"
+        },
+        {
+            "id": "green-plastic",
+            "name": "Green Plastic",
+            "file": "assets/boards/green-plastic.png"
+        },
+        {
+            "id": "newspaper",
+            "name": "Newspaper",
+            "file": "assets/boards/newspaper.png"
+        }
+    ],
+    "sound_packs": [
+        {
+            "id": "standard",
+            "name": "Standard"
+        },
+        {
+            "id": "piano",
+            "name": "Piano"
+        },
+        {
+            "id": "robot",
+            "name": "Robot"
+        },
+        {
+            "id": "nature",
+            "name": "Nature"
+        }
+    ]
+}

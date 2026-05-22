@@ -1,13 +1,17 @@
 {
-    "name": "brilliant_movee",
-    "short_name": "brilliant_movee",
+    "name": "Brilliant Movee",
+    "short_name": "BrilliantMovee",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "brilliant project. chess review move",
-    "orientation": "portrait-primary",
+    "background_color": "#080C10",
+    "theme_color": "#080C10",
+    "description": "Brilliant Movee — Replay. Analyze. Evolve. Premium chess game analysis.",
+    "orientation": "any",
     "prefer_related_applications": false,
+    "categories": [
+        "games",
+        "sports"
+    ],
     "icons": [
         {
             "src": "icons/Icon-192.png",
