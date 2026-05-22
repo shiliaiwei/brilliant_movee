@@ -191,6 +191,11 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
 
       // Request engine analysis for position before move
       final requestId = 'ply_$plyIndex';
+      final responseFuture = _engine.responses
+          .where((r) => r.requestId == requestId)
+          .first
+          .timeout(const Duration(seconds: 5));
+
       _engine.analyze(StockfishRequest(
         type: StockfishMessageType.analyze,
         fen: boardBefore.fen,
@@ -199,15 +204,12 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
         requestId: requestId,
       ));
 
-      // Wait for response (with timeout)
+      // Wait for response
       StockfishResponse? response;
       try {
-        response = await _engine.responses
-            .where((r) => r.requestId == requestId)
-            .first
-            .timeout(const Duration(seconds: 5));
+        response = await responseFuture;
       } catch (_) {
-        // Timeout — use default classification
+        // Timeout
       }
 
       final evalBefore =
@@ -215,6 +217,11 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
 
       // Request analysis for position after move
       final requestId2 = 'ply_${plyIndex}_after';
+      final responseFuture2 = _engine.responses
+          .where((r) => r.requestId == requestId2)
+          .first
+          .timeout(const Duration(seconds: 5));
+
       _engine.analyze(StockfishRequest(
         type: StockfishMessageType.analyze,
         fen: boardAfter.fen,
@@ -225,10 +232,7 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
 
       StockfishResponse? response2;
       try {
-        response2 = await _engine.responses
-            .where((r) => r.requestId == requestId2)
-            .first
-            .timeout(const Duration(seconds: 5));
+        response2 = await responseFuture2;
       } catch (_) {}
 
       final evalAfter = response2?.lines.isNotEmpty == true

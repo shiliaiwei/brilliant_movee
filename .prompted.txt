@@ -15,3 +15,10 @@ please make classification name add to move pieces interacting in asset
 Classification badge shown ON the piece when navigating moves (floating label on the moved piece square)
 Sound — wire up real just_audio playback with bundled standard sound assets
 Let me also check what sound files exist and what just_audio needs:
+
+
+
+-pls add logo brand app icon
+-fix the application history it not fect at all no hitory list
+
+make no shadow style, after that give new versipon apk and move to desktop folder

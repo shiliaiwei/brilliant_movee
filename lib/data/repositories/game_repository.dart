@@ -29,8 +29,8 @@ class GameRepository {
 
     if (archives.isEmpty) return [];
 
-    // Fetch last 2 months
-    final recentArchives = archives.reversed.take(2).toList();
+    // Fetch last 6 months
+    final recentArchives = archives.reversed.take(6).toList();
     final allGames = <GameModel>[];
 
     for (final archiveUrl in recentArchives) {
@@ -72,11 +72,11 @@ class GameRepository {
         final result = game.resultFor(username);
         final matches = switch (resultFilter) {
           'win' => result == '1-0' &&
-              game.whiteUsername.toLowerCase() == username.toLowerCase() ||
+                  game.whiteUsername.toLowerCase() == username.toLowerCase() ||
               result == '0-1' &&
                   game.blackUsername.toLowerCase() == username.toLowerCase(),
           'loss' => result == '0-1' &&
-              game.whiteUsername.toLowerCase() == username.toLowerCase() ||
+                  game.whiteUsername.toLowerCase() == username.toLowerCase() ||
               result == '1-0' &&
                   game.blackUsername.toLowerCase() == username.toLowerCase(),
           'draw' => result == '1/2-1/2',
@@ -85,8 +85,7 @@ class GameRepository {
         if (!matches) return false;
       }
 
-      if (timeControlFilter != null &&
-          game.timeControl != timeControlFilter) {
+      if (timeControlFilter != null && game.timeControl != timeControlFilter) {
         return false;
       }
 

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:isolate';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'move_classifier.dart';
 
 /// Message types for Stockfish isolate communication.
@@ -37,12 +38,10 @@ class StockfishResponse {
   final String? error;
 }
 
-/// Stockfish engine runner on a Dart Isolate.
-/// ARCH-04: Engine MUST NOT run on main UI thread.
-///
-/// NOTE: In production, this would load the Stockfish 16 .so via dart:ffi.
-/// This implementation provides the full UCI protocol interface and
-/// simulates engine responses for development/testing.
+/// Stockfish engine runner.
+/// ARCH-04: Engine MUST NOT run on main UI thread (uses Isolate).
+/// Web fallback: Runs directly in async tasks (as Stockfish isn't easily
+/// usable on Web without WASM/Workers, this maintains simulation mode).
 class StockfishIsolate {
   StockfishIsolate._();
 
@@ -60,6 +59,11 @@ class StockfishIsolate {
 
   Future<void> start() async {
     if (_isRunning) return;
+
+    if (kIsWeb) {
+      _isRunning = true;
+      return;
+    }
 
     final receivePort = ReceivePort();
     _isolate = await Isolate.spawn(
@@ -82,10 +86,16 @@ class StockfishIsolate {
   }
 
   void analyze(StockfishRequest request) {
+    if (kIsWeb) {
+      // Simulate engine thinking on Web directly
+      _analyzePosition(request, null);
+      return;
+    }
     _sendPort?.send(request);
   }
 
   void stop() {
+    if (kIsWeb) return;
     _sendPort?.send(
       StockfishRequest(
         type: StockfishMessageType.stop,
@@ -96,17 +106,26 @@ class StockfishIsolate {
   }
 
   Future<void> dispose() async {
-    _sendPort?.send(
-      StockfishRequest(
-        type: StockfishMessageType.quit,
-        fen: '',
-        requestId: 'quit',
-      ),
-    );
-    _isolate?.kill(priority: Isolate.immediate);
-    _isolate = null;
+    if (!kIsWeb) {
+      _sendPort?.send(
+        StockfishRequest(
+          type: StockfishMessageType.quit,
+          fen: '',
+          requestId: 'quit',
+        ),
+      );
+      _isolate?.kill(priority: Isolate.immediate);
+      _isolate = null;
+    }
     _isRunning = false;
     await _responseController.close();
+  }
+
+  /// Internal bridge for Web to emit responses
+  void _emitResponse(StockfishResponse response) {
+    if (!_responseController.isClosed) {
+      _responseController.add(response);
+    }
   }
 }
 
@@ -114,9 +133,6 @@ class StockfishIsolate {
 void _engineIsolateEntry(SendPort mainSendPort) {
   final receivePort = ReceivePort();
   mainSendPort.send(receivePort.sendPort);
-
-  // In production: initialize Stockfish 16 via dart:ffi here
-  // stockfish_ffi.init();
 
   receivePort.listen((message) {
     if (message is! StockfishRequest) return;
@@ -135,18 +151,24 @@ void _engineIsolateEntry(SendPort mainSendPort) {
 
 /// Simulates Stockfish analysis for development.
 /// In production, this sends UCI commands to the Stockfish binary.
-void _analyzePosition(StockfishRequest request, SendPort sendPort) {
+void _analyzePosition(StockfishRequest request, SendPort? sendPort) {
   // Simulate engine thinking time
   Future.delayed(const Duration(milliseconds: 200), () {
     // Generate mock engine lines based on FEN
     final lines = _generateMockLines(request.fen, request.multiPv);
 
-    sendPort.send(StockfishResponse(
+    final response = StockfishResponse(
       requestId: request.requestId,
       fen: request.fen,
       lines: lines,
       isComplete: true,
-    ));
+    );
+
+    if (sendPort != null) {
+      sendPort.send(response);
+    } else if (kIsWeb) {
+      StockfishIsolate.instance._emitResponse(response);
+    }
   });
 }
 

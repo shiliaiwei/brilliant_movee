@@ -106,13 +106,6 @@ class _HeroSection extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.05),
-                  blurRadius: 20,
-                  offset: const Offset(0, 10),
-                ),
-              ],
               border: Border.all(color: AppColors.divider, width: 2),
             ),
             child: ClipOval(

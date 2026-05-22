@@ -86,6 +86,7 @@ class HistoryScreen extends ConsumerWidget {
                   color: AppColors.primary,
                   onRefresh: () async => ref.invalidate(_historyGamesProvider),
                   child: ListView.builder(
+                    physics: const AlwaysScrollableScrollPhysics(),
                     padding: const EdgeInsets.symmetric(
                       horizontal: AppSpacing.lg,
                       vertical: AppSpacing.md,

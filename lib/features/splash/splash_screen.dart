@@ -234,20 +234,8 @@ class _LogoWidget extends StatelessWidget {
     return Container(
       width: 100,
       height: 100,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.4),
-            blurRadius: 40,
-            spreadRadius: 10,
-          ),
-          BoxShadow(
-            color: AppColors.secondary.withValues(alpha: 0.2),
-            blurRadius: 60,
-            spreadRadius: 20,
-          ),
-        ],
       ),
       child: ClipOval(
         child: Image.asset(

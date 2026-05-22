@@ -34,15 +34,6 @@ class ChtCard extends StatelessWidget {
         color: effectiveBg,
         borderRadius: BorderRadius.circular(AppRadius.card),
         border: Border.all(color: effectiveBorder, width: 1),
-        boxShadow: glowColor != null
-            ? [
-                BoxShadow(
-                  color: glowColor!.withValues(alpha: 0.15),
-                  blurRadius: 20,
-                  spreadRadius: 0,
-                ),
-              ]
-            : null,
       ),
       child: Material(
         color: Colors.transparent,

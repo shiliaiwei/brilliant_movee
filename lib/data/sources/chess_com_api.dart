@@ -17,7 +17,8 @@ class ChessComApi {
         connectTimeout: const Duration(seconds: 10),
         receiveTimeout: const Duration(seconds: 15),
         headers: {
-          'User-Agent': 'BrilliantMovee/1.0 (chess analysis app)',
+          'User-Agent':
+              'Mozilla/5.0 (compatible; StupidBrilliant/1.1; +https://github.com/shiliaiwei/brilliant_movee)',
         },
       ),
     )..interceptors.add(
@@ -38,8 +39,7 @@ class ChessComApi {
 
   /// Fetch player stats (ratings).
   Future<PlayerStats> getPlayerStats(String username) async {
-    final response =
-        await _dio.get('/player/${username.toLowerCase()}/stats');
+    final response = await _dio.get('/player/${username.toLowerCase()}/stats');
     return PlayerStats.fromJson(response.data as Map<String, dynamic>);
   }
 

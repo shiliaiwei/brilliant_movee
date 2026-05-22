@@ -99,15 +99,6 @@ class _GradientButton extends StatelessWidget {
               ),
         color: isDisabled ? AppColors.backgroundElevated : null,
         borderRadius: BorderRadius.circular(AppRadius.button),
-        boxShadow: isDisabled
-            ? null
-            : [
-                BoxShadow(
-                  color: colors.first.withValues(alpha: 0.35),
-                  blurRadius: 16,
-                  offset: const Offset(0, 4),
-                ),
-              ],
       ),
       child: Material(
         color: Colors.transparent,

@@ -126,11 +126,13 @@ abstract final class PgnParser {
     final noComments = movesText.replaceAll(RegExp(r'\{[^}]*\}'), '');
     // Remove variations in parentheses
     final noVariations = noComments.replaceAll(RegExp(r'\([^)]*\)'), '');
+    // Separate move numbers from moves (e.g., "1.e4" -> "1. e4")
+    final separated = noVariations.replaceAllMapped(
+      RegExp(r'(\d+\.+)([^\s\.].*)'),
+      (match) => '${match.group(1)} ${match.group(2)}',
+    );
     // Split on whitespace
-    return noVariations
-        .split(RegExp(r'\s+'))
-        .where((t) => t.isNotEmpty)
-        .toList();
+    return separated.split(RegExp(r'\s+')).where((t) => t.isNotEmpty).toList();
   }
 
   static bool _isValidSan(String token) {

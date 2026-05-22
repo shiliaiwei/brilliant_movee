@@ -30,6 +30,7 @@ class ReviewScreen extends ConsumerStatefulWidget {
 class _ReviewScreenState extends ConsumerState<ReviewScreen> {
   bool _showCelebrate = false;
   bool _celebrateShown = false;
+  bool _isFlipped = false;
 
   @override
   void initState() {
@@ -71,7 +72,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
           // Flip board button
           IconButton(
             icon: const Icon(Icons.flip_rounded),
-            onPressed: () {/* flip board */},
+            onPressed: () => setState(() => _isFlipped = !_isFlipped),
             tooltip: 'Flip Board',
           ),
           // Analysis progress indicator
@@ -106,8 +107,16 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
               : Stack(
                   children: [
                     context.isWide
-                        ? _WideReviewBody(state: state, settings: settings)
-                        : _ReviewBody(state: state, settings: settings),
+                        ? _WideReviewBody(
+                            state: state,
+                            settings: settings,
+                            isFlipped: _isFlipped,
+                          )
+                        : _ReviewBody(
+                            state: state,
+                            settings: settings,
+                            isFlipped: _isFlipped,
+                          ),
                     if (_showCelebrate)
                       CelebrateOverlay(
                         result: state.game?.result ?? '*',
@@ -123,10 +132,15 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
 }
 
 class _ReviewBody extends ConsumerWidget {
-  const _ReviewBody({required this.state, required this.settings});
+  const _ReviewBody({
+    required this.state,
+    required this.settings,
+    required this.isFlipped,
+  });
 
   final ReviewState state;
   final SettingsState settings;
+  final bool isFlipped;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -147,7 +161,7 @@ class _ReviewBody extends ConsumerWidget {
               children: [
                 // Eval bar
                 AnimatedEvalBar(
-                  evalCp: evalCp,
+                  evalCp: isFlipped ? -evalCp : evalCp,
                   height: double.infinity,
                   width: 18,
                 ),
@@ -163,6 +177,7 @@ class _ReviewBody extends ConsumerWidget {
                           showCoordinates: settings.showCoordinates,
                           highlightLastMove: settings.highlightLastMove,
                           moveQuality: currentClassification?.quality,
+                          isFlipped: isFlipped,
                         )
                       : const Center(
                           child: Icon(
@@ -636,10 +651,15 @@ class _InfoChip extends StatelessWidget {
 // ── Desktop/tablet: side-by-side board + analysis ────────────────────────────
 
 class _WideReviewBody extends ConsumerWidget {
-  const _WideReviewBody({required this.state, required this.settings});
+  const _WideReviewBody({
+    required this.state,
+    required this.settings,
+    required this.isFlipped,
+  });
 
   final ReviewState state;
   final SettingsState settings;
+  final bool isFlipped;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -663,7 +683,7 @@ class _WideReviewBody extends ConsumerWidget {
                     children: [
                       // Eval bar
                       AnimatedEvalBar(
-                        evalCp: evalCp,
+                        evalCp: isFlipped ? -evalCp : evalCp,
                         height: double.infinity,
                         width: 18,
                       ),
@@ -682,6 +702,7 @@ class _WideReviewBody extends ConsumerWidget {
                                     highlightLastMove:
                                         settings.highlightLastMove,
                                     moveQuality: currentClassification?.quality,
+                                    isFlipped: isFlipped,
                                   )
                                 : const Center(
                                     child: Icon(

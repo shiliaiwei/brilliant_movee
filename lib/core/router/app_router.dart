@@ -13,6 +13,7 @@ import '../../features/settings/board_selector_screen.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_text_styles.dart';
 import '../constants/app_spacing.dart';
+import '../services/storage_service.dart';
 import '../utils/responsive.dart';
 
 /// All named routes for Brilliant Movee.
@@ -368,12 +369,6 @@ class _BrandLogo extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.1),
-            blurRadius: 8,
-          ),
-        ],
         border: Border.all(color: AppColors.divider, width: 1),
       ),
       child: ClipOval(
@@ -540,7 +535,13 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: '/analyze',
-                builder: (context, state) => const SearchScreen(),
+                builder: (context, state) {
+                  final storage = ref.read(storageServiceProvider);
+                  if (storage.connectedUsername != null) {
+                    return const HistoryScreen();
+                  }
+                  return const SearchScreen();
+                },
               ),
             ],
           ),
