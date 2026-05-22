@@ -16,6 +16,8 @@ class GameModel {
     required this.whiteRating,
     required this.blackRating,
     required this.result,
+    required this.whiteResult,
+    required this.blackResult,
     this.openingName,
     this.openingEco,
     this.whiteAccuracy,
@@ -33,6 +35,8 @@ class GameModel {
   final int whiteRating;
   final int blackRating;
   final String result; // '1-0', '0-1', '1/2-1/2'
+  final String whiteResult; // 'win', 'resignation', 'checkmated', etc.
+  final String blackResult;
   final String? openingName;
   final String? openingEco;
   final double? whiteAccuracy;
@@ -42,6 +46,9 @@ class GameModel {
   factory GameModel.fromJson(Map<String, dynamic> json) {
     final white = json['white'] as Map<String, dynamic>? ?? {};
     final black = json['black'] as Map<String, dynamic>? ?? {};
+
+    final wRes = white['result'] as String? ?? '';
+    final bRes = black['result'] as String? ?? '';
 
     return GameModel(
       id: json['uuid'] as String? ?? json['url'] as String? ?? '',
@@ -53,15 +60,17 @@ class GameModel {
       blackUsername: black['username'] as String? ?? '',
       whiteRating: white['rating'] as int? ?? 0,
       blackRating: black['rating'] as int? ?? 0,
-      result: white['result'] == 'win'
+      whiteResult: wRes,
+      blackResult: bRes,
+      result: wRes == 'win'
           ? '1-0'
-          : black['result'] == 'win'
+          : bRes == 'win'
               ? '0-1'
               : '1/2-1/2',
-      whiteAccuracy: (json['accuracies'] as Map<String, dynamic>?)?['white']
-          as double?,
-      blackAccuracy: (json['accuracies'] as Map<String, dynamic>?)?['black']
-          as double?,
+      whiteAccuracy:
+          (json['accuracies'] as Map<String, dynamic>?)?['white'] as double?,
+      blackAccuracy:
+          (json['accuracies'] as Map<String, dynamic>?)?['black'] as double?,
     );
   }
 
@@ -98,6 +107,45 @@ class GameModel {
     return isWhite ? '0-1' : '1-0';
   }
 
+  String terminationFor(String username) {
+    final isWhite = whiteUsername.toLowerCase() == username.toLowerCase();
+    final res = isWhite ? whiteResult : blackResult;
+    final oppRes = isWhite ? blackResult : whiteResult;
+
+    if (res == 'win') {
+      return 'Won by ${_formatTermination(oppRes)}';
+    } else if (oppRes == 'win') {
+      return 'Lost by ${_formatTermination(res)}';
+    } else {
+      return 'Draw by ${_formatTermination(res)}';
+    }
+  }
+
+  String _formatTermination(String t) {
+    switch (t) {
+      case 'resignation':
+        return 'resignation';
+      case 'checkmated':
+        return 'checkmate';
+      case 'timeout':
+        return 'timeout';
+      case 'abandoned':
+        return 'abandonment';
+      case 'stalemate':
+        return 'stalemate';
+      case 'repetition':
+        return 'repetition';
+      case 'insufficient':
+        return 'insufficient material';
+      case 'agreed':
+        return 'agreement';
+      case 'timevariants':
+        return 'time out';
+      default:
+        return t;
+    }
+  }
+
   double? accuracyFor(String username) {
     final isWhite = whiteUsername.toLowerCase() == username.toLowerCase();
     return isWhite ? whiteAccuracy : blackAccuracy;
@@ -115,6 +163,8 @@ class GameModel {
       whiteRating: whiteRating,
       blackRating: blackRating,
       result: result,
+      whiteResult: whiteResult,
+      blackResult: blackResult,
       openingName: openingName,
       openingEco: openingEco,
       whiteAccuracy: whiteAccuracy,

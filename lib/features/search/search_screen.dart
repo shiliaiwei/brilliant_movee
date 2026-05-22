@@ -119,15 +119,14 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 
   Future<void> _connect() async {
     _focusNode.unfocus();
-    final success = await ref
-        .read(_searchStateProvider.notifier)
-        .connect(context);
+    final success =
+        await ref.read(_searchStateProvider.notifier).connect(context);
 
     if (!mounted) return;
 
     if (success) {
       final username = ref.read(_searchStateProvider).username;
-      context.go('${AppRoutes.profile}?username=$username');
+      context.push('${AppRoutes.profile}?username=$username');
     } else {
       _shakeKey.currentState?.shake();
     }
@@ -167,113 +166,130 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                if (widget.fromOnboarding) ...[
-                  const SizedBox(height: AppSpacing.xxxl),
-                  // Chess.com logo placeholder
-                  Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      color: AppColors.backgroundElevated,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: AppColors.primaryBorder),
-                    ),
-                    child: const Icon(
-                      Icons.sports_esports_rounded,
-                      color: AppColors.primary,
-                      size: 40,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.xl),
-                  Text(
-                    'Connect Your Account',
-                    style: AppTextStyles.headline,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: AppSpacing.sm),
-                  Text(
-                    'Enter your Chess.com username to load your games.',
-                    style: AppTextStyles.bodyMuted,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: AppSpacing.xxxl),
-                ],
-
-                // Username field with shake animation
-                _ShakeWidget(
-                  key: _shakeKey,
-                  child: _UsernameField(
-                    controller: _controller,
-                    focusNode: _focusNode,
-                    error: state.error,
-                    onChanged: (v) =>
-                        ref.read(_searchStateProvider.notifier).updateUsername(v),
-                    onSubmitted: (_) => _connect(),
-                  ),
-                ),
-
-                const SizedBox(height: AppSpacing.xxl),
-
-                // Connect button
-                ChtButton(
-                  label: 'Connect',
-                  onPressed: state.isLoading ? null : _connect,
-                  isLoading: state.isLoading,
-                  icon: Icons.link_rounded,
-                ),
-
-                // Recent usernames
-                if (recentUsernames.isNotEmpty) ...[
-                  const SizedBox(height: AppSpacing.xxl),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Recent',
-                      style: AppTextStyles.labelMuted,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.sm),
-                  Wrap(
-                    spacing: AppSpacing.sm,
-                    runSpacing: AppSpacing.sm,
-                    children: recentUsernames.map((u) {
-                      return ActionChip(
-                        label: Text(u, style: AppTextStyles.label),
-                        backgroundColor: AppColors.backgroundElevated,
-                        side: const BorderSide(color: AppColors.primaryBorder),
-                        onPressed: () {
-                          _controller.text = u;
-                          ref
-                              .read(_searchStateProvider.notifier)
-                              .updateUsername(u);
-                        },
-                      );
-                    }).toList(),
-                  ),
-                ],
-
-                const SizedBox(height: AppSpacing.xxl),
-
-                // Info card
-                ChtCard(
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.info_outline_rounded,
-                        color: AppColors.primary,
-                        size: 20,
-                      ),
-                      const SizedBox(width: AppSpacing.md),
-                      Expanded(
-                        child: Text(
-                          'Uses Chess.com public API. No password required.',
-                          style: AppTextStyles.caption,
+                    if (widget.fromOnboarding) ...[
+                      const SizedBox(height: AppSpacing.xxxl),
+                      // App logo
+                      Container(
+                        width: 100,
+                        height: 100,
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.primary.withValues(alpha: 0.1),
+                              blurRadius: 20,
+                              offset: const Offset(0, 10),
+                            ),
+                          ],
+                          border:
+                              Border.all(color: AppColors.divider, width: 1),
+                        ),
+                        child: ClipOval(
+                          child: Image.asset(
+                            'assets/brand/logo.png',
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => const Icon(
+                              Icons.sports_esports_rounded,
+                              color: AppColors.primary,
+                              size: 48,
+                            ),
+                          ),
                         ),
                       ),
+                      const SizedBox(height: AppSpacing.xl),
+                      Text(
+                        'Connect Your Account',
+                        style: AppTextStyles.headline,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      Text(
+                        'Enter your Chess.com username to load your games.',
+                        style: AppTextStyles.bodyMuted,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: AppSpacing.xxxl),
                     ],
-                  ),
-                ),
-                ],
+
+                    // Username field with shake animation
+                    _ShakeWidget(
+                      key: _shakeKey,
+                      child: _UsernameField(
+                        controller: _controller,
+                        focusNode: _focusNode,
+                        error: state.error,
+                        onChanged: (v) => ref
+                            .read(_searchStateProvider.notifier)
+                            .updateUsername(v),
+                        onSubmitted: (_) => _connect(),
+                      ),
+                    ),
+
+                    const SizedBox(height: AppSpacing.xxl),
+
+                    // Connect button
+                    ChtButton(
+                      label: 'Connect',
+                      onPressed: state.isLoading ? null : _connect,
+                      isLoading: state.isLoading,
+                      icon: Icons.link_rounded,
+                    ),
+
+                    // Recent usernames
+                    if (recentUsernames.isNotEmpty) ...[
+                      const SizedBox(height: AppSpacing.xxl),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Recent',
+                          style: AppTextStyles.labelMuted,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      Wrap(
+                        spacing: AppSpacing.sm,
+                        runSpacing: AppSpacing.sm,
+                        children: recentUsernames.map((u) {
+                          return ActionChip(
+                            label: Text(u, style: AppTextStyles.label),
+                            backgroundColor: AppColors.backgroundElevated,
+                            side: const BorderSide(
+                                color: AppColors.primaryBorder),
+                            onPressed: () {
+                              _controller.text = u;
+                              ref
+                                  .read(_searchStateProvider.notifier)
+                                  .updateUsername(u);
+                            },
+                          );
+                        }).toList(),
+                      ),
+                    ],
+
+                    const SizedBox(height: AppSpacing.xxl),
+
+                    // Info card
+                    ChtCard(
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.info_outline_rounded,
+                            color: AppColors.primary,
+                            size: 20,
+                          ),
+                          const SizedBox(width: AppSpacing.md),
+                          Expanded(
+                            child: Text(
+                              'Uses Chess.com public API. No password required.',
+                              style: AppTextStyles.caption,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

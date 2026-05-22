@@ -5,15 +5,14 @@ import '../constants/app_colors.dart';
 import '../constants/app_text_styles.dart';
 import '../constants/app_spacing.dart';
 
-/// Builds the Material 3 dark theme for Brilliant Movee.
-/// All values are derived from design tokens — no raw values here.
+/// Builds the Material 3 light theme (Premium White) for Brilliant Movee.
 abstract final class AppTheme {
-  static ThemeData get darkTheme {
-    final colorScheme = AppColors.m3DarkScheme;
+  static ThemeData get lightTheme {
+    final colorScheme = AppColors.m3LightScheme;
 
     return ThemeData(
       useMaterial3: true,
-      brightness: Brightness.dark,
+      brightness: Brightness.light,
       colorScheme: colorScheme,
 
       // ── Scaffold ──────────────────────────────────────────────────────────
@@ -29,30 +28,20 @@ abstract final class AppTheme {
         titleTextStyle: AppTextStyles.headline,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
-          statusBarIconBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.dark,
           systemNavigationBarColor: AppColors.backgroundDeep,
-          systemNavigationBarIconBrightness: Brightness.light,
+          systemNavigationBarIconBrightness: Brightness.dark,
         ),
         iconTheme: const IconThemeData(color: AppColors.textPrimary, size: 24),
       ),
 
       // ── Bottom Navigation ─────────────────────────────────────────────────
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        backgroundColor: AppColors.backgroundSurface,
+        backgroundColor: AppColors.backgroundDeep,
         selectedItemColor: AppColors.primary,
         unselectedItemColor: AppColors.textSecondary,
         type: BottomNavigationBarType.fixed,
         elevation: 0,
-        selectedLabelStyle: TextStyle(
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w600,
-          fontSize: 11,
-        ),
-        unselectedLabelStyle: TextStyle(
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w400,
-          fontSize: 11,
-        ),
       ),
 
       // ── Card ──────────────────────────────────────────────────────────────
@@ -61,7 +50,7 @@ abstract final class AppTheme {
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadius.card),
-          side: const BorderSide(color: AppColors.primaryBorder, width: 1),
+          side: const BorderSide(color: AppColors.divider, width: 1),
         ),
         margin: EdgeInsets.zero,
       ),
@@ -70,7 +59,7 @@ abstract final class AppTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
-          foregroundColor: AppColors.backgroundDeep,
+          foregroundColor: Colors.white,
           minimumSize: const Size(double.infinity, 50),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.button),
@@ -88,7 +77,6 @@ abstract final class AppTheme {
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: AppColors.primary,
-          minimumSize: const Size(48, 48),
           textStyle: AppTextStyles.bodyMedium,
         ),
       ),
@@ -96,41 +84,19 @@ abstract final class AppTheme {
       // ── Input Decoration ──────────────────────────────────────────────────
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.backgroundElevated,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.lg,
-          vertical: AppSpacing.md,
-        ),
+        fillColor: AppColors.backgroundSurface,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadius.md),
-          borderSide: const BorderSide(color: AppColors.primaryBorder),
+          borderSide: const BorderSide(color: AppColors.divider),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadius.md),
-          borderSide: const BorderSide(color: AppColors.primaryBorder),
+          borderSide: const BorderSide(color: AppColors.divider),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadius.md),
           borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
         ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppRadius.md),
-          borderSide: const BorderSide(color: AppColors.error),
-        ),
-        hintStyle: AppTextStyles.body.copyWith(color: AppColors.textSecondary),
-        labelStyle: AppTextStyles.body.copyWith(color: AppColors.textSecondary),
-      ),
-
-      // ── Chip ──────────────────────────────────────────────────────────────
-      chipTheme: ChipThemeData(
-        backgroundColor: AppColors.backgroundElevated,
-        selectedColor: AppColors.primaryGlow,
-        labelStyle: AppTextStyles.label,
-        side: const BorderSide(color: AppColors.primaryBorder),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadius.chip),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       ),
 
       // ── Divider ───────────────────────────────────────────────────────────
@@ -140,69 +106,15 @@ abstract final class AppTheme {
         space: 1,
       ),
 
-      // ── Bottom Sheet ──────────────────────────────────────────────────────
-      bottomSheetTheme: const BottomSheetThemeData(
-        backgroundColor: AppColors.backgroundSurface,
-        modalBackgroundColor: AppColors.backgroundSurface,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(AppRadius.sheet),
-          ),
-        ),
-        dragHandleColor: AppColors.textSecondary,
-        dragHandleSize: Size(40, 4),
-        showDragHandle: true,
-      ),
-
-      // ── Snack Bar ─────────────────────────────────────────────────────────
-      snackBarTheme: SnackBarThemeData(
-        backgroundColor: AppColors.backgroundElevated,
-        contentTextStyle: AppTextStyles.body,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadius.md),
-        ),
-        behavior: SnackBarBehavior.floating,
-      ),
-
-      // ── Slider ────────────────────────────────────────────────────────────
-      sliderTheme: const SliderThemeData(
-        activeTrackColor: AppColors.primary,
-        inactiveTrackColor: AppColors.backgroundElevated,
-        thumbColor: AppColors.primary,
-        overlayColor: AppColors.primaryGlow,
-        valueIndicatorColor: AppColors.backgroundElevated,
-        valueIndicatorTextStyle: TextStyle(
-          fontFamily: 'JetBrainsMono',
-          color: AppColors.textPrimary,
-          fontSize: 12,
-        ),
-      ),
-
-      // ── Switch ────────────────────────────────────────────────────────────
-      switchTheme: SwitchThemeData(
-        thumbColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) return AppColors.primary;
-          return AppColors.textSecondary;
-        }),
-        trackColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
-            return AppColors.primaryGlow;
-          }
-          return AppColors.backgroundElevated;
-        }),
-      ),
-
       // ── Text Theme ────────────────────────────────────────────────────────
       textTheme: GoogleFonts.interTextTheme().apply(
         bodyColor: AppColors.textPrimary,
         displayColor: AppColors.textPrimary,
       ),
-
-      // ── Icon ──────────────────────────────────────────────────────────────
-      iconTheme: const IconThemeData(
-        color: AppColors.textPrimary,
-        size: 24,
-      ),
     );
   }
+
+  // Keep darkTheme for fallback or if user switches, but default will be light
+  static ThemeData get darkTheme =>
+      lightTheme; // For now, override with light as requested
 }

@@ -29,7 +29,8 @@ class ChtMoveBadge extends StatelessWidget {
       decoration: BoxDecoration(
         color: config.color.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(AppRadius.pill),
-        border: Border.all(color: config.color.withValues(alpha: 0.6), width: 1),
+        border:
+            Border.all(color: config.color.withValues(alpha: 0.6), width: 1),
         boxShadow: showGlow
             ? [
                 BoxShadow(
@@ -133,7 +134,7 @@ class ChtResultBadge extends StatelessWidget {
   }
 }
 
-/// Rating category badge
+/// Rating category badge - Premium White Redesign
 class ChtRatingBadge extends StatelessWidget {
   const ChtRatingBadge({
     super.key,
@@ -146,27 +147,39 @@ class ChtRatingBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (rating == 0) return const SizedBox.shrink();
+
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: AppColors.backgroundElevated,
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        border: Border.all(color: AppColors.primaryBorder, width: 1),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        border: Border.all(color: AppColors.divider, width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.03),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             category.toUpperCase(),
-            style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary),
+            style: AppTextStyles.badge.copyWith(
+              color: AppColors.textSecondary,
+              fontSize: 9,
+              letterSpacing: 1.2,
+            ),
           ),
-          const SizedBox(height: AppSpacing.xs),
+          const SizedBox(height: 4),
           Text(
-            rating > 0 ? '$rating' : '-',
-            style: AppTextStyles.label.copyWith(
-              color: AppColors.primary,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
+            '$rating',
+            style: AppTextStyles.monoLarge.copyWith(
+              color: AppColors.textPrimary,
+              fontSize: 20,
             ),
           ),
         ],

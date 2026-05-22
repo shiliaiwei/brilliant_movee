@@ -8,6 +8,7 @@ abstract final class StorageKeys {
   static const String recentUsernames = 'recent_usernames';
   static const String boardTheme = 'board_theme';
   static const String pieceSet = 'piece_set';
+  static const String soundPack = 'sound_pack';
   static const String engineDepth = 'engine_depth';
   static const String multiPv = 'multi_pv';
   static const String autoAnalyze = 'auto_analyze';
@@ -63,6 +64,10 @@ class StorageService {
   String get pieceSet => _prefs.getString(StorageKeys.pieceSet) ?? 'cburnett';
   Future<void> setPieceSet(String set) =>
       _prefs.setString(StorageKeys.pieceSet, set);
+
+  String get soundPack => _prefs.getString(StorageKeys.soundPack) ?? 'standard';
+  Future<void> setSoundPack(String pack) =>
+      _prefs.setString(StorageKeys.soundPack, pack);
 
   // ── Engine ────────────────────────────────────────────────────────────────
   int get engineDepth => _prefs.getInt(StorageKeys.engineDepth) ?? 18;

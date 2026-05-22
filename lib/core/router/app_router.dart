@@ -178,9 +178,8 @@ class _BottomNav extends StatelessWidget {
                           tab.label,
                           style: AppTextStyles.caption.copyWith(
                             fontSize: 10,
-                            fontWeight: isSelected
-                                ? FontWeight.w600
-                                : FontWeight.w400,
+                            fontWeight:
+                                isSelected ? FontWeight.w600 : FontWeight.w400,
                             color: isSelected
                                 ? AppColors.primary
                                 : AppColors.textSecondary,
@@ -274,7 +273,8 @@ class _SideRail extends StatelessWidget {
 
   final int currentIndex;
   final ValueChanged<int> onTap;
-  final bool extended; // true = show labels (desktop), false = icons only (tablet)
+  final bool
+      extended; // true = show labels (desktop), false = icons only (tablet)
 
   @override
   Widget build(BuildContext context) {
@@ -304,7 +304,7 @@ class _SideRail extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'BRILLIANT',
+                              'STUPID',
                               style: AppTextStyles.badge.copyWith(
                                 color: AppColors.primary,
                                 letterSpacing: 2,
@@ -312,7 +312,7 @@ class _SideRail extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'MOVEE',
+                              'BRILLIANT',
                               style: AppTextStyles.badge.copyWith(
                                 color: AppColors.textPrimary,
                                 letterSpacing: 2,
@@ -362,28 +362,28 @@ class _BrandLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 36,
-      height: 36,
+      width: 40,
+      height: 40,
+      padding: const EdgeInsets.all(2),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
+        color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.3),
-            blurRadius: 12,
+            color: AppColors.primary.withValues(alpha: 0.1),
+            blurRadius: 8,
           ),
         ],
+        border: Border.all(color: AppColors.divider, width: 1),
       ),
       child: ClipOval(
         child: Image.asset(
           'assets/brand/logo.png',
           fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) => Container(
-            color: AppColors.backgroundElevated,
-            child: const Icon(
-              Icons.sports_esports_rounded,
-              color: AppColors.primary,
-              size: 20,
-            ),
+          errorBuilder: (_, __, ___) => const Icon(
+            Icons.sports_esports_rounded,
+            color: AppColors.primary,
+            size: 20,
           ),
         ),
       ),
@@ -427,9 +427,7 @@ class _SideNavItem extends StatelessWidget {
               horizontal: extended ? 12 : 0,
             ),
             decoration: BoxDecoration(
-              color: isSelected
-                  ? AppColors.primaryGlow
-                  : Colors.transparent,
+              color: isSelected ? AppColors.primaryGlow : Colors.transparent,
               borderRadius: BorderRadius.circular(AppRadius.md),
               border: isSelected
                   ? Border.all(color: AppColors.primaryBorder, width: 1)
@@ -452,9 +450,8 @@ class _SideNavItem extends StatelessWidget {
                           color: isSelected
                               ? AppColors.primary
                               : AppColors.textSecondary,
-                          fontWeight: isSelected
-                              ? FontWeight.w600
-                              : FontWeight.w400,
+                          fontWeight:
+                              isSelected ? FontWeight.w600 : FontWeight.w400,
                         ),
                       ),
                     ],

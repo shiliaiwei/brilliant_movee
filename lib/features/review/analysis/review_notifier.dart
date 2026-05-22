@@ -4,6 +4,7 @@ import '../../../engine/move_classifier.dart';
 import '../../../engine/stockfish_isolate.dart';
 import '../../../engine/opening_book.dart';
 import '../../../core/services/storage_service.dart';
+import '../../../core/services/audio_service.dart';
 import '../board/board_state.dart';
 
 class ReviewState {
@@ -71,9 +72,10 @@ class ReviewState {
 }
 
 class ReviewNotifier extends StateNotifier<ReviewState> {
-  ReviewNotifier(this._storage) : super(const ReviewState());
+  ReviewNotifier(this._storage, this._audio) : super(const ReviewState());
 
   final StorageService _storage;
+  final AudioService _audio;
   final StockfishIsolate _engine = StockfishIsolate.instance;
 
   Future<void> loadGame(String pgn) async {
@@ -120,7 +122,25 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
 
   void _setCurrentPly(int ply) {
     final clamped = ply.clamp(0, state.boardStates.length - 1);
-    state = state.copyWith(currentPlyIndex: clamped);
+    if (clamped != state.currentPlyIndex) {
+      state = state.copyWith(currentPlyIndex: clamped);
+
+      // Play move sound
+      if (clamped > 0) {
+        final move = state.game?.moves[clamped - 1];
+        if (move?.san.contains('x') ?? false) {
+          _audio.play(SoundEvent.capture);
+        } else {
+          _audio.play(SoundEvent.move);
+        }
+
+        // Play special sound for brilliant moves
+        final classification = state.classificationAt(clamped);
+        if (classification?.quality == MoveQuality.brilliant) {
+          _audio.play(SoundEvent.brilliant);
+        }
+      }
+    }
   }
 
   Future<void> _startAnalysis() async {
@@ -139,7 +159,8 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
       return;
     }
 
-    final classifications = List<MoveClassification?>.from(state.classifications);
+    final classifications =
+        List<MoveClassification?>.from(state.classifications);
     int analyzed = 0;
 
     // Progressive analysis: analyze current ply + next 3 plies first
@@ -189,9 +210,8 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
         // Timeout — use default classification
       }
 
-      final evalBefore = response?.lines.isNotEmpty == true
-          ? response!.lines.first.eval
-          : 0.0;
+      final evalBefore =
+          response?.lines.isNotEmpty == true ? response!.lines.first.eval : 0.0;
 
       // Request analysis for position after move
       final requestId2 = 'ply_${plyIndex}_after';
@@ -258,5 +278,8 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
 
 final reviewProvider =
     StateNotifierProvider.autoDispose<ReviewNotifier, ReviewState>((ref) {
-  return ReviewNotifier(ref.read(storageServiceProvider));
+  return ReviewNotifier(
+    ref.read(storageServiceProvider),
+    ref.read(audioServiceProvider),
+  );
 });

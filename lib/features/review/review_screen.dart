@@ -15,6 +15,7 @@ import '../../engine/pgn_parser.dart';
 import 'board/chess_board_widget.dart';
 import 'analysis/review_notifier.dart';
 import 'celebrate/celebrate_overlay.dart';
+import '../../core/services/settings_provider.dart';
 
 class ReviewScreen extends ConsumerStatefulWidget {
   const ReviewScreen({super.key, required this.gameId, required this.pgn});
@@ -51,6 +52,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(reviewProvider);
+    final settings = ref.watch(settingsProvider);
     final storage = ref.read(storageServiceProvider);
 
     // Check for game end
@@ -104,16 +106,15 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
               : Stack(
                   children: [
                     context.isWide
-                        ? _WideReviewBody(state: state, storage: storage)
-                        : _ReviewBody(state: state, storage: storage),
+                        ? _WideReviewBody(state: state, settings: settings)
+                        : _ReviewBody(state: state, settings: settings),
                     if (_showCelebrate)
                       CelebrateOverlay(
                         result: state.game?.result ?? '*',
                         username: storage.connectedUsername ?? '',
                         whiteUsername: state.game?.white ?? '',
                         analysisData: null,
-                        onDismiss: () =>
-                            setState(() => _showCelebrate = false),
+                        onDismiss: () => setState(() => _showCelebrate = false),
                       ),
                   ],
                 ),
@@ -122,10 +123,10 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
 }
 
 class _ReviewBody extends ConsumerWidget {
-  const _ReviewBody({required this.state, required this.storage});
+  const _ReviewBody({required this.state, required this.settings});
 
   final ReviewState state;
-  final StorageService storage;
+  final SettingsState settings;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -157,10 +158,11 @@ class _ReviewBody extends ConsumerWidget {
                   child: boardState != null
                       ? ChessBoardWidget(
                           boardState: boardState,
-                          pieceSetId: storage.pieceSet,
-                          boardThemeId: storage.boardTheme,
-                          showCoordinates: storage.showCoordinates,
-                          highlightLastMove: storage.highlightLastMove,
+                          pieceSetId: settings.pieceSet,
+                          boardThemeId: settings.boardTheme,
+                          showCoordinates: settings.showCoordinates,
+                          highlightLastMove: settings.highlightLastMove,
+                          moveQuality: currentClassification?.quality,
                         )
                       : const Center(
                           child: Icon(
@@ -271,7 +273,8 @@ class _NavButton extends StatelessWidget {
             ),
             child: Icon(
               icon,
-              color: isEnabled ? AppColors.textPrimary : AppColors.textSecondary,
+              color:
+                  isEnabled ? AppColors.textPrimary : AppColors.textSecondary,
               size: 22,
             ),
           ),
@@ -313,8 +316,7 @@ class _MoveNotationStrip extends ConsumerWidget {
               plyIndex: plyIndex,
               isActive: isActive,
               classification: classification,
-              onTap: () =>
-                  ref.read(reviewProvider.notifier).goToPly(plyIndex),
+              onTap: () => ref.read(reviewProvider.notifier).goToPly(plyIndex),
             ),
           );
         },
@@ -362,7 +364,8 @@ class _MoveChip extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         decoration: BoxDecoration(
-          color: isActive ? AppColors.primaryGlow : AppColors.backgroundElevated,
+          color:
+              isActive ? AppColors.primaryGlow : AppColors.backgroundElevated,
           borderRadius: BorderRadius.circular(AppRadius.chip),
           border: Border.all(
             color: isActive ? AppColors.primary : AppColors.primaryBorder,
@@ -445,7 +448,8 @@ class _AnalysisPanel extends ConsumerWidget {
                   if (classification != null)
                     ChtMoveBadge(
                       quality: classification!.quality,
-                      showGlow: classification!.quality == MoveQuality.brilliant,
+                      showGlow:
+                          classification!.quality == MoveQuality.brilliant,
                     ),
                   if (state.isAnalyzing && classification == null)
                     const SizedBox(
@@ -632,10 +636,10 @@ class _InfoChip extends StatelessWidget {
 // ── Desktop/tablet: side-by-side board + analysis ────────────────────────────
 
 class _WideReviewBody extends ConsumerWidget {
-  const _WideReviewBody({required this.state, required this.storage});
+  const _WideReviewBody({required this.state, required this.settings});
 
   final ReviewState state;
-  final StorageService storage;
+  final SettingsState settings;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -672,10 +676,12 @@ class _WideReviewBody extends ConsumerWidget {
                             child: boardState != null
                                 ? ChessBoardWidget(
                                     boardState: boardState,
-                                    pieceSetId: storage.pieceSet,
-                                    boardThemeId: storage.boardTheme,
-                                    showCoordinates: storage.showCoordinates,
-                                    highlightLastMove: storage.highlightLastMove,
+                                    pieceSetId: settings.pieceSet,
+                                    boardThemeId: settings.boardTheme,
+                                    showCoordinates: settings.showCoordinates,
+                                    highlightLastMove:
+                                        settings.highlightLastMove,
+                                    moveQuality: currentClassification?.quality,
                                   )
                                 : const Center(
                                     child: Icon(

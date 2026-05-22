@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_text_styles.dart';
 import '../../../core/services/asset_service.dart';
+import '../../../engine/move_classifier.dart';
 import 'board_state.dart';
 
 /// 2D chess board rendered with local piece assets.
@@ -14,6 +15,7 @@ class ChessBoardWidget extends StatelessWidget {
     required this.boardThemeId,
     required this.showCoordinates,
     required this.highlightLastMove,
+    this.moveQuality,
     this.onSquareTap,
     this.isFlipped = false,
   });
@@ -23,6 +25,7 @@ class ChessBoardWidget extends StatelessWidget {
   final String boardThemeId;
   final bool showCoordinates;
   final bool highlightLastMove;
+  final MoveQuality? moveQuality;
   final void Function(String square)? onSquareTap;
   final bool isFlipped;
 
@@ -54,6 +57,15 @@ class ChessBoardWidget extends StatelessWidget {
                   onSquareTap: onSquareTap,
                 ),
 
+                // Classification Overlay
+                if (moveQuality != null && boardState.lastMoveTo != null)
+                  _ClassificationBadge(
+                    square: boardState.lastMoveTo!,
+                    quality: moveQuality!,
+                    squareSize: squareSize,
+                    isFlipped: isFlipped,
+                  ),
+
                 // Best move arrow overlay
                 if (boardState.bestMoveFrom != null &&
                     boardState.bestMoveTo != null)
@@ -76,6 +88,105 @@ class ChessBoardWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _ClassificationBadge extends StatelessWidget {
+  const _ClassificationBadge({
+    required this.square,
+    required this.quality,
+    required this.squareSize,
+    required this.isFlipped,
+  });
+
+  final String square;
+  final MoveQuality quality;
+  final double squareSize;
+  final bool isFlipped;
+
+  @override
+  Widget build(BuildContext context) {
+    if (square.length < 2) return const SizedBox.shrink();
+    int col = square.codeUnitAt(0) - 'a'.codeUnitAt(0);
+    int row = 8 - int.parse(square[1]);
+    if (isFlipped) {
+      col = 7 - col;
+      row = 7 - row;
+    }
+
+    final (icon, color, label) = _config();
+
+    return Positioned(
+      left: col * squareSize + squareSize * 0.6,
+      top: row * squareSize - squareSize * 0.2,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(2),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black26, blurRadius: 4, offset: Offset(0, 2))
+              ],
+            ),
+            child: Icon(icon, color: color, size: squareSize * 0.35),
+          ),
+          const SizedBox(height: 2),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: Text(
+              label,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 8,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  (IconData, Color, String) _config() {
+    return switch (quality) {
+      MoveQuality.brilliant => (
+          Icons.auto_awesome,
+          AppColors.brilliant,
+          'BRILLIANT'
+        ),
+      MoveQuality.great => (Icons.thumb_up_rounded, AppColors.great, 'GREAT'),
+      MoveQuality.best => (Icons.star_rounded, AppColors.primary, 'BEST'),
+      MoveQuality.good => (Icons.check_circle_rounded, AppColors.good, 'GOOD'),
+      MoveQuality.book => (Icons.menu_book_rounded, AppColors.book, 'BOOK'),
+      MoveQuality.inaccuracy => (
+          Icons.help_rounded,
+          AppColors.inaccuracy,
+          'INACCURACY'
+        ),
+      MoveQuality.mistake => (
+          Icons.warning_rounded,
+          AppColors.mistake,
+          'MISTAKE'
+        ),
+      MoveQuality.blunder => (
+          Icons.error_rounded,
+          AppColors.blunder,
+          'BLUNDER'
+        ),
+      MoveQuality.miss => (Icons.cancel_rounded, AppColors.miss, 'MISS'),
+      MoveQuality.forced => (
+          Icons.arrow_forward_rounded,
+          AppColors.textSecondary,
+          'FORCED'
+        ),
+    };
   }
 }
 
@@ -210,7 +321,8 @@ class _PiecesLayer extends StatelessWidget {
           final col = i % 8;
           final row = i ~/ 8;
           final square = _colRowToSquare(col, row, isFlipped);
-          if (boardState.pieces.containsKey(square)) return const SizedBox.shrink();
+          if (boardState.pieces.containsKey(square))
+            return const SizedBox.shrink();
           return Positioned(
             left: col * squareSize,
             top: row * squareSize,
@@ -443,8 +555,7 @@ class _ArrowPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_ArrowPainter old) =>
-      old.from != from || old.to != to;
+  bool shouldRepaint(_ArrowPainter old) => old.from != from || old.to != to;
 }
 
 class _CoordinatesOverlay extends StatelessWidget {

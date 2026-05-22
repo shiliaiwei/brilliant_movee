@@ -5,12 +5,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_styles.dart';
 import '../../core/constants/app_spacing.dart';
-import '../../core/widgets/cht_button.dart';
 import '../../core/widgets/cht_card.dart';
 import '../../core/widgets/cht_badge.dart';
 import '../../core/widgets/cht_error_state.dart';
 import '../../core/widgets/shimmer_loader.dart';
-import '../../core/router/app_router.dart';
 import '../../core/utils/responsive.dart';
 import '../../data/models/player_model.dart';
 import '../../data/repositories/player_repository.dart';
@@ -32,10 +30,11 @@ class ProfileScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundDeep,
       appBar: AppBar(
-        title: Text(username),
+        title: const Text('Profile'),
+        centerTitle: true,
         backgroundColor: AppColors.backgroundDeep,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_rounded),
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
@@ -43,7 +42,8 @@ class ProfileScreen extends ConsumerWidget {
         loading: () => const _ProfileShimmer(),
         error: (e, _) => ChtErrorState(
           title: 'Failed to load profile',
-          description: 'Could not fetch data for "$username". Check your connection.',
+          description:
+              'Could not fetch data for "$username". Check your connection.',
           onRetry: () => ref.invalidate(_profileProvider(username)),
         ),
         data: (player) => _ProfileContent(player: player),
@@ -59,131 +59,86 @@ class _ProfileContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SingleChildScrollView(
-          padding: EdgeInsets.only(
-            left: context.screenPadding,
-            right: context.screenPadding,
-            top: AppSpacing.screenV,
-            bottom: 100,
-          ),
-          child: ResponsiveContainer(
-            child: context.isWide
-                ? _WideProfileLayout(player: player)
-                : _NarrowProfileLayout(player: player),
-          ),
+    return SingleChildScrollView(
+      padding: EdgeInsets.symmetric(
+        horizontal: context.screenPadding,
+        vertical: AppSpacing.screenV,
+      ),
+      child: ResponsiveContainer(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _HeroSection(player: player),
+            const SizedBox(height: AppSpacing.xxl),
+            if (player.stats != null) ...[
+              Text('Rating Overview', style: AppTextStyles.title),
+              const SizedBox(height: AppSpacing.md),
+              _RatingsGrid(stats: player.stats!),
+              const SizedBox(height: AppSpacing.xxl),
+              Text('Performance Record', style: AppTextStyles.title),
+              const SizedBox(height: AppSpacing.md),
+              _WinLossSection(stats: player.stats!),
+              const SizedBox(height: AppSpacing.xxl),
+            ],
+            Text('Analysis Stats', style: AppTextStyles.title),
+            const SizedBox(height: AppSpacing.md),
+            _AnalysisStatsGrid(),
+            const SizedBox(height: 100),
+          ],
         ),
-
-        // Pinned CTA button
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: Container(
-            padding: EdgeInsets.fromLTRB(
-              context.screenPadding,
-              AppSpacing.md,
-              context.screenPadding,
-              MediaQuery.of(context).padding.bottom + AppSpacing.md,
-            ),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  AppColors.backgroundDeep.withValues(alpha: 0),
-                  AppColors.backgroundDeep,
-                ],
-              ),
-            ),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 400),
-                child: ChtButton(
-                  label: 'View Game History',
-                  onPressed: () => context.go(AppRoutes.history),
-                  icon: Icons.history_rounded,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
 
-class _HeroCard extends StatelessWidget {
-  const _HeroCard({required this.player});
-
+class _HeroSection extends StatelessWidget {
+  const _HeroSection({required this.player});
   final PlayerModel player;
 
   @override
   Widget build(BuildContext context) {
-    return ChtCard(
-      glowColor: AppColors.primary,
-      child: Row(
+    return Center(
+      child: Column(
         children: [
-          // Avatar
           Container(
-            width: 72,
-            height: 72,
+            width: 100,
+            height: 100,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: AppColors.primary, width: 2),
+              color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.3),
-                  blurRadius: 12,
+                  color: Colors.black.withValues(alpha: 0.05),
+                  blurRadius: 20,
+                  offset: const Offset(0, 10),
                 ),
               ],
+              border: Border.all(color: AppColors.divider, width: 2),
             ),
             child: ClipOval(
               child: player.avatar != null
                   ? CachedNetworkImage(
                       imageUrl: player.avatar!,
                       fit: BoxFit.cover,
-                      placeholder: (_, __) => const _AvatarPlaceholder(),
                       errorWidget: (_, __, ___) => const _AvatarPlaceholder(),
                     )
                   : const _AvatarPlaceholder(),
             ),
           ),
-
-          const SizedBox(width: AppSpacing.lg),
-
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(player.displayName, style: AppTextStyles.title),
-                const SizedBox(height: AppSpacing.xs),
-                Text(
-                  '@${player.username}',
-                  style: AppTextStyles.bodyMuted,
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Row(
-                  children: [
-                    if (player.country != null) ...[
-                      ChtBadge(
-                        label: player.country!.toUpperCase(),
-                        color: AppColors.book,
-                        compact: true,
-                      ),
-                      const SizedBox(width: AppSpacing.sm),
-                    ],
-                    if (player.joinedYear.isNotEmpty)
-                      Text(
-                        'Since ${player.joinedYear}',
-                        style: AppTextStyles.caption,
-                      ),
-                  ],
-                ),
-              ],
-            ),
+          const SizedBox(height: AppSpacing.lg),
+          Text(player.displayName, style: AppTextStyles.headline),
+          Text(
+            '@${player.username}',
+            style: AppTextStyles.bodyMuted.copyWith(letterSpacing: 1),
           ),
+          if (player.country != null) ...[
+            const SizedBox(height: AppSpacing.sm),
+            ChtBadge(
+              label: player.country!.toUpperCase(),
+              color: AppColors.textSecondary,
+              compact: true,
+            ),
+          ],
         ],
       ),
     );
@@ -196,123 +151,105 @@ class _AvatarPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.backgroundElevated,
+      color: AppColors.backgroundSurface,
       child: const Icon(
         Icons.person_rounded,
-        color: AppColors.textSecondary,
-        size: 36,
+        color: AppColors.textDisabled,
+        size: 48,
       ),
     );
   }
 }
 
-class _RatingsRow extends StatelessWidget {
-  const _RatingsRow({required this.stats});
-
+class _RatingsGrid extends StatelessWidget {
+  const _RatingsGrid({required this.stats});
   final PlayerStats stats;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: ChtRatingBadge(
-            category: 'Rapid',
-            rating: stats.rapidRating ?? 0,
-          ),
-        ),
-        const SizedBox(width: AppSpacing.sm),
-        Expanded(
-          child: ChtRatingBadge(
-            category: 'Blitz',
-            rating: stats.blitzRating ?? 0,
-          ),
-        ),
-        const SizedBox(width: AppSpacing.sm),
-        Expanded(
-          child: ChtRatingBadge(
-            category: 'Bullet',
-            rating: stats.bulletRating ?? 0,
-          ),
-        ),
-        const SizedBox(width: AppSpacing.sm),
-        Expanded(
-          child: ChtRatingBadge(
-            category: 'Daily',
-            rating: stats.dailyRating ?? 0,
-          ),
-        ),
-      ],
+    final List<(String, int?)> ratings = [
+      ('Rapid', stats.rapidRating),
+      ('Blitz', stats.blitzRating),
+      ('Bullet', stats.bulletRating),
+      ('Daily', stats.dailyRating),
+    ];
+
+    final visibleRatings =
+        ratings.where((r) => r.$2 != null && r.$2! > 0).toList();
+
+    if (visibleRatings.isEmpty) {
+      return Text('No ratings available', style: AppTextStyles.bodyMuted);
+    }
+
+    return Wrap(
+      spacing: AppSpacing.md,
+      runSpacing: AppSpacing.md,
+      children: visibleRatings
+          .map((r) => SizedBox(
+                width: (MediaQuery.of(context).size.width -
+                        context.screenPadding * 2 -
+                        AppSpacing.md) /
+                    2,
+                child: ChtRatingBadge(category: r.$1, rating: r.$2!),
+              ))
+          .toList(),
     );
   }
 }
 
-class _WinLossBar extends StatelessWidget {
-  const _WinLossBar({required this.stats});
-
+class _WinLossSection extends StatelessWidget {
+  const _WinLossSection({required this.stats});
   final PlayerStats stats;
 
   @override
   Widget build(BuildContext context) {
     final total = stats.totalGames;
-    if (total == 0) {
-      return Text('No games recorded', style: AppTextStyles.bodyMuted);
-    }
-
-    final winFrac = stats.wins / total;
-    final drawFrac = stats.draws / total;
-    final lossFrac = stats.losses / total;
+    if (total == 0) return const SizedBox.shrink();
 
     return ChtCard(
+      padding: const EdgeInsets.all(AppSpacing.lg),
       child: Column(
         children: [
-          // Bar
+          Row(
+            children: [
+              _ResultIndicator(
+                  label: 'W', value: stats.wins, color: AppColors.win),
+              const SizedBox(width: AppSpacing.md),
+              _ResultIndicator(
+                  label: 'D', value: stats.draws, color: AppColors.draw),
+              const SizedBox(width: AppSpacing.md),
+              _ResultIndicator(
+                  label: 'L', value: stats.losses, color: AppColors.loss),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.lg),
           ClipRRect(
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(6),
             child: SizedBox(
-              height: 12,
+              height: 8,
               child: Row(
                 children: [
-                  Flexible(
-                    flex: (winFrac * 100).round(),
-                    child: Container(color: AppColors.win),
-                  ),
-                  Flexible(
-                    flex: (drawFrac * 100).round(),
-                    child: Container(color: AppColors.draw),
-                  ),
-                  Flexible(
-                    flex: (lossFrac * 100).round(),
-                    child: Container(color: AppColors.loss),
-                  ),
+                  Expanded(
+                      flex: stats.wins, child: Container(color: AppColors.win)),
+                  Expanded(
+                      flex: stats.draws,
+                      child: Container(color: AppColors.draw)),
+                  Expanded(
+                      flex: stats.losses,
+                      child: Container(color: AppColors.loss)),
                 ],
               ),
             ),
           ),
           const SizedBox(height: AppSpacing.md),
-          // Labels
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _StatLabel(
-                label: 'Wins',
-                value: '${stats.wins}',
-                color: AppColors.win,
-              ),
-              _StatLabel(
-                label: 'Draws',
-                value: '${stats.draws}',
-                color: AppColors.draw,
-              ),
-              _StatLabel(
-                label: 'Losses',
-                value: '${stats.losses}',
-                color: AppColors.loss,
-              ),
-              _StatLabel(
-                label: 'Win Rate',
-                value: '${(stats.winRate * 100).toStringAsFixed(1)}%',
-                color: AppColors.primary,
+              Text('Total Games: $total', style: AppTextStyles.caption),
+              Text(
+                'Win Rate: ${(stats.winRate * 100).toStringAsFixed(1)}%',
+                style: AppTextStyles.caption.copyWith(
+                    color: AppColors.win, fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -322,84 +259,92 @@ class _WinLossBar extends StatelessWidget {
   }
 }
 
-class _StatLabel extends StatelessWidget {
-  const _StatLabel({
-    required this.label,
-    required this.value,
-    required this.color,
-  });
-
+class _ResultIndicator extends StatelessWidget {
+  const _ResultIndicator(
+      {required this.label, required this.value, required this.color});
   final String label;
-  final String value;
+  final int value;
   final Color color;
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(value,
-            style: AppTextStyles.label.copyWith(
-              color: color,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-            )),
-        Text(label, style: AppTextStyles.caption),
+        Text(label,
+            style: AppTextStyles.caption
+                .copyWith(color: color, fontWeight: FontWeight.bold)),
+        Text('$value', style: AppTextStyles.title.copyWith(fontSize: 18)),
       ],
     );
   }
 }
 
-class _QuickStats extends StatelessWidget {
-  const _QuickStats({required this.player});
+class _AnalysisStatsGrid extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: AppSpacing.md,
+      runSpacing: AppSpacing.md,
+      children: [
+        _AnalysisStatTile(
+            label: 'Brilliant',
+            value: '12',
+            color: AppColors.brilliant,
+            icon: Icons.auto_awesome),
+        _AnalysisStatTile(
+            label: 'Great',
+            value: '45',
+            color: AppColors.great,
+            icon: Icons.thumb_up_rounded),
+        _AnalysisStatTile(
+            label: 'Accuracy',
+            value: '82%',
+            color: AppColors.primary,
+            icon: Icons.analytics_rounded),
+        _AnalysisStatTile(
+            label: 'Games',
+            value: '128',
+            color: AppColors.secondary,
+            icon: Icons.history_rounded),
+      ],
+    );
+  }
+}
 
-  final PlayerModel player;
+class _AnalysisStatTile extends StatelessWidget {
+  const _AnalysisStatTile(
+      {required this.label,
+      required this.value,
+      required this.color,
+      required this.icon});
+  final String label;
+  final String value;
+  final Color color;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: ChtCard(
-            child: Column(
-              children: [
-                const Icon(Icons.people_rounded,
-                    color: AppColors.primary, size: 24),
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  '${player.followers}',
-                  style: AppTextStyles.label.copyWith(
-                    color: AppColors.primary,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                Text('Followers', style: AppTextStyles.caption),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.md),
-        Expanded(
-          child: ChtCard(
-            child: Column(
-              children: [
-                const Icon(Icons.calendar_today_rounded,
-                    color: AppColors.secondary, size: 24),
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  player.joinedYear.isNotEmpty ? player.joinedYear : '-',
-                  style: AppTextStyles.label.copyWith(
-                    color: AppColors.secondary,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                Text('Joined', style: AppTextStyles.caption),
-              ],
-            ),
-          ),
-        ),
-      ],
+    return Container(
+      width: (MediaQuery.of(context).size.width -
+              context.screenPadding * 2 -
+              AppSpacing.md) /
+          2,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.backgroundSurface,
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        border: Border.all(color: color.withValues(alpha: 0.2), width: 1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: color, size: 20),
+          const SizedBox(height: 12),
+          Text(value, style: AppTextStyles.headline.copyWith(fontSize: 22)),
+          Text(label, style: AppTextStyles.caption),
+        ],
+      ),
     );
   }
 }
@@ -409,108 +354,21 @@ class _ProfileShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChtShimmer(
+    return const ChtShimmer(
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.screenH),
+        padding: EdgeInsets.all(24),
         child: Column(
           children: [
-            const ShimmerBox(width: double.infinity, height: 100),
-            const SizedBox(height: AppSpacing.xl),
-            Row(
-              children: List.generate(
-                4,
-                (i) => Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        right: i < 3 ? AppSpacing.sm : 0),
-                    child: const ShimmerBox(width: null, height: 70),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: AppSpacing.xl),
-            const ShimmerBox(width: double.infinity, height: 80),
+            ShimmerBox(width: 100, height: 100, borderRadius: 50),
+            SizedBox(height: 16),
+            ShimmerBox(width: 150, height: 24),
+            SizedBox(height: 8),
+            ShimmerBox(width: 100, height: 16),
+            SizedBox(height: 40),
+            ShimmerBox(width: double.infinity, height: 200),
           ],
         ),
       ),
-    );
-  }
-}
-
-// ── Responsive profile layouts ────────────────────────────────────────────────
-
-class _NarrowProfileLayout extends StatelessWidget {
-  const _NarrowProfileLayout({required this.player});
-  final PlayerModel player;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _HeroCard(player: player),
-        const SizedBox(height: AppSpacing.xl),
-        if (player.stats != null) ...[
-          Text('Ratings', style: AppTextStyles.title),
-          const SizedBox(height: AppSpacing.md),
-          _RatingsRow(stats: player.stats!),
-          const SizedBox(height: AppSpacing.xl),
-          Text('Record', style: AppTextStyles.title),
-          const SizedBox(height: AppSpacing.md),
-          _WinLossBar(stats: player.stats!),
-          const SizedBox(height: AppSpacing.xl),
-        ],
-        Text('Quick Stats', style: AppTextStyles.title),
-        const SizedBox(height: AppSpacing.md),
-        _QuickStats(player: player),
-      ],
-    );
-  }
-}
-
-class _WideProfileLayout extends StatelessWidget {
-  const _WideProfileLayout({required this.player});
-  final PlayerModel player;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Left: hero card + quick stats
-        Expanded(
-          flex: 2,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _HeroCard(player: player),
-              const SizedBox(height: AppSpacing.xl),
-              Text('Quick Stats', style: AppTextStyles.title),
-              const SizedBox(height: AppSpacing.md),
-              _QuickStats(player: player),
-            ],
-          ),
-        ),
-        const SizedBox(width: AppSpacing.xxl),
-        // Right: ratings + record
-        Expanded(
-          flex: 3,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (player.stats != null) ...[
-                Text('Ratings', style: AppTextStyles.title),
-                const SizedBox(height: AppSpacing.md),
-                _RatingsRow(stats: player.stats!),
-                const SizedBox(height: AppSpacing.xl),
-                Text('Record', style: AppTextStyles.title),
-                const SizedBox(height: AppSpacing.md),
-                _WinLossBar(stats: player.stats!),
-              ],
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

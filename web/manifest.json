@@ -1,16 +1,17 @@
 {
-    "name": "Brilliant Movee",
-    "short_name": "BrilliantMovee",
+    "name": "Stupid Brilliant",
+    "short_name": "StupidBrilliant",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#080C10",
-    "theme_color": "#080C10",
-    "description": "Brilliant Movee — Replay. Analyze. Evolve. Premium chess game analysis.",
+    "background_color": "#FFFFFF",
+    "theme_color": "#00BFA5",
+    "description": "Stupid Brilliant — Replay. Analyze. Evolve. Premium chess game analysis powered by Stockfish 16.",
     "orientation": "any",
     "prefer_related_applications": false,
     "categories": [
         "games",
-        "sports"
+        "sports",
+        "utilities"
     ],
     "icons": [
         {
@@ -34,6 +35,15 @@
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Stupid Brilliant Analysis"
         }
     ]
 }

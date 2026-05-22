@@ -1,0 +1,17 @@
+
+
+now we need to fix , the mobile crash,
+-put the logo app, UI white premuim is better ,
+-brand color do not use as gredaient color ,
+-redesgin the profile after user enter username and showing their profile rating block redesgin make easy viiew, if 0 dont shoing, for the rescord is good, do not showing date join and follwoing if their
+-game history not found in mobile view, 0 found it,fix that and showing history usernam owner openent rating, win by ressgin draw abandone etc , tap to see the detail and has button analy review etc
+-the setting is greate, and fix the board and piece style preset save apply is not working , and the setting profile suer if can showing like following user friend and analtic all brillaint total greate total more,
+
+
+
+please make classification name add to move pieces interacting in asset
+
+
+Classification badge shown ON the piece when navigating moves (floating label on the moved piece square)
+Sound — wire up real just_audio playback with bundled standard sound assets
+Let me also check what sound files exist and what just_audio needs:

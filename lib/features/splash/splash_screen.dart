@@ -186,7 +186,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                       child: Column(
                         children: [
                           Text(
-                            'BRILLIANT MOVEE',
+                            'STUPID BRILLIANT',
                             style: AppTextStyles.appName,
                           ),
                           const SizedBox(height: AppSpacing.md),
@@ -340,7 +340,9 @@ class _ParticlePainter extends CustomPainter {
     if (a < 0) a += 2 * 3.14159265;
     // Taylor series
     double result = a - (a * a * a) / 6 + (a * a * a * a * a) / 120;
-    if (a > 3.14159265) result = -(a - 3.14159265) + (a - 3.14159265) * (a - 3.14159265) * (a - 3.14159265) / 6;
+    if (a > 3.14159265)
+      result = -(a - 3.14159265) +
+          (a - 3.14159265) * (a - 3.14159265) * (a - 3.14159265) / 6;
     return result.clamp(-1.0, 1.0);
   }
 

@@ -1,7 +1,7 @@
 name: brilliant_movee
-description: "Brilliant Movee — Replay. Analyze. Evolve. A premium chess analysis app."
+description: "Stupid Brilliant — Replay. Analyze. Evolve. A premium chess analysis app."
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.1.0+2
 
 environment:
   sdk: ^3.4.0
@@ -67,7 +67,7 @@ flutter_launcher_icons:
   android: true
   ios: false
   image_path: "assets/brand/logo.png"
-  adaptive_icon_background: "#080C10"
+  adaptive_icon_background: "#FFFFFF"
   adaptive_icon_foreground: "assets/brand/logo.png"
 
 flutter:
@@ -84,7 +84,12 @@ flutter:
     - assets/pieces/staunty/
     - assets/pieces/california/
     - assets/pieces/pirouetti/
-    - assets/sounds/
+    - assets/sounds/standard/
+    - assets/sounds/piano/
+    - assets/sounds/nes/
+    - assets/sounds/sfx/
+    - assets/sounds/futuristic/
+    - assets/sounds/lisp/
     - assets/data/
 
   # Fonts loaded via google_fonts package at runtime (SpaceGrotesk, Inter, JetBrainsMono).

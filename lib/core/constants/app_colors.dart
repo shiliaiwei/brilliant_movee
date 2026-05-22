@@ -1,105 +1,104 @@
 import 'package:flutter/material.dart';
 
-/// Aurora Obsidian color palette for Brilliant Movee.
+/// Premium White color palette for Brilliant Movee.
 /// All colors are tokens — never use raw hex values outside this file.
 abstract final class AppColors {
   // ── Backgrounds ──────────────────────────────────────────────────────────
-  static const Color backgroundDeep = Color(0xFF080C10);     // Void Black
-  static const Color backgroundSurface = Color(0xFF0E1620);  // Abyss
-  static const Color backgroundElevated = Color(0xFF141F2E); // Slate Glass
+  static const Color backgroundDeep = Color(0xFFFFFFFF); // Pure White
+  static const Color backgroundSurface = Color(0xFFF8FAFB); // Off White
+  static const Color backgroundElevated = Color(0xFFF0F4F7); // Light Grey
 
   // ── Primary ──────────────────────────────────────────────────────────────
-  static const Color primary = Color(0xFF00E5C3);            // Biolume Teal
-  static const Color primaryDim = Color(0xFF00A88D);         // Deep Teal
-  static const Color primaryGlow = Color(0x4000E5C3);        // Teal glow 25%
-  static const Color primaryBorder = Color(0x1A00E5C3);      // Teal border 10%
+  static const Color primary = Color(0xFF00BFA5); // Premium Teal
+  static const Color primaryDim = Color(0xFF00897B);
+  static const Color primaryGlow = Color(0x1A00BFA5); // 10% opacity
+  static const Color primaryBorder = Color(0x1F00BFA5); // 12% opacity
 
   // ── Secondary / Accent ───────────────────────────────────────────────────
-  static const Color secondary = Color(0xFF7B5EFF);          // Aurora Violet
-  static const Color tertiary = Color(0xFF39FF6A);           // Forest Pulse
+  static const Color secondary = Color(0xFF6200EE); // Premium Purple
+  static const Color tertiary = Color(0xFF00C853); // Success Green
 
   // ── Move Quality ─────────────────────────────────────────────────────────
-  static const Color brilliant = Color(0xFFFFD700);          // Gold Prism
-  static const Color brilliantGlow = Color(0x80FFD700);
-  static const Color great = Color(0xFF00C97A);              // Emerald
-  static const Color good = Color(0xFF4CAF50);               // Light Green
-  static const Color book = Color(0xFF4FC3F7);               // Sky Rune
-  static const Color inaccuracy = Color(0xFFFFB830);         // Amber
-  static const Color mistake = Color(0xFFFF6B35);            // Ember
-  static const Color blunder = Color(0xFFFF2D55);            // Crimson Pulse
-  static const Color miss = Color(0xFF9C27B0);               // Purple
+  static const Color brilliant = Color(0xFFE9B200); // Premium Gold
+  static const Color brilliantGlow = Color(0x33E9B200);
+  static const Color great = Color(0xFF009688);
+  static const Color good = Color(0xFF43A047);
+  static const Color book = Color(0xFF0288D1);
+  static const Color inaccuracy = Color(0xFFF57C00);
+  static const Color mistake = Color(0xFFE64A19);
+  static const Color blunder = Color(0xFFD32F2F);
+  static const Color miss = Color(0xFF8E24AA);
 
   // ── Text ─────────────────────────────────────────────────────────────────
-  static const Color textPrimary = Color(0xFFE8F4F0);        // Ice White
-  static const Color textSecondary = Color(0xFF6B8A9A);      // Fog
-  static const Color textDisabled = Color(0xFF3A4F5C);
+  static const Color textPrimary = Color(0xFF1A1C1E); // Near Black
+  static const Color textSecondary = Color(0xFF44474E); // Grey
+  static const Color textDisabled = Color(0xFFC4C7CF);
 
   // ── Semantic ─────────────────────────────────────────────────────────────
-  static const Color win = Color(0xFF39FF6A);
-  static const Color loss = Color(0xFFFF2D55);
-  static const Color draw = Color(0xFF6B8A9A);
-  static const Color warning = Color(0xFFFF6B35);
-  static const Color error = Color(0xFFFF2D55);
-  static const Color success = Color(0xFF00E5C3);
+  static const Color win = Color(0xFF00C853);
+  static const Color loss = Color(0xFFD32F2F);
+  static const Color draw = Color(0xFF74777F);
+  static const Color warning = Color(0xFFF57C00);
+  static const Color error = Color(0xFFBA1A1A);
+  static const Color success = Color(0xFF00BFA5);
 
   // ── Board ────────────────────────────────────────────────────────────────
-  static const Color boardHighlightFrom = Color(0x8000E5C3);
-  static const Color boardHighlightTo = Color(0x6000E5C3);
-  static const Color boardArrow = Color(0xCC00E5C3);
-  static const Color boardArrowBest = Color(0xCC7B5EFF);
+  static const Color boardHighlightFrom = Color(0x4D00BFA5);
+  static const Color boardHighlightTo = Color(0x3300BFA5);
+  static const Color boardArrow = Color(0xB300BFA5);
+  static const Color boardArrowBest = Color(0xB36200EE);
 
-  // ── Gradients ────────────────────────────────────────────────────────────
+  // ── Gradients (Simplified/Solid equivalents) ─────────────────────────────
   static const List<Color> heroGradient = [
-    Color(0xFF080C10),
-    Color(0xFF0D1F1A),
+    Color(0xFFFFFFFF),
+    Color(0xFFF8FAFB),
   ];
 
   static const List<Color> ctaGradient = [
-    Color(0xFF00E5C3),
-    Color(0xFF7B5EFF),
+    Color(0xFF00BFA5),
+    Color(0xFF00BFA5), // No more gradient
   ];
 
   static const List<Color> winGradient = [
-    Color(0xFF39FF6A),
-    Color(0xFF00E5C3),
-    Color(0xFF7B5EFF),
+    Color(0xFF00C853),
+    Color(0xFF00C853),
   ];
 
   static const List<Color> loseGradient = [
-    Color(0xFF1A0A0A),
-    Color(0xFF2D0F0F),
+    Color(0xFFFDF7F7),
+    Color(0xFFFDF7F7),
   ];
 
   static const List<Color> evalWhiteGradient = [
-    Color(0xFFE8F4F0),
-    Color(0xFF6B8A9A),
+    Color(0xFFFFFFFF),
+    Color(0xFFE1E2E4),
   ];
 
   static const List<Color> evalBlackGradient = [
-    Color(0xFF141F2E),
-    Color(0xFF080C10),
+    Color(0xFF44474E),
+    Color(0xFF1A1C1E),
   ];
 
   // ── Overlay / Glass ──────────────────────────────────────────────────────
-  static const Color glassOverlay = Color(0x1A00E5C3);
-  static const Color scrim = Color(0xCC080C10);
-  static const Color divider = Color(0x1A6B8A9A);
+  static const Color glassOverlay = Color(0x0D00BFA5);
+  static const Color scrim = Color(0x80000000);
+  static const Color divider = Color(0xFFE1E2E4);
 
-  // ── M3 ColorScheme seed (used for Material widgets) ──────────────────────
-  static ColorScheme get m3DarkScheme => ColorScheme.fromSeed(
+  // ── M3 ColorScheme ───────────────────────────────────────────────────────
+  static ColorScheme get m3LightScheme => ColorScheme.fromSeed(
         seedColor: primary,
-        brightness: Brightness.dark,
+        brightness: Brightness.light,
       ).copyWith(
         surface: backgroundSurface,
         onSurface: textPrimary,
         primary: primary,
-        onPrimary: backgroundDeep,
+        onPrimary: Colors.white,
         secondary: secondary,
-        onSecondary: textPrimary,
+        onSecondary: Colors.white,
         tertiary: tertiary,
         error: error,
-        onError: textPrimary,
+        onError: Colors.white,
         surfaceContainerHighest: backgroundElevated,
-        outline: primaryBorder,
+        outline: divider,
       );
 }

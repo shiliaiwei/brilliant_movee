@@ -54,7 +54,7 @@ class HomeScreen extends ConsumerWidget {
               const SizedBox(height: AppSpacing.xxl),
               ChtButton(
                 label: 'Connect Account',
-                onPressed: () => context.go(AppRoutes.search),
+                onPressed: () => context.push(AppRoutes.search),
                 isFullWidth: false,
               ),
             ],
@@ -83,10 +83,18 @@ class HomeScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Greeting header
-                  _GreetingHeader(
-                    username: username,
-                    playerAsync: playerAsync,
+                  // Greeting header with Logo
+                  Row(
+                    children: [
+                      _BrandLogo(),
+                      const SizedBox(width: AppSpacing.md),
+                      Expanded(
+                        child: _GreetingHeader(
+                          username: username,
+                          playerAsync: playerAsync,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: AppSpacing.xxl),
 
@@ -150,7 +158,8 @@ class _GreetingHeader extends StatelessWidget {
         ),
         // Avatar chip
         playerAsync.when(
-          loading: () => const ShimmerBox(width: 44, height: 44, borderRadius: 22),
+          loading: () =>
+              const ShimmerBox(width: 44, height: 44, borderRadius: 22),
           error: (_, __) => const _DefaultAvatar(),
           data: (player) => player?.avatar != null
               ? Container(
@@ -209,7 +218,7 @@ class _LastGameCard extends StatelessWidget {
     final accuracy = game.accuracyFor(username);
 
     return ChtCard(
-      onTap: () => context.go(
+      onTap: () => context.push(
         AppRoutes.review,
         extra: game.pgn,
       ),
@@ -351,10 +360,10 @@ class _StatsTiles extends StatelessWidget {
 
     for (final g in games) {
       final r = g.resultFor(username);
-      if (r == '1-0' &&
-          g.whiteUsername.toLowerCase() == username.toLowerCase()) wins++;
-      if (r == '0-1' &&
-          g.blackUsername.toLowerCase() == username.toLowerCase()) wins++;
+      if (r == '1-0' && g.whiteUsername.toLowerCase() == username.toLowerCase())
+        wins++;
+      if (r == '0-1' && g.blackUsername.toLowerCase() == username.toLowerCase())
+        wins++;
       final acc = g.accuracyFor(username);
       if (acc != null) {
         totalAccuracy += acc;
@@ -429,7 +438,8 @@ class _StatTile extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          Text(label, style: AppTextStyles.caption, textAlign: TextAlign.center),
+          Text(label,
+              style: AppTextStyles.caption, textAlign: TextAlign.center),
         ],
       ),
     );
@@ -494,7 +504,7 @@ class _NarrowHomeLayout extends StatelessWidget {
         const SizedBox(height: AppSpacing.xxxl),
         ChtButton(
           label: 'Analyze New Game',
-          onPressed: () => context.go(AppRoutes.history),
+          onPressed: () => context.push(AppRoutes.history),
           icon: Icons.analytics_rounded,
         ),
       ],
@@ -546,7 +556,8 @@ class _WideHomeLayout extends StatelessWidget {
                       Text('Recent Games', style: AppTextStyles.title),
                       const SizedBox(height: AppSpacing.md),
                       ...recent.map((g) => Padding(
-                            padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                            padding:
+                                const EdgeInsets.only(bottom: AppSpacing.sm),
                             child: _LastGameCard(game: g, username: username),
                           )),
                     ],
@@ -602,8 +613,10 @@ class _StatsColumn extends StatelessWidget {
 
     for (final g in games) {
       final r = g.resultFor(username);
-      if ((r == '1-0' && g.whiteUsername.toLowerCase() == username.toLowerCase()) ||
-          (r == '0-1' && g.blackUsername.toLowerCase() == username.toLowerCase())) {
+      if ((r == '1-0' &&
+              g.whiteUsername.toLowerCase() == username.toLowerCase()) ||
+          (r == '0-1' &&
+              g.blackUsername.toLowerCase() == username.toLowerCase())) {
         wins++;
       }
       final acc = g.accuracyFor(username);
@@ -614,8 +627,9 @@ class _StatsColumn extends StatelessWidget {
     }
 
     final winRate = total > 0 ? (wins / total * 100).toStringAsFixed(1) : '-';
-    final avgAccuracy =
-        accuracyCount > 0 ? (totalAccuracy / accuracyCount).toStringAsFixed(1) : '-';
+    final avgAccuracy = accuracyCount > 0
+        ? (totalAccuracy / accuracyCount).toStringAsFixed(1)
+        : '-';
 
     return Column(
       children: [
@@ -640,6 +654,39 @@ class _StatsColumn extends StatelessWidget {
           color: AppColors.secondary,
         ),
       ],
+    );
+  }
+}
+
+class _BrandLogo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 44,
+      height: 44,
+      padding: const EdgeInsets.all(2),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withValues(alpha: 0.15),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+        border: Border.all(color: AppColors.divider, width: 1),
+      ),
+      child: ClipOval(
+        child: Image.asset(
+          'assets/brand/logo.png',
+          fit: BoxFit.cover,
+          errorBuilder: (_, __, ___) => const Icon(
+            Icons.sports_esports_rounded,
+            color: AppColors.primary,
+          ),
+        ),
+      ),
     );
   }
 }
