@@ -14,7 +14,7 @@ class BrilliantMoveeApp extends ConsumerWidget {
     return MaterialApp.router(
       title: 'Stupid Brilliant',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
+      theme: AppTheme.darkTheme,
       routerConfig: router,
     );
   }

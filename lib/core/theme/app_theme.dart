@@ -5,14 +5,14 @@ import '../constants/app_colors.dart';
 import '../constants/app_text_styles.dart';
 import '../constants/app_spacing.dart';
 
-/// Builds the Material 3 light theme (Premium White) for Brilliant Movee.
+/// Builds the Material 3 dark theme (Pure Black) for Stupid Brilliant.
 abstract final class AppTheme {
-  static ThemeData get lightTheme {
-    final colorScheme = AppColors.m3LightScheme;
+  static ThemeData get darkTheme {
+    final colorScheme = AppColors.m3DarkScheme;
 
     return ThemeData(
       useMaterial3: true,
-      brightness: Brightness.light,
+      brightness: Brightness.dark,
       colorScheme: colorScheme,
 
       // ── Scaffold ──────────────────────────────────────────────────────────
@@ -24,20 +24,20 @@ abstract final class AppTheme {
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
         scrolledUnderElevation: 0,
-        centerTitle: false,
-        titleTextStyle: AppTextStyles.headline,
+        centerTitle: true,
+        titleTextStyle: AppTextStyles.headline.copyWith(fontSize: 20),
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
-          statusBarIconBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.light,
           systemNavigationBarColor: AppColors.backgroundDeep,
-          systemNavigationBarIconBrightness: Brightness.dark,
+          systemNavigationBarIconBrightness: Brightness.light,
         ),
         iconTheme: const IconThemeData(color: AppColors.textPrimary, size: 24),
       ),
 
       // ── Bottom Navigation ─────────────────────────────────────────────────
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        backgroundColor: AppColors.backgroundDeep,
+        backgroundColor: AppColors.backgroundSurface,
         selectedItemColor: AppColors.primary,
         unselectedItemColor: AppColors.textSecondary,
         type: BottomNavigationBarType.fixed,
@@ -97,6 +97,7 @@ abstract final class AppTheme {
           borderRadius: BorderRadius.circular(AppRadius.md),
           borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
         ),
+        hintStyle: AppTextStyles.body.copyWith(color: AppColors.textSecondary),
       ),
 
       // ── Divider ───────────────────────────────────────────────────────────
@@ -114,7 +115,5 @@ abstract final class AppTheme {
     );
   }
 
-  // Keep darkTheme for fallback or if user switches, but default will be light
-  static ThemeData get darkTheme =>
-      lightTheme; // For now, override with light as requested
+  static ThemeData get lightTheme => darkTheme;
 }

@@ -19,30 +19,30 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   int _currentStep = 0;
   static const int _totalSteps = 3;
 
-  static const _slides = [
-    _OnboardingSlide(
+  static final _slides = [
+    const _OnboardingSlide(
       title: 'Replay Every Battle',
       subtitle:
           'Load any Chess.com game and watch it unfold move by move with full board animation.',
       icon: Icons.replay_rounded,
-      gradientColors: [Color(0xFF080C10), Color(0xFF0D2A1A)],
+      gradientColors: [Color(0xFF000000), Color(0xFF111111)],
       accentColor: AppColors.primary,
     ),
-    _OnboardingSlide(
+    const _OnboardingSlide(
       title: 'Stockfish Sees All',
       subtitle:
           'Every move analyzed by Stockfish 16. See the eval bar shift, best moves highlighted, and your mistakes exposed.',
       icon: Icons.psychology_rounded,
-      gradientColors: [Color(0xFF0A0818), Color(0xFF1A0D2E)],
-      accentColor: AppColors.secondary,
+      gradientColors: [Color(0xFF000000), Color(0xFF111111)],
+      accentColor: AppColors.brilliant,
     ),
-    _OnboardingSlide(
+    const _OnboardingSlide(
       title: 'Your Stats. Your Story.',
       subtitle:
           'Track accuracy, brilliant moves, blunders, and your improvement over time.',
       icon: Icons.bar_chart_rounded,
-      gradientColors: [Color(0xFF080C10), Color(0xFF0D1F1A)],
-      accentColor: AppColors.tertiary,
+      gradientColors: [Color(0xFF000000), Color(0xFF111111)],
+      accentColor: AppColors.great,
     ),
   ];
 
@@ -107,13 +107,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 Expanded(
                   child: IndexedStack(
                     index: _currentStep,
-                    children: _slides
-                        .map((s) => _SlideContent(slide: s))
-                        .toList(),
+                    children:
+                        _slides.map((s) => _SlideContent(slide: s)).toList(),
                   ),
                 ),
 
-                // Dot indicators (non-tappable per NAV-06)
+                // Dot indicators
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(_totalSteps, (i) {
@@ -190,7 +189,7 @@ class _SlideContent extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Icon with glow
+          // Icon
           Container(
             width: 120,
             height: 120,
@@ -201,13 +200,6 @@ class _SlideContent extends StatelessWidget {
                 color: slide.accentColor.withValues(alpha: 0.3),
                 width: 1,
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: slide.accentColor.withValues(alpha: 0.2),
-                  blurRadius: 40,
-                  spreadRadius: 10,
-                ),
-              ],
             ),
             child: Icon(slide.icon, size: 56, color: slide.accentColor),
           ),

@@ -22,3 +22,61 @@ Let me also check what sound files exist and what just_audio needs:
 -fix the application history it not fect at all no hitory list
 
 make no shadow style, after that give new versipon apk and move to desktop folder
+
+
+
+-fix the app history play is not showing all list play and tin the board of review the piece is not showing , and pls adding label icon from classification to the peice move , all 10 clssification label, dont add text as label adding icon small with piece , the piece item should be 2d,
+- make the screen on app showing like screen time batery showing do make as full fit the screen , and make the baord center the screenphone,
+-make the analyz , review wokring , , and maek the button back , also listen to nav back when user control as back from bultin smatphone, to, if user wanna leave the app as to leave ,
+- new color design
+Background (Base): #000000 (Pure Black)
+Background (Elevated components/Panels): #111111 to #161616 (Deep grey)
+Background (Hover/Active states): #222222 to #333333
+Text (Primary): #EDEDED (High-contrast, off-white)
+Text (Secondary): #999999 (Muted Grey)
+
+Background 2
+
+Secondary background
+
+Colors 1–3: Component Backgrounds
+These three colors are designed for UI component backgrounds.
+
+Color 1
+
+Default background
+
+Color 2
+
+Hover background
+
+Color 3
+
+Active background
+
+Colors 7-8: High Contrast Backgrounds
+These two colors are designed for high contrast UI component backgrounds.
+
+Color 7
+
+High contrast background
+
+Color 8
+
+Hover high contrast background
+
+
+Colors 9-10: Text and Icons
+These two colors are designed for accessible text and icons.
+
+Color 9
+
+Secondary text and icons
+
+Color 10
+
+Primary text and icons
+
+The Frontend Cloud
+
+Build, scale, and secure a faster, personalized web with Vercel. and change the logo use  as brand logo app https://github.com/shiliaiwei/brilliant_movee/blob/c33a2a964dd04f6a1b883730bb4c7ab8ab8c5da5/assets/classification/sigma.png

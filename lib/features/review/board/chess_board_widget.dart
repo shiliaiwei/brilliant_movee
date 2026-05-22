@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_text_styles.dart';
 import '../../../core/services/asset_service.dart';
@@ -6,7 +7,6 @@ import '../../../engine/move_classifier.dart';
 import 'board_state.dart';
 
 /// 2D chess board rendered with local piece assets.
-/// Uses RepaintBoundary for performance (PERF-03).
 class ChessBoardWidget extends StatelessWidget {
   const ChessBoardWidget({
     super.key,
@@ -40,6 +40,7 @@ class ChessBoardWidget extends StatelessWidget {
             final squareSize = size / 8;
 
             return Stack(
+              clipBehavior: Clip.none,
               children: [
                 // Board background
                 _BoardBackground(
@@ -57,9 +58,9 @@ class ChessBoardWidget extends StatelessWidget {
                   onSquareTap: onSquareTap,
                 ),
 
-                // Classification Overlay
+                // Classification Icon Overlay (Small icon with piece)
                 if (moveQuality != null && boardState.lastMoveTo != null)
-                  _ClassificationBadge(
+                  _ClassificationIcon(
                     square: boardState.lastMoveTo!,
                     quality: moveQuality!,
                     squareSize: squareSize,
@@ -91,8 +92,8 @@ class ChessBoardWidget extends StatelessWidget {
   }
 }
 
-class _ClassificationBadge extends StatelessWidget {
-  const _ClassificationBadge({
+class _ClassificationIcon extends StatelessWidget {
+  const _ClassificationIcon({
     required this.square,
     required this.quality,
     required this.squareSize,
@@ -114,77 +115,37 @@ class _ClassificationBadge extends StatelessWidget {
       row = 7 - row;
     }
 
-    final (icon, color, label) = _config();
+    final (icon, color) = _config();
 
     return Positioned(
-      left: col * squareSize + squareSize * 0.6,
-      top: row * squareSize - squareSize * 0.2,
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(2),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black26, blurRadius: 4, offset: Offset(0, 2))
-              ],
-            ),
-            child: Icon(icon, color: color, size: squareSize * 0.35),
-          ),
-          const SizedBox(height: 2),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Text(
-              label,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 8,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
+      left: col * squareSize + squareSize * 0.55,
+      top: row * squareSize - squareSize * 0.15,
+      child: Container(
+        padding: const EdgeInsets.all(1.5),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          shape: BoxShape.circle,
+          border: Border.all(color: color, width: 1.5),
+        ),
+        child: Icon(icon, color: color, size: squareSize * 0.35),
       ),
     );
   }
 
-  (IconData, Color, String) _config() {
+  (IconData, Color) _config() {
     return switch (quality) {
-      MoveQuality.brilliant => (
-          Icons.auto_awesome,
-          AppColors.brilliant,
-          'BRILLIANT'
-        ),
-      MoveQuality.great => (Icons.thumb_up_rounded, AppColors.great, 'GREAT'),
-      MoveQuality.best => (Icons.star_rounded, AppColors.primary, 'BEST'),
-      MoveQuality.good => (Icons.check_circle_rounded, AppColors.good, 'GOOD'),
-      MoveQuality.book => (Icons.menu_book_rounded, AppColors.book, 'BOOK'),
-      MoveQuality.inaccuracy => (
-          Icons.help_rounded,
-          AppColors.inaccuracy,
-          'INACCURACY'
-        ),
-      MoveQuality.mistake => (
-          Icons.warning_rounded,
-          AppColors.mistake,
-          'MISTAKE'
-        ),
-      MoveQuality.blunder => (
-          Icons.error_rounded,
-          AppColors.blunder,
-          'BLUNDER'
-        ),
-      MoveQuality.miss => (Icons.cancel_rounded, AppColors.miss, 'MISS'),
+      MoveQuality.brilliant => (Icons.auto_awesome, AppColors.brilliant),
+      MoveQuality.great => (Icons.thumb_up_rounded, AppColors.great),
+      MoveQuality.best => (Icons.star_rounded, AppColors.primary),
+      MoveQuality.good => (Icons.check_circle_rounded, AppColors.good),
+      MoveQuality.book => (Icons.menu_book_rounded, AppColors.book),
+      MoveQuality.inaccuracy => (Icons.help_rounded, AppColors.inaccuracy),
+      MoveQuality.mistake => (Icons.warning_rounded, AppColors.mistake),
+      MoveQuality.blunder => (Icons.error_rounded, AppColors.blunder),
+      MoveQuality.miss => (Icons.cancel_rounded, AppColors.miss),
       MoveQuality.forced => (
           Icons.arrow_forward_rounded,
-          AppColors.textSecondary,
-          'FORCED'
+          AppColors.textSecondary
         ),
     };
   }
@@ -216,9 +177,7 @@ class _BoardBackground extends StatelessWidget {
 
 class _FallbackBoard extends StatelessWidget {
   const _FallbackBoard({required this.size});
-
   final double size;
-
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
@@ -234,17 +193,12 @@ class _FallbackBoardPainter extends CustomPainter {
     final squareSize = size.width / 8;
     final lightPaint = Paint()..color = const Color(0xFFB58863);
     final darkPaint = Paint()..color = const Color(0xFFF0D9B5);
-
     for (int row = 0; row < 8; row++) {
       for (int col = 0; col < 8; col++) {
         final isLight = (row + col) % 2 == 0;
         canvas.drawRect(
           Rect.fromLTWH(
-            col * squareSize,
-            row * squareSize,
-            squareSize,
-            squareSize,
-          ),
+              col * squareSize, row * squareSize, squareSize, squareSize),
           isLight ? darkPaint : lightPaint,
         );
       }
@@ -364,36 +318,46 @@ class _PieceImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final assetPath = 'assets/pieces/$pieceSetId/$piece.png';
+    // Standard piece mapping for 2D assets
+    // We expect pieces like 'wP', 'wN', 'wB', 'wR', 'wQ', 'wK'
+    // Ensure naming is consistent: first char lowercase color, second char uppercase type
+    final color = piece[0].toLowerCase();
+    final type = piece[1].toUpperCase();
+    final normalizedPiece = '$color$type';
+
+    final assetPath = 'assets/pieces/$pieceSetId/$normalizedPiece.png';
+
     return Image.asset(
       assetPath,
       width: size,
       height: size,
       fit: BoxFit.contain,
-      errorBuilder: (_, __, ___) => _FallbackPiece(piece: piece, size: size),
+      errorBuilder: (context, error, stackTrace) {
+        // Log error and fallback
+        return _FallbackPiece(piece: piece, size: size);
+      },
     );
   }
 }
 
 class _FallbackPiece extends StatelessWidget {
   const _FallbackPiece({required this.piece, required this.size});
-
   final String piece;
   final double size;
 
-  String get _symbol => switch (piece) {
-        'wK' => '♔',
-        'wQ' => '♕',
-        'wR' => '♖',
-        'wB' => '♗',
-        'wN' => '♘',
-        'wP' => '♙',
-        'bK' => '♚',
-        'bQ' => '♛',
-        'bR' => '♜',
-        'bB' => '♝',
-        'bN' => '♞',
-        'bP' => '♟',
+  String get _symbol => switch (piece.toLowerCase()) {
+        'wk' => '♔',
+        'wq' => '♕',
+        'wr' => '♖',
+        'wb' => '♗',
+        'wn' => '♘',
+        'wp' => '♙',
+        'bk' => '♚',
+        'bq' => '♛',
+        'br' => '♜',
+        'bb' => '♝',
+        'bn' => '♞',
+        'bp' => '♟',
         _ => '?',
       };
 
@@ -418,12 +382,10 @@ class _HighlightSquare extends StatelessWidget {
     required this.color,
     required this.isFlipped,
   });
-
   final String square;
   final double squareSize;
   final Color color;
   final bool isFlipped;
-
   @override
   Widget build(BuildContext context) {
     if (square.length < 2) return const SizedBox.shrink();
@@ -436,11 +398,7 @@ class _HighlightSquare extends StatelessWidget {
     return Positioned(
       left: col * squareSize,
       top: row * squareSize,
-      child: Container(
-        width: squareSize,
-        height: squareSize,
-        color: color,
-      ),
+      child: Container(width: squareSize, height: squareSize, color: color),
     );
   }
 }
@@ -452,33 +410,25 @@ class _ArrowOverlay extends StatelessWidget {
     required this.squareSize,
     required this.isFlipped,
   });
-
   final String from;
   final String to;
   final double squareSize;
   final bool isFlipped;
-
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
       painter: _ArrowPainter(
-        from: from,
-        to: to,
-        squareSize: squareSize,
-        isFlipped: isFlipped,
-      ),
+          from: from, to: to, squareSize: squareSize, isFlipped: isFlipped),
     );
   }
 }
 
 class _ArrowPainter extends CustomPainter {
-  const _ArrowPainter({
-    required this.from,
-    required this.to,
-    required this.squareSize,
-    required this.isFlipped,
-  });
-
+  const _ArrowPainter(
+      {required this.from,
+      required this.to,
+      required this.squareSize,
+      required this.isFlipped});
   final String from;
   final String to;
   final double squareSize;
@@ -493,65 +443,33 @@ class _ArrowPainter extends CustomPainter {
       row = 7 - row;
     }
     return Offset(
-      col * squareSize + squareSize / 2,
-      row * squareSize + squareSize / 2,
-    );
+        col * squareSize + squareSize / 2, row * squareSize + squareSize / 2);
   }
 
   @override
   void paint(Canvas canvas, Size size) {
     final start = _squareCenter(from);
     final end = _squareCenter(to);
-
     final paint = Paint()
       ..color = AppColors.boardArrowBest
       ..strokeWidth = squareSize * 0.15
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
-
     canvas.drawLine(start, end, paint);
-
-    // Arrowhead
-    final angle = _atan2(end.dy - start.dy, end.dx - start.dx);
+    final angle = math.atan2(end.dy - start.dy, end.dx - start.dx);
     const arrowSize = 12.0;
     final arrowPath = Path()
       ..moveTo(end.dx, end.dy)
-      ..lineTo(
-        end.dx - arrowSize * _cos(angle - 0.5),
-        end.dy - arrowSize * _sin(angle - 0.5),
-      )
-      ..lineTo(
-        end.dx - arrowSize * _cos(angle + 0.5),
-        end.dy - arrowSize * _sin(angle + 0.5),
-      )
+      ..lineTo(end.dx - arrowSize * math.cos(angle - 0.5),
+          end.dy - arrowSize * math.sin(angle - 0.5))
+      ..lineTo(end.dx - arrowSize * math.cos(angle + 0.5),
+          end.dy - arrowSize * math.sin(angle + 0.5))
       ..close();
-
     canvas.drawPath(
-      arrowPath,
-      Paint()
-        ..color = AppColors.boardArrowBest
-        ..style = PaintingStyle.fill,
-    );
-  }
-
-  double _atan2(double y, double x) {
-    if (x > 0) return _atan(y / x);
-    if (x < 0 && y >= 0) return _atan(y / x) + 3.14159;
-    if (x < 0 && y < 0) return _atan(y / x) - 3.14159;
-    if (x == 0 && y > 0) return 1.5708;
-    if (x == 0 && y < 0) return -1.5708;
-    return 0;
-  }
-
-  double _atan(double x) {
-    return x - x * x * x / 3 + x * x * x * x * x / 5;
-  }
-
-  double _cos(double a) => _sin(a + 1.5708);
-  double _sin(double a) {
-    double n = a % (2 * 3.14159265);
-    if (n < 0) n += 2 * 3.14159265;
-    return (n - n * n * n / 6 + n * n * n * n * n / 120).clamp(-1.0, 1.0);
+        arrowPath,
+        Paint()
+          ..color = AppColors.boardArrowBest
+          ..style = PaintingStyle.fill);
   }
 
   @override
@@ -559,53 +477,35 @@ class _ArrowPainter extends CustomPainter {
 }
 
 class _CoordinatesOverlay extends StatelessWidget {
-  const _CoordinatesOverlay({
-    required this.squareSize,
-    required this.isFlipped,
-  });
-
+  const _CoordinatesOverlay(
+      {required this.squareSize, required this.isFlipped});
   final double squareSize;
   final bool isFlipped;
-
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // File labels (a-h) at bottom
         ...List.generate(8, (i) {
           final file = isFlipped
               ? String.fromCharCode('h'.codeUnitAt(0) - i)
               : String.fromCharCode('a'.codeUnitAt(0) + i);
           return Positioned(
-            left: i * squareSize + squareSize - 12,
-            bottom: 2,
-            child: Text(
-              file,
-              style: AppTextStyles.monoSmall.copyWith(
-                fontSize: 9,
-                color: (i % 2 == 0)
-                    ? AppColors.backgroundSurface.withValues(alpha: 0.8)
-                    : AppColors.textPrimary.withValues(alpha: 0.8),
-              ),
-            ),
-          );
+              left: i * squareSize + squareSize - 12,
+              bottom: 2,
+              child: Text(file,
+                  style: AppTextStyles.monoSmall.copyWith(
+                      fontSize: 9,
+                      color: (i % 2 == 0) ? Colors.black45 : Colors.white70)));
         }),
-        // Rank labels (1-8) at left
         ...List.generate(8, (i) {
           final rank = isFlipped ? '${i + 1}' : '${8 - i}';
           return Positioned(
-            left: 2,
-            top: i * squareSize + 2,
-            child: Text(
-              rank,
-              style: AppTextStyles.monoSmall.copyWith(
-                fontSize: 9,
-                color: (i % 2 == 0)
-                    ? AppColors.textPrimary.withValues(alpha: 0.8)
-                    : AppColors.backgroundSurface.withValues(alpha: 0.8),
-              ),
-            ),
-          );
+              left: 2,
+              top: i * squareSize + 2,
+              child: Text(rank,
+                  style: AppTextStyles.monoSmall.copyWith(
+                      fontSize: 9,
+                      color: (i % 2 == 0) ? Colors.white70 : Colors.black45)));
         }),
       ],
     );
