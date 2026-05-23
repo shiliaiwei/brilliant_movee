@@ -54,12 +54,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   Future<void> _getStarted() async {
     await ref.read(storageServiceProvider).setHasSeenOnboarding(true);
-    if (mounted) context.go('${AppRoutes.search}?from=onboarding');
+    if (mounted) context.go(AppRoutes.home);
   }
 
   void _skip() {
     ref.read(storageServiceProvider).setHasSeenOnboarding(true);
-    context.go('${AppRoutes.search}?from=onboarding');
+    context.go(AppRoutes.home);
   }
 
   @override

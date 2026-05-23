@@ -120,11 +120,13 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    final username = ref.read(storageServiceProvider).connectedUsername;
-    if (username != null) {
-      _controller.text = username;
-      ref.read(_searchStateProvider.notifier).updateUsername(username);
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final username = ref.read(storageServiceProvider).connectedUsername;
+      if (username != null && mounted) {
+        _controller.text = username;
+        ref.read(_searchStateProvider.notifier).updateUsername(username);
+      }
+    });
   }
 
   @override
@@ -142,8 +144,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     if (!mounted) return;
 
     if (success) {
-      final username = ref.read(_searchStateProvider).username;
-      context.push('${AppRoutes.profile}?username=$username');
+      context.go(AppRoutes.home);
     } else {
       _shakeKey.currentState?.shake();
     }

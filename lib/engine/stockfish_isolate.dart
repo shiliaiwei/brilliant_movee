@@ -10,7 +10,7 @@ class StockfishRequest {
   const StockfishRequest({
     required this.type,
     required this.fen,
-    this.depth = 18,
+    this.depth = 22,
     this.multiPv = 3,
     this.requestId = '',
   });
@@ -173,13 +173,32 @@ void _analyzePosition(StockfishRequest request, SendPort? sendPort) {
 }
 
 List<EngineLineResult> _generateMockLines(String fen, int multiPv) {
-  // Mock evaluation — in production this comes from Stockfish UCI output
+  // Generate a pseudo-random but stable evaluation based on the FEN string
+  final hash = fen.hashCode;
+  final baseEval = (hash % 400) - 200; // Eval between -2.00 and +2.00
+
   return List.generate(
     multiPv.clamp(1, 3),
     (i) => EngineLineResult(
-      moves: ['e2e4', 'e7e5', 'g1f3'],
-      eval: (50 - i * 30).toDouble(),
-      depth: 18,
+      moves: _generateMockMoves(fen, i),
+      eval: (baseEval - i * 40).toDouble(),
+      depth: 22,
     ),
   );
+}
+
+List<String> _generateMockMoves(String fen, int index) {
+  // Very simple mock move generation
+  final moves = [
+    'e2e4',
+    'd2d4',
+    'g1f3',
+    'b1c3',
+    'e7e5',
+    'd7d5',
+    'g8f6',
+    'b8c6'
+  ];
+  final start = (fen.length + index) % moves.length;
+  return [moves[start], moves[(start + 1) % moves.length]];
 }

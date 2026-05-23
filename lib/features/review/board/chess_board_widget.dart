@@ -18,6 +18,7 @@ class ChessBoardWidget extends StatelessWidget {
     this.moveQuality,
     this.onSquareTap,
     this.isFlipped = false,
+    this.captureKey,
   });
 
   final BoardState boardState;
@@ -28,13 +29,26 @@ class ChessBoardWidget extends StatelessWidget {
   final MoveQuality? moveQuality;
   final void Function(String square)? onSquareTap;
   final bool isFlipped;
+  final GlobalKey? captureKey;
 
   @override
   Widget build(BuildContext context) {
-    return RepaintBoundary(
-      child: AspectRatio(
-        aspectRatio: 1,
-        child: LayoutBuilder(
+    return Container(
+      key: captureKey,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(2),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.3),
+            blurRadius: 10,
+            spreadRadius: 1,
+          ),
+        ],
+      ),
+      child: RepaintBoundary(
+        child: AspectRatio(
+          aspectRatio: 1,
+          child: LayoutBuilder(
           builder: (context, constraints) {
             final size = constraints.maxWidth;
             final squareSize = size / 8;
@@ -49,13 +63,15 @@ class ChessBoardWidget extends StatelessWidget {
                 ),
 
                 // Squares grid with pieces
-                _PiecesLayer(
-                  boardState: boardState,
-                  squareSize: squareSize,
-                  pieceSetId: pieceSetId,
-                  highlightLastMove: highlightLastMove,
-                  isFlipped: isFlipped,
-                  onSquareTap: onSquareTap,
+                Positioned.fill(
+                  child: _PiecesLayer(
+                    boardState: boardState,
+                    squareSize: squareSize,
+                    pieceSetId: pieceSetId,
+                    highlightLastMove: highlightLastMove,
+                    isFlipped: isFlipped,
+                    onSquareTap: onSquareTap,
+                  ),
                 ),
 
                 // Classification Icon Overlay (Small icon with piece)
@@ -70,18 +86,22 @@ class ChessBoardWidget extends StatelessWidget {
                 // Best move arrow overlay
                 if (boardState.bestMoveFrom != null &&
                     boardState.bestMoveTo != null)
-                  _ArrowOverlay(
-                    from: boardState.bestMoveFrom!,
-                    to: boardState.bestMoveTo!,
-                    squareSize: squareSize,
-                    isFlipped: isFlipped,
+                  Positioned.fill(
+                    child: _ArrowOverlay(
+                      from: boardState.bestMoveFrom!,
+                      to: boardState.bestMoveTo!,
+                      squareSize: squareSize,
+                      isFlipped: isFlipped,
+                    ),
                   ),
 
                 // Coordinates
                 if (showCoordinates)
-                  _CoordinatesOverlay(
-                    squareSize: squareSize,
-                    isFlipped: isFlipped,
+                  Positioned.fill(
+                    child: _CoordinatesOverlay(
+                      squareSize: squareSize,
+                      isFlipped: isFlipped,
+                    ),
                   ),
               ],
             );
@@ -327,15 +347,26 @@ class _PieceImage extends StatelessWidget {
 
     final assetPath = 'assets/pieces/$pieceSetId/$normalizedPiece.png';
 
-    return Image.asset(
-      assetPath,
-      width: size,
-      height: size,
-      fit: BoxFit.contain,
-      errorBuilder: (context, error, stackTrace) {
-        // Log error and fallback
-        return _FallbackPiece(piece: piece, size: size);
-      },
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.15),
+            blurRadius: 4,
+            offset: const Offset(1, 1),
+          ),
+        ],
+      ),
+      child: Image.asset(
+        assetPath,
+        width: size,
+        height: size,
+        fit: BoxFit.contain,
+        errorBuilder: (context, error, stackTrace) {
+          // Log error and fallback
+          return _FallbackPiece(piece: piece, size: size);
+        },
+      ),
     );
   }
 }

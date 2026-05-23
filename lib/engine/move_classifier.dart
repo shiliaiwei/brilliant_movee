@@ -47,24 +47,37 @@ class MoveClassification {
         MoveQuality.forced => 'Forced',
       };
 
-  String get plainExplanation => switch (quality) {
-        MoveQuality.brilliant =>
-          'A brilliant sacrifice! The engine initially evaluates this as losing, but deeper analysis reveals it wins.',
-        MoveQuality.great =>
-          'An excellent move — nearly the best option available.',
-        MoveQuality.best => "The engine's top choice for this position.",
-        MoveQuality.good => 'A solid move that maintains the position.',
-        MoveQuality.book => 'A well-known opening theory move.',
-        MoveQuality.inaccuracy =>
-          'A slight inaccuracy. There was a better option available.',
-        MoveQuality.mistake =>
-          'A mistake that gives the opponent a meaningful advantage.',
-        MoveQuality.blunder =>
-          'A serious blunder! This move significantly worsens the position.',
-        MoveQuality.miss =>
-          'A missed winning opportunity. The position was winning before this move.',
-        MoveQuality.forced => 'The only legal or reasonable move here.',
-      };
+  String get plainExplanation {
+    if (quality == MoveQuality.brilliant) {
+      return 'A brilliant sacrifice! You found a winning line that the engine only sees after deep calculation.';
+    }
+    if (quality == MoveQuality.great) {
+      return 'An excellent move. It maintains your advantage and puts pressure on your opponent.';
+    }
+    if (quality == MoveQuality.book) {
+      return 'This is a well-known theoretical move in the opening book.';
+    }
+    if (quality == MoveQuality.best) {
+      return 'The engine\'s top choice. This is the most accurate move in the position.';
+    }
+    if (quality == MoveQuality.miss) {
+      return 'You missed a winning opportunity. The position was much better before this move.';
+    }
+    if (quality == MoveQuality.blunder) {
+      final sign = evalBefore > evalAfter ? 'dropped' : 'gained';
+      return 'A serious blunder! You $sign over ${(cpl / 100).toStringAsFixed(1)} points of evaluation.';
+    }
+    if (quality == MoveQuality.mistake) {
+      return 'A mistake that hands over the initiative to your opponent.';
+    }
+    if (quality == MoveQuality.inaccuracy) {
+      return 'A slight inaccuracy. There was a more precise way to handle this position.';
+    }
+    if (quality == MoveQuality.forced) {
+      return 'The only legal or reasonable move in this position.';
+    }
+    return 'A solid move that keeps the game balanced.';
+  }
 }
 
 class EngineLineResult {
@@ -155,9 +168,8 @@ abstract final class MoveClassifier {
 
     // 5. Context modifier: if already losing, lower thresholds
     final isAlreadyLosing = evalBefore < -300;
-    final quality = isAlreadyLosing
-        ? _classifyLosing(cpl)
-        : _classifyNormal(cpl);
+    final quality =
+        isAlreadyLosing ? _classifyLosing(cpl) : _classifyNormal(cpl);
 
     return MoveClassification(
       quality: quality,
@@ -170,20 +182,20 @@ abstract final class MoveClassifier {
   }
 
   static MoveQuality _classifyNormal(int cpl) {
-    if (cpl == 0) return MoveQuality.best;
-    if (cpl <= 5) return MoveQuality.great;
-    if (cpl <= 15) return MoveQuality.good;
-    if (cpl <= 50) return MoveQuality.inaccuracy;
-    if (cpl <= 150) return MoveQuality.mistake;
+    if (cpl <= 0) return MoveQuality.best;
+    if (cpl <= 10) return MoveQuality.great;
+    if (cpl <= 25) return MoveQuality.good;
+    if (cpl <= 75) return MoveQuality.inaccuracy;
+    if (cpl <= 200) return MoveQuality.mistake;
     return MoveQuality.blunder;
   }
 
   static MoveQuality _classifyLosing(int cpl) {
-    if (cpl == 0) return MoveQuality.best;
-    if (cpl <= 10) return MoveQuality.great;
-    if (cpl <= 30) return MoveQuality.good;
-    if (cpl <= 80) return MoveQuality.inaccuracy;
-    if (cpl <= 200) return MoveQuality.mistake;
+    if (cpl <= 0) return MoveQuality.best;
+    if (cpl <= 15) return MoveQuality.great;
+    if (cpl <= 40) return MoveQuality.good;
+    if (cpl <= 100) return MoveQuality.inaccuracy;
+    if (cpl <= 250) return MoveQuality.mistake;
     return MoveQuality.blunder;
   }
 

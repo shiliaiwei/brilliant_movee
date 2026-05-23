@@ -115,10 +115,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     final storage = ref.read(storageServiceProvider);
     if (!storage.hasSeenOnboarding) {
       context.go(AppRoutes.onboarding);
-    } else if (storage.connectedUsername != null) {
-      context.go(AppRoutes.home);
     } else {
-      context.go('${AppRoutes.search}?from=onboarding');
+      // Direct to Home screen. If no username is set, Home screen shows "Connect Account"
+      context.go(AppRoutes.home);
     }
   }
 

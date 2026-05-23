@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../engine/pgn_parser.dart';
 import '../../../engine/move_classifier.dart';
@@ -5,6 +7,7 @@ import '../../../engine/stockfish_isolate.dart';
 import '../../../engine/opening_book.dart';
 import '../../../core/services/storage_service.dart';
 import '../../../core/services/audio_service.dart';
+import '../../../core/services/recording_service.dart';
 import '../board/board_state.dart';
 
 class ReviewState {
@@ -19,6 +22,11 @@ class ReviewState {
     this.isAnalyzing = false,
     this.error,
     this.analysisProgress = 0,
+    this.isRetryMode = false,
+    this.retryMove,
+    this.retryFeedback,
+    this.isExporting = false,
+    this.exportProgress = 0,
   });
 
   final String pgn;
@@ -31,6 +39,11 @@ class ReviewState {
   final bool isAnalyzing;
   final String? error;
   final double analysisProgress; // 0.0 - 1.0
+  final bool isRetryMode;
+  final String? retryMove;
+  final String? retryFeedback;
+  final bool isExporting;
+  final double exportProgress;
 
   BoardState? get currentBoardState =>
       boardStates.isNotEmpty && currentPlyIndex < boardStates.length
@@ -59,6 +72,11 @@ class ReviewState {
     bool? isAnalyzing,
     String? error,
     double? analysisProgress,
+    bool? isRetryMode,
+    String? retryMove,
+    String? retryFeedback,
+    bool? isExporting,
+    double? exportProgress,
   }) {
     return ReviewState(
       pgn: pgn ?? this.pgn,
@@ -71,6 +89,11 @@ class ReviewState {
       isAnalyzing: isAnalyzing ?? this.isAnalyzing,
       error: error,
       analysisProgress: analysisProgress ?? this.analysisProgress,
+      isRetryMode: isRetryMode ?? this.isRetryMode,
+      retryMove: retryMove ?? this.retryMove,
+      retryFeedback: retryFeedback ?? this.retryFeedback,
+      isExporting: isExporting ?? this.isExporting,
+      exportProgress: exportProgress ?? this.exportProgress,
     );
   }
 }
@@ -124,6 +147,14 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
   void goBack() => _setCurrentPly(state.currentPlyIndex - 1);
   void goForward() => _setCurrentPly(state.currentPlyIndex + 1);
   void goToPly(int ply) => _setCurrentPly(ply);
+
+  void toggleRetryMode() {
+    state = state.copyWith(
+      isRetryMode: !state.isRetryMode,
+      retryMove: null,
+      retryFeedback: null,
+    );
+  }
 
   void _setCurrentPly(int ply) {
     final clamped = ply.clamp(0, state.boardStates.length - 1);
@@ -286,6 +317,49 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
   }
 
   void startAnalysis() => _startAnalysis();
+
+  Future<String?> exportVideo(GlobalKey captureKey) async {
+    if (state.boardStates.isEmpty) return null;
+
+    final totalPlies = state.boardStates.length;
+    // Aim for ~30-40 seconds for 60 plies, so ~0.5s per ply
+    const frameDelay = Duration(milliseconds: 500);
+    final frames = <ui.Image>[];
+
+    state = state.copyWith(isExporting: true, exportProgress: 0);
+
+    // Initial position
+    _setCurrentPly(0);
+    await Future.delayed(const Duration(milliseconds: 100)); // Wait for render
+    final startFrame = await RecordingService.instance.captureFrame(captureKey);
+    if (startFrame != null) frames.add(startFrame);
+
+    for (int i = 1; i < totalPlies; i++) {
+      if (!mounted) return null;
+      _setCurrentPly(i);
+      state = state.copyWith(exportProgress: (i / totalPlies) * 0.5);
+
+      // Wait for UI to update
+      await Future.delayed(frameDelay);
+
+      final frame = await RecordingService.instance.captureFrame(captureKey);
+      if (frame != null) frames.add(frame);
+    }
+
+    if (frames.isEmpty) {
+      state = state.copyWith(isExporting: false);
+      return null;
+    }
+
+    state = state.copyWith(exportProgress: 0.6);
+    final videoPath = await RecordingService.instance.generateGameVideo(
+      frames: frames,
+      fps: 2, // 2 frames per second (0.5s per move)
+    );
+
+    state = state.copyWith(isExporting: false, exportProgress: 1.0);
+    return videoPath;
+  }
 
   @override
   void dispose() {

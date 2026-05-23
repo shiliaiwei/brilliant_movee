@@ -10,8 +10,10 @@ import '../../core/services/storage_service.dart';
 import '../../core/services/settings_provider.dart';
 import '../../core/utils/responsive.dart';
 import '../../engine/move_classifier.dart';
+import '../../engine/opening_book.dart';
 import 'board/chess_board_widget.dart';
 import 'analysis/review_notifier.dart';
+import 'analysis/recording_export_widget.dart';
 import 'celebrate/celebrate_overlay.dart';
 
 class ReviewScreen extends ConsumerStatefulWidget {
@@ -28,6 +30,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
   bool _showCelebrate = false;
   bool _celebrateShown = false;
   bool _isFlipped = false;
+  final GlobalKey _exportKey = GlobalKey();
 
   @override
   void initState() {
@@ -118,6 +121,44 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
           ),
           actions: [
             IconButton(
+              icon: Icon(
+                  state.isExporting
+                      ? Icons.hourglass_top_rounded
+                      : Icons.videocam_rounded,
+                  size: 22,
+                  color:
+                      state.isExporting ? AppColors.secondary : Colors.white),
+              onPressed: state.isExporting
+                  ? null
+                  : () async {
+                      final path = await ref
+                          .read(reviewProvider.notifier)
+                          .exportVideo(_exportKey);
+                      if (mounted && path != null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Video saved to: $path'),
+                            backgroundColor: AppColors.success,
+                          ),
+                        );
+                      }
+                    },
+            ),
+            IconButton(
+              icon: const Icon(Icons.share_rounded,
+                  size: 20, color: Colors.white),
+              onPressed: () {
+                final ply = state.currentPlyIndex;
+                final move = ply > 0 ? state.game?.moves[ply - 1].san : 'start';
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Game state at move $move shared!'),
+                    backgroundColor: AppColors.primary,
+                  ),
+                );
+              },
+            ),
+            IconButton(
               icon: const Icon(Icons.flip_camera_android_rounded,
                   size: 22, color: Colors.white),
               onPressed: () => setState(() => _isFlipped = !_isFlipped),
@@ -151,6 +192,31 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                   )
                 : Stack(
                     children: [
+                      // Off-screen widget for video export
+                      if (state.isExporting)
+                        Positioned(
+                          left: -2000, // Hide it far off-screen
+                          child: RepaintBoundary(
+                            child: RecordingExportWidget(
+                              boardState: state.currentBoardState!,
+                              pieceSetId: settings.pieceSet,
+                              boardThemeId: settings.boardTheme,
+                              openingName: OpeningBook.getOpeningName(
+                                      state.currentBoardState!.fen) ??
+                                  'CHESS GAME',
+                              moveNotation: state.currentPlyIndex > 0
+                                  ? state.game!.moves[state.currentPlyIndex - 1]
+                                      .fullNotation
+                                  : 'START',
+                              moveQuality: state
+                                  .classificationAt(state.currentPlyIndex)
+                                  ?.quality,
+                              isFlipped: _isFlipped,
+                              captureKey: _exportKey,
+                            ),
+                          ),
+                        ),
+
                       context.isWide
                           ? _WideReviewBody(
                               state: state,
@@ -191,9 +257,26 @@ class _ReviewBody extends StatelessWidget {
     final boardState = state.currentBoardState;
     final classification = state.classificationAt(state.currentPlyIndex);
     final evalCp = classification?.evalAfter ?? 0.0;
+    final openingName =
+        boardState != null ? OpeningBook.getOpeningName(boardState.fen) : null;
 
     return Column(
       children: [
+        if (openingName != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
+            child: Text(
+              openingName,
+              textAlign: TextAlign.center,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.primary,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 0.5,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
         // Board Section
         Expanded(
           child: Column(
@@ -213,21 +296,35 @@ class _ReviewBody extends StatelessWidget {
                     const SizedBox(width: 12),
                     // Chess Board
                     Expanded(
-                      child: AspectRatio(
-                        aspectRatio: 1,
-                        child: boardState != null
-                            ? ChessBoardWidget(
-                                boardState: boardState,
-                                pieceSetId: settings.pieceSet,
-                                boardThemeId: settings.boardTheme,
-                                showCoordinates: settings.showCoordinates,
-                                highlightLastMove: settings.highlightLastMove,
-                                moveQuality: classification?.quality,
-                                isFlipped: isFlipped,
-                              )
-                            : Container(color: AppColors.backgroundSurface),
+                      child: Center(
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 500),
+                          child: AspectRatio(
+                            aspectRatio: 1,
+                            child: boardState != null
+                                ? ChessBoardWidget(
+                                    boardState: state.isRetryMode
+                                        ? boardState.copyWith(
+                                            bestMoveFrom:
+                                                boardState.lastMoveFrom,
+                                            bestMoveTo: boardState.lastMoveTo,
+                                          )
+                                        : boardState,
+                                    pieceSetId: settings.pieceSet,
+                                    boardThemeId: settings.boardTheme,
+                                    showCoordinates: settings.showCoordinates,
+                                    highlightLastMove:
+                                        settings.highlightLastMove,
+                                    moveQuality: classification?.quality,
+                                    isFlipped: isFlipped,
+                                  )
+                                : Container(color: AppColors.backgroundSurface),
+                          ),
+                        ),
                       ),
                     ),
+                    const SizedBox(
+                        width: 20), // Balance the eval bar on the left
                   ],
                 ),
               ),
@@ -298,10 +395,10 @@ class _NavIconButton extends StatelessWidget {
           padding: EdgeInsets.all(large ? 14 : 10),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: onTap == null ? Colors.transparent : AppColors.color1,
+            color: onTap == null ? Colors.transparent : Colors.white10,
             border: onTap == null
                 ? null
-                : Border.all(color: AppColors.divider, width: 1),
+                : Border.all(color: Colors.white24, width: 1),
           ),
           child: Icon(icon,
               color: onTap == null ? AppColors.textDisabled : Colors.white,
@@ -367,41 +464,133 @@ class _AnalysisPanel extends ConsumerWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
         border: Border(top: BorderSide(color: AppColors.divider, width: 1)),
       ),
-      child: Column(
+      child:
+          _AnalysisPanelContent(state: state, classification: classification),
+    );
+  }
+}
+
+class _AnalysisPanelContent extends ConsumerWidget {
+  const _AnalysisPanelContent(
+      {super.key, required this.state, required this.classification});
+  final ReviewState state;
+  final MoveClassification? classification;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (state.isRetryMode) {
+      return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (classification != null) ...[
-            Row(
-              children: [
-                Text(state.game!.moves[state.currentPlyIndex - 1].san,
-                    style: AppTextStyles.monoLarge
-                        .copyWith(color: Colors.white, fontSize: 24)),
-                const SizedBox(width: 16),
-                _ClassificationTinyBadge(quality: classification!.quality),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Text(classification!.plainExplanation,
-                style: AppTextStyles.body.copyWith(color: Colors.white70)),
-          ] else
-            const Text('SELECT A MOVE TO ANALYZE',
-                style: TextStyle(
-                    color: AppColors.textSecondary,
-                    letterSpacing: 1,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold)),
+          Row(
+            children: [
+              const Icon(Icons.psychology_rounded, color: AppColors.secondary),
+              const SizedBox(width: 8),
+              Text('RETRY MODE',
+                  style: AppTextStyles.monoLarge
+                      .copyWith(color: AppColors.secondary, fontSize: 20)),
+            ],
+          ),
+          const SizedBox(height: 12),
+          const Text(
+              'Try to find a better move than the one played. The best move is now highlighted with an arrow as a hint!',
+              style: TextStyle(color: Colors.white70, fontSize: 14)),
           const SizedBox(height: 24),
           ChtButton(
-            label: state.isAnalyzing ? 'ANALYZING...' : 'RUN ANALYSIS',
-            onPressed: state.isAnalyzing
-                ? null
-                : () => ref.read(reviewProvider.notifier).startAnalysis(),
-            icon: Icons.psychology_rounded,
+            label: 'EXIT RETRY',
+            onPressed: () =>
+                ref.read(reviewProvider.notifier).toggleRetryMode(),
+            icon: Icons.close_rounded,
             height: 48,
+            backgroundColor: Colors.white10,
           ),
         ],
-      ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (classification != null) ...[
+          Row(
+            children: [
+              Text(state.game!.moves[state.currentPlyIndex - 1].fullNotation,
+                  style: AppTextStyles.monoLarge
+                      .copyWith(color: Colors.white, fontSize: 24)),
+              const SizedBox(width: 16),
+              _ClassificationTinyBadge(quality: classification!.quality),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(classification!.plainExplanation,
+              style: AppTextStyles.body.copyWith(color: Colors.white70)),
+          if (classification!.quality != MoveQuality.best &&
+              classification!.bestMove != null) ...[
+            const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(12),
+                border:
+                    Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.lightbulb_outline_rounded,
+                      color: AppColors.primary, size: 18),
+                  const SizedBox(width: 8),
+                  const Text('BEST MOVE: ',
+                      style: TextStyle(
+                          color: AppColors.textSecondary,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold)),
+                  Text(classification!.bestMove!,
+                      style: const TextStyle(
+                          color: AppColors.primary,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'monospace')),
+                ],
+              ),
+            ),
+          ],
+        ] else
+          const Text('SELECT A MOVE TO ANALYZE',
+              style: TextStyle(
+                  color: AppColors.textSecondary,
+                  letterSpacing: 1,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold)),
+        const SizedBox(height: 24),
+        if (!state.isRetryMode &&
+            classification != null &&
+            (classification!.quality == MoveQuality.blunder ||
+                classification!.quality == MoveQuality.mistake ||
+                classification!.quality == MoveQuality.inaccuracy))
+          Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: ChtButton(
+              label: 'RETRY THIS MOVE',
+              onPressed: () =>
+                  ref.read(reviewProvider.notifier).toggleRetryMode(),
+              icon: Icons.refresh_rounded,
+              height: 48,
+              backgroundColor: AppColors.secondary,
+            ),
+          ),
+        ChtButton(
+          label: state.isAnalyzing ? 'ANALYZING...' : 'RUN DEEP ANALYSIS',
+          onPressed: state.isAnalyzing
+              ? null
+              : () => ref.read(reviewProvider.notifier).startAnalysis(),
+          icon: Icons.psychology_rounded,
+          height: 52,
+          backgroundColor: state.isAnalyzing ? null : AppColors.primary,
+        ),
+      ],
     );
   }
 }
@@ -449,19 +638,91 @@ class _ClassificationTinyBadge extends StatelessWidget {
 }
 
 class _WideReviewBody extends StatelessWidget {
-  const _WideReviewBody(
-      {super.key,
-      required this.state,
-      required this.settings,
-      required this.isFlipped});
+  const _WideReviewBody({
+    super.key,
+    required this.state,
+    required this.settings,
+    required this.isFlipped,
+  });
+
   final ReviewState state;
   final SettingsState settings;
   final bool isFlipped;
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-        child: Text('WIDE VIEW NOT IMPLEMENTED',
-            style: TextStyle(color: Colors.white)));
+    final boardState = state.currentBoardState;
+    final classification = state.classificationAt(state.currentPlyIndex);
+    final evalCp = classification?.evalAfter ?? 0.0;
+
+    return Row(
+      children: [
+        // Left: Eval bar and Board
+        Expanded(
+          flex: 3,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(32),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AnimatedEvalBar(
+                      evalCp: isFlipped ? -evalCp : evalCp,
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      width: 12,
+                    ),
+                    const SizedBox(width: 32),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.height * 0.7,
+                        maxHeight: MediaQuery.of(context).size.height * 0.7,
+                      ),
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: boardState != null
+                            ? ChessBoardWidget(
+                                boardState: boardState,
+                                pieceSetId: settings.pieceSet,
+                                boardThemeId: settings.boardTheme,
+                                showCoordinates: settings.showCoordinates,
+                                highlightLastMove: settings.highlightLastMove,
+                                moveQuality: classification?.quality,
+                                isFlipped: isFlipped,
+                              )
+                            : Container(color: AppColors.backgroundSurface),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              _NavigationControls(state: state),
+              const SizedBox(height: 24),
+              _MoveNotationStrip(state: state),
+            ],
+          ),
+        ),
+
+        // Right: Analysis Panel
+        Expanded(
+          flex: 2,
+          child: Container(
+            height: double.infinity,
+            decoration: const BoxDecoration(
+              color: AppColors.backgroundSurface,
+              border:
+                  Border(left: BorderSide(color: AppColors.divider, width: 1)),
+            ),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
+              child: _AnalysisPanelContent(
+                  state: state, classification: classification),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

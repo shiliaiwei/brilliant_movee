@@ -39,7 +39,7 @@ class PgnMove {
 
   String get fullNotation {
     if (isWhite) return '$moveNumber. $san';
-    return '$san';
+    return '$moveNumber... $san';
   }
 }
 

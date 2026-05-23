@@ -41,12 +41,29 @@ class SettingsScreen extends ConsumerWidget {
                 child: Column(
                   children: [
                     _SettingsTile(
+                      icon: Icons.account_circle_rounded,
+                      title: 'My Profile',
+                      subtitle: 'View your chess stats and progress',
+                      onTap: () {
+                        final username = storage.connectedUsername;
+                        if (username != null) {
+                          context
+                              .push('${AppRoutes.profile}?username=$username');
+                        } else {
+                          context.go(AppRoutes.search);
+                        }
+                      },
+                      trailing: const Icon(Icons.chevron_right_rounded,
+                          color: AppColors.textSecondary),
+                    ),
+                    const Divider(height: 1, indent: 52),
+                    _SettingsTile(
                       icon: Icons.person_rounded,
                       title: 'Connected Username',
                       subtitle: storage.connectedUsername ?? 'Not connected',
                       onTap: () => context.go(AppRoutes.search),
-                      trailing: const Icon(Icons.chevron_right_rounded,
-                          color: AppColors.textSecondary),
+                      trailing: const Icon(Icons.sync_rounded,
+                          size: 18, color: AppColors.textSecondary),
                     ),
                     const Divider(height: 1, indent: 52),
                     _SettingsTile(
