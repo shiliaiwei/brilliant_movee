@@ -1,73 +1,62 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/services/storage_service.dart';
 import '../models/player_model.dart';
 import '../sources/chess_com_api.dart';
+import '../sources/lichess_api.dart';
 
-/// Repository for player data. Screens never call the API directly.
+/// Repository for player data.
 class PlayerRepository {
-  PlayerRepository(this._api);
+  PlayerRepository(this._chessCom, this._lichess, this._storage);
 
-  final ChessComApi _api;
+  final ChessComApi _chessCom;
+  final LichessApi _lichess;
+  final StorageService _storage;
 
   // In-memory cache
   final Map<String, PlayerModel> _profileCache = {};
 
-  /// Fetch full player profile with stats.
-  /// Retries up to 3 times with exponential backoff on timeout.
-  Future<PlayerModel> getFullProfile(String username) async {
-    final key = username.toLowerCase();
+  /// Fetch full player profile.
+  Future<PlayerModel> getFullProfile(String username,
+      {String? platform}) async {
+    final effectivePlatform =
+        platform ?? _storage.connectedPlatform ?? 'chess_com';
+    final key = '${effectivePlatform}_${username.toLowerCase()}';
     if (_profileCache.containsKey(key)) return _profileCache[key]!;
 
     PlayerModel? profile;
-    int attempt = 0;
-    const maxAttempts = 3;
 
-    while (attempt < maxAttempts) {
-      try {
-        profile = await _api.getPlayer(username);
-        final stats = await _api.getPlayerStats(username);
-        profile = profile.copyWith(stats: stats);
-        _profileCache[key] = profile;
-        return profile;
-      } on DioException catch (e) {
-        attempt++;
-        if (attempt >= maxAttempts) rethrow;
-        if (e.type == DioExceptionType.connectionTimeout ||
-            e.type == DioExceptionType.receiveTimeout) {
-          await Future.delayed(Duration(seconds: attempt * 2));
-        } else {
-          rethrow;
-        }
-      }
+    if (effectivePlatform == 'lichess') {
+      profile = await _lichess.getPlayer(username);
+    } else {
+      profile = await _chessCom.getPlayer(username);
+      final stats = await _chessCom.getPlayerStats(username);
+      profile = profile.copyWith(stats: stats);
     }
 
-    throw Exception('Failed to fetch profile after $maxAttempts attempts');
+    _profileCache[key] = profile;
+    return profile;
   }
 
-  /// Validate username with retry.
-  Future<bool> validateUsername(String username) async {
-    int attempt = 0;
-    const maxAttempts = 3;
-
-    while (attempt < maxAttempts) {
-      try {
-        return await _api.validateUsername(username);
-      } on DioException catch (e) {
-        attempt++;
-        if (attempt >= maxAttempts) return false;
-        if (e.type == DioExceptionType.connectionTimeout) {
-          await Future.delayed(Duration(seconds: attempt * 2));
-        } else {
-          return false;
-        }
+  /// Validate username exists on platform.
+  Future<bool> validateUsername(String username,
+      {String platform = 'chess_com'}) async {
+    try {
+      if (platform == 'lichess') {
+        return await _lichess.validateUsername(username);
       }
+      return await _chessCom.validateUsername(username);
+    } catch (_) {
+      return false;
     }
-    return false;
   }
 
   void clearCache() => _profileCache.clear();
 }
 
 final playerRepositoryProvider = Provider<PlayerRepository>((ref) {
-  return PlayerRepository(ref.read(chessComApiProvider));
+  return PlayerRepository(
+    ref.read(chessComApiProvider),
+    ref.read(lichessApiProvider),
+    ref.read(storageServiceProvider),
+  );
 });

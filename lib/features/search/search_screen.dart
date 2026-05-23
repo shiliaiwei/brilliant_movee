@@ -44,14 +44,17 @@ final _searchStateProvider =
   return _SearchNotifier(
     ref.read(playerRepositoryProvider),
     ref.read(storageServiceProvider),
+    ref,
   );
 });
 
 class _SearchNotifier extends StateNotifier<_SearchState> {
-  _SearchNotifier(this._repo, this._storage) : super(const _SearchState());
+  _SearchNotifier(this._repo, this._storage, this._ref)
+      : super(const _SearchState());
 
   final PlayerRepository _repo;
   final StorageService _storage;
+  final Ref _ref;
 
   void updateUsername(String value) {
     state = state.copyWith(
@@ -71,25 +74,29 @@ class _SearchNotifier extends StateNotifier<_SearchState> {
       return false;
     }
 
-    if (state.platform == ChessPlatform.lichess) {
-      state = state.copyWith(error: 'Lichess support coming soon!');
-      return false;
-    }
-
+    final platformStr =
+        state.platform == ChessPlatform.lichess ? 'lichess' : 'chess_com';
     state = state.copyWith(isLoading: true, error: null);
 
     try {
-      final isValid = await _repo.validateUsername(username);
+      final isValid =
+          await _repo.validateUsername(username, platform: platformStr);
       if (!isValid) {
         state = state.copyWith(
           isLoading: false,
-          error: 'Player not found on Chess.com',
+          error:
+              'Player not found on ${state.platform == ChessPlatform.lichess ? 'Lichess.org' : 'Chess.com'}',
         );
         return false;
       }
 
       await _storage.setConnectedUsername(username);
+      await _storage.setConnectedPlatform(platformStr);
       await _storage.addRecentUsername(username);
+
+      _ref.read(connectedUsernameProvider.notifier).state = username;
+      _ref.read(connectedPlatformProvider.notifier).state = platformStr;
+
       state = state.copyWith(isLoading: false);
       return true;
     } catch (e) {

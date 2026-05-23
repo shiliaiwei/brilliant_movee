@@ -23,8 +23,8 @@ final _historyFilterProvider =
 
 final _historyGamesProvider =
     FutureProvider.autoDispose<List<GameModel>>((ref) async {
-  final username = ref.read(storageServiceProvider).connectedUsername;
-  if (username == null) return [];
+  final username \u003d ref.watch(connectedUsernameProvider);
+  if (username \u003d\u003d null) return [];
   // Increase depth to 12 months to show more games
   return ref
       .read(gameRepositoryProvider)
@@ -45,7 +45,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController \u003d TabController(length: 2, vsync: this);
   }
 
   @override
@@ -56,9 +56,9 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen>
 
   @override
   Widget build(BuildContext context) {
-    final username = ref.read(storageServiceProvider).connectedUsername;
-    final gamesAsync = ref.watch(_historyGamesProvider);
-    final filter = ref.watch(_historyFilterProvider);
+    final username \u003d ref.watch(connectedUsernameProvider);
+    final gamesAsync \u003d ref.watch(_historyGamesProvider);
+    final filter \u003d ref.watch(_historyFilterProvider);
 
     return Scaffold(
       backgroundColor: AppColors.backgroundDeep,

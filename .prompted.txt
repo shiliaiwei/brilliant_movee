@@ -113,3 +113,19 @@ after success showing homescreeen dock menu , setting
 font technical use  inter  roboto font from google and khmer translate billginguual khmer use google Google_Sans in saaset foodler
 
 add more menu call tip or reverse that that menu will present lessin tip trick of chess i will prvide later
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+redesgin the  home screen showing soemthing  more creative remove last game and your start from the home oage,and history shwoing by pageante page, all last palyed. and remove the hastage logo replace to ico something new, and label win or result 'check maate or ressign short word,  dont shwoing rating, shwoing only username white white above black below,  that card dont add drop add tap on that history and link page shwoing chessbaord played , and button analysis, and review result and move ,  in the game game review look glitch screen , and the bchess borad put number ouside the baord row. fix whenuser tap on record do not auto move , and also add labbel if user has been review the paly add label been revieed small , i want to use the effect tap on the card look beautiful and iwant that effect apply to place tap showng that effect , oepneing explain showing only name that name call the oepning only no description ouside the naem of opening call. 

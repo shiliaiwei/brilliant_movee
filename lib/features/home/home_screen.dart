@@ -19,15 +19,15 @@ import '../../data/repositories/game_repository.dart';
 
 final _homePlayerProvider =
     FutureProvider.autoDispose<PlayerModel?>((ref) async {
-  final username = ref.read(storageServiceProvider).connectedUsername;
-  if (username == null) return null;
+  final username \u003d ref.watch(connectedUsernameProvider);
+  if (username \u003d\u003d null) return null;
   return ref.read(playerRepositoryProvider).getFullProfile(username);
 });
 
 final _homeGamesProvider =
     FutureProvider.autoDispose<List<GameModel>>((ref) async {
-  final username = ref.read(storageServiceProvider).connectedUsername;
-  if (username == null) return [];
+  final username \u003d ref.watch(connectedUsernameProvider);
+  if (username \u003d\u003d null) return [];
   return ref.read(gameRepositoryProvider).getRecentGames(username);
 });
 
@@ -36,32 +36,30 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final username = ref.read(storageServiceProvider).connectedUsername;
-    final playerAsync = ref.watch(_homePlayerProvider);
-    final gamesAsync = ref.watch(_homeGamesProvider);
+    final username \u003d ref.watch(connectedUsernameProvider);
+    final playerAsync \u003d ref.watch(_homePlayerProvider);
+    final gamesAsync \u003d ref.watch(_homeGamesProvider);
 
-    if (username == null) {
-      return Scaffold(
-        backgroundColor: AppColors.backgroundDeep,
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(Icons.person_off_rounded,
-                  color: AppColors.textSecondary, size: 48),
-              const SizedBox(height: AppSpacing.lg),
-              Text('No account connected', style: AppTextStyles.title),
-              const SizedBox(height: AppSpacing.xxl),
-              ChtButton(
-                label: 'Connect Account',
-                onPressed: () => context.push(AppRoutes.search),
-                isFullWidth: false,
-              ),
-            ],
-          ),
+    return Scaffold(
+      backgroundColor: AppColors.backgroundDeep,
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.person_off_rounded,
+                color: AppColors.textSecondary, size: 48),
+            const SizedBox(height: AppSpacing.lg),
+            Text('No account connected', style: AppTextStyles.title),
+            const SizedBox(height: AppSpacing.xxl),
+            ChtButton(
+              label: 'Connect Account',
+              onPressed: () => context.push(AppRoutes.search),
+              isFullWidth: false,
+            ),
+          ],
         ),
-      );
-    }
+      ),
+    );
 
     return Scaffold(
       backgroundColor: AppColors.backgroundDeep,
@@ -121,7 +119,7 @@ class HomeScreen extends ConsumerWidget {
   }
 }
 
-class _GreetingHeader extends StatelessWidget {
+class _GreetingHeader extends ConsumerWidget {
   const _GreetingHeader({
     required this.username,
     required this.playerAsync,
@@ -138,7 +136,12 @@ class _GreetingHeader extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final platform = ref.watch(connectedPlatformProvider);
+    final avatarUrl = platform == 'lichess' 
+        ? 'https://lichess1.org/avatar/$username'
+        : null;
+
     return Row(
       children: [
         Expanded(
@@ -160,26 +163,38 @@ class _GreetingHeader extends StatelessWidget {
         playerAsync.when(
           loading: () =>
               const ShimmerBox(width: 44, height: 44, borderRadius: 22),
-          error: (_, __) => const _DefaultAvatar(),
-          data: (player) => player?.avatar != null
-              ? Container(
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: AppColors.primary, width: 1.5),
-                  ),
-                  child: ClipOval(
-                    child: CachedNetworkImage(
-                      imageUrl: player!.avatar!,
-                      fit: BoxFit.cover,
-                      errorWidget: (_, __, ___) => const _DefaultAvatar(),
-                    ),
-                  ),
-                )
+          error: (_, __) => avatarUrl != null 
+              ? _AvatarImage(url: avatarUrl)
               : const _DefaultAvatar(),
+          data: (player) => player?.avatar != null
+              ? _AvatarImage(url: player!.avatar!)
+              : (avatarUrl != null ? _AvatarImage(url: avatarUrl) : const _DefaultAvatar()),
         ),
       ],
+    );
+  }
+}
+
+class _AvatarImage extends StatelessWidget {
+  const _AvatarImage({required this.url});
+  final String url;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 44,
+      height: 44,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: AppColors.primary, width: 1.5),
+      ),
+      child: ClipOval(
+        child: CachedNetworkImage(
+          imageUrl: url,
+          fit: BoxFit.cover,
+          errorWidget: (_, __, ___) => const _DefaultAvatar(),
+        ),
+      ),
     );
   }
 }
@@ -303,13 +318,16 @@ class _LastGameCard extends StatelessWidget {
   }
 }
 
-class _NoGamesCard extends StatelessWidget {
+class _NoGamesCard extends ConsumerWidget {
   const _NoGamesCard({required this.username});
 
   final String username;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final platform = ref.watch(connectedPlatformProvider) ?? 'chess_com';
+    final platformName = platform == 'lichess' ? 'Lichess.org' : 'Chess.com';
+
     return ChtCard(
       child: Column(
         children: [
@@ -318,7 +336,7 @@ class _NoGamesCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.md),
           Text('No recent games found', style: AppTextStyles.body),
           Text(
-            'Play some games on Chess.com first',
+            'Play some games on $platformName first',
             style: AppTextStyles.bodyMuted,
           ),
         ],

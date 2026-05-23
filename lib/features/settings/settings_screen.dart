@@ -175,9 +175,11 @@ class SettingsScreen extends ConsumerWidget {
           TextButton(
             onPressed: () {
               storage.clearAll();
+              ref.read(connectedUsernameProvider.notifier).state \u003d null;
+              ref.read(connectedPlatformProvider.notifier).state \u003d null;
               Navigator.pop(ctx);
             },
-            child: Text('Clear All',
+            child: Text(\u0027Clear All\u0027,
                 style:
                     AppTextStyles.bodyMedium.copyWith(color: AppColors.error)),
           ),

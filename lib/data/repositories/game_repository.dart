@@ -1,12 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/services/storage_service.dart';
 import '../models/game_model.dart';
 import '../sources/chess_com_api.dart';
+import '../sources/lichess_api.dart';
 
 /// Repository for game history data.
 class GameRepository {
-  GameRepository(this._api);
+  GameRepository(this._chessCom, this._lichess, this._storage);
 
-  final ChessComApi _api;
+  final ChessComApi _chessCom;
+  final LichessApi _lichess;
+  final StorageService _storage;
 
   // In-memory cache
   final Map<String, List<GameModel>> _gamesCache = {};
@@ -15,27 +19,33 @@ class GameRepository {
   Future<List<GameModel>> getRecentGames(
     String username, {
     bool forceRefresh = false,
+    String? platform,
   }) async {
-    final key = username.toLowerCase();
+    final effectivePlatform =
+        platform ?? _storage.connectedPlatform ?? 'chess_com';
+    final key = '${effectivePlatform}_${username.toLowerCase()}';
 
     if (!forceRefresh && _gamesCache.containsKey(key)) {
       return _gamesCache[key]!;
     }
 
     try {
-      final archives = await _api.getArchiveUrls(username);
-      if (archives.isEmpty) return [];
+      List<GameModel> allGames = [];
 
-      // Fetch last 12 months for a complete history
-      final recentArchives = archives.reversed.take(12).toList();
+      if (effectivePlatform == 'lichess') {
+        allGames = await _lichess.getRecentGames(username, limit: 30);
+      } else {
+        final archives = await _chessCom.getArchiveUrls(username);
+        if (archives.isEmpty) return [];
 
-      // Use Future.wait for faster parallel fetching
-      final results = await Future.wait(recentArchives.map((url) =>
-          _api.getGamesFromArchive(url).catchError((_) => <GameModel>[])));
+        final recentArchives = archives.reversed.take(6).toList();
+        final results = await Future.wait(recentArchives.map((url) => _chessCom
+            .getGamesFromArchive(url)
+            .catchError((_) => <GameModel>[])));
 
-      final allGames = <GameModel>[];
-      for (final games in results) {
-        allGames.addAll(games);
+        for (final games in results) {
+          allGames.addAll(games);
+        }
       }
 
       // Sort by date descending
@@ -52,5 +62,9 @@ class GameRepository {
 }
 
 final gameRepositoryProvider = Provider<GameRepository>((ref) {
-  return GameRepository(ref.read(chessComApiProvider));
+  return GameRepository(
+    ref.read(chessComApiProvider),
+    ref.read(lichessApiProvider),
+    ref.read(storageServiceProvider),
+  );
 });

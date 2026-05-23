@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 abstract final class StorageKeys {
   static const String hasSeenOnboarding = 'has_seen_onboarding';
   static const String connectedUsername = 'connected_username';
+  static const String connectedPlatform =
+      'connected_platform'; // 'chess_com' or 'lichess'
   static const String recentUsernames = 'recent_usernames';
   static const String boardTheme = 'board_theme';
   static const String pieceSet = 'piece_set';
@@ -43,8 +45,16 @@ class StorageService {
   Future<void> setConnectedUsername(String username) =>
       _prefs.setString(StorageKeys.connectedUsername, username);
 
-  Future<void> clearConnectedUsername() =>
-      _prefs.remove(StorageKeys.connectedUsername);
+  String? get connectedPlatform =>
+      _prefs.getString(StorageKeys.connectedPlatform);
+
+  Future<void> setConnectedPlatform(String platform) =>
+      _prefs.setString(StorageKeys.connectedPlatform, platform);
+
+  Future<void> clearConnectedUsername() async {
+    await _prefs.remove(StorageKeys.connectedUsername);
+    await _prefs.remove(StorageKeys.connectedPlatform);
+  }
 
   List<String> get recentUsernames =>
       _prefs.getStringList(StorageKeys.recentUsernames) ?? [];
@@ -146,4 +156,12 @@ class StorageService {
 /// Provider for StorageService — initialized in main.dart.
 final storageServiceProvider = Provider<StorageService>((ref) {
   throw UnimplementedError('StorageService must be initialized before use');
+});
+
+final connectedUsernameProvider = StateProvider<String?>((ref) {
+  return ref.watch(storageServiceProvider).connectedUsername;
+});
+
+final connectedPlatformProvider = StateProvider<String?>((ref) {
+  return ref.watch(storageServiceProvider).connectedPlatform;
 });
