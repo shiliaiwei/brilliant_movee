@@ -31,12 +31,22 @@ class PlayerRepository {
       return _profileCache[key]!;
     }
 
-    PlayerModel profile = await _chessCom.getPlayer(username);
-    final stats = await _chessCom.getPlayerStats(username);
-    profile = profile.copyWith(stats: stats);
+    try {
+      final profile = await _chessCom.getPlayer(username);
+      PlayerStats? stats;
+      try {
+        stats = await _chessCom.getPlayerStats(username);
+      } catch (e) {
+        // Stats might be missing for very new or restricted accounts
+      }
 
-    _profileCache[key] = profile;
-    return profile;
+      final completeProfile = profile.copyWith(stats: stats);
+      _profileCache[key] = completeProfile;
+      return completeProfile;
+    } catch (e) {
+      // If direct profile fetch fails, try to return whatever we have or rethrow
+      rethrow;
+    }
   }
 
   /// Validate username exists on Chess.com

@@ -11,6 +11,8 @@ import '../../core/router/app_router.dart';
 import '../../data/models/game_model.dart';
 import '../../data/repositories/game_repository.dart';
 
+import 'package:intl/intl.dart';
+
 final _historyGamesProvider =
     FutureProvider.autoDispose<List<GameModel>>((ref) async {
   final username = ref.watch(connectedUsernameProvider);
@@ -78,38 +80,94 @@ class HistoryScreen extends ConsumerWidget {
             child:
                 Text('Failed to load history', style: AppTextStyles.bodyMuted),
           ),
-          data: (games) => RefreshIndicator(
-            onRefresh: () async => ref.invalidate(_historyGamesProvider),
-            color: AppColors.primary,
-            backgroundColor: AppColors.backgroundSurface,
-            child: CustomScrollView(
-              physics: const BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics()),
-              slivers: [
-                if (games.isEmpty)
-                  SliverFillRemaining(
-                    child: Center(child: _NoGamesCard(username: username)),
-                  )
-                else
-                  SliverPadding(
-                    padding: const EdgeInsets.all(20),
-                    sliver: SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, i) => _GameFeedItem(
-                          game: games[i],
-                          currentUsername: username,
+          data: (games) {
+            if (games.isEmpty) {
+              return Center(child: _NoGamesCard(username: username));
+            }
+
+            final grouped = _groupGamesByDate(games);
+
+            return RefreshIndicator(
+              onRefresh: () async => ref.invalidate(_historyGamesProvider),
+              color: AppColors.primary,
+              backgroundColor: AppColors.backgroundSurface,
+              child: ListView.builder(
+                physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
+                padding: const EdgeInsets.all(20),
+                itemCount: grouped.length,
+                itemBuilder: (context, index) {
+                  final group = grouped[index];
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 12, top: 8),
+                        child: Row(
+                          children: [
+                            Text(
+                              group.dateLabel.toUpperCase(),
+                              style: AppTextStyles.badge.copyWith(
+                                color: AppColors.primary,
+                                letterSpacing: 1.2,
+                              ),
+                            ),
+                            const Spacer(),
+                            Text(
+                              '${group.games.length} Games',
+                              style: AppTextStyles.caption,
+                            ),
+                          ],
                         ),
-                        childCount: games.length,
                       ),
-                    ),
-                  ),
-              ],
-            ),
-          ),
+                      ...group.games.map((g) => _GameFeedItem(
+                            game: g,
+                            currentUsername: username,
+                          )),
+                      const SizedBox(height: 20),
+                    ],
+                  );
+                },
+              ),
+            );
+          },
         ),
       ),
     );
   }
+
+  List<_GameGroup> _groupGamesByDate(List<GameModel> games) {
+    final Map<String, List<GameModel>> map = {};
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final yesterday = today.subtract(const Duration(days: 1));
+
+    for (final game in games) {
+      final date = game.endDateTime;
+      final d = DateTime(date.year, date.month, date.day);
+      String label;
+      if (d == today) {
+        label = 'Today';
+      } else if (d == yesterday) {
+        label = 'Yesterday';
+      } else {
+        label = DateFormat('MMMM d, yyyy').format(d);
+      }
+
+      if (!map.containsKey(label)) map[label] = [];
+      map[label]!.add(game);
+    }
+
+    return map.entries
+        .map((e) => _GameGroup(dateLabel: e.key, games: e.value))
+        .toList();
+  }
+}
+
+class _GameGroup {
+  final String dateLabel;
+  final List<GameModel> games;
+  _GameGroup({required this.dateLabel, required this.games});
 }
 
 class _GameFeedItem extends ConsumerWidget {
@@ -137,8 +195,8 @@ class _GameFeedItem extends ConsumerWidget {
         child: Row(
           children: [
             Container(
-              width: 44,
-              height: 44,
+              width: 48,
+              height: 48,
               decoration: BoxDecoration(
                 color: statusColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
@@ -146,7 +204,7 @@ class _GameFeedItem extends ConsumerWidget {
               child: Icon(
                 _getStatusIcon(res),
                 color: statusColor,
-                size: 20,
+                size: 22,
               ),
             ),
             const SizedBox(width: 16),
@@ -155,39 +213,33 @@ class _GameFeedItem extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    game.whiteUsername,
+                    game.whiteUsername == currentUsername
+                        ? game.blackUsername
+                        : game.whiteUsername,
                     style: AppTextStyles.bodyMedium.copyWith(
-                      fontWeight: game.whiteUsername.toLowerCase() ==
-                              currentUsername.toLowerCase()
-                          ? FontWeight.bold
-                          : FontWeight.normal,
+                      fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 4),
-                  Text(
-                    game.blackUsername,
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      fontWeight: game.blackUsername.toLowerCase() ==
-                              currentUsername.toLowerCase()
-                          ? FontWeight.bold
-                          : FontWeight.normal,
-                      color: Colors.white70,
-                    ),
-                  ),
-                  if (isReviewed)
-                    const Padding(
-                      padding: EdgeInsets.only(top: 6),
-                      child: Text(
-                        'REVIEWED',
-                        style: TextStyle(
-                          color: AppColors.primary,
-                          fontSize: 8,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 0.5,
-                        ),
+                  Row(
+                    children: [
+                      Text(
+                        game.timeControlLabel,
+                        style: AppTextStyles.caption.copyWith(fontSize: 10),
                       ),
-                    ),
+                      const SizedBox(width: 8),
+                      if (isReviewed)
+                        const Text(
+                          '• REVIEWED',
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontSize: 8,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -213,8 +265,8 @@ class _GameFeedItem extends ConsumerWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  game.timeControlLabel,
-                  style: AppTextStyles.caption.copyWith(fontSize: 10),
+                  DateFormat('HH:mm').format(game.endDateTime),
+                  style: AppTextStyles.caption.copyWith(fontSize: 9),
                 ),
               ],
             ),

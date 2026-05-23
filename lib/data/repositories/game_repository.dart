@@ -28,9 +28,6 @@ class GameRepository {
       final archives = await _chessCom.getArchiveUrls(username);
 
       final List<String> targets = [];
-      if (archives.isNotEmpty) {
-        targets.addAll(archives.reversed);
-      }
 
       // Proactively fetch current month AND previous month to catch late updates
       final now = DateTime.now();
@@ -42,17 +39,17 @@ class GameRepository {
       final prevMonthUrl =
           'https://api.chess.com/pub/player/${username.toLowerCase()}/games/$lastMonthYear/${lastMonth.toString().padLeft(2, '0')}';
 
-      if (!targets.contains(currentMonthUrl)) {
-        targets.insert(0, currentMonthUrl);
-      }
-      if (!targets.contains(prevMonthUrl)) {
-        targets.add(prevMonthUrl);
+      targets.add(currentMonthUrl);
+      targets.add(prevMonthUrl);
+
+      if (archives.isNotEmpty) {
+        // Filter out targets we already added to avoid duplicates
+        final remaining =
+            archives.reversed.where((url) => !targets.contains(url)).toList();
+        targets.addAll(remaining.take(15)); // Take 15 more months for depth
       }
 
-      // Take a robust set of recent archives
-      final limitedTargets = targets.toSet().take(12).toList();
-
-      final results = await Future.wait(limitedTargets.map((url) =>
+      final results = await Future.wait(targets.toSet().map((url) =>
           _chessCom.getGamesFromArchive(url).catchError((_) => <GameModel>[])));
 
       final List<GameModel> allGames = [];

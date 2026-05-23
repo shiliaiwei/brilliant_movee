@@ -255,81 +255,132 @@ class _ReviewBody extends StatelessWidget {
     final boardState = state.currentBoardState;
     final classification = state.classificationAt(state.currentPlyIndex);
     final evalCp = classification?.evalAfter ?? 0.0;
+    final openingName =
+        boardState != null ? OpeningBook.getOpeningName(boardState.fen) : null;
+
+    final currentMoveStr = state.currentPlyIndex > 0
+        ? state.game!.moves[state.currentPlyIndex - 1].fullNotation
+        : 'START';
 
     return Column(
       children: [
-        // Board Section
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // Eval Bar (Fixed height relative to screen width to prevent glitching)
-                      ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxHeight:
-                              math.min(MediaQuery.of(context).size.width, 400),
-                        ),
-                        child: AnimatedEvalBar(
-                          evalCp: isFlipped ? -evalCp : evalCp,
-                          height: 360, // Fixed stable height
-                          width: 8,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      // Chess Board
-                      Expanded(
-                        child: Center(
-                          child: ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 480),
-                            child: AspectRatio(
-                              aspectRatio: 1,
-                              child: boardState != null
-                                  ? ChessBoardWidget(
-                                      boardState: state.isRetryMode
-                                          ? boardState.copyWith(
-                                              bestMoveFrom:
-                                                  boardState.lastMoveFrom,
-                                              bestMoveTo: boardState.lastMoveTo,
-                                            )
-                                          : boardState,
-                                      pieceSetId: settings.pieceSet,
-                                      boardThemeId: settings.boardTheme,
-                                      showCoordinates: settings.showCoordinates,
-                                      highlightLastMove:
-                                          settings.highlightLastMove,
-                                      moveQuality: classification?.quality,
-                                      isFlipped: isFlipped,
-                                    )
-                                  : Container(
-                                      color: AppColors.backgroundSurface),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 20), // Balance
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 32),
-                _NavigationControls(state: state),
-                const SizedBox(height: 20),
-                _MoveNotationStrip(state: state),
-                const SizedBox(height: 10),
-              ],
+        // Opening Name above the board
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+          child: Text(
+            openingName ?? 'CHESS ANALYSIS',
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.primary,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0.5,
             ),
           ),
         ),
-        // Bottom Analysis Panel
-        _AnalysisPanel(state: state, classification: classification),
+
+        // Centered Stable Board Section
+        Expanded(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final availableWidth = constraints.maxWidth;
+              final availableHeight = constraints.maxHeight;
+              final side = math.min(availableWidth, availableHeight) * 0.92;
+
+              return Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Small Eval Bar next to centered board
+                    AnimatedEvalBar(
+                      evalCp: isFlipped ? -evalCp : evalCp,
+                      height: side,
+                      width: 6,
+                    ),
+                    const SizedBox(width: 12),
+                    SizedBox(
+                      width: side,
+                      height: side,
+                      child: boardState != null
+                          ? ChessBoardWidget(
+                              boardState: state.isRetryMode
+                                  ? boardState.copyWith(
+                                      bestMoveFrom: boardState.lastMoveFrom,
+                                      bestMoveTo: boardState.lastMoveTo,
+                                    )
+                                  : boardState,
+                              pieceSetId: settings.pieceSet,
+                              boardThemeId: settings.boardTheme,
+                              showCoordinates: settings.showCoordinates,
+                              highlightLastMove: settings.highlightLastMove,
+                              moveQuality: classification?.quality,
+                              isFlipped: isFlipped,
+                            )
+                          : Container(color: AppColors.backgroundSurface),
+                    ),
+                    const SizedBox(width: 18), // Balance for eval bar
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+
+        // Current Move SAN & Quality
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                currentMoveStr,
+                style: AppTextStyles.monoLarge.copyWith(
+                  fontSize: 28,
+                  color: Colors.white,
+                ),
+              ),
+              if (classification != null) ...[
+                const SizedBox(width: 12),
+                _ClassificationTinyBadge(quality: classification.quality),
+              ],
+            ],
+          ),
+        ),
+
+        // Navigation Controls at the bottom
+        _NavigationControls(state: state),
+        const SizedBox(height: 24),
+
+        // Simplified bottom panel (Remove description)
+        _AnalysisPanelSimplified(state: state),
       ],
+    );
+  }
+}
+
+class _AnalysisPanelSimplified extends ConsumerWidget {
+  const _AnalysisPanelSimplified({required this.state});
+  final ReviewState state;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
+      decoration: const BoxDecoration(
+        color: AppColors.backgroundSurface,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        border: Border(top: BorderSide(color: AppColors.divider, width: 1)),
+      ),
+      child: ChtButton(
+        label: state.isAnalyzing ? 'ANALYZING...' : 'RUN DEEP ANALYSIS',
+        onPressed: state.isAnalyzing
+            ? null
+            : () => ref.read(reviewProvider.notifier).startAnalysis(),
+        icon: Icons.psychology_rounded,
+        height: 52,
+      ),
     );
   }
 }
