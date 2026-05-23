@@ -603,7 +603,7 @@ class _ClassificationTinyBadge extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset(asset, width: 16, height: 16, fit: BoxFit.contain),
+          _buildIcon(asset, color),
           const SizedBox(width: 8),
           Text(label,
               style: TextStyle(
@@ -614,6 +614,25 @@ class _ClassificationTinyBadge extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _buildIcon(String asset, Color color) {
+    if (quality == MoveQuality.miss) {
+      return Container(
+        width: 16,
+        height: 16,
+        decoration: const BoxDecoration(
+          color: Color(0xFF8E24AA),
+          shape: BoxShape.circle,
+        ),
+        child: const Icon(
+          Icons.priority_high_rounded,
+          color: Colors.white,
+          size: 12,
+        ),
+      );
+    }
+    return Image.asset(asset, width: 16, height: 16, fit: BoxFit.contain);
   }
 
   (String, Color, String) _config() {

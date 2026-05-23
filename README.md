@@ -1,60 +1,80 @@
-STUPID BRILLIANT PROJECT ARCHITECTURE
+# ♟️ Stupid Brilliant — Chess Analysis Evolved
 
-EXECUTIVE SUMMARY
+**Stupid Brilliant** is a premium chess analysis platform designed to turn raw game data into professional tactical narratives. Powered by Stockfish 16 and a sophisticated move classification engine, it provides deep insights, accuracy metrics, and high-fidelity game reconstructions for competitive players.
 
-Stupid Brilliant is a high-performance chess analysis architecture designed to transform raw game data into a professional educational narrative. By integrating the Stockfish 16 engine with a sophisticated move classification system, the platform provides users with deep tactical insights, accuracy metrics, and high-fidelity game reconstructions. It is built to serve both casual enthusiasts and competitive players who require a precise understanding of their performance on the board.
+---
 
-SYSTEM BRANDING AND CONTENT DESIGN
+## 🚀 Project Overview
 
-The brand identity revolves around the concept of precision-driven evolution. The visual language utilizes a deep-space palette with high-chroma primary accents to emphasize the futuristic nature of AI-driven analysis. Content design focuses on clarity and impact, delivering complex engine evaluations through intuitive move quality labels like Brilliant, Great, and Blunder. Every interface element is designed to minimize cognitive load, allowing the user to focus entirely on the tactical story of their game.
+Stupid Brilliant bridges the gap between raw engine data and human-readable tactical coaching. It features a "Deep Space" aesthetic, high-resolution rendering, and automated social media video generation.
 
-PROJECT FRAMEWORKING AND ARCHITECTURE
+### ✨ Key Features
+- **Deep Engine Analysis**: Stockfish 16 running in a dedicated isolate (Depth 22+).
+- **Insights Profile**: A professional dashboard mirroring "Chess.com Insights" with move quality breakdowns.
+- **Global Leaderboards**: Real-time rankings across all Chess.com categories (Rapid, Blitz, Bullet, etc.).
+- **Smart Move Classification**: Identification of Brilliant (!!), Great (!), and Blunder (??) moves with natural language coaching.
+- **1:1 Video Export**: Automated board recording for social media (TikTok/Reels).
+- **Responsive Design**: Seamless experience across Mobile, Tablet, and Web.
 
-The application is engineered using a modular, feature-first approach in Flutter, ensuring high scalability across mobile and web platforms.
+---
 
-State Management: The project utilizes Flutter Riverpod for reactive dependency injection and robust state handling across complex analysis pipelines.
-Engine Pipeline: Stockfish runs in a dedicated background isolate to prevent UI thread blocking. This ensures that the interface remains smooth at 60fps even during deep-depth calculations.
-Rendering: The chess board uses a custom-layered rendering system with RepaintBoundary optimization. Pieces are rendered with professional drop shadows and high-resolution assets to match the aesthetic of leading global chess platforms.
-Video Processing: A specialized off-screen renderer captures the board at a 1:1 aspect ratio, which is then processed through a background FFmpeg pipeline to generate social-media-ready video content.
+## 🛠 Project Flow & Architecture
 
-CORE TECHNICAL SPECIFICATIONS
+### 📊 System Workflow
+```mermaid
+graph TD
+    A[User connects Chess.com Account] --> B[Fetch Game History/Archives]
+    B --> C[Select Game for Review]
+    C --> D[Parse PGN & Build Board States]
+    D --> E[Start Stockfish Isolate Analysis]
+    E --> F[Move Classifier: Map CPL to Quality]
+    F --> G[Generate Natural Language AI Coaching]
+    G --> H[Render High-Fidelity Review UI]
+    H --> I[Optional: Export 1:1 Social Media Video]
+```
 
-Engine Accuracy: Stockfish v22 optimized at depth 22 for precise tactical identification.
-Opening Book: Integration of a comprehensive ECO library covering over 3,700 theoretical lines for instant opening detection.
-Classification Algorithm: A dynamic Centipawn Loss (CPL) system that calculates move quality based on position volatility and game phase.
-Responsive Layout: A two-column adaptive grid that shifts from a vertical mobile stack to a side-by-side analysis suite on web and tablet.
+### 🏗 Architecture Layers
+- **Presentation (Flutter)**: Feature-first modular UI using Riverpod for reactive state management.
+- **Domain (Repositories)**: Unified data access layer for Chess.com API.
+- **Engine (Stockfish)**: Multi-threaded engine bridge using background isolates.
+- **Infrastructure (Services)**: Local persistence (Hive), Audio, and Frame-by-frame Recording.
 
-ALTERNATIVE UTILITY AND STRATEGIC APPLICATIONS
+---
 
-The Stupid Brilliant framework offers versatility beyond standard review:
-Social Media Automation: Streamers can instantly generate high-quality 1:1 board replays for TikTok and Instagram without manual editing.
-Performance Coaching: Trainers can utilize the AI Coach explanations to provide natural language feedback to students.
-Tactical Archiving: Players can build a personal repository of brilliant moves and historical blunders to identify long-term patterns in their play style.
+## 📂 Project Structure
 
-PROJECT STRUCTURE
+- `lib/core`: Global theme, constants, and shared utilities.
+- `lib/data`: Models and repositories for Chess.com integration.
+- `lib/engine`: Stockfish integration, PGN parsing, and Move Classification.
+- `lib/features`:
+  - `/home`: Global leaderboard and search.
+  - `/history`: Real-time game fetch and archive browser.
+  - `/profile`: "Insights" style performance dashboard.
+  - `/review`: Interactive analysis board and AI coach.
+- `assets/classification`: Custom high-fidelity PNG icons for move quality.
 
-lib/core: Global constants, theme definitions, and core utility services.
-lib/data: Repository layers and data models for Chess.com integration.
-lib/engine: Stockfish isolates, PGN parsing logic, and the Move Classifier.
-lib/features: Encapsulated modules for Onboarding, Search, Review, and Settings.
-lib/features/review: The primary analysis interface, including the board, evaluation bar, and notation strip.
+---
 
-RESOURCE ATTRIBUTION AND CREDITS
+## 🚀 Installation & Build
 
-Stupid Brilliant is made possible by the contributions of the following global resources:
-Stockfish: The open-source engine providing the world-class analysis core.
-Chess.com: API access for real-time game history and player statistics.
-FFmpeg Project: Low-level multimedia framework used for high-performance video encoding.
-Cburnett Piece Set: Professional chess assets used for the standard interface.
-Chess.dart Community: Logic for standard algebraic notation and move validation.
-Google Sans: Typography used for the premium brand identity.
+### Prerequisites
+- Flutter SDK `^3.4.0`
+- Android Studio / VS Code
+- Git
 
+### Build Release APK
+```bash
+flutter build apk --release
+```
+The latest APK is available in the `release/` folder.
 
+---
 
-Premium Feel
-•
-Tap Effects: Every card, chip, and leaderboard item now features a subtle Scale Animation on tap, providing tactile feedback throughout the app.
-•
-Board Labels: The board analysis markers (!!, !, ★, etc.) have been upgraded from standard material icons to high-resolution PNG assets.
-✅ Verification Results
-Build Status
+## 🌟 Acknowledgments
+- **Stockfish**: The world's strongest open-source chess engine.
+- **Chess.com**: For public API access and data consistency.
+- **Cburnett Assets**: Standard professional piece sets.
+- **FFmpeg**: Powering the high-performance video encoding pipeline.
+
+---
+Developed by **shiliaiwei**

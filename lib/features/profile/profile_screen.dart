@@ -481,12 +481,7 @@ class _QualityRow extends StatelessWidget {
               SizedBox(
                 width: 22,
                 height: 22,
-                child: Image.asset(
-                  asset,
-                  fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) =>
-                      Icon(Icons.circle, color: color, size: 14),
-                ),
+                child: _buildIcon(asset, color),
               ),
               const SizedBox(width: 14),
               Expanded(
@@ -512,6 +507,28 @@ class _QualityRow extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildIcon(String asset, Color color) {
+    if (quality == MoveQuality.miss) {
+      return Container(
+        decoration: const BoxDecoration(
+          color: Color(0xFF8E24AA),
+          shape: BoxShape.circle,
+        ),
+        child: const Icon(
+          Icons.priority_high_rounded,
+          color: Colors.white,
+          size: 14,
+        ),
+      );
+    }
+    return Image.asset(
+      asset,
+      fit: BoxFit.contain,
+      errorBuilder: (context, error, stackTrace) =>
+          Icon(Icons.circle, color: color, size: 14),
     );
   }
 

@@ -44,3 +44,13 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 assets_prepare/
+
+# Sensitive local files
+.env
+.env.*
+.secrets
+*.jks
+*.keystore
+auth_config.json
+google-services.json
+FirebaseServiceAccount.json

@@ -32,16 +32,25 @@ class GameRepository {
         targets.addAll(archives.reversed);
       }
 
-      // Always try to fetch current month specifically to ensure absolute latest games
+      // Proactively fetch current month AND previous month to catch late updates
       final now = DateTime.now();
+      final lastMonth = now.month == 1 ? 12 : now.month - 1;
+      final lastMonthYear = now.month == 1 ? now.year - 1 : now.year;
+
       final currentMonthUrl =
           'https://api.chess.com/pub/player/${username.toLowerCase()}/games/${now.year}/${now.month.toString().padLeft(2, '0')}';
+      final prevMonthUrl =
+          'https://api.chess.com/pub/player/${username.toLowerCase()}/games/$lastMonthYear/${lastMonth.toString().padLeft(2, '0')}';
+
       if (!targets.contains(currentMonthUrl)) {
         targets.insert(0, currentMonthUrl);
       }
+      if (!targets.contains(prevMonthUrl)) {
+        targets.add(prevMonthUrl);
+      }
 
-      // Limit to 24 targets (2 years) to avoid massive parallel requests but still good history
-      final limitedTargets = targets.take(24).toList();
+      // Take a robust set of recent archives
+      final limitedTargets = targets.toSet().take(12).toList();
 
       final results = await Future.wait(limitedTargets.map((url) =>
           _chessCom.getGamesFromArchive(url).catchError((_) => <GameModel>[])));

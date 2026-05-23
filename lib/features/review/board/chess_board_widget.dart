@@ -211,20 +211,37 @@ class _ClassificationIcon extends StatelessWidget {
         width: squareSize * 0.45,
         height: squareSize * 0.45,
         decoration: const BoxDecoration(
-          color: Colors.white,
           shape: BoxShape.circle,
           boxShadow: [
-            BoxShadow(color: Colors.black26, blurRadius: 2, spreadRadius: 1)
+            BoxShadow(color: Colors.black45, blurRadius: 4, spreadRadius: 1)
           ],
         ),
-        padding: const EdgeInsets.all(1),
-        child: Image.asset(
-          asset,
-          fit: BoxFit.contain,
-          errorBuilder: (_, __, ___) =>
-              const Icon(Icons.help, size: 12, color: Colors.grey),
-        ),
+        padding: const EdgeInsets.all(0.5),
+        child: _buildIcon(asset),
       ),
+    );
+  }
+
+  Widget _buildIcon(String asset) {
+    if (quality == MoveQuality.miss) {
+      return Container(
+        decoration: const BoxDecoration(
+          color: Color(0xFF8E24AA), // Material Purple 700
+          shape: BoxShape.circle,
+        ),
+        child: const Icon(
+          Icons.priority_high_rounded,
+          color: Colors.white,
+          size: 14,
+        ),
+      );
+    }
+
+    return Image.asset(
+      asset,
+      fit: BoxFit.contain,
+      errorBuilder: (_, __, ___) =>
+          const Icon(Icons.help, size: 12, color: Colors.grey),
     );
   }
 
