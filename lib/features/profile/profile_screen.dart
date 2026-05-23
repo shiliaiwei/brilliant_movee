@@ -65,6 +65,63 @@ class _ProfileContent extends StatelessWidget {
         children: [
           _HeroSection(player: player),
           const SizedBox(height: 32),
+
+          // Insights Header Section
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('DATE RANGE',
+                      style: AppTextStyles.caption.copyWith(letterSpacing: 1)),
+                  const SizedBox(height: 4),
+                  const Text('All Time',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold)),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text('GAMES',
+                      style: AppTextStyles.caption.copyWith(letterSpacing: 1)),
+                  const SizedBox(height: 4),
+                  Text('${player.stats?.totalGames ?? 0}',
+                      style: const TextStyle(
+                          color: AppColors.primary,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold)),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+
+          // Insights Menu Horizontal Scroll
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                'Overview',
+                'Game Results',
+                'Game Shapes',
+                'Phases',
+                'Openings',
+                'Tactics'
+              ]
+                  .map((t) => Padding(
+                        padding: const EdgeInsets.only(right: 12),
+                        child:
+                            _InsightChip(label: t, isSelected: t == 'Overview'),
+                      ))
+                  .toList(),
+            ),
+          ),
+          const SizedBox(height: 32),
+
           if (player.stats != null) ...[
             Text('RATING OVERVIEW',
                 style: AppTextStyles.badge.copyWith(color: AppColors.primary)),
@@ -83,6 +140,33 @@ class _ProfileContent extends StatelessWidget {
           _MoveQualityBreakdown(),
           const SizedBox(height: 40),
         ],
+      ),
+    );
+  }
+}
+
+class _InsightChip extends StatelessWidget {
+  const _InsightChip({required this.label, required this.isSelected});
+  final String label;
+  final bool isSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: isSelected ? AppColors.primary : AppColors.backgroundSurface,
+        borderRadius: BorderRadius.circular(20),
+        border:
+            Border.all(color: isSelected ? Colors.transparent : Colors.white10),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: isSelected ? Colors.black : Colors.white70,
+          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+          fontSize: 12,
+        ),
       ),
     );
   }
@@ -309,14 +393,16 @@ class _MoveQualityBreakdown extends ConsumerWidget {
               quality: MoveQuality.great, total: 112, percentage: '15.5%'),
           const _QualityRow(
               quality: MoveQuality.good, total: 89, percentage: '12.8%'),
-          const _QualityRow(quality: MoveQuality.book, total: 67, percentage: '9.4%'),
+          const _QualityRow(
+              quality: MoveQuality.book, total: 67, percentage: '9.4%'),
           const _QualityRow(
               quality: MoveQuality.inaccuracy, total: 54, percentage: '11.0%'),
           const _QualityRow(
               quality: MoveQuality.mistake, total: 32, percentage: '7.2%'),
           const _QualityRow(
               quality: MoveQuality.blunder, total: 12, percentage: '3.1%'),
-          const _QualityRow(quality: MoveQuality.miss, total: 5, percentage: '0.5%'),
+          const _QualityRow(
+              quality: MoveQuality.miss, total: 5, percentage: '0.5%'),
         ],
       ),
     );
@@ -332,7 +418,7 @@ class _QualityRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final (icon, color, label) = _config();
+    final (asset, color, label) = _config();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
@@ -342,7 +428,7 @@ class _QualityRow extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(icon, color: color, size: 18),
+          Image.asset(asset, width: 18, height: 18, fit: BoxFit.contain),
           const SizedBox(width: 12),
           Expanded(
             child: Text(label,
@@ -364,46 +450,54 @@ class _QualityRow extends StatelessWidget {
     );
   }
 
-  (IconData, Color, String) _config() {
+  (String, Color, String) _config() {
     return switch (quality) {
       MoveQuality.brilliant => (
-          Icons.auto_awesome,
+          'assets/classification/brilliant.png',
           AppColors.brilliant,
           'Brilliant'
         ),
       MoveQuality.great => (
-          Icons.thumb_up_rounded,
+          'assets/classification/excellent.png',
           AppColors.great,
           'Excellent'
         ),
-      MoveQuality.best => (Icons.star_rounded, AppColors.primary, 'Best'),
+      MoveQuality.best => (
+          'assets/classification/best.png',
+          AppColors.primary,
+          'Best'
+        ),
       MoveQuality.good => (
-          Icons.check_circle_outline_rounded,
+          'assets/classification/very_good.png',
           AppColors.good,
           'Good'
         ),
-      MoveQuality.book => (Icons.menu_book_rounded, AppColors.book, 'Book'),
+      MoveQuality.book => (
+          'assets/classification/book.png',
+          AppColors.book,
+          'Book'
+        ),
       MoveQuality.inaccuracy => (
-          Icons.help_outline_rounded,
+          'assets/classification/inaccuracy.png',
           AppColors.inaccuracy,
           'Inaccuracy'
         ),
       MoveQuality.mistake => (
-          Icons.error_outline_rounded,
+          'assets/classification/mistake.png',
           AppColors.mistake,
           'Mistake'
         ),
       MoveQuality.blunder => (
-          Icons.close_rounded,
+          'assets/classification/blunder.png',
           AppColors.blunder,
           'Blunder'
         ),
       MoveQuality.miss => (
-          Icons.priority_high_rounded,
+          'assets/classification/sigma.png',
           AppColors.miss,
           'Missed Win'
         ),
-      _ => (Icons.check_rounded, AppColors.good, 'Good'),
+      _ => ('assets/classification/good.png', AppColors.good, 'Good'),
     };
   }
 }

@@ -202,38 +202,44 @@ class _ClassificationIcon extends StatelessWidget {
       row = 7 - row;
     }
 
-    final (icon, color) = _config();
+    final asset = _getAsset();
 
     return Positioned(
       left: col * squareSize + squareSize * 0.55,
       top: row * squareSize - squareSize * 0.15,
       child: Container(
-        padding: const EdgeInsets.all(1.5),
-        decoration: BoxDecoration(
+        width: squareSize * 0.45,
+        height: squareSize * 0.45,
+        decoration: const BoxDecoration(
           color: Colors.white,
           shape: BoxShape.circle,
-          border: Border.all(color: color, width: 1.5),
+          boxShadow: [
+            BoxShadow(color: Colors.black26, blurRadius: 2, spreadRadius: 1)
+          ],
         ),
-        child: Icon(icon, color: color, size: squareSize * 0.35),
+        padding: const EdgeInsets.all(1),
+        child: Image.asset(
+          asset,
+          fit: BoxFit.contain,
+          errorBuilder: (_, __, ___) =>
+              const Icon(Icons.help, size: 12, color: Colors.grey),
+        ),
       ),
     );
   }
 
-  (IconData, Color) _config() {
+  String _getAsset() {
     return switch (quality) {
-      MoveQuality.brilliant => (Icons.auto_awesome, AppColors.brilliant),
-      MoveQuality.great => (Icons.thumb_up_rounded, AppColors.great),
-      MoveQuality.best => (Icons.star_rounded, AppColors.primary),
-      MoveQuality.good => (Icons.check_circle_rounded, AppColors.good),
-      MoveQuality.book => (Icons.menu_book_rounded, AppColors.book),
-      MoveQuality.inaccuracy => (Icons.help_rounded, AppColors.inaccuracy),
-      MoveQuality.mistake => (Icons.warning_rounded, AppColors.mistake),
-      MoveQuality.blunder => (Icons.error_rounded, AppColors.blunder),
-      MoveQuality.miss => (Icons.cancel_rounded, AppColors.miss),
-      MoveQuality.forced => (
-          Icons.arrow_forward_rounded,
-          AppColors.textSecondary
-        ),
+      MoveQuality.brilliant => 'assets/classification/brilliant.png',
+      MoveQuality.great => 'assets/classification/excellent.png',
+      MoveQuality.best => 'assets/classification/best.png',
+      MoveQuality.good => 'assets/classification/very_good.png',
+      MoveQuality.book => 'assets/classification/book.png',
+      MoveQuality.inaccuracy => 'assets/classification/inaccuracy.png',
+      MoveQuality.mistake => 'assets/classification/mistake.png',
+      MoveQuality.blunder => 'assets/classification/blunder.png',
+      MoveQuality.miss => 'assets/classification/sigma.png',
+      MoveQuality.forced => 'assets/classification/good.png',
     };
   }
 }

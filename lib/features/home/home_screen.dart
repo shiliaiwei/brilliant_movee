@@ -163,15 +163,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     child: Text('Failed to load leaderboard',
                         style: TextStyle(color: Colors.white38))),
                 data: (players) {
-                  // Fix for user 'shiliaiwei' if present, ensuring rank is shown or updated
-                  // This is logic to handle a specific user request for ranking fix.
                   return ListView.builder(
                     physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 10),
                     itemCount: players.length,
-                    itemBuilder: (context, i) =>
-                        _LeaderboardItem(player: players[i]),
+                    itemBuilder: (context, i) {
+                      final p = players[i];
+                      // Highlight connected user if found
+                      final isMe =
+                          p.username.toLowerCase() == username.toLowerCase();
+                      return _LeaderboardItem(player: p, isMe: isMe);
+                    },
                   );
                 },
               ),
@@ -216,8 +219,9 @@ class _FilterChip extends StatelessWidget {
 }
 
 class _LeaderboardItem extends StatelessWidget {
-  const _LeaderboardItem({required this.player});
+  const _LeaderboardItem({required this.player, this.isMe = false});
   final LeaderboardPlayer player;
+  final bool isMe;
 
   @override
   Widget build(BuildContext context) {
@@ -227,6 +231,8 @@ class _LeaderboardItem extends StatelessWidget {
         onTap: () =>
             context.push('${AppRoutes.profile}?username=${player.username}'),
         padding: const EdgeInsets.all(12),
+        glowColor: isMe ? AppColors.primary : null,
+        borderColor: isMe ? AppColors.primary.withValues(alpha: 0.5) : null,
         child: Row(
           children: [
             SizedBox(
@@ -234,8 +240,11 @@ class _LeaderboardItem extends StatelessWidget {
               child: Text(
                 '#${player.rank}',
                 style: AppTextStyles.monoSmall.copyWith(
-                  color:
-                      player.rank <= 3 ? AppColors.brilliant : Colors.white38,
+                  color: isMe
+                      ? AppColors.primary
+                      : (player.rank <= 3
+                          ? AppColors.brilliant
+                          : Colors.white38),
                   fontWeight: FontWeight.bold,
                 ),
               ),

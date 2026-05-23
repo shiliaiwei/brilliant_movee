@@ -593,7 +593,7 @@ class _ClassificationTinyBadge extends StatelessWidget {
   final MoveQuality quality;
   @override
   Widget build(BuildContext context) {
-    final (icon, color, label) = _config();
+    final (asset, color, label) = _config();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
@@ -603,8 +603,8 @@ class _ClassificationTinyBadge extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: color, size: 16),
-          const SizedBox(width: 6),
+          Image.asset(asset, width: 16, height: 16, fit: BoxFit.contain),
+          const SizedBox(width: 8),
           Text(label,
               style: TextStyle(
                   color: color,
@@ -616,16 +616,54 @@ class _ClassificationTinyBadge extends StatelessWidget {
     );
   }
 
-  (IconData, Color, String) _config() {
+  (String, Color, String) _config() {
     return switch (quality) {
       MoveQuality.brilliant => (
-          Icons.auto_awesome,
+          'assets/classification/brilliant.png',
           AppColors.brilliant,
           'BRILLIANT'
         ),
-      MoveQuality.great => (Icons.thumb_up_rounded, AppColors.great, 'GREAT'),
-      MoveQuality.best => (Icons.star_rounded, AppColors.primary, 'BEST'),
-      _ => (Icons.check_rounded, AppColors.good, 'GOOD'),
+      MoveQuality.great => (
+          'assets/classification/excellent.png',
+          AppColors.great,
+          'GREAT'
+        ),
+      MoveQuality.best => (
+          'assets/classification/best.png',
+          AppColors.primary,
+          'BEST'
+        ),
+      MoveQuality.good => (
+          'assets/classification/very_good.png',
+          AppColors.good,
+          'GOOD'
+        ),
+      MoveQuality.book => (
+          'assets/classification/book.png',
+          AppColors.book,
+          'BOOK'
+        ),
+      MoveQuality.inaccuracy => (
+          'assets/classification/inaccuracy.png',
+          AppColors.inaccuracy,
+          'INACCURACY'
+        ),
+      MoveQuality.mistake => (
+          'assets/classification/mistake.png',
+          AppColors.mistake,
+          'MISTAKE'
+        ),
+      MoveQuality.blunder => (
+          'assets/classification/blunder.png',
+          AppColors.blunder,
+          'BLUNDER'
+        ),
+      MoveQuality.miss => (
+          'assets/classification/sigma.png',
+          AppColors.miss,
+          'MISS'
+        ),
+      _ => ('assets/classification/good.png', AppColors.good, 'GOOD'),
     };
   }
 }
