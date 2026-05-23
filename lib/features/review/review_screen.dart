@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -244,9 +245,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
 
 class _ReviewBody extends StatelessWidget {
   const _ReviewBody(
-      {required this.state,
-      required this.settings,
-      required this.isFlipped});
+      {required this.state, required this.settings, required this.isFlipped});
   final ReviewState state;
   final SettingsState settings;
   final bool isFlipped;
@@ -256,87 +255,78 @@ class _ReviewBody extends StatelessWidget {
     final boardState = state.currentBoardState;
     final classification = state.classificationAt(state.currentPlyIndex);
     final evalCp = classification?.evalAfter ?? 0.0;
-    final openingName =
-        boardState != null ? OpeningBook.getOpeningName(boardState.fen) : null;
 
     return Column(
       children: [
-        if (openingName != null)
-          Padding(
-            padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
-            child: Text(
-              openingName,
-              textAlign: TextAlign.center,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.primary,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 0.5,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
         // Board Section
         Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Eval Bar
-                    AnimatedEvalBar(
-                      evalCp: isFlipped ? -evalCp : evalCp,
-                      height: MediaQuery.of(context).size.width - 64,
-                      width: 8,
-                    ),
-                    const SizedBox(width: 12),
-                    // Chess Board
-                    Expanded(
-                      child: Center(
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 500),
-                          child: AspectRatio(
-                            aspectRatio: 1,
-                            child: boardState != null
-                                ? ChessBoardWidget(
-                                    boardState: state.isRetryMode
-                                        ? boardState.copyWith(
-                                            bestMoveFrom:
-                                                boardState.lastMoveFrom,
-                                            bestMoveTo: boardState.lastMoveTo,
-                                          )
-                                        : boardState,
-                                    pieceSetId: settings.pieceSet,
-                                    boardThemeId: settings.boardTheme,
-                                    showCoordinates: settings.showCoordinates,
-                                    highlightLastMove:
-                                        settings.highlightLastMove,
-                                    moveQuality: classification?.quality,
-                                    isFlipped: isFlipped,
-                                  )
-                                : Container(color: AppColors.backgroundSurface),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // Eval Bar (Fixed height relative to screen width to prevent glitching)
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxHeight:
+                              math.min(MediaQuery.of(context).size.width, 400),
+                        ),
+                        child: AnimatedEvalBar(
+                          evalCp: isFlipped ? -evalCp : evalCp,
+                          height: 360, // Fixed stable height
+                          width: 8,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      // Chess Board
+                      Expanded(
+                        child: Center(
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 480),
+                            child: AspectRatio(
+                              aspectRatio: 1,
+                              child: boardState != null
+                                  ? ChessBoardWidget(
+                                      boardState: state.isRetryMode
+                                          ? boardState.copyWith(
+                                              bestMoveFrom:
+                                                  boardState.lastMoveFrom,
+                                              bestMoveTo: boardState.lastMoveTo,
+                                            )
+                                          : boardState,
+                                      pieceSetId: settings.pieceSet,
+                                      boardThemeId: settings.boardTheme,
+                                      showCoordinates: settings.showCoordinates,
+                                      highlightLastMove:
+                                          settings.highlightLastMove,
+                                      moveQuality: classification?.quality,
+                                      isFlipped: isFlipped,
+                                    )
+                                  : Container(
+                                      color: AppColors.backgroundSurface),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                        width: 20), // Balance the eval bar on the left
-                  ],
+                      const SizedBox(width: 20), // Balance
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 32),
-              // Navigation Controls
-              _NavigationControls(state: state),
-              const SizedBox(height: 24),
-              // Move Notation Strip
-              _MoveNotationStrip(state: state),
-            ],
+                const SizedBox(height: 32),
+                _NavigationControls(state: state),
+                const SizedBox(height: 20),
+                _MoveNotationStrip(state: state),
+                const SizedBox(height: 10),
+              ],
+            ),
           ),
         ),
-
         // Bottom Analysis Panel
         _AnalysisPanel(state: state, classification: classification),
       ],
@@ -377,8 +367,7 @@ class _NavigationControls extends ConsumerWidget {
 }
 
 class _NavIconButton extends StatelessWidget {
-  const _NavIconButton(
-      {required this.icon, this.onTap, this.large = false});
+  const _NavIconButton({required this.icon, this.onTap, this.large = false});
   final IconData icon;
   final VoidCallback? onTap;
   final bool large;
@@ -448,8 +437,7 @@ class _MoveNotationStrip extends ConsumerWidget {
 }
 
 class _AnalysisPanel extends ConsumerWidget {
-  const _AnalysisPanel(
-      {required this.state, required this.classification});
+  const _AnalysisPanel({required this.state, required this.classification});
   final ReviewState state;
   final MoveClassification? classification;
 
@@ -508,6 +496,10 @@ class _AnalysisPanelContent extends ConsumerWidget {
       );
     }
 
+    final openingName = state.currentBoardState != null
+        ? OpeningBook.getOpeningName(state.currentBoardState!.fen)
+        : null;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -523,8 +515,11 @@ class _AnalysisPanelContent extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 12),
-          Text(classification!.plainExplanation,
-              style: AppTextStyles.body.copyWith(color: Colors.white70)),
+          Text(openingName ?? classification!.plainExplanation,
+              style: AppTextStyles.body.copyWith(
+                color: openingName != null ? AppColors.primary : Colors.white70,
+                fontWeight: openingName != null ? FontWeight.bold : null,
+              )),
           if (classification!.quality != MoveQuality.best &&
               classification!.bestMove != null) ...[
             const SizedBox(height: 16),

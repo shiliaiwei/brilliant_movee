@@ -33,15 +33,18 @@ class ChessBoardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const double boardMargin = 22.0;
+
     return Container(
       key: captureKey,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(2),
+        color: AppColors.backgroundDeep,
+        borderRadius: BorderRadius.circular(4),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.3),
-            blurRadius: 10,
-            spreadRadius: 1,
+            color: Colors.black.withValues(alpha: 0.5),
+            blurRadius: 20,
+            spreadRadius: 2,
           ),
         ],
       ),
@@ -50,57 +53,73 @@ class ChessBoardWidget extends StatelessWidget {
           aspectRatio: 1,
           child: LayoutBuilder(
             builder: (context, constraints) {
-              final size = constraints.maxWidth;
-              final squareSize = size / 8;
+              final totalSize = constraints.maxWidth;
+              final boardSize =
+                  showCoordinates ? totalSize - (boardMargin * 2) : totalSize;
+              final squareSize = boardSize / 8;
 
               return Stack(
+                alignment: Alignment.center,
                 clipBehavior: Clip.none,
                 children: [
-                  // Board background
-                  _BoardBackground(
-                    boardThemeId: boardThemeId,
-                    size: size,
-                  ),
+                  // Actual Board with pieces
+                  SizedBox(
+                    width: boardSize,
+                    height: boardSize,
+                    child: Stack(
+                      children: [
+                        // Board background
+                        _BoardBackground(
+                          boardThemeId: boardThemeId,
+                          size: boardSize,
+                        ),
 
-                  // Squares grid with pieces
-                  Positioned.fill(
-                    child: _PiecesLayer(
-                      boardState: boardState,
-                      squareSize: squareSize,
-                      pieceSetId: pieceSetId,
-                      highlightLastMove: highlightLastMove,
-                      isFlipped: isFlipped,
-                      onSquareTap: onSquareTap,
+                        // Squares grid with pieces
+                        Positioned.fill(
+                          child: _PiecesLayer(
+                            boardState: boardState,
+                            squareSize: squareSize,
+                            pieceSetId: pieceSetId,
+                            highlightLastMove: highlightLastMove,
+                            isFlipped: isFlipped,
+                            onSquareTap: onSquareTap,
+                          ),
+                        ),
+
+                        // Classification Icon Overlay (Small icon with piece)
+                        if (moveQuality != null &&
+                            boardState.lastMoveTo != null)
+                          _ClassificationIcon(
+                            square: boardState.lastMoveTo!,
+                            quality: moveQuality!,
+                            squareSize: squareSize,
+                            isFlipped: isFlipped,
+                          ),
+
+                        // Best move arrow overlay
+                        if (boardState.bestMoveFrom != null &&
+                            boardState.bestMoveTo != null)
+                          Positioned.fill(
+                            child: _ArrowOverlay(
+                              from: boardState.bestMoveFrom!,
+                              to: boardState.bestMoveTo!,
+                              squareSize: squareSize,
+                              isFlipped: isFlipped,
+                            ),
+                          ),
+                      ],
                     ),
                   ),
 
-                  // Classification Icon Overlay (Small icon with piece)
-                  if (moveQuality != null && boardState.lastMoveTo != null)
-                    _ClassificationIcon(
-                      square: boardState.lastMoveTo!,
-                      quality: moveQuality!,
-                      squareSize: squareSize,
-                      isFlipped: isFlipped,
-                    ),
-
-                  // Best move arrow overlay
-                  if (boardState.bestMoveFrom != null &&
-                      boardState.bestMoveTo != null)
-                    Positioned.fill(
-                      child: _ArrowOverlay(
-                        from: boardState.bestMoveFrom!,
-                        to: boardState.bestMoveTo!,
-                        squareSize: squareSize,
-                        isFlipped: isFlipped,
-                      ),
-                    ),
-
-                  // Coordinates
+                  // Coordinates (Placed OUTSIDE the board)
                   if (showCoordinates)
                     Positioned.fill(
-                      child: _CoordinatesOverlay(
-                        squareSize: squareSize,
-                        isFlipped: isFlipped,
+                      child: IgnorePointer(
+                        child: _OutsideCoordinatesOverlay(
+                          boardSize: boardSize,
+                          margin: boardMargin,
+                          isFlipped: isFlipped,
+                        ),
                       ),
                     ),
                 ],
@@ -109,6 +128,53 @@ class ChessBoardWidget extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _OutsideCoordinatesOverlay extends StatelessWidget {
+  const _OutsideCoordinatesOverlay({
+    required this.boardSize,
+    required this.margin,
+    required this.isFlipped,
+  });
+
+  final double boardSize;
+  final double margin;
+  final bool isFlipped;
+
+  @override
+  Widget build(BuildContext context) {
+    final squareSize = boardSize / 8;
+    final textStyle = AppTextStyles.monoSmall.copyWith(
+      fontSize: 10,
+      color: Colors.white.withValues(alpha: 0.5),
+      fontWeight: FontWeight.bold,
+    );
+
+    return Stack(
+      children: [
+        // Files (a-h) - Bottom
+        ...List.generate(8, (i) {
+          final file = isFlipped
+              ? String.fromCharCode('h'.codeUnitAt(0) - i)
+              : String.fromCharCode('a'.codeUnitAt(0) + i);
+          return Positioned(
+            left: margin + (i * squareSize) + (squareSize / 2) - 4,
+            bottom: 4,
+            child: Text(file, style: textStyle),
+          );
+        }),
+        // Ranks (1-8) - Left
+        ...List.generate(8, (i) {
+          final rank = isFlipped ? '${i + 1}' : '${8 - i}';
+          return Positioned(
+            left: 6,
+            top: margin + (i * squareSize) + (squareSize / 2) - 6,
+            child: Text(rank, style: textStyle),
+          );
+        }),
+      ],
     );
   }
 }
@@ -516,31 +582,6 @@ class _CoordinatesOverlay extends StatelessWidget {
   final bool isFlipped;
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        ...List.generate(8, (i) {
-          final file = isFlipped
-              ? String.fromCharCode('h'.codeUnitAt(0) - i)
-              : String.fromCharCode('a'.codeUnitAt(0) + i);
-          return Positioned(
-              left: i * squareSize + squareSize - 12,
-              bottom: 2,
-              child: Text(file,
-                  style: AppTextStyles.monoSmall.copyWith(
-                      fontSize: 9,
-                      color: (i % 2 == 0) ? Colors.black45 : Colors.white70)));
-        }),
-        ...List.generate(8, (i) {
-          final rank = isFlipped ? '${i + 1}' : '${8 - i}';
-          return Positioned(
-              left: 2,
-              top: i * squareSize + 2,
-              child: Text(rank,
-                  style: AppTextStyles.monoSmall.copyWith(
-                      fontSize: 9,
-                      color: (i % 2 == 0) ? Colors.white70 : Colors.black45)));
-        }),
-      ],
-    );
+    return const SizedBox.shrink();
   }
 }

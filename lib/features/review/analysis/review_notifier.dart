@@ -149,6 +149,7 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
   void goToPly(int ply) => _setCurrentPly(ply);
 
   void toggleRetryMode() {
+    if (state.isExporting) return;
     state = state.copyWith(
       isRetryMode: !state.isRetryMode,
       retryMove: null,
@@ -157,6 +158,11 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
   }
 
   void _setCurrentPly(int ply) {
+    if (state.isExporting &&
+        !StackTrace.current.toString().contains('exportVideo')) {
+      return; // Block manual moves during export
+    }
+
     final clamped = ply.clamp(0, state.boardStates.length - 1);
     if (clamped != state.currentPlyIndex) {
       state = state.copyWith(currentPlyIndex: clamped);
