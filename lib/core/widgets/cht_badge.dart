@@ -45,25 +45,25 @@ class ChtMoveBadge extends StatelessWidget {
   _BadgeConfig _badgeConfig(MoveQuality q) {
     switch (q) {
       case MoveQuality.brilliant:
-        return _BadgeConfig(AppColors.brilliant, '!! BRILLIANT', '!!');
+        return const _BadgeConfig(AppColors.brilliant, '!! BRILLIANT', '!!');
       case MoveQuality.great:
-        return _BadgeConfig(AppColors.great, '! GREAT', '!');
+        return const _BadgeConfig(AppColors.great, '! GREAT', '!');
       case MoveQuality.best:
-        return _BadgeConfig(AppColors.primary, 'BEST', '★');
+        return const _BadgeConfig(AppColors.primary, 'BEST', '★');
       case MoveQuality.good:
-        return _BadgeConfig(AppColors.good, 'GOOD', '✓');
+        return const _BadgeConfig(AppColors.good, 'GOOD', '✓');
       case MoveQuality.book:
-        return _BadgeConfig(AppColors.book, 'BOOK', '📖');
+        return const _BadgeConfig(AppColors.book, 'BOOK', '📖');
       case MoveQuality.inaccuracy:
-        return _BadgeConfig(AppColors.inaccuracy, 'INACCURACY', '?!');
+        return const _BadgeConfig(AppColors.inaccuracy, 'INACCURACY', '?!');
       case MoveQuality.mistake:
-        return _BadgeConfig(AppColors.mistake, 'MISTAKE', '?');
+        return const _BadgeConfig(AppColors.mistake, 'MISTAKE', '?');
       case MoveQuality.blunder:
-        return _BadgeConfig(AppColors.blunder, 'BLUNDER', '??');
+        return const _BadgeConfig(AppColors.blunder, 'BLUNDER', '??');
       case MoveQuality.miss:
-        return _BadgeConfig(AppColors.miss, 'MISS', '✗');
+        return const _BadgeConfig(AppColors.miss, 'MISS', '✗');
       case MoveQuality.forced:
-        return _BadgeConfig(AppColors.textSecondary, 'FORCED', '→');
+        return const _BadgeConfig(AppColors.textSecondary, 'FORCED', '→');
     }
   }
 }

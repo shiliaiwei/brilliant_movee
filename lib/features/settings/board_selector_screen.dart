@@ -36,8 +36,8 @@ class _BoardSelectorScreenState extends ConsumerState<BoardSelectorScreen> {
 
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text('Settings applied successfully'),
+        const SnackBar(
+          content: Text('Settings applied successfully'),
           backgroundColor: AppColors.primary,
           behavior: SnackBarBehavior.floating,
         ),

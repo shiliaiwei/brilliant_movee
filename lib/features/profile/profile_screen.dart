@@ -305,19 +305,19 @@ class _AnalysisStatsGrid extends ConsumerWidget {
               ? () => context.push(AppRoutes.brilliant)
               : null,
         ),
-        _AnalysisStatTile(
+        const _AnalysisStatTile(
           label: 'Great',
           value: '45',
           color: AppColors.great,
           icon: Icons.thumb_up_rounded,
         ),
-        _AnalysisStatTile(
+        const _AnalysisStatTile(
           label: 'Accuracy',
           value: '82%',
           color: AppColors.primary,
           icon: Icons.analytics_rounded,
         ),
-        _AnalysisStatTile(
+        const _AnalysisStatTile(
           label: 'Games',
           value: '128',
           color: AppColors.secondary,

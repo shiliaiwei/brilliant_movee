@@ -54,7 +54,7 @@ class ReviewState {
   bool get isAtEnd =>
       boardStates.isEmpty || currentPlyIndex >= boardStates.length - 1;
 
-  int get totalPlies => boardStates.length > 0 ? boardStates.length - 1 : 0;
+  int get totalPlies => boardStates.isNotEmpty ? boardStates.length - 1 : 0;
 
   MoveClassification? classificationAt(int plyIndex) {
     if (plyIndex <= 0 || plyIndex > classifications.length) return null;

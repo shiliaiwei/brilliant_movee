@@ -13,7 +13,6 @@ import '../../features/settings/board_selector_screen.dart';
 import '../../features/profile/brilliant_games_screen.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_text_styles.dart';
-import '../services/storage_service.dart';
 import '../utils/responsive.dart';
 
 /// All named routes for Stupid Brilliant.
@@ -82,10 +81,12 @@ class _ShellScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (context.isDesktop)
+    if (context.isDesktop) {
       return _DesktopShell(navigationShell: navigationShell, onTap: _onTap);
-    if (context.isTablet)
+    }
+    if (context.isTablet) {
       return _TabletShell(navigationShell: navigationShell, onTap: _onTap);
+    }
     return _MobileShell(navigationShell: navigationShell, onTap: _onTap);
   }
 }

@@ -97,7 +97,7 @@ class StockfishIsolate {
   void stop() {
     if (kIsWeb) return;
     _sendPort?.send(
-      StockfishRequest(
+      const StockfishRequest(
         type: StockfishMessageType.stop,
         fen: '',
         requestId: 'stop',
@@ -108,7 +108,7 @@ class StockfishIsolate {
   Future<void> dispose() async {
     if (!kIsWeb) {
       _sendPort?.send(
-        StockfishRequest(
+        const StockfishRequest(
           type: StockfishMessageType.quit,
           fen: '',
           requestId: 'quit',

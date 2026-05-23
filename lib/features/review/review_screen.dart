@@ -244,8 +244,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
 
 class _ReviewBody extends StatelessWidget {
   const _ReviewBody(
-      {super.key,
-      required this.state,
+      {required this.state,
       required this.settings,
       required this.isFlipped});
   final ReviewState state;
@@ -346,7 +345,7 @@ class _ReviewBody extends StatelessWidget {
 }
 
 class _NavigationControls extends ConsumerWidget {
-  const _NavigationControls({super.key, required this.state});
+  const _NavigationControls({required this.state});
   final ReviewState state;
 
   @override
@@ -379,7 +378,7 @@ class _NavigationControls extends ConsumerWidget {
 
 class _NavIconButton extends StatelessWidget {
   const _NavIconButton(
-      {super.key, required this.icon, this.onTap, this.large = false});
+      {required this.icon, this.onTap, this.large = false});
   final IconData icon;
   final VoidCallback? onTap;
   final bool large;
@@ -410,7 +409,7 @@ class _NavIconButton extends StatelessWidget {
 }
 
 class _MoveNotationStrip extends ConsumerWidget {
-  const _MoveNotationStrip({super.key, required this.state});
+  const _MoveNotationStrip({required this.state});
   final ReviewState state;
 
   @override
@@ -450,7 +449,7 @@ class _MoveNotationStrip extends ConsumerWidget {
 
 class _AnalysisPanel extends ConsumerWidget {
   const _AnalysisPanel(
-      {super.key, required this.state, required this.classification});
+      {required this.state, required this.classification});
   final ReviewState state;
   final MoveClassification? classification;
 
@@ -472,7 +471,7 @@ class _AnalysisPanel extends ConsumerWidget {
 
 class _AnalysisPanelContent extends ConsumerWidget {
   const _AnalysisPanelContent(
-      {super.key, required this.state, required this.classification});
+      {required this.state, required this.classification});
   final ReviewState state;
   final MoveClassification? classification;
 
@@ -595,7 +594,7 @@ class _AnalysisPanelContent extends ConsumerWidget {
 }
 
 class _ClassificationTinyBadge extends StatelessWidget {
-  const _ClassificationTinyBadge({super.key, required this.quality});
+  const _ClassificationTinyBadge({required this.quality});
   final MoveQuality quality;
   @override
   Widget build(BuildContext context) {
@@ -638,7 +637,6 @@ class _ClassificationTinyBadge extends StatelessWidget {
 
 class _WideReviewBody extends StatelessWidget {
   const _WideReviewBody({
-    super.key,
     required this.state,
     required this.settings,
     required this.isFlipped,

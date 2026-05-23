@@ -360,10 +360,12 @@ class _StatsTiles extends StatelessWidget {
 
     for (final g in games) {
       final r = g.resultFor(username);
-      if (r == '1-0' && g.whiteUsername.toLowerCase() == username.toLowerCase())
+      if (r == '1-0' && g.whiteUsername.toLowerCase() == username.toLowerCase()) {
         wins++;
-      if (r == '0-1' && g.blackUsername.toLowerCase() == username.toLowerCase())
+      }
+      if (r == '0-1' && g.blackUsername.toLowerCase() == username.toLowerCase()) {
         wins++;
+      }
       final acc = g.accuracyFor(username);
       if (acc != null) {
         totalAccuracy += acc;

@@ -111,23 +111,23 @@ class GameCardShimmer extends StatelessWidget {
           color: AppColors.backgroundSurface,
           borderRadius: BorderRadius.circular(AppRadius.card),
         ),
-        child: Row(
+        child: const Row(
           children: [
-            const ShimmerBox(width: 64, height: 64, borderRadius: 8),
-            const SizedBox(width: AppSpacing.md),
+            ShimmerBox(width: 64, height: 64, borderRadius: 8),
+            SizedBox(width: AppSpacing.md),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const ShimmerBox(width: 120, height: 14),
-                  const SizedBox(height: AppSpacing.sm),
-                  const ShimmerBox(width: 80, height: 12),
-                  const SizedBox(height: AppSpacing.sm),
+                  ShimmerBox(width: 120, height: 14),
+                  SizedBox(height: AppSpacing.sm),
+                  ShimmerBox(width: 80, height: 12),
+                  SizedBox(height: AppSpacing.sm),
                   Row(
                     children: [
-                      const ShimmerBox(width: 48, height: 20, borderRadius: 10),
-                      const SizedBox(width: AppSpacing.sm),
-                      const ShimmerBox(width: 60, height: 20, borderRadius: 10),
+                      ShimmerBox(width: 48, height: 20, borderRadius: 10),
+                      SizedBox(width: AppSpacing.sm),
+                      ShimmerBox(width: 60, height: 20, borderRadius: 10),
                     ],
                   ),
                 ],

@@ -35,7 +35,7 @@ class SettingsScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _SectionHeader(title: 'Account'),
+              const _SectionHeader(title: 'Account'),
               ChtCard(
                 padding: EdgeInsets.zero,
                 child: Column(
@@ -76,7 +76,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.xl),
-              _SectionHeader(title: 'Board & Pieces'),
+              const _SectionHeader(title: 'Board & Pieces'),
               ChtCard(
                 padding: EdgeInsets.zero,
                 child: Column(
@@ -110,7 +110,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.xl),
-              _SectionHeader(title: 'Social & Friends'),
+              const _SectionHeader(title: 'Social & Friends'),
               ChtCard(
                 padding: EdgeInsets.zero,
                 child: Column(
@@ -127,18 +127,18 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.xl),
-              _SectionHeader(title: 'About'),
-              ChtCard(
+              const _SectionHeader(title: 'About'),
+              const ChtCard(
                 padding: EdgeInsets.zero,
                 child: Column(
                   children: [
-                    const _SettingsTile(
+                    _SettingsTile(
                       icon: Icons.info_outline_rounded,
                       title: 'App Version',
                       subtitle: '1.0.0 (Stable)',
                     ),
-                    const Divider(height: 1, indent: 52),
-                    const _SettingsTile(
+                    Divider(height: 1, indent: 52),
+                    _SettingsTile(
                       icon: Icons.source_rounded,
                       title: 'Open Source',
                       subtitle: 'Powered by Stockfish 16',

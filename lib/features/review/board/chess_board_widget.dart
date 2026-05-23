@@ -296,8 +296,9 @@ class _PiecesLayer extends StatelessWidget {
           final col = i % 8;
           final row = i ~/ 8;
           final square = _colRowToSquare(col, row, isFlipped);
-          if (boardState.pieces.containsKey(square))
+          if (boardState.pieces.containsKey(square)) {
             return const SizedBox.shrink();
+          }
           return Positioned(
             left: col * squareSize,
             top: row * squareSize,

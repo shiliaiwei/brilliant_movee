@@ -5,7 +5,6 @@ import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_styles.dart';
 import '../../core/constants/app_spacing.dart';
 import '../../core/widgets/cht_button.dart';
-import '../../core/widgets/cht_card.dart';
 import '../../core/services/storage_service.dart';
 import '../../core/router/app_router.dart';
 import '../../data/repositories/player_repository.dart';

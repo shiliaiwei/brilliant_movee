@@ -1,5 +1,6 @@
 /// PGN parser for Brilliant Movee.
 /// Extracts moves, headers, and FEN positions from PGN strings.
+library;
 
 class PgnGame {
   const PgnGame({
