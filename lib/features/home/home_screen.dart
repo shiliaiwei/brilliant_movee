@@ -13,7 +13,7 @@ import '../../data/models/leaderboard_model.dart';
 import '../../data/repositories/player_repository.dart';
 
 final _leaderboardCategoryProvider =
-    StateProvider<String>((ref) => 'chess_rapid');
+    StateProvider<String>((ref) => 'live_rapid');
 
 final _leaderboardProvider =
     FutureProvider.autoDispose<List<LeaderboardPlayer>>((ref) async {
@@ -133,15 +133,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 children: [
-                  'chess_rapid',
-                  'chess_blitz',
-                  'chess_bullet',
+                  'live_rapid',
+                  'live_blitz',
+                  'live_bullet',
                   'daily',
-                  'daily_puzzle'
+                  'tactics'
                 ]
                     .map((cat) => _FilterChip(
                           label: cat
-                              .replaceAll('chess_', '')
+                              .replaceAll('live_', '')
                               .replaceAll('_', ' ')
                               .toUpperCase(),
                           isSelected: selectedCategory == cat,

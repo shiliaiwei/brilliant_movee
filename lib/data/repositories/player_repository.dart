@@ -24,9 +24,12 @@ class PlayerRepository {
   }
 
   /// Fetch full player profile from Chess.com
-  Future<PlayerModel> getFullProfile(String username) async {
+  Future<PlayerModel> getFullProfile(String username,
+      {bool forceRefresh = false}) async {
     final key = username.toLowerCase();
-    if (_profileCache.containsKey(key)) return _profileCache[key]!;
+    if (!forceRefresh && _profileCache.containsKey(key)) {
+      return _profileCache[key]!;
+    }
 
     PlayerModel profile = await _chessCom.getPlayer(username);
     final stats = await _chessCom.getPlayerStats(username);

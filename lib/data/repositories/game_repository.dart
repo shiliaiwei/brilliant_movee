@@ -26,17 +26,36 @@ class GameRepository {
 
     try {
       final archives = await _chessCom.getArchiveUrls(username);
-      if (archives.isEmpty) return [];
 
-      // Fetch last 12 active months for history
-      final recentArchives = archives.reversed.take(12).toList();
+      final List<String> targets = [];
+      if (archives.isNotEmpty) {
+        targets.addAll(archives.reversed);
+      }
 
-      final results = await Future.wait(recentArchives.map((url) =>
+      // Always try to fetch current month specifically to ensure absolute latest games
+      final now = DateTime.now();
+      final currentMonthUrl =
+          'https://api.chess.com/pub/player/${username.toLowerCase()}/games/${now.year}/${now.month.toString().padLeft(2, '0')}';
+      if (!targets.contains(currentMonthUrl)) {
+        targets.insert(0, currentMonthUrl);
+      }
+
+      // Limit to 24 targets (2 years) to avoid massive parallel requests but still good history
+      final limitedTargets = targets.take(24).toList();
+
+      final results = await Future.wait(limitedTargets.map((url) =>
           _chessCom.getGamesFromArchive(url).catchError((_) => <GameModel>[])));
 
       final List<GameModel> allGames = [];
+      final Set<String> seenIds = {};
+
       for (final games in results) {
-        allGames.addAll(games);
+        for (final g in games) {
+          if (!seenIds.contains(g.id)) {
+            allGames.add(g);
+            seenIds.add(g.id);
+          }
+        }
       }
 
       // Sort by date descending

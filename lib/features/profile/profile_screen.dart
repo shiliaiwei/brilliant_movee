@@ -478,26 +478,31 @@ class _QualityRow extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Image.asset(
-                asset,
+              SizedBox(
                 width: 22,
                 height: 22,
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) =>
-                    Icon(Icons.circle, color: color, size: 18),
+                child: Image.asset(
+                  asset,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) =>
+                      Icon(Icons.circle, color: color, size: 14),
+                ),
               ),
               const SizedBox(width: 14),
               Expanded(
                 child: Text(label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.bodyMedium
                         .copyWith(color: color, fontWeight: FontWeight.w600)),
               ),
+              const SizedBox(width: 8),
               Text(percentage,
                   style:
                       AppTextStyles.bodyMedium.copyWith(color: Colors.white38)),
-              const SizedBox(width: 20),
+              const SizedBox(width: 12),
               SizedBox(
-                width: 60,
+                width: 50,
                 child: Text('$total',
                     textAlign: TextAlign.right,
                     style: AppTextStyles.bodyMedium.copyWith(
