@@ -112,6 +112,10 @@ class ChessBoardWidget extends StatelessWidget {
   }
 }
 
+    );
+  }
+}
+
 class _ClassificationIcon extends StatelessWidget {
   const _ClassificationIcon({
     required this.square,

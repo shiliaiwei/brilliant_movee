@@ -503,7 +503,7 @@ class _AnalysisPanelContent extends ConsumerWidget {
                 ref.read(reviewProvider.notifier).toggleRetryMode(),
             icon: Icons.close_rounded,
             height: 48,
-            backgroundColor: Colors.white10,
+            variant: ChtButtonVariant.ghost,
           ),
         ],
       );
@@ -578,7 +578,7 @@ class _AnalysisPanelContent extends ConsumerWidget {
                   ref.read(reviewProvider.notifier).toggleRetryMode(),
               icon: Icons.refresh_rounded,
               height: 48,
-              backgroundColor: AppColors.secondary,
+              variant: ChtButtonVariant.secondary,
             ),
           ),
         ChtButton(
@@ -588,7 +588,6 @@ class _AnalysisPanelContent extends ConsumerWidget {
               : () => ref.read(reviewProvider.notifier).startAnalysis(),
           icon: Icons.psychology_rounded,
           height: 52,
-          backgroundColor: state.isAnalyzing ? null : AppColors.primary,
         ),
       ],
     );
