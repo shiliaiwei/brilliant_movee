@@ -16,6 +16,9 @@ final _profileProvider = FutureProvider.autoDispose
   return ref.read(playerRepositoryProvider).getFullProfile(username);
 });
 
+final _selectedInsightTabProvider =
+    StateProvider.autoDispose<String>((ref) => 'Overview');
+
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key, required this.username});
 
@@ -50,13 +53,15 @@ class ProfileScreen extends ConsumerWidget {
   }
 }
 
-class _ProfileContent extends StatelessWidget {
+class _ProfileContent extends ConsumerWidget {
   const _ProfileContent({required this.player});
 
   final PlayerModel player;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedTab = ref.watch(_selectedInsightTabProvider);
+
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.all(20),
@@ -103,6 +108,7 @@ class _ProfileContent extends StatelessWidget {
           // Insights Menu Horizontal Scroll
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
             child: Row(
               children: [
                 'Overview',
@@ -110,34 +116,65 @@ class _ProfileContent extends StatelessWidget {
                 'Game Shapes',
                 'Phases',
                 'Openings',
-                'Tactics'
+                'Tactics',
+                'Moves',
+                'Calendar',
+                'Geography'
               ]
                   .map((t) => Padding(
                         padding: const EdgeInsets.only(right: 12),
-                        child:
-                            _InsightChip(label: t, isSelected: t == 'Overview'),
+                        child: _InsightChip(
+                          label: t,
+                          isSelected: selectedTab == t,
+                          onTap: () => ref
+                              .read(_selectedInsightTabProvider.notifier)
+                              .state = t,
+                        ),
                       ))
                   .toList(),
             ),
           ),
           const SizedBox(height: 32),
 
-          if (player.stats != null) ...[
-            Text('RATING OVERVIEW',
+          if (selectedTab == 'Overview') ...[
+            if (player.stats != null) ...[
+              Text('RATING OVERVIEW',
+                  style:
+                      AppTextStyles.badge.copyWith(color: AppColors.primary)),
+              const SizedBox(height: 12),
+              _RatingsGrid(stats: player.stats!),
+              const SizedBox(height: 32),
+              Text('PERFORMANCE RECORD',
+                  style:
+                      AppTextStyles.badge.copyWith(color: AppColors.primary)),
+              const SizedBox(height: 12),
+              _WinLossSection(stats: player.stats!),
+              const SizedBox(height: 32),
+            ],
+            Text('MOVE QUALITY INSIGHTS',
                 style: AppTextStyles.badge.copyWith(color: AppColors.primary)),
             const SizedBox(height: 12),
-            _RatingsGrid(stats: player.stats!),
-            const SizedBox(height: 32),
-            Text('PERFORMANCE RECORD',
-                style: AppTextStyles.badge.copyWith(color: AppColors.primary)),
-            const SizedBox(height: 12),
-            _WinLossSection(stats: player.stats!),
-            const SizedBox(height: 32),
+            _MoveQualityBreakdown(),
+          ] else ...[
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 60),
+                child: Column(
+                  children: [
+                    const Icon(Icons.analytics_outlined,
+                        color: Colors.white10, size: 64),
+                    const SizedBox(height: 16),
+                    Text('$selectedTab Details',
+                        style: AppTextStyles.bodyMedium
+                            .copyWith(color: Colors.white38)),
+                    const SizedBox(height: 8),
+                    const Text('Premium analysis in progress...',
+                        style: TextStyle(color: Colors.white24, fontSize: 12)),
+                  ],
+                ),
+              ),
+            ),
           ],
-          Text('MOVE QUALITY INSIGHTS',
-              style: AppTextStyles.badge.copyWith(color: AppColors.primary)),
-          const SizedBox(height: 12),
-          _MoveQualityBreakdown(),
           const SizedBox(height: 40),
         ],
       ),
@@ -146,26 +183,36 @@ class _ProfileContent extends StatelessWidget {
 }
 
 class _InsightChip extends StatelessWidget {
-  const _InsightChip({required this.label, required this.isSelected});
+  const _InsightChip(
+      {required this.label, required this.isSelected, required this.onTap});
   final String label;
   final bool isSelected;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: isSelected ? AppColors.primary : AppColors.backgroundSurface,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
         borderRadius: BorderRadius.circular(20),
-        border:
-            Border.all(color: isSelected ? Colors.transparent : Colors.white10),
-      ),
-      child: Text(
-        label,
-        style: TextStyle(
-          color: isSelected ? Colors.black : Colors.white70,
-          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-          fontSize: 12,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: isSelected ? AppColors.primary : AppColors.backgroundSurface,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+                color: isSelected ? Colors.transparent : Colors.white10),
+          ),
+          child: Text(
+            label,
+            style: TextStyle(
+              color: isSelected ? Colors.black : Colors.white70,
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+              fontSize: 12,
+            ),
+          ),
         ),
       ),
     );
@@ -258,24 +305,23 @@ class _RatingsGrid extends StatelessWidget {
       spacing: 12,
       runSpacing: 12,
       children: visibleRatings
-          .map((r) => Container(
+          .map((r) => SizedBox(
                 width: (MediaQuery.of(context).size.width - 52) / 2,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundSurface,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.white10),
-                ),
-                child: Column(
-                  children: [
-                    Text(r.$1.toUpperCase(),
-                        style:
-                            AppTextStyles.caption.copyWith(letterSpacing: 1)),
-                    const SizedBox(height: 8),
-                    Text('${r.$2}',
-                        style: AppTextStyles.headline
-                            .copyWith(fontSize: 22, color: Colors.white)),
-                  ],
+                child: ChtCard(
+                  onTap: () {},
+                  padding: const EdgeInsets.all(16),
+                  backgroundColor: AppColors.backgroundSurface,
+                  child: Column(
+                    children: [
+                      Text(r.$1.toUpperCase(),
+                          style:
+                              AppTextStyles.caption.copyWith(letterSpacing: 1)),
+                      const SizedBox(height: 8),
+                      Text('${r.$2}',
+                          style: AppTextStyles.headline
+                              .copyWith(fontSize: 22, color: Colors.white)),
+                    ],
+                  ),
                 ),
               ))
           .toList(),
@@ -293,6 +339,7 @@ class _WinLossSection extends StatelessWidget {
     if (total == 0) return const SizedBox.shrink();
 
     return ChtCard(
+      onTap: () {},
       padding: const EdgeInsets.all(20),
       backgroundColor: AppColors.backgroundSurface,
       child: Column(
@@ -372,7 +419,6 @@ class _MoveQualityBreakdown extends ConsumerWidget {
     final storage = ref.watch(storageServiceProvider);
 
     // Aggregating local analysis stats for realistic feel
-    // Note: Public API doesn't provide these globally, so we show our app's analysis stats
     final brilliantCount = storage.brilliantGamesData.length;
 
     return Container(
@@ -419,33 +465,47 @@ class _QualityRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (asset, color, label) = _config();
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        border: Border(
-            bottom: BorderSide(
-                color: Colors.white.withValues(alpha: 0.05), width: 0.5)),
-      ),
-      child: Row(
-        children: [
-          Image.asset(asset, width: 18, height: 18, fit: BoxFit.contain),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(label,
-                style: AppTextStyles.bodyMedium
-                    .copyWith(color: color, fontWeight: FontWeight.w600)),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {},
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          decoration: BoxDecoration(
+            border: Border(
+                bottom: BorderSide(
+                    color: Colors.white.withValues(alpha: 0.05), width: 0.5)),
           ),
-          Text(percentage,
-              style: AppTextStyles.bodyMedium.copyWith(color: Colors.white70)),
-          const SizedBox(width: 20),
-          SizedBox(
-            width: 60,
-            child: Text('$total',
-                textAlign: TextAlign.right,
-                style: AppTextStyles.bodyMedium.copyWith(
-                    color: Colors.white, fontWeight: FontWeight.bold)),
+          child: Row(
+            children: [
+              Image.asset(
+                asset,
+                width: 22,
+                height: 22,
+                fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) =>
+                    Icon(Icons.circle, color: color, size: 18),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Text(label,
+                    style: AppTextStyles.bodyMedium
+                        .copyWith(color: color, fontWeight: FontWeight.w600)),
+              ),
+              Text(percentage,
+                  style:
+                      AppTextStyles.bodyMedium.copyWith(color: Colors.white38)),
+              const SizedBox(width: 20),
+              SizedBox(
+                width: 60,
+                child: Text('$total',
+                    textAlign: TextAlign.right,
+                    style: AppTextStyles.bodyMedium.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

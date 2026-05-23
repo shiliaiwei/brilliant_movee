@@ -28,8 +28,8 @@ class GameRepository {
       final archives = await _chessCom.getArchiveUrls(username);
       if (archives.isEmpty) return [];
 
-      // Fetch last 6 months for history
-      final recentArchives = archives.reversed.take(6).toList();
+      // Fetch last 12 active months for history
+      final recentArchives = archives.reversed.take(12).toList();
 
       final results = await Future.wait(recentArchives.map((url) =>
           _chessCom.getGamesFromArchive(url).catchError((_) => <GameModel>[])));

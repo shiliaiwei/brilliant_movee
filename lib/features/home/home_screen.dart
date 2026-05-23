@@ -12,7 +12,8 @@ import '../../core/router/app_router.dart';
 import '../../data/models/leaderboard_model.dart';
 import '../../data/repositories/player_repository.dart';
 
-final _leaderboardCategoryProvider = StateProvider<String>((ref) => 'rapid');
+final _leaderboardCategoryProvider =
+    StateProvider<String>((ref) => 'chess_rapid');
 
 final _leaderboardProvider =
     FutureProvider.autoDispose<List<LeaderboardPlayer>>((ref) async {
@@ -131,9 +132,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                children: ['rapid', 'blitz', 'bullet', 'daily', 'daily_puzzle']
+                children: [
+                  'chess_rapid',
+                  'chess_blitz',
+                  'chess_bullet',
+                  'daily',
+                  'daily_puzzle'
+                ]
                     .map((cat) => _FilterChip(
-                          label: cat.replaceAll('_', ' ').toUpperCase(),
+                          label: cat
+                              .replaceAll('chess_', '')
+                              .replaceAll('_', ' ')
+                              .toUpperCase(),
                           isSelected: selectedCategory == cat,
                           onTap: () => ref
                               .read(_leaderboardCategoryProvider.notifier)

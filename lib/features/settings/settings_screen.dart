@@ -17,7 +17,7 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
     final notifier = ref.read(settingsProvider.notifier);
-    final storage = ref.read(storageServiceProvider);
+    final storage = ref.watch(storageServiceProvider);
 
     return Scaffold(
       backgroundColor: AppColors.backgroundDeep,

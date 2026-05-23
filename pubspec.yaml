@@ -78,6 +78,7 @@ flutter:
 
   assets:
     - assets/brand/
+    - assets/classification/
     - assets/boards/
     - assets/pieces/cburnett/
     - assets/pieces/alpha/
