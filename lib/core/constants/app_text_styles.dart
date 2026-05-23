@@ -2,26 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
-/// Typography system for Brilliant Movee.
-/// Uses google_fonts for Space Grotesk, Inter, and JetBrains Mono.
-/// All text styles are tokens — never use raw TextStyle outside this file.
+/// Typography system for Stupid Brilliant.
+/// Uses Inter for technical/general text, Roboto for labels, and Google Sans for Khmer.
 abstract final class AppTextStyles {
-  // ── Display — Space Grotesk 700 32sp ─────────────────────────────────────
-  static TextStyle get display => GoogleFonts.spaceGrotesk(
+  // ── Base configuration ──────────────────────────────────────────────────
+  static const String khmerFontFamily = 'GoogleSans';
+
+  // ── Display — Inter 700 32sp ─────────────────────────────────────────────
+  static TextStyle get display => GoogleFonts.inter(
         fontWeight: FontWeight.w700,
         fontSize: 32,
-        letterSpacing: 0.5,
+        letterSpacing: -0.5,
         color: AppColors.textPrimary,
-        height: 1.2,
+        height: 1.1,
       );
 
-  // ── Headline — Space Grotesk 600 24sp ────────────────────────────────────
-  static TextStyle get headline => GoogleFonts.spaceGrotesk(
+  // ── Headline — Inter 600 24sp ────────────────────────────────────────────
+  static TextStyle get headline => GoogleFonts.inter(
         fontWeight: FontWeight.w600,
         fontSize: 24,
-        letterSpacing: 0.2,
+        letterSpacing: -0.2,
         color: AppColors.textPrimary,
-        height: 1.3,
+        height: 1.2,
       );
 
   // ── Title — Inter 600 18sp ───────────────────────────────────────────────
@@ -29,7 +31,7 @@ abstract final class AppTextStyles {
         fontWeight: FontWeight.w600,
         fontSize: 18,
         color: AppColors.textPrimary,
-        height: 1.4,
+        height: 1.3,
       );
 
   // ── Body — Inter 400 14sp ────────────────────────────────────────────────
@@ -47,66 +49,77 @@ abstract final class AppTextStyles {
         height: 1.5,
       );
 
-  // ── Label — JetBrains Mono 500 12sp ─────────────────────────────────────
-  static TextStyle get label => GoogleFonts.jetBrainsMono(
+  // ── Label — Roboto 500 12sp ──────────────────────────────────────────────
+  static TextStyle get label => GoogleFonts.roboto(
         fontWeight: FontWeight.w500,
         fontSize: 12,
         color: AppColors.textPrimary,
         height: 1.4,
-        letterSpacing: 0.5,
+        letterSpacing: 0.1,
       );
 
-  // ── Caption — Inter 400 11sp ─────────────────────────────────────────────
-  static TextStyle get caption => GoogleFonts.inter(
+  // ── Caption — Roboto 400 11sp ────────────────────────────────────────────
+  static TextStyle get caption => GoogleFonts.roboto(
         fontWeight: FontWeight.w400,
         fontSize: 11,
         color: AppColors.textSecondary,
         height: 1.4,
       );
 
-  // ── Badge — Space Grotesk 700 10sp ───────────────────────────────────────
-  static TextStyle get badge => GoogleFonts.spaceGrotesk(
+  // ── Badge — Inter 700 10sp ───────────────────────────────────────────────
+  static TextStyle get badge => GoogleFonts.inter(
         fontWeight: FontWeight.w700,
         fontSize: 10,
-        letterSpacing: 0.8,
+        letterSpacing: 0.5,
         color: AppColors.textPrimary,
         height: 1.2,
       );
 
-  // ── Mono large — for eval/notation display ───────────────────────────────
-  static TextStyle get monoLarge => GoogleFonts.jetBrainsMono(
+  // ── Mono large — Roboto Mono 700 20sp ────────────────────────────────────
+  static TextStyle get monoLarge => GoogleFonts.robotoMono(
         fontWeight: FontWeight.w700,
         fontSize: 20,
         color: AppColors.textPrimary,
-        letterSpacing: 1.0,
+        letterSpacing: 0.5,
       );
 
-  static TextStyle get monoSmall => GoogleFonts.jetBrainsMono(
+  static TextStyle get monoSmall => GoogleFonts.robotoMono(
         fontWeight: FontWeight.w400,
         fontSize: 11,
         color: AppColors.textSecondary,
-        letterSpacing: 0.3,
+        letterSpacing: 0.1,
       );
 
   // ── App name / brand ─────────────────────────────────────────────────────
-  static TextStyle get appName => GoogleFonts.spaceGrotesk(
-        fontWeight: FontWeight.w700,
+  static TextStyle get appName => GoogleFonts.inter(
+        fontWeight: FontWeight.w800,
         fontSize: 28,
-        letterSpacing: 4.0,
+        letterSpacing: -1.0,
         color: AppColors.textPrimary,
-        height: 1.2,
+        height: 1.1,
       );
 
-  static TextStyle get tagline => GoogleFonts.jetBrainsMono(
+  static TextStyle get tagline => GoogleFonts.roboto(
         fontWeight: FontWeight.w400,
         fontSize: 13,
-        letterSpacing: 2.0,
+        letterSpacing: 0.5,
         color: AppColors.primary,
         height: 1.4,
       );
 
+  // ── Khmer Specific — Google Sans ─────────────────────────────────────────
+  static TextStyle get khmerBody => const TextStyle(
+        fontFamily: khmerFontFamily,
+        fontWeight: FontWeight.w400,
+        fontSize: 14,
+        color: AppColors.textPrimary,
+      );
+
   // ── Muted variants ───────────────────────────────────────────────────────
-  static TextStyle get bodyMuted => body.copyWith(color: AppColors.textSecondary);
-  static TextStyle get captionPrimary => caption.copyWith(color: AppColors.primary);
-  static TextStyle get labelMuted => label.copyWith(color: AppColors.textSecondary);
+  static TextStyle get bodyMuted =>
+      body.copyWith(color: AppColors.textSecondary);
+  static TextStyle get captionPrimary =>
+      caption.copyWith(color: AppColors.primary);
+  static TextStyle get labelMuted =>
+      label.copyWith(color: AppColors.textSecondary);
 }

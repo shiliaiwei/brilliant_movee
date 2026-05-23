@@ -91,5 +91,11 @@ flutter:
     - assets/sounds/futuristic/
     - assets/sounds/lisp/
     - assets/data/
+    - assets/fonts/Google_Sans/
 
-  # Fonts loaded via google_fonts package at runtime (SpaceGrotesk, Inter, JetBrainsMono).
+  fonts:
+    - family: GoogleSans
+      fonts:
+        - asset: assets/fonts/Google_Sans/GoogleSans-VariableFont_GRAD,opsz,wght.ttf
+        - asset: assets/fonts/Google_Sans/GoogleSans-Italic-VariableFont_GRAD,opsz,wght.ttf
+          style: italic

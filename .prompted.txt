@@ -80,3 +80,14 @@ Primary text and icons
 The Frontend Cloud
 
 Build, scale, and secure a faster, personalized web with Vercel. and change the logo use  as brand logo app https://github.com/shiliaiwei/brilliant_movee/blob/c33a2a964dd04f6a1b883730bb4c7ab8ab8c5da5/assets/classification/sigma.png
+
+
+
+pls remove the hightliht atext skip, enter user should add more like cheess .com and lichess org
+
+after success showing homescreeen dock menu , setting
+-redesgin all text should be black contrast , and ui black contrasst like github or vercel ui,
+
+font technical use  inter  roboto font from google and khmer translate billginguual khmer use google Google_Sans in saaset foodler
+
+add more menu call tip or reverse that that menu will present lessin tip trick of chess i will prvide later

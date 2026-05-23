@@ -586,7 +586,7 @@ class _WideHomeLayout extends StatelessWidget {
               const SizedBox(height: AppSpacing.xxl),
               ChtButton(
                 label: 'Analyze New Game',
-                onPressed: () => context.go(AppRoutes.history),
+                onPressed: () => context.push(AppRoutes.history),
                 icon: Icons.analytics_rounded,
               ),
             ],

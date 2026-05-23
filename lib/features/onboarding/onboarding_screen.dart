@@ -23,7 +23,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     const _OnboardingSlide(
       title: 'Replay Every Battle',
       subtitle:
-          'Load any Chess.com game and watch it unfold move by move with full board animation.',
+          'Load any Chess.com or Lichess game and watch it unfold move by move with full board animation.',
       icon: Icons.replay_rounded,
       gradientColors: [Color(0xFF000000), Color(0xFF111111)],
       accentColor: AppColors.primary,
@@ -71,32 +71,24 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       backgroundColor: AppColors.backgroundDeep,
       body: Stack(
         children: [
-          // Gradient background
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 400),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: slide.gradientColors,
-              ),
-            ),
-          ),
+          // Background
+          Container(color: AppColors.backgroundDeep),
 
           SafeArea(
             child: Column(
               children: [
-                // Skip button
+                // Skip button (Simplified, no highlight)
                 Align(
                   alignment: Alignment.topRight,
                   child: Padding(
                     padding: const EdgeInsets.all(AppSpacing.lg),
-                    child: TextButton(
-                      onPressed: _skip,
+                    child: GestureDetector(
+                      onTap: _skip,
                       child: Text(
                         'Skip',
-                        style: AppTextStyles.body.copyWith(
+                        style: AppTextStyles.caption.copyWith(
                           color: AppColors.textSecondary,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
@@ -124,7 +116,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       decoration: BoxDecoration(
                         color: i == _currentStep
                             ? slide.accentColor
-                            : AppColors.textSecondary.withValues(alpha: 0.4),
+                            : AppColors.divider,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     );
@@ -189,7 +181,7 @@ class _SlideContent extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Icon
+          // Icon (No shadow as requested)
           Container(
             width: 120,
             height: 120,
@@ -197,7 +189,7 @@ class _SlideContent extends StatelessWidget {
               shape: BoxShape.circle,
               color: slide.accentColor.withValues(alpha: 0.1),
               border: Border.all(
-                color: slide.accentColor.withValues(alpha: 0.3),
+                color: slide.accentColor.withValues(alpha: 0.2),
                 width: 1,
               ),
             ),

@@ -119,10 +119,12 @@ class _HeroSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.lg),
-          Text(player.displayName, style: AppTextStyles.headline),
+          Text(player.displayName,
+              style: AppTextStyles.headline.copyWith(color: AppColors.color10)),
           Text(
             '@${player.username}',
-            style: AppTextStyles.bodyMuted.copyWith(letterSpacing: 1),
+            style: AppTextStyles.bodyMuted
+                .copyWith(letterSpacing: 1, color: AppColors.color9),
           ),
           if (player.country != null) ...[
             const SizedBox(height: AppSpacing.sm),
@@ -201,6 +203,7 @@ class _WinLossSection extends StatelessWidget {
 
     return ChtCard(
       padding: const EdgeInsets.all(AppSpacing.lg),
+      backgroundColor: AppColors.color1,
       child: Column(
         children: [
           Row(
@@ -238,7 +241,9 @@ class _WinLossSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Total Games: $total', style: AppTextStyles.caption),
+              Text('Total Games: $total',
+                  style:
+                      AppTextStyles.caption.copyWith(color: AppColors.color9)),
               Text(
                 'Win Rate: ${(stats.winRate * 100).toStringAsFixed(1)}%',
                 style: AppTextStyles.caption.copyWith(
@@ -267,7 +272,9 @@ class _ResultIndicator extends StatelessWidget {
         Text(label,
             style: AppTextStyles.caption
                 .copyWith(color: color, fontWeight: FontWeight.bold)),
-        Text('$value', style: AppTextStyles.title.copyWith(fontSize: 18)),
+        Text('$value',
+            style: AppTextStyles.title
+                .copyWith(fontSize: 18, color: AppColors.color10)),
       ],
     );
   }
@@ -325,17 +332,20 @@ class _AnalysisStatTile extends StatelessWidget {
           2,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.backgroundSurface,
+        color: AppColors.color1,
         borderRadius: BorderRadius.circular(AppRadius.lg),
-        border: Border.all(color: color.withValues(alpha: 0.2), width: 1),
+        border: Border.all(color: AppColors.divider, width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, color: color, size: 20),
           const SizedBox(height: 12),
-          Text(value, style: AppTextStyles.headline.copyWith(fontSize: 22)),
-          Text(label, style: AppTextStyles.caption),
+          Text(value,
+              style: AppTextStyles.headline
+                  .copyWith(fontSize: 22, color: AppColors.color10)),
+          Text(label,
+              style: AppTextStyles.caption.copyWith(color: AppColors.color9)),
         ],
       ),
     );

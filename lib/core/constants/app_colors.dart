@@ -1,35 +1,32 @@
 import 'package:flutter/material.dart';
 
-/// Obsidian Pure Black color palette for Stupid Brilliant.
+/// Obsidian Pure Black / GitHub-Vercel High Contrast palette for Stupid Brilliant.
 abstract final class AppColors {
   // ── Backgrounds ──────────────────────────────────────────────────────────
-  static const Color backgroundDeep = Color(0xFF000000); // Pure Black (Base)
-  static const Color backgroundSurface =
-      Color(0xFF111111); // Deep Grey (Panels)
-  static const Color backgroundElevated = Color(0xFF161616); // Elevated Grey
+  static const Color backgroundDeep = Color(0xFF000000); // Base (Pure Black)
+  static const Color backgroundSurface = Color(0xFF111111); // Panels (Color 1)
+  static const Color backgroundElevated = Color(0xFF161616); // Deep grey
 
-  // ── States ───────────────────────────────────────────────────────────────
-  static const Color backgroundHover = Color(0xFF222222); // Hover state
-  static const Color backgroundActive = Color(0xFF333333); // Active state
-  static const Color glassOverlay = Color(0x1AFFFFFF);
+  // ── Component States (Requested Colors 1–3) ─────────────────────────────
+  static const Color color1 = Color(0xFF111111); // Default background
+  static const Color color2 = Color(0xFF222222); // Hover background
+  static const Color color3 = Color(0xFF333333); // Active background
 
-  // ── Primary ──────────────────────────────────────────────────────────────
-  static const Color primary = Color(0xFF00BFA5); // Teal
-  static const Color primaryDim = Color(0xFF00897B);
-  static const Color primaryGlow = Color(0x3300BFA5);
-  static const Color primaryBorder = Color(0xFF222222);
+  // ── High Contrast (Requested Colors 7–8) ────────────────────────────────
+  static const Color color7 = Color(0xFFEDEDED); // High contrast background
+  static const Color color8 = Color(0xFFFFFFFF); // Hover high contrast
 
-  // ── Secondary / Accent ───────────────────────────────────────────────────
+  // ── Text & Icons (Requested Colors 9–10) ────────────────────────────────
+  static const Color color9 = Color(0xFF999999); // Secondary text and icons
+  static const Color color10 = Color(0xFFEDEDED); // Primary text and icons
+
+  // ── Semantic & Aliases ──────────────────────────────────────────────────
+  static const Color primary = Color(0xFF00BFA5);
   static const Color secondary = Color(0xFF222222);
   static const Color tertiary = Color(0xFF333333);
 
-  // ── High Contrast ────────────────────────────────────────────────────────
-  static const Color highContrast = Color(0xFF222222); // Color 7
-  static const Color highContrastHover = Color(0xFF333333); // Color 8
-
-  // ── Text & Icons ─────────────────────────────────────────────────────────
-  static const Color textPrimary = Color(0xFFEDEDED); // Off-white (Color 10)
-  static const Color textSecondary = Color(0xFF999999); // Muted Grey (Color 9)
+  static const Color textPrimary = color10;
+  static const Color textSecondary = color9;
   static const Color textDisabled = Color(0xFF444444);
 
   // ── Move Quality ─────────────────────────────────────────────────────────
@@ -43,7 +40,7 @@ abstract final class AppColors {
   static const Color blunder = Color(0xFFD32F2F);
   static const Color miss = Color(0xFF8E24AA);
 
-  // ── Semantic ─────────────────────────────────────────────────────────────
+  // ── Semantic Status ──────────────────────────────────────────────────────
   static const Color win = Color(0xFF00C853);
   static const Color loss = Color(0xFFD32F2F);
   static const Color draw = Color(0xFF999999);
@@ -86,8 +83,11 @@ abstract final class AppColors {
     Color(0xFF000000),
   ];
 
-  static const Color scrim = Color(0xCC000000);
   static const Color divider = Color(0xFF222222);
+  static const Color primaryGlow = Color(0x1A00BFA5);
+  static const Color primaryBorder = Color(0xFF222222);
+  static const Color scrim = Color(0xCC000000);
+  static const Color glassOverlay = Color(0x0DFFFFFF);
 
   // ── M3 ColorScheme ───────────────────────────────────────────────────────
   static ColorScheme get m3DarkScheme => const ColorScheme.dark().copyWith(
@@ -95,9 +95,9 @@ abstract final class AppColors {
         onSurface: textPrimary,
         primary: primary,
         onPrimary: Colors.white,
-        secondary: Color(0xFF222222),
+        secondary: color2,
         onSecondary: textPrimary,
         surfaceContainerHighest: backgroundSurface,
-        outline: backgroundActive,
+        outline: color3,
       );
 }
