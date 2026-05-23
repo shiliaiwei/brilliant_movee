@@ -3,8 +3,8 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:ffmpeg_kit_flutter_full/ffmpeg_kit.dart';
-import 'package:ffmpeg_kit_flutter_full/return_code.dart';
+// import 'package:ffmpeg_kit_flutter_full_gpl/ffmpeg_kit.dart';
+// import 'package:ffmpeg_kit_flutter_full_gpl/return_code.dart';
 
 class RecordingService {
   RecordingService._();
@@ -38,11 +38,10 @@ class RecordingService {
       final outputPath =
           '${tempDir.path}/chess_review_${DateTime.now().millisecondsSinceEpoch}.mp4';
 
-      // FFmpeg command to stitch images into a video
-      // -r: input framerate
-      // -i: input pattern
-      // -c:v libx264: video codec
-      // -pix_fmt yuv420p: compatibility for most players
+      // FFmpeg recording is temporarily disabled due to dependency issues.
+      // To re-enable, add ffmpeg_kit_flutter to pubspec.yaml and uncomment below.
+
+      /*
       final command =
           '-r $fps -i ${framesDir.path}/frame_%04d.png -c:v libx264 -pix_fmt yuv420p -y $outputPath';
 
@@ -55,6 +54,11 @@ class RecordingService {
         debugPrint('FFmpeg failed: ${await session.getOutput()}');
         return null;
       }
+      */
+
+      debugPrint(
+          'Video generation is currently disabled (FFmpeg dependency missing). Frames saved to ${framesDir.path}');
+      return null;
     } catch (e) {
       debugPrint('Recording error: $e');
       return null;

@@ -2,6 +2,9 @@
 
     git push origin main --tags
     flutter build apk --release
+# In /Users/Apple16/Desktop/brilliant_movee:
+git add . && git commit -m "style: apply dart fix and clean up code" && git push origin main
+
 
 
 
