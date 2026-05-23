@@ -10,6 +10,7 @@ import '../board/board_state.dart';
 class ReviewState {
   const ReviewState({
     this.pgn = '',
+    this.gameId,
     this.game,
     this.boardStates = const [],
     this.currentPlyIndex = 0,
@@ -21,6 +22,7 @@ class ReviewState {
   });
 
   final String pgn;
+  final String? gameId;
   final PgnGame? game;
   final List<BoardState> boardStates;
   final int currentPlyIndex;
@@ -48,6 +50,7 @@ class ReviewState {
 
   ReviewState copyWith({
     String? pgn,
+    String? gameId,
     PgnGame? game,
     List<BoardState>? boardStates,
     int? currentPlyIndex,
@@ -59,6 +62,7 @@ class ReviewState {
   }) {
     return ReviewState(
       pgn: pgn ?? this.pgn,
+      gameId: gameId ?? this.gameId,
       game: game ?? this.game,
       boardStates: boardStates ?? this.boardStates,
       currentPlyIndex: currentPlyIndex ?? this.currentPlyIndex,
@@ -78,7 +82,7 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
   final AudioService _audio;
   final StockfishIsolate _engine = StockfishIsolate.instance;
 
-  Future<void> loadGame(String pgn) async {
+  Future<void> loadGame(String pgn, {String? gameId, int? startAtMove}) async {
     if (pgn.isEmpty) {
       state = state.copyWith(
         error: 'No PGN data provided',
@@ -95,9 +99,10 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
 
       state = state.copyWith(
         pgn: pgn,
+        gameId: gameId,
         game: game,
         boardStates: boardStates,
-        currentPlyIndex: 0,
+        currentPlyIndex: startAtMove ?? 0,
         classifications: List.filled(game.moves.length, null),
         isLoading: false,
       );
@@ -254,6 +259,15 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
             : null,
         playedMove: move.san,
       );
+
+      // PERSIST BRILLIANT MOVES
+      if (classification.quality == MoveQuality.brilliant) {
+        _storage.saveBrilliantGame(
+          state.gameId ?? 'manual_${DateTime.now().millisecondsSinceEpoch}',
+          state.pgn,
+          plyIndex,
+        );
+      }
 
       classifications[plyIndex - 1] = classification;
       analyzed++;

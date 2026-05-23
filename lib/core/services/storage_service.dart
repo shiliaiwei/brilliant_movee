@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,10 +20,10 @@ abstract final class StorageKeys {
   static const String highlightLastMove = 'highlight_last_move';
   static const String moveAnimationSpeed = 'move_animation_speed';
   static const String brilliantSensitivity = 'brilliant_sensitivity';
+  static const String brilliantGames = 'brilliant_games'; // List of JSON
 }
 
 /// Service for all local key-value storage operations.
-/// All screens access storage through this service — never directly.
 class StorageService {
   StorageService(this._prefs);
 
@@ -116,6 +117,27 @@ class StorageService {
       _prefs.getString(StorageKeys.brilliantSensitivity) ?? 'medium';
   Future<void> setBrilliantSensitivity(String sensitivity) =>
       _prefs.setString(StorageKeys.brilliantSensitivity, sensitivity);
+
+  // ── Analysis Stats ────────────────────────────────────────────────────────
+  List<String> get brilliantGamesData =>
+      _prefs.getStringList(StorageKeys.brilliantGames) ?? [];
+
+  Future<void> saveBrilliantGame(
+      String gameId, String pgn, int moveIndex) async {
+    final list = brilliantGamesData.toList();
+    // Use hash or similar to check for duplicates if ID is missing
+    if (list.any((item) => item.contains(gameId))) return;
+
+    final entry = jsonEncode({
+      'id': gameId,
+      'pgn': pgn,
+      'move': moveIndex,
+      'timestamp': DateTime.now().millisecondsSinceEpoch,
+    });
+
+    list.add(entry);
+    await _prefs.setStringList(StorageKeys.brilliantGames, list);
+  }
 
   // ── Cache management ──────────────────────────────────────────────────────
   Future<void> clearAll() => _prefs.clear();

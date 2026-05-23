@@ -33,7 +33,15 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(reviewProvider.notifier).loadGame(widget.pgn);
+      final moveIndexStr =
+          GoRouterState.of(context).uri.queryParameters['move'];
+      final startAtMove = int.tryParse(moveIndexStr ?? '');
+
+      ref.read(reviewProvider.notifier).loadGame(
+            widget.pgn,
+            gameId: widget.gameId,
+            startAtMove: startAtMove,
+          );
     });
   }
 
@@ -170,7 +178,10 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
 
 class _ReviewBody extends StatelessWidget {
   const _ReviewBody(
-      {required this.state, required this.settings, required this.isFlipped});
+      {super.key,
+      required this.state,
+      required this.settings,
+      required this.isFlipped});
   final ReviewState state;
   final SettingsState settings;
   final bool isFlipped;

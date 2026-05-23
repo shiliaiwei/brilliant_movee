@@ -9,6 +9,8 @@ import '../../core/widgets/cht_card.dart';
 import '../../core/widgets/cht_badge.dart';
 import '../../core/widgets/cht_error_state.dart';
 import '../../core/widgets/shimmer_loader.dart';
+import '../../core/services/storage_service.dart';
+import '../../core/router/app_router.dart';
 import '../../core/utils/responsive.dart';
 import '../../data/models/player_model.dart';
 import '../../data/repositories/player_repository.dart';
@@ -280,73 +282,106 @@ class _ResultIndicator extends StatelessWidget {
   }
 }
 
-class _AnalysisStatsGrid extends StatelessWidget {
+class _AnalysisStatsGrid extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final storage = ref.watch(storageServiceProvider);
+    final brilliantGames = storage.brilliantGamesData;
+
+    // Simple logic: total games = connected account history length (approx)
+    // For now use hardcoded values if stats unavailable, or actual counts if possible
+    final brilliantCount = brilliantGames.length;
+
     return Wrap(
       spacing: AppSpacing.md,
       runSpacing: AppSpacing.md,
       children: [
         _AnalysisStatTile(
-            label: 'Brilliant',
-            value: '12',
-            color: AppColors.brilliant,
-            icon: Icons.auto_awesome),
+          label: 'Brilliant',
+          value: '$brilliantCount',
+          color: AppColors.brilliant,
+          icon: Icons.auto_awesome,
+          onTap: brilliantCount > 0
+              ? () => context.push(AppRoutes.brilliant)
+              : null,
+        ),
         _AnalysisStatTile(
-            label: 'Great',
-            value: '45',
-            color: AppColors.great,
-            icon: Icons.thumb_up_rounded),
+          label: 'Great',
+          value: '45',
+          color: AppColors.great,
+          icon: Icons.thumb_up_rounded,
+        ),
         _AnalysisStatTile(
-            label: 'Accuracy',
-            value: '82%',
-            color: AppColors.primary,
-            icon: Icons.analytics_rounded),
+          label: 'Accuracy',
+          value: '82%',
+          color: AppColors.primary,
+          icon: Icons.analytics_rounded,
+        ),
         _AnalysisStatTile(
-            label: 'Games',
-            value: '128',
-            color: AppColors.secondary,
-            icon: Icons.history_rounded),
+          label: 'Games',
+          value: '128',
+          color: AppColors.secondary,
+          icon: Icons.history_rounded,
+        ),
       ],
     );
   }
 }
 
 class _AnalysisStatTile extends StatelessWidget {
-  const _AnalysisStatTile(
-      {required this.label,
-      required this.value,
-      required this.color,
-      required this.icon});
+  const _AnalysisStatTile({
+    required this.label,
+    required this.value,
+    required this.color,
+    required this.icon,
+    this.onTap,
+  });
+
   final String label;
   final String value;
   final Color color;
   final IconData icon;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: (MediaQuery.of(context).size.width -
-              context.screenPadding * 2 -
-              AppSpacing.md) /
-          2,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.color1,
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-        border: Border.all(color: AppColors.divider, width: 1),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, color: color, size: 20),
-          const SizedBox(height: 12),
-          Text(value,
-              style: AppTextStyles.headline
-                  .copyWith(fontSize: 22, color: AppColors.color10)),
-          Text(label,
-              style: AppTextStyles.caption.copyWith(color: AppColors.color9)),
-        ],
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: (MediaQuery.of(context).size.width -
+                context.screenPadding * 2 -
+                AppSpacing.md) /
+            2,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.color1,
+          borderRadius: BorderRadius.circular(AppRadius.lg),
+          border: Border.all(
+            color: onTap != null
+                ? color.withValues(alpha: 0.5)
+                : AppColors.divider,
+            width: onTap != null ? 1.5 : 1,
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(icon, color: color, size: 20),
+                if (onTap != null)
+                  Icon(Icons.arrow_forward_ios_rounded, color: color, size: 12),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Text(value,
+                style: AppTextStyles.headline
+                    .copyWith(fontSize: 22, color: AppColors.color10)),
+            Text(label,
+                style: AppTextStyles.caption.copyWith(color: AppColors.color9)),
+          ],
+        ),
       ),
     );
   }

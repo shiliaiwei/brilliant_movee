@@ -10,6 +10,7 @@ import '../../features/history/history_screen.dart';
 import '../../features/review/review_screen.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/settings/board_selector_screen.dart';
+import '../../features/profile/brilliant_games_screen.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_text_styles.dart';
 import '../services/storage_service.dart';
@@ -27,6 +28,7 @@ abstract final class AppRoutes {
   static const String settings = '/settings';
   static const String boardSelector = '/settings/board';
   static const String tips = '/tips';
+  static const String brilliant = '/brilliant';
 }
 
 class _TabItem {
@@ -267,6 +269,9 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
           path: AppRoutes.boardSelector,
           builder: (context, state) => const BoardSelectorScreen()),
+      GoRoute(
+          path: AppRoutes.brilliant,
+          builder: (context, state) => const BrilliantGamesScreen()),
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) =>
             _ShellScaffold(navigationShell: shell),
