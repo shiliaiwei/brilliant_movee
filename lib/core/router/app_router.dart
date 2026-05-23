@@ -51,8 +51,8 @@ const _tabs = [
     route: AppRoutes.home,
   ),
   _TabItem(
-    icon: Icons.history_outlined,
-    selectedIcon: Icons.history_rounded,
+    icon: Icons.sports_esports_outlined,
+    selectedIcon: Icons.sports_esports_rounded,
     label: 'Games',
     route: AppRoutes.history,
   ),
