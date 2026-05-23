@@ -13,6 +13,7 @@ import '../../core/services/storage_service.dart';
 import '../../core/router/app_router.dart';
 import '../../data/models/game_model.dart';
 import '../../data/repositories/game_repository.dart';
+import '../search/search_screen.dart';
 
 // Filter state
 enum GameFilter { all, win, loss, draw, bullet, blitz, rapid }
@@ -24,14 +25,37 @@ final _historyGamesProvider =
     FutureProvider.autoDispose<List<GameModel>>((ref) async {
   final username = ref.read(storageServiceProvider).connectedUsername;
   if (username == null) return [];
-  return ref.read(gameRepositoryProvider).getRecentGames(username);
+  // Increase depth to 12 months to show more games
+  return ref
+      .read(gameRepositoryProvider)
+      .getRecentGames(username, forceRefresh: true);
 });
 
-class HistoryScreen extends ConsumerWidget {
+class HistoryScreen extends ConsumerStatefulWidget {
   const HistoryScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HistoryScreen> createState() => _HistoryScreenState();
+}
+
+class _HistoryScreenState extends ConsumerState<HistoryScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final username = ref.read(storageServiceProvider).connectedUsername;
     final gamesAsync = ref.watch(_historyGamesProvider);
     final filter = ref.watch(_historyFilterProvider);
@@ -39,68 +63,82 @@ class HistoryScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundDeep,
       appBar: AppBar(
-        title: const Text('Analysis History'),
+        title: const Text('GAMES & ANALYSIS'),
         centerTitle: true,
         backgroundColor: AppColors.backgroundDeep,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh_rounded, size: 22),
-            onPressed: () => ref.invalidate(_historyGamesProvider),
-            tooltip: 'Refresh',
-          ),
-        ],
+        bottom: TabBar(
+          controller: _tabController,
+          indicatorColor: AppColors.primary,
+          labelColor: Colors.white,
+          unselectedLabelColor: AppColors.textSecondary,
+          tabs: const [
+            Tab(text: 'HISTORY'),
+            Tab(text: 'ANALYZE'),
+          ],
+        ),
       ),
-      body: Column(
+      body: TabBarView(
+        controller: _tabController,
         children: [
-          _FilterBar(
-            selected: filter,
-            onSelect: (f) =>
-                ref.read(_historyFilterProvider.notifier).state = f,
-          ),
-          const Divider(),
-          Expanded(
-            child: gamesAsync.when(
-              loading: () => ListView.builder(
-                padding: const EdgeInsets.all(AppSpacing.lg),
-                itemCount: 8,
-                itemBuilder: (_, __) => const GameCardShimmer(),
+          // History Tab
+          Column(
+            children: [
+              _FilterBar(
+                selected: filter,
+                onSelect: (f) =>
+                    ref.read(_historyFilterProvider.notifier).state = f,
               ),
-              error: (e, _) => ChtErrorState(
-                title: 'Failed to load games',
-                description:
-                    'Could not fetch your recent games from Chess.com.',
-                onRetry: () => ref.invalidate(_historyGamesProvider),
-              ),
-              data: (games) {
-                final filtered = _applyFilter(games, filter, username ?? '');
-                if (filtered.isEmpty) {
-                  return ChtEmptyState(
-                    title: 'No games found',
-                    description: filter == GameFilter.all
-                        ? 'Try connecting your account or playing some games.'
-                        : 'No games match your current filter.',
-                    icon: Icons.history_rounded,
-                  );
-                }
-                return RefreshIndicator(
-                  color: AppColors.primary,
-                  onRefresh: () async => ref.invalidate(_historyGamesProvider),
-                  child: ListView.builder(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.lg,
-                      vertical: AppSpacing.md,
-                    ),
-                    itemCount: filtered.length,
-                    itemBuilder: (context, i) => _EnhancedGameCard(
-                      game: filtered[i],
-                      username: username ?? '',
-                    ),
+              const Divider(height: 1),
+              Expanded(
+                child: gamesAsync.when(
+                  loading: () => ListView.builder(
+                    padding: const EdgeInsets.all(AppSpacing.lg),
+                    itemCount: 8,
+                    itemBuilder: (_, __) => const GameCardShimmer(),
                   ),
-                );
-              },
-            ),
+                  error: (e, _) => ChtErrorState(
+                    title: 'Failed to load games',
+                    description:
+                        'Could not fetch your recent games. Check your connection.',
+                    onRetry: () => ref.invalidate(_historyGamesProvider),
+                  ),
+                  data: (games) {
+                    final filtered =
+                        _applyFilter(games, filter, username ?? '');
+                    if (filtered.isEmpty) {
+                      return ChtEmptyState(
+                        title: 'No games found',
+                        description: filter == GameFilter.all
+                            ? 'Try connecting your account or playing some games.'
+                            : 'No games match your current filter.',
+                        icon: Icons.history_rounded,
+                      );
+                    }
+                    return RefreshIndicator(
+                      color: AppColors.primary,
+                      onRefresh: () async =>
+                          ref.invalidate(_historyGamesProvider),
+                      child: ListView.builder(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.lg,
+                          vertical: AppSpacing.md,
+                        ),
+                        itemCount: filtered.length,
+                        itemBuilder: (context, i) => _EnhancedGameCard(
+                          game: filtered[i],
+                          username: username ?? '',
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
+
+          // Analyze Tab (Search)
+          const SearchScreen(fromOnboarding: false),
         ],
       ),
     );
@@ -234,12 +272,14 @@ class _EnhancedGameCardState extends State<_EnhancedGameCard> {
                           const SizedBox(height: 6),
                           Text(
                             'vs $opponent ($oppRating)',
-                            style: AppTextStyles.bodyMedium
-                                .copyWith(fontWeight: FontWeight.w600),
+                            style: AppTextStyles.bodyMedium.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white),
                           ),
                           Text(
                             widget.game.terminationFor(widget.username),
-                            style: AppTextStyles.caption,
+                            style: AppTextStyles.caption
+                                .copyWith(color: AppColors.textSecondary),
                           ),
                         ],
                       ),

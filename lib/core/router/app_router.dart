@@ -52,7 +52,7 @@ const _tabs = [
   _TabItem(
     icon: Icons.history_outlined,
     selectedIcon: Icons.history_rounded,
-    label: 'History',
+    label: 'Games',
     route: AppRoutes.history,
   ),
   _TabItem(
@@ -60,12 +60,6 @@ const _tabs = [
     selectedIcon: Icons.lightbulb_rounded,
     label: 'Tips',
     route: AppRoutes.tips,
-  ),
-  _TabItem(
-    icon: Icons.analytics_outlined,
-    selectedIcon: Icons.analytics_rounded,
-    label: 'Analyze',
-    route: '/analyze',
   ),
   _TabItem(
     icon: Icons.settings_outlined,
@@ -105,7 +99,7 @@ class _MobileShell extends StatelessWidget {
       body: navigationShell,
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
-          color: AppColors.backgroundSurface,
+          color: AppColors.backgroundDeep,
           border: Border(top: BorderSide(color: AppColors.divider, width: 0.5)),
         ),
         child: SafeArea(
@@ -197,7 +191,7 @@ class _SideRail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: extended ? 220 : 72,
-      color: AppColors.backgroundSurface,
+      color: AppColors.backgroundDeep,
       child: Column(
         children: [
           const SizedBox(height: 32),
@@ -292,16 +286,6 @@ final routerProvider = Provider<GoRouter>((ref) {
                 path: AppRoutes.tips,
                 builder: (context, state) =>
                     const _PlaceholderScreen(title: 'Tips & Tricks'))
-          ]),
-          StatefulShellBranch(routes: [
-            GoRoute(
-                path: '/analyze',
-                builder: (context, state) {
-                  final storage = ref.read(storageServiceProvider);
-                  return storage.connectedUsername != null
-                      ? const HistoryScreen()
-                      : const SearchScreen();
-                })
           ]),
           StatefulShellBranch(routes: [
             GoRoute(

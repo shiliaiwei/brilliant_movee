@@ -52,17 +52,22 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.backgroundSurface,
-        title: Text('Exit Review?', style: AppTextStyles.title),
-        content: const Text('Do you want to stop the current analysis?'),
+        title: Text('EXIT REVIEW?',
+            style: AppTextStyles.title
+                .copyWith(color: Colors.white, letterSpacing: 1)),
+        content: const Text('Do you want to stop analysis and return?',
+            style: TextStyle(color: Colors.white70)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel',
+            child: const Text('CANCEL',
                 style: TextStyle(color: AppColors.textSecondary)),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Exit', style: TextStyle(color: AppColors.loss)),
+            child: const Text('EXIT',
+                style: TextStyle(
+                    color: AppColors.loss, fontWeight: FontWeight.bold)),
           ),
         ],
       ),
@@ -90,11 +95,14 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
       child: Scaffold(
         backgroundColor: AppColors.backgroundDeep,
         appBar: AppBar(
-          title: const Text('Game Review'),
+          title: Text('GAME REVIEW',
+              style: AppTextStyles.headline.copyWith(
+                  fontSize: 16, letterSpacing: 2, color: Colors.white)),
           centerTitle: true,
           backgroundColor: AppColors.backgroundDeep,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
+            icon: const Icon(Icons.arrow_back_ios_new_rounded,
+                size: 20, color: Colors.white),
             onPressed: () async {
               final shouldPop = await _onWillPop();
               if (shouldPop && mounted) context.pop();
@@ -102,7 +110,8 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
           ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.flip_camera_android_rounded, size: 22),
+              icon: const Icon(Icons.flip_camera_android_rounded,
+                  size: 22, color: Colors.white),
               onPressed: () => setState(() => _isFlipped = !_isFlipped),
             ),
             if (state.isAnalyzing)
@@ -127,7 +136,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                 child: CircularProgressIndicator(color: AppColors.primary))
             : state.error != null
                 ? ChtErrorState(
-                    title: 'Error',
+                    title: 'ERROR',
                     description: state.error!,
                     onRetry: () =>
                         ref.read(reviewProvider.notifier).loadGame(widget.pgn),
@@ -174,7 +183,7 @@ class _ReviewBody extends StatelessWidget {
 
     return Column(
       children: [
-        // Centered Board Section
+        // Board Section
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -182,37 +191,46 @@ class _ReviewBody extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    // Eval Bar
                     AnimatedEvalBar(
-                        evalCp: isFlipped ? -evalCp : evalCp,
-                        height: 320,
-                        width: 8),
-                    const SizedBox(width: 8),
+                      evalCp: isFlipped ? -evalCp : evalCp,
+                      height: MediaQuery.of(context).size.width - 64,
+                      width: 8,
+                    ),
+                    const SizedBox(width: 12),
+                    // Chess Board
                     Expanded(
-                      child: boardState != null
-                          ? ChessBoardWidget(
-                              boardState: boardState,
-                              pieceSetId: settings.pieceSet,
-                              boardThemeId: settings.boardTheme,
-                              showCoordinates: settings.showCoordinates,
-                              highlightLastMove: settings.highlightLastMove,
-                              moveQuality: classification?.quality,
-                              isFlipped: isFlipped,
-                            )
-                          : const SizedBox.square(dimension: 300),
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: boardState != null
+                            ? ChessBoardWidget(
+                                boardState: boardState,
+                                pieceSetId: settings.pieceSet,
+                                boardThemeId: settings.boardTheme,
+                                showCoordinates: settings.showCoordinates,
+                                highlightLastMove: settings.highlightLastMove,
+                                moveQuality: classification?.quality,
+                                isFlipped: isFlipped,
+                              )
+                            : Container(color: AppColors.backgroundSurface),
+                      ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 32),
+              // Navigation Controls
               _NavigationControls(state: state),
-              const SizedBox(height: 16),
+              const SizedBox(height: 24),
+              // Move Notation Strip
               _MoveNotationStrip(state: state),
             ],
           ),
         ),
 
-        // Analysis Footer
+        // Bottom Analysis Panel
         _AnalysisPanel(state: state, classification: classification),
       ],
     );
@@ -232,17 +250,17 @@ class _NavigationControls extends ConsumerWidget {
         _NavIconButton(
             icon: Icons.first_page_rounded,
             onTap: state.isAtStart ? null : notifier.goToStart),
-        const SizedBox(width: 12),
+        const SizedBox(width: 16),
         _NavIconButton(
             icon: Icons.chevron_left_rounded,
             onTap: state.isAtStart ? null : notifier.goBack,
             large: true),
-        const SizedBox(width: 24),
+        const SizedBox(width: 32),
         _NavIconButton(
             icon: Icons.chevron_right_rounded,
             onTap: state.isAtEnd ? null : notifier.goForward,
             large: true),
-        const SizedBox(width: 12),
+        const SizedBox(width: 16),
         _NavIconButton(
             icon: Icons.last_page_rounded,
             onTap: state.isAtEnd ? null : notifier.goToEnd),
@@ -264,19 +282,18 @@ class _NavIconButton extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(40),
         child: Container(
-          padding: EdgeInsets.all(large ? 12 : 8),
+          padding: EdgeInsets.all(large ? 14 : 10),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: onTap == null
-                ? Colors.transparent
-                : AppColors.backgroundSurface,
+            color: onTap == null ? Colors.transparent : AppColors.color1,
+            border: onTap == null
+                ? null
+                : Border.all(color: AppColors.divider, width: 1),
           ),
           child: Icon(icon,
-              color: onTap == null
-                  ? AppColors.textDisabled
-                  : AppColors.textPrimary,
+              color: onTap == null ? AppColors.textDisabled : Colors.white,
               size: large ? 32 : 24),
         ),
       ),
@@ -292,10 +309,10 @@ class _MoveNotationStrip extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     if (state.game == null) return const SizedBox.shrink();
     return SizedBox(
-      height: 48,
+      height: 54,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         itemCount: state.game!.moves.length,
         itemBuilder: (context, i) {
           final ply = i + 1;
@@ -305,12 +322,13 @@ class _MoveNotationStrip extends ConsumerWidget {
             padding: const EdgeInsets.only(right: 8),
             child: ChoiceChip(
               label: Text(move.san,
-                  style:
-                      TextStyle(fontWeight: isActive ? FontWeight.bold : null)),
+                  style: TextStyle(
+                      color: isActive ? Colors.white : Colors.white70,
+                      fontWeight: isActive ? FontWeight.bold : null)),
               selected: isActive,
               onSelected: (_) => ref.read(reviewProvider.notifier).goToPly(ply),
-              selectedColor: AppColors.primaryGlow,
-              backgroundColor: AppColors.backgroundSurface,
+              selectedColor: AppColors.color3,
+              backgroundColor: AppColors.color1,
               side: BorderSide(
                   color: isActive ? AppColors.primary : AppColors.divider),
               showCheckmark: false,
@@ -332,10 +350,11 @@ class _AnalysisPanel extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
+      padding: const EdgeInsets.fromLTRB(24, 24, 24, 40),
       decoration: const BoxDecoration(
         color: AppColors.backgroundSurface,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+        border: Border(top: BorderSide(color: AppColors.divider, width: 1)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -345,25 +364,30 @@ class _AnalysisPanel extends ConsumerWidget {
             Row(
               children: [
                 Text(state.game!.moves[state.currentPlyIndex - 1].san,
-                    style: AppTextStyles.monoLarge),
-                const SizedBox(width: 12),
+                    style: AppTextStyles.monoLarge
+                        .copyWith(color: Colors.white, fontSize: 24)),
+                const SizedBox(width: 16),
                 _ClassificationTinyBadge(quality: classification!.quality),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 12),
             Text(classification!.plainExplanation,
-                style: AppTextStyles.bodyMuted),
+                style: AppTextStyles.body.copyWith(color: Colors.white70)),
           ] else
-            const Text('Analyze this position...',
-                style: TextStyle(color: AppColors.textSecondary)),
-          const SizedBox(height: 20),
+            const Text('SELECT A MOVE TO ANALYZE',
+                style: TextStyle(
+                    color: AppColors.textSecondary,
+                    letterSpacing: 1,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold)),
+          const SizedBox(height: 24),
           ChtButton(
-            label: state.isAnalyzing ? 'Analyzing...' : 'Run Analysis',
+            label: state.isAnalyzing ? 'ANALYZING...' : 'RUN ANALYSIS',
             onPressed: state.isAnalyzing
                 ? null
                 : () => ref.read(reviewProvider.notifier).startAnalysis(),
             icon: Icons.psychology_rounded,
-            height: 44,
+            height: 48,
           ),
         ],
       ),
@@ -378,19 +402,22 @@ class _ClassificationTinyBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final (icon, color, label) = _config();
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: color.withValues(alpha: 0.3))),
+          color: color.withValues(alpha: 0.15),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: color.withValues(alpha: 0.4))),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: color, size: 14),
-          const SizedBox(width: 4),
+          Icon(icon, color: color, size: 16),
+          const SizedBox(width: 6),
           Text(label,
               style: TextStyle(
-                  color: color, fontSize: 10, fontWeight: FontWeight.bold)),
+                  color: color,
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1)),
         ],
       ),
     );
@@ -423,6 +450,7 @@ class _WideReviewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-        child: Text('Wide view not implemented for Black theme yet.'));
+        child: Text('WIDE VIEW NOT IMPLEMENTED',
+            style: TextStyle(color: Colors.white)));
   }
 }
