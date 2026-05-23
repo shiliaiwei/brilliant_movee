@@ -551,7 +551,7 @@ class _NoGamesCard extends StatelessWidget {
               color: AppColors.textSecondary, size: 36),
           const SizedBox(height: AppSpacing.md),
           Text('No recent games found', style: AppTextStyles.body),
-          const Text(
+          Text(
             'Play some games on Chess.com first',
             style: AppTextStyles.bodyMuted,
           ),

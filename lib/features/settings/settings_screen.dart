@@ -177,7 +177,6 @@ class SettingsScreen extends ConsumerWidget {
             onPressed: () {
               storage.clearAll();
               ref.read(connectedUsernameProvider.notifier).state = null;
-              ref.read(connectedPlatformProvider.notifier).state = null;
               Navigator.pop(ctx);
             },
             child: Text('Clear All',
