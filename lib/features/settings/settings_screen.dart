@@ -70,7 +70,7 @@ class SettingsScreen extends ConsumerWidget {
                       icon: Icons.delete_outline_rounded,
                       title: 'Clear Cache',
                       subtitle: 'Remove locally stored games',
-                      onTap: () => _showClearCacheDialog(context, storage),
+                      onTap: () => _showClearCacheDialog(context, ref, storage),
                     ),
                   ],
                 ),
@@ -157,7 +157,8 @@ class SettingsScreen extends ConsumerWidget {
   String _capitalize(String s) =>
       s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);
 
-  void _showClearCacheDialog(BuildContext context, StorageService storage) {
+  void _showClearCacheDialog(
+      BuildContext context, WidgetRef ref, StorageService storage) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -175,11 +176,11 @@ class SettingsScreen extends ConsumerWidget {
           TextButton(
             onPressed: () {
               storage.clearAll();
-              ref.read(connectedUsernameProvider.notifier).state \u003d null;
-              ref.read(connectedPlatformProvider.notifier).state \u003d null;
+              ref.read(connectedUsernameProvider.notifier).state = null;
+              ref.read(connectedPlatformProvider.notifier).state = null;
               Navigator.pop(ctx);
             },
-            child: Text(\u0027Clear All\u0027,
+            child: Text('Clear All',
                 style:
                     AppTextStyles.bodyMedium.copyWith(color: AppColors.error)),
           ),
