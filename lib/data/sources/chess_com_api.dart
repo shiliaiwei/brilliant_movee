@@ -71,6 +71,12 @@ class ChessComApi {
       rethrow;
     }
   }
+
+  /// Fetch Leaderboards
+  Future<Map<String, dynamic>> getLeaderboards() async {
+    final response = await _dio.get('/leaderboards');
+    return response.data as Map<String, dynamic>;
+  }
 }
 
 final chessComApiProvider = Provider<ChessComApi>((ref) => ChessComApi());

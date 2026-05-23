@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/services/storage_service.dart';
 import '../models/player_model.dart';
+import '../models/leaderboard_model.dart';
 import '../sources/chess_com_api.dart';
 import '../sources/lichess_api.dart';
 
@@ -14,6 +15,15 @@ class PlayerRepository {
 
   // In-memory cache
   final Map<String, PlayerModel> _profileCache = {};
+
+  /// Fetch top players in a specific category (daily, blitz, rapid, bullet, etc.)
+  Future<List<LeaderboardPlayer>> getTopPlayers(String category) async {
+    final data = await _chessCom.getLeaderboards();
+    final players = data[category] as List? ?? [];
+    return players
+        .map((json) => LeaderboardPlayer.fromJson(json as Map<String, dynamic>))
+        .toList();
+  }
 
   /// Fetch full player profile.
   Future<PlayerModel> getFullProfile(String username,

@@ -55,7 +55,7 @@ class MoveClassification {
       return 'An excellent move. It maintains your advantage and puts pressure on your opponent.';
     }
     if (quality == MoveQuality.book) {
-      return 'This is a well-known theoretical move in the opening book.';
+      return 'Book move';
     }
     if (quality == MoveQuality.best) {
       return 'The engine\'s top choice. This is the most accurate move in the position.';
