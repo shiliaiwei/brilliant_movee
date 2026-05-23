@@ -1,5 +1,24 @@
 
 
+    git push origin main --tags
+    flutter build apk --release
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 now we need to fix , the mobile crash,
 -put the logo app, UI white premuim is better ,
 -brand color do not use as gredaient color ,

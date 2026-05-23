@@ -1,39 +1,50 @@
-# Stupid Brilliant
+STUPID BRILLIANT PROJECT ARCHITECTURE
 
-Stupid Brilliant is a technical chess analysis platform designed to provide high-depth game reviews and move quality classification. The system integrates the Stockfish 16 engine with public chess data to deliver a premium analysis experience across mobile and web platforms.
+EXECUTIVE SUMMARY
 
-## System Architecture
+Stupid Brilliant is a high-performance chess analysis architecture designed to transform raw game data into a professional educational narrative. By integrating the Stockfish 16 engine with a sophisticated move classification system, the platform provides users with deep tactical insights, accuracy metrics, and high-fidelity game reconstructions. It is built to serve both casual enthusiasts and competitive players who require a precise understanding of their performance on the board.
 
-The application is built using the Flutter framework and follows a reactive state management pattern. It is divided into three primary layers.
+SYSTEM BRANDING AND CONTENT DESIGN
 
-1. Data Layer: Responsible for fetching player statistics and game history from the Chess.com public API. It handles PGN parsing and FEN string generation.
-2. Engine Layer: Executes Stockfish 16 within a dedicated Dart Isolate. This ensures that heavy computational analysis does not block the main UI thread. Communication is handled via the UCI protocol.
-3. UI Layer: Implements a premium design system based on a white color palette, utilizing adaptive layouts that transition between a bottom navigation bar for mobile and a sidebar navigation for desktop and tablet views.
+The brand identity revolves around the concept of precision-driven evolution. The visual language utilizes a deep-space palette with high-chroma primary accents to emphasize the futuristic nature of AI-driven analysis. Content design focuses on clarity and impact, delivering complex engine evaluations through intuitive move quality labels like Brilliant, Great, and Blunder. Every interface element is designed to minimize cognitive load, allowing the user to focus entirely on the tactical story of their game.
 
-## Game Processing Pipeline
+PROJECT FRAMEWORKING AND ARCHITECTURE
 
-When a user selects a game for review, the following sequence occurs.
+The application is engineered using a modular, feature-first approach in Flutter, ensuring high scalability across mobile and web platforms.
 
-1. PGN Parsing: The raw game text is converted into a list of moves and corresponding FEN strings representing every position in the game.
-2. Static Analysis: The system checks each position against an internal opening book to identify known theoretical moves.
-3. Engine Analysis: For moves not found in the opening book, the system performs a dual-pass analysis. It evaluates the position before the move and the position resulting from the move.
-4. Metric Calculation: The system calculates the Centipawn Loss (CPL) and determines if a sacrifice occurred by comparing piece values between consecutive board states.
+State Management: The project utilizes Flutter Riverpod for reactive dependency injection and robust state handling across complex analysis pipelines.
+Engine Pipeline: Stockfish runs in a dedicated background isolate to prevent UI thread blocking. This ensures that the interface remains smooth at 60fps even during deep-depth calculations.
+Rendering: The chess board uses a custom-layered rendering system with RepaintBoundary optimization. Pieces are rendered with professional drop shadows and high-resolution assets to match the aesthetic of leading global chess platforms.
+Video Processing: A specialized off-screen renderer captures the board at a 1:1 aspect ratio, which is then processed through a background FFmpeg pipeline to generate social-media-ready video content.
 
-## Move Classification Algorithm
+CORE TECHNICAL SPECIFICATIONS
 
-Move quality is assigned based on mathematical thresholds and contextual heuristics.
+Engine Accuracy: Stockfish v22 optimized at depth 22 for precise tactical identification.
+Opening Book: Integration of a comprehensive ECO library covering over 3,700 theoretical lines for instant opening detection.
+Classification Algorithm: A dynamic Centipawn Loss (CPL) system that calculates move quality based on position volatility and game phase.
+Responsive Layout: A two-column adaptive grid that shifts from a vertical mobile stack to a side-by-side analysis suite on web and tablet.
 
-- Brilliant: Assigned when a move is the top engine choice, involves a piece sacrifice, and results in a significant evaluation turnaround after deep analysis compared to a shallow search.
-- Great: Assigned to moves that are highly accurate but do not meet the sacrifice criteria of a brilliant move.
-- Best: Assigned when the played move matches the engine's primary recommendation.
-- Good: Moves that maintain a stable evaluation within a narrow centipawn margin.
-- Inaccuracy/Mistake/Blunder: Assigned based on increasing tiers of centipawn loss relative to the current position strength.
-- Miss: Assigned when a move fails to capitalize on a winning advantage, resulting in a significant drop in win probability.
+ALTERNATIVE UTILITY AND STRATEGIC APPLICATIONS
 
-## Technical Implementation Details
+The Stupid Brilliant framework offers versatility beyond standard review:
+Social Media Automation: Streamers can instantly generate high-quality 1:1 board replays for TikTok and Instagram without manual editing.
+Performance Coaching: Trainers can utilize the AI Coach explanations to provide natural language feedback to students.
+Tactical Archiving: Players can build a personal repository of brilliant moves and historical blunders to identify long-term patterns in their play style.
 
-- State Management: Utilizing Riverpod for reactive updates and persistent settings.
-- Storage: Local preferences and cached game data are managed through SharedPreferences and Hive.
-- Audio: The just_audio package handles high-performance playback of the standard chess sound pack, synchronized with move navigation.
-- Rendering: The chess board uses RepaintBoundary to optimize performance during rapid move navigation, redrawing only the necessary squares and pieces.
-- PWA: The web version is configured as a Progressive Web App with custom manifest settings and high-resolution icons for a native-like browser experience.
+PROJECT STRUCTURE
+
+lib/core: Global constants, theme definitions, and core utility services.
+lib/data: Repository layers and data models for Chess.com integration.
+lib/engine: Stockfish isolates, PGN parsing logic, and the Move Classifier.
+lib/features: Encapsulated modules for Onboarding, Search, Review, and Settings.
+lib/features/review: The primary analysis interface, including the board, evaluation bar, and notation strip.
+
+RESOURCE ATTRIBUTION AND CREDITS
+
+Stupid Brilliant is made possible by the contributions of the following global resources:
+Stockfish: The open-source engine providing the world-class analysis core.
+Chess.com: API access for real-time game history and player statistics.
+FFmpeg Project: Low-level multimedia framework used for high-performance video encoding.
+Cburnett Piece Set: Professional chess assets used for the standard interface.
+Chess.dart Community: Logic for standard algebraic notation and move validation.
+Google Sans: Typography used for the premium brand identity.

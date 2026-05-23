@@ -49,69 +49,66 @@ class ChessBoardWidget extends StatelessWidget {
         child: AspectRatio(
           aspectRatio: 1,
           child: LayoutBuilder(
-          builder: (context, constraints) {
-            final size = constraints.maxWidth;
-            final squareSize = size / 8;
+            builder: (context, constraints) {
+              final size = constraints.maxWidth;
+              final squareSize = size / 8;
 
-            return Stack(
-              clipBehavior: Clip.none,
-              children: [
-                // Board background
-                _BoardBackground(
-                  boardThemeId: boardThemeId,
-                  size: size,
-                ),
-
-                // Squares grid with pieces
-                Positioned.fill(
-                  child: _PiecesLayer(
-                    boardState: boardState,
-                    squareSize: squareSize,
-                    pieceSetId: pieceSetId,
-                    highlightLastMove: highlightLastMove,
-                    isFlipped: isFlipped,
-                    onSquareTap: onSquareTap,
-                  ),
-                ),
-
-                // Classification Icon Overlay (Small icon with piece)
-                if (moveQuality != null && boardState.lastMoveTo != null)
-                  _ClassificationIcon(
-                    square: boardState.lastMoveTo!,
-                    quality: moveQuality!,
-                    squareSize: squareSize,
-                    isFlipped: isFlipped,
+              return Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  // Board background
+                  _BoardBackground(
+                    boardThemeId: boardThemeId,
+                    size: size,
                   ),
 
-                // Best move arrow overlay
-                if (boardState.bestMoveFrom != null &&
-                    boardState.bestMoveTo != null)
+                  // Squares grid with pieces
                   Positioned.fill(
-                    child: _ArrowOverlay(
-                      from: boardState.bestMoveFrom!,
-                      to: boardState.bestMoveTo!,
+                    child: _PiecesLayer(
+                      boardState: boardState,
                       squareSize: squareSize,
+                      pieceSetId: pieceSetId,
+                      highlightLastMove: highlightLastMove,
                       isFlipped: isFlipped,
+                      onSquareTap: onSquareTap,
                     ),
                   ),
 
-                // Coordinates
-                if (showCoordinates)
-                  Positioned.fill(
-                    child: _CoordinatesOverlay(
+                  // Classification Icon Overlay (Small icon with piece)
+                  if (moveQuality != null && boardState.lastMoveTo != null)
+                    _ClassificationIcon(
+                      square: boardState.lastMoveTo!,
+                      quality: moveQuality!,
                       squareSize: squareSize,
                       isFlipped: isFlipped,
                     ),
-                  ),
-              ],
-            );
-          },
+
+                  // Best move arrow overlay
+                  if (boardState.bestMoveFrom != null &&
+                      boardState.bestMoveTo != null)
+                    Positioned.fill(
+                      child: _ArrowOverlay(
+                        from: boardState.bestMoveFrom!,
+                        to: boardState.bestMoveTo!,
+                        squareSize: squareSize,
+                        isFlipped: isFlipped,
+                      ),
+                    ),
+
+                  // Coordinates
+                  if (showCoordinates)
+                    Positioned.fill(
+                      child: _CoordinatesOverlay(
+                        squareSize: squareSize,
+                        isFlipped: isFlipped,
+                      ),
+                    ),
+                ],
+              );
+            },
+          ),
         ),
       ),
-    );
-  }
-}
-
     );
   }
 }

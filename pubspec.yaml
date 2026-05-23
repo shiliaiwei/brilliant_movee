@@ -42,7 +42,7 @@ dependencies:
   just_audio: ^0.9.40
 
   # Video Recording & Processing
-  ffmpeg_kit_flutter: ^6.0.3-LTS
+  ffmpeg_kit_flutter_full: ^6.0.3
 
   # FFI (Engine Bridge)
   ffi: ^2.1.3
