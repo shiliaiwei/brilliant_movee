@@ -9,32 +9,26 @@ import '../../core/services/storage_service.dart';
 import '../../core/router/app_router.dart';
 import '../../data/repositories/player_repository.dart';
 
-enum ChessPlatform { chessCom, lichess }
-
 class _SearchState {
   const _SearchState({
     this.isLoading = false,
     this.error,
     this.username = '',
-    this.platform = ChessPlatform.chessCom,
   });
 
   final bool isLoading;
   final String? error;
   final String username;
-  final ChessPlatform platform;
 
   _SearchState copyWith({
     bool? isLoading,
     String? error,
     String? username,
-    ChessPlatform? platform,
   }) {
     return _SearchState(
       isLoading: isLoading ?? this.isLoading,
       error: error,
       username: username ?? this.username,
-      platform: platform ?? this.platform,
     );
   }
 }
@@ -63,10 +57,6 @@ class _SearchNotifier extends StateNotifier<_SearchState> {
     );
   }
 
-  void setPlatform(ChessPlatform platform) {
-    state = state.copyWith(platform: platform, error: null);
-  }
-
   Future<bool> connect(BuildContext context) async {
     final username = state.username.trim();
     if (username.isEmpty) {
@@ -74,28 +64,22 @@ class _SearchNotifier extends StateNotifier<_SearchState> {
       return false;
     }
 
-    final platformStr =
-        state.platform == ChessPlatform.lichess ? 'lichess' : 'chess_com';
     state = state.copyWith(isLoading: true, error: null);
 
     try {
-      final isValid =
-          await _repo.validateUsername(username, platform: platformStr);
+      final isValid = await _repo.validateUsername(username);
       if (!isValid) {
         state = state.copyWith(
           isLoading: false,
-          error:
-              'Player not found on ${state.platform == ChessPlatform.lichess ? 'Lichess.org' : 'Chess.com'}',
+          error: 'Player not found on Chess.com',
         );
         return false;
       }
 
       await _storage.setConnectedUsername(username);
-      await _storage.setConnectedPlatform(platformStr);
       await _storage.addRecentUsername(username);
 
       _ref.read(connectedUsernameProvider.notifier).state = username;
-      _ref.read(connectedPlatformProvider.notifier).state = platformStr;
 
       state = state.copyWith(isLoading: false);
       return true;
@@ -122,6 +106,8 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   final _controller = TextEditingController();
   final _focusNode = FocusNode();
   final _shakeKey = GlobalKey<_ShakeWidgetState>();
+
+  final List<String> _testUsernames = ['hikaru', 'shiliaiwei', 'GothamChess'];
 
   @override
   void initState() {
@@ -193,30 +179,31 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                   const SizedBox(height: AppSpacing.xxl),
                   Text('Connect Your Account', style: AppTextStyles.headline),
                   const SizedBox(height: AppSpacing.sm),
-                  Text('Choose your preferred platform',
+                  Text('Enter your Chess.com username',
                       style: AppTextStyles.bodyMuted),
 
                   const SizedBox(height: AppSpacing.xxl),
 
-                  // Platform Selector
-                  Row(
-                    children: [
-                      _PlatformCard(
-                        label: 'Chess.com',
-                        isSelected: state.platform == ChessPlatform.chessCom,
-                        onTap: () => ref
-                            .read(_searchStateProvider.notifier)
-                            .setPlatform(ChessPlatform.chessCom),
-                      ),
-                      const SizedBox(width: 12),
-                      _PlatformCard(
-                        label: 'Lichess.org',
-                        isSelected: state.platform == ChessPlatform.lichess,
-                        onTap: () => ref
-                            .read(_searchStateProvider.notifier)
-                            .setPlatform(ChessPlatform.lichess),
-                      ),
-                    ],
+                  // Quick test users
+                  Wrap(
+                    spacing: 8,
+                    alignment: WrapAlignment.center,
+                    children: _testUsernames
+                        .map((u) => ActionChip(
+                              label:
+                                  Text(u, style: const TextStyle(fontSize: 12)),
+                              onPressed: () {
+                                _controller.text = u;
+                                ref
+                                    .read(_searchStateProvider.notifier)
+                                    .updateUsername(u);
+                                _connect();
+                              },
+                              backgroundColor:
+                                  AppColors.primary.withValues(alpha: 0.1),
+                              side: const BorderSide(color: AppColors.primary),
+                            ))
+                        .toList(),
                   ),
 
                   const SizedBox(height: AppSpacing.xl),
@@ -275,44 +262,6 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                     ),
                   ],
                 ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _PlatformCard extends StatelessWidget {
-  const _PlatformCard(
-      {required this.label, required this.isSelected, required this.onTap});
-  final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          decoration: BoxDecoration(
-            color: isSelected ? AppColors.color3 : AppColors.color1,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: isSelected ? AppColors.primary : AppColors.divider,
-              width: 1.5,
-            ),
-          ),
-          child: Center(
-            child: Text(
-              label,
-              style: AppTextStyles.label.copyWith(
-                color: isSelected ? AppColors.primary : AppColors.textSecondary,
-                fontWeight: isSelected ? FontWeight.bold : null,
               ),
             ),
           ),

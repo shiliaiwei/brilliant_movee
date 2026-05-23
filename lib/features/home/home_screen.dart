@@ -239,9 +239,9 @@ class _LeaderboardView extends ConsumerWidget {
           child: ListView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            children: ['daily', 'blitz', 'rapid', 'bullet']
+            children: ['daily', 'blitz', 'rapid', 'bullet', 'daily_puzzle']
                 .map((cat) => _FilterChip(
-                      label: cat.toUpperCase(),
+                      label: cat.replaceAll('_', ' ').toUpperCase(),
                       isSelected: selectedCategory == cat,
                       onTap: () => ref
                           .read(_leaderboardCategoryProvider.notifier)
@@ -537,16 +537,13 @@ class _LeaderboardItem extends StatelessWidget {
   }
 }
 
-class _NoGamesCard extends ConsumerWidget {
+class _NoGamesCard extends StatelessWidget {
   const _NoGamesCard({required this.username});
 
   final String username;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final platform = ref.watch(connectedPlatformProvider) ?? 'chess_com';
-    final platformName = platform == 'lichess' ? 'Lichess.org' : 'Chess.com';
-
+  Widget build(BuildContext context) {
     return ChtCard(
       child: Column(
         children: [
@@ -554,8 +551,8 @@ class _NoGamesCard extends ConsumerWidget {
               color: AppColors.textSecondary, size: 36),
           const SizedBox(height: AppSpacing.md),
           Text('No recent games found', style: AppTextStyles.body),
-          Text(
-            'Play some games on $platformName first',
+          const Text(
+            'Play some games on Chess.com first',
             style: AppTextStyles.bodyMuted,
           ),
         ],

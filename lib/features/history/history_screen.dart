@@ -42,7 +42,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen>
           unselectedLabelColor: Colors.white38,
           tabs: const [
             Tab(text: 'HISTORY'),
-            Tab(text: 'CONNECT'),
+            Tab(text: 'SEARCH'),
           ],
         ),
       ),
