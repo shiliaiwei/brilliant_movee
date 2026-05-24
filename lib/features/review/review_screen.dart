@@ -108,18 +108,6 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                     },
             ),
             IconButton(
-              icon: Icon(
-                state.isAnalyzing
-                    ? Icons.sync_rounded
-                    : Icons.psychology_rounded,
-                size: 22,
-                color: state.isAnalyzing ? AppColors.primary : Colors.white,
-              ),
-              onPressed: state.isAnalyzing
-                  ? null
-                  : () => ref.read(reviewProvider.notifier).startAnalysis(),
-            ),
-            IconButton(
               icon: const Icon(Icons.flip_camera_android_rounded,
                   size: 22, color: Colors.white),
               onPressed: () => setState(() => _isFlipped = !_isFlipped),
@@ -205,8 +193,7 @@ class _ReviewBody extends StatelessWidget {
     final move = state.currentPlyIndex > 0
         ? state.game!.moves[state.currentPlyIndex - 1]
         : null;
-    final currentMoveStr =
-        move != null ? '${move.moveNumber} ${move.san}' : 'START';
+    final currentMoveStr = move != null ? '${move.moveNumber}${move.san}' : '•';
 
     return Column(
       children: [
@@ -216,7 +203,7 @@ class _ReviewBody extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                (openingName ?? 'BASE DATABASE').toUpperCase(),
+                (openingName ?? '•').toUpperCase(),
                 textAlign: TextAlign.center,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -297,14 +284,14 @@ class _ReviewBody extends StatelessWidget {
                     Text(
                       currentMoveStr,
                       style: const TextStyle(
-                        fontSize: 16, // Smaller move number
+                        fontSize: 14, // Smaller
                         color: Colors.white,
                         fontWeight: FontWeight.w900,
-                        letterSpacing: 0.5,
+                        letterSpacing: 0.2,
                       ),
                     ),
                     if (classification != null) ...[
-                      const SizedBox(width: 16),
+                      const SizedBox(width: 12),
                       _ClassificationTinyBadge(quality: classification.quality),
                     ],
                   ],
