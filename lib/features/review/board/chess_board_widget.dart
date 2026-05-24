@@ -33,20 +33,13 @@ class ChessBoardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double boardMargin = 22.0;
+    const double boardMargin = 0.0; // Remove margin to fit left/right
 
     return Container(
       key: captureKey,
       decoration: BoxDecoration(
         color: AppColors.backgroundDeep,
         borderRadius: BorderRadius.circular(4),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.5),
-            blurRadius: 20,
-            spreadRadius: 2,
-          ),
-        ],
       ),
       child: RepaintBoundary(
         child: AspectRatio(
@@ -54,8 +47,7 @@ class ChessBoardWidget extends StatelessWidget {
           child: LayoutBuilder(
             builder: (context, constraints) {
               final totalSize = constraints.maxWidth;
-              final boardSize =
-                  showCoordinates ? totalSize - (boardMargin * 2) : totalSize;
+              final boardSize = totalSize;
               final squareSize = boardSize / 8;
 
               return Stack(
@@ -144,10 +136,10 @@ class _BlurInsideCoordinatesOverlay extends StatelessWidget {
   Widget build(BuildContext context) {
     final textStyle = AppTextStyles.monoSmall.copyWith(
       fontSize: 9,
-      color: Colors.white.withValues(alpha: 0.5),
+      color: Colors.white.withValues(alpha: 0.4),
       fontWeight: FontWeight.bold,
       shadows: [
-        const Shadow(color: Colors.black38, blurRadius: 3),
+        const Shadow(color: Colors.black26, blurRadius: 2),
       ],
     );
 
@@ -204,11 +196,11 @@ class _ClassificationIcon extends StatelessWidget {
     final asset = _getAsset();
 
     return Positioned(
-      left: col * squareSize + squareSize * 0.55,
-      top: row * squareSize - squareSize * 0.15,
+      left: col * squareSize + squareSize * 0.65,
+      top: row * squareSize - squareSize * 0.1,
       child: Container(
-        width: squareSize * 0.45,
-        height: squareSize * 0.45,
+        width: squareSize * 0.35, // Smaller as requested
+        height: squareSize * 0.35,
         decoration: const BoxDecoration(
           shape: BoxShape.circle,
           boxShadow: [

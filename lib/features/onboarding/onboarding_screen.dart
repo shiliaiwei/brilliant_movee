@@ -31,7 +31,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     const _OnboardingSlide(
       title: 'Stockfish Sees All',
       subtitle:
-          'Every move analyzed by Stockfish 16. See the eval bar shift, best moves highlighted, and your mistakes exposed.',
+          'Every move analyzed by Stockfish-sf_18. See the eval bar shift, best moves highlighted, and your mistakes exposed.',
       icon: Icons.psychology_rounded,
       gradientColors: [Color(0xFF000000), Color(0xFF111111)],
       accentColor: AppColors.brilliant,

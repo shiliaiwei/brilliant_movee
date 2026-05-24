@@ -161,6 +161,9 @@ class _CelebrateOverlayState extends State<CelebrateOverlay>
                           titleColor: _titleColor,
                           analysisData: widget.analysisData,
                           onDismiss: widget.onDismiss,
+                          resultLabel: widget.result == '1-0'
+                              ? 'White Won'
+                              : (widget.result == '0-1' ? 'Black Won' : 'Draw'),
                         ),
                       ),
                     ),
@@ -181,12 +184,14 @@ class _SummaryCard extends StatelessWidget {
     required this.titleColor,
     required this.analysisData,
     required this.onDismiss,
+    required this.resultLabel,
   });
 
   final String title;
   final Color titleColor;
   final GameAnalysisData? analysisData;
   final VoidCallback onDismiss;
+  final String resultLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -213,6 +218,15 @@ class _SummaryCard extends StatelessWidget {
             style: AppTextStyles.display.copyWith(
               color: titleColor,
               letterSpacing: 4,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            resultLabel.toUpperCase(),
+            style: AppTextStyles.caption.copyWith(
+              color: Colors.white70,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.2,
             ),
           ),
           const SizedBox(height: AppSpacing.xxl),

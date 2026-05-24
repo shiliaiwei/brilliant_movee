@@ -246,7 +246,7 @@ class _ReviewBody extends StatelessWidget {
             builder: (context, constraints) {
               final availableWidth = constraints.maxWidth;
               final availableHeight = constraints.maxHeight;
-              final side = math.min(availableWidth, availableHeight) * 0.92;
+              final side = math.min(availableWidth, availableHeight) * 0.98;
 
               return Center(
                 child: SizedBox(
@@ -276,7 +276,7 @@ class _ReviewBody extends StatelessWidget {
 
         // Current Move & Navigation (Compact Row)
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12),
+          padding: const EdgeInsets.symmetric(vertical: 16),
           child: Column(
             children: [
               Row(
@@ -285,7 +285,7 @@ class _ReviewBody extends StatelessWidget {
                   Text(
                     currentMoveStr,
                     style: AppTextStyles.monoLarge.copyWith(
-                      fontSize: 24, // Smaller
+                      fontSize: 32,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
@@ -296,7 +296,7 @@ class _ReviewBody extends StatelessWidget {
                   ],
                 ],
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 16),
               _NavigationControls(state: state),
             ],
           ),
@@ -347,6 +347,13 @@ class _AnalysisPanelSimplified extends ConsumerWidget {
                 ? Icons.sync_rounded
                 : Icons.psychology_rounded,
             height: 52,
+          ),
+          const SizedBox(height: 8),
+          const Center(
+            child: Text(
+              'Stockfish-sf_18 Engine',
+              style: TextStyle(color: Colors.white24, fontSize: 8),
+            ),
           ),
         ],
       ),

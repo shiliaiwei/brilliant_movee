@@ -126,7 +126,7 @@ class SettingsScreen extends ConsumerWidget {
                     const _SettingsTile(
                       icon: Icons.bolt_rounded,
                       title: 'Engine Power',
-                      subtitle: 'Stockfish 16 (NNUE Optimized)',
+                      subtitle: 'Stockfish-sf_18 (NNUE Optimized)',
                     ),
                   ],
                 ),
@@ -163,7 +163,7 @@ class SettingsScreen extends ConsumerWidget {
                     _SettingsTile(
                       icon: Icons.source_rounded,
                       title: 'Open Source',
-                      subtitle: 'Powered by Stockfish 16',
+                      subtitle: 'Powered by Stockfish-sf_18',
                     ),
                   ],
                 ),

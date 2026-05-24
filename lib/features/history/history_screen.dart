@@ -283,15 +283,7 @@ class _GameFeedItem extends ConsumerWidget {
   }
 
   String _getShortResult(GameModel game, String username) {
-    final isWhite = game.whiteUsername.toLowerCase() == username.toLowerCase();
-    final res = isWhite ? game.whiteResult : game.blackResult;
-
-    if (res == 'win') return 'Won';
-    if (res == 'checkmated') return 'Mate';
-    if (res == 'resignation') return 'Resign';
-    if (res == 'timeout') return 'Time';
-    if (res == 'abandoned') return 'Aband';
-    return 'Draw';
+    return game.terminationFor(username);
   }
 }
 
