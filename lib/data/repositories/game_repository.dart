@@ -1,15 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/services/storage_service.dart';
 import '../models/game_model.dart';
 import '../sources/chess_com_api.dart';
 
 /// Repository for game history data from Chess.com.
 class GameRepository {
-  GameRepository(this._chessCom, this._storage);
+  GameRepository(this._chessCom);
 
   final ChessComApi _chessCom;
-  final StorageService _storage;
 
   // In-memory cache
   final Map<String, List<GameModel>> _gamesCache = {};
@@ -81,6 +79,5 @@ class GameRepository {
 final gameRepositoryProvider = Provider<GameRepository>((ref) {
   return GameRepository(
     ref.read(chessComApiProvider),
-    ref.read(storageServiceProvider),
   );
 });

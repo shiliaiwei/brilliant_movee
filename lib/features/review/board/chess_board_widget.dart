@@ -34,8 +34,6 @@ class ChessBoardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double boardMargin = 0.0; // Remove margin to fit left/right
-
     return Container(
       key: captureKey,
       decoration: BoxDecoration(
@@ -641,15 +639,4 @@ class _ArrowPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_ArrowPainter old) => old.from != from || old.to != to;
-}
-
-class _CoordinatesOverlay extends StatelessWidget {
-  const _CoordinatesOverlay(
-      {required this.squareSize, required this.isFlipped});
-  final double squareSize;
-  final bool isFlipped;
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox.shrink();
-  }
 }

@@ -360,10 +360,6 @@ class _GameFeedItem extends ConsumerWidget {
     if (res == '1-0') return Icons.emoji_events_rounded;
     return Icons.close_rounded;
   }
-
-  String _getShortResult(GameModel game, String username) {
-    return game.terminationFor(username);
-  }
 }
 
 class _NoGamesCard extends StatelessWidget {

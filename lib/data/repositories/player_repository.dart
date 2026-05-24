@@ -1,15 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/services/storage_service.dart';
 import '../models/player_model.dart';
 import '../models/leaderboard_model.dart';
 import '../sources/chess_com_api.dart';
 
 /// Repository for player data.
 class PlayerRepository {
-  PlayerRepository(this._chessCom, this._storage);
+  PlayerRepository(this._chessCom);
 
   final ChessComApi _chessCom;
-  final StorageService _storage;
 
   // In-memory cache
   final Map<String, PlayerModel> _profileCache = {};
@@ -65,6 +63,5 @@ class PlayerRepository {
 final playerRepositoryProvider = Provider<PlayerRepository>((ref) {
   return PlayerRepository(
     ref.read(chessComApiProvider),
-    ref.read(storageServiceProvider),
   );
 });

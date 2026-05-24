@@ -5,7 +5,6 @@ import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ffmpeg_kit_flutter_full_gpl/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_full_gpl/return_code.dart';
-import 'package:ffmpeg_kit_flutter_full_gpl/ffmpeg_session.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
@@ -57,7 +56,7 @@ class RecordingService {
     Size resolution = const Size(1080, 1080),
   }) async {
     _isRecording = true;
-    final Uuid uuid = const Uuid();
+    const Uuid uuid = Uuid();
 
     try {
       final tempDir = await getTemporaryDirectory();
