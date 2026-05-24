@@ -314,9 +314,124 @@ class _ReviewBody extends StatelessWidget {
           ),
         ),
 
+        // Move Quality Summary
+        _MoveQualitySummary(state: state),
+
         // Compact Bottom Panel
         _AnalysisPanelSimplified(state: state),
       ],
+    );
+  }
+}
+
+class _MoveQualitySummary extends StatelessWidget {
+  const _MoveQualitySummary({required this.state});
+  final ReviewState state;
+
+  @override
+  Widget build(BuildContext context) {
+    if (state.classifications.every((c) => c == null)) {
+      return const SizedBox.shrink();
+    }
+
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: AppColors.backgroundSurface,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.divider),
+      ),
+      child: Column(
+        children: [
+          _SummaryRow(
+            label: 'BRILLIANT',
+            white: state.whiteTotals.brilliant,
+            black: state.blackTotals.brilliant,
+            color: AppColors.brilliant,
+            icon: 'assets/classification/brilliant.png',
+          ),
+          _SummaryRow(
+            label: 'GREAT',
+            white: state.whiteTotals.great,
+            black: state.blackTotals.great,
+            color: AppColors.great,
+            icon: 'assets/classification/excellent.png',
+          ),
+          _SummaryRow(
+            label: 'BEST',
+            white: state.whiteTotals.best,
+            black: state.blackTotals.best,
+            color: AppColors.best,
+            icon: 'assets/classification/best.png',
+          ),
+          _SummaryRow(
+            label: 'BLUNDER',
+            white: state.whiteTotals.blunder,
+            black: state.blackTotals.blunder,
+            color: AppColors.blunder,
+            icon: 'assets/classification/blunder.png',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SummaryRow extends StatelessWidget {
+  const _SummaryRow({
+    required this.label,
+    required this.white,
+    required this.black,
+    required this.color,
+    required this.icon,
+  });
+
+  final String label;
+  final int white;
+  final int black;
+  final Color color;
+  final String icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 30,
+            child: Text(
+              '$white',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: color, fontWeight: FontWeight.bold, fontSize: 11),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Image.asset(icon, width: 14, height: 14),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              label,
+              style: const TextStyle(
+                  color: Colors.white30,
+                  fontSize: 8,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1),
+            ),
+          ),
+          SizedBox(
+            width: 30,
+            child: Text(
+              '$black',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: color, fontWeight: FontWeight.bold, fontSize: 11),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

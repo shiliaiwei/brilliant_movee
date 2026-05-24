@@ -142,8 +142,15 @@ abstract final class MoveClassifier {
 
     final cpl = (evalBefore - evalAfter).round().clamp(0, 9999);
 
-    // 3. Brilliant: best move + sacrifice + shallow eval negative + deep eval winning
-    if (cpl == 0 && isSacrifice && shallowEval < -50 && evalAfter > 50) {
+    // 3. Brilliant (!!)
+    // A sacrifice that is at least a "Best" or "Great" move.
+    // Or a move that is much better than the second best line.
+    bool isBrilliant = false;
+    if (isSacrifice && cpl <= 15) {
+      isBrilliant = true;
+    }
+
+    if (isBrilliant) {
       return MoveClassification(
         quality: MoveQuality.brilliant,
         cpl: cpl,
@@ -154,7 +161,21 @@ abstract final class MoveClassifier {
       );
     }
 
-    // 4. Missed win: position was winning, now it's not
+    // 4. Great (!)
+    // Maintains a significant advantage or is the only move that doesn't lose.
+    if (cpl <= 10 &&
+        (evalBefore > 200 || (evalBefore < -100 && evalAfter > -50))) {
+      return MoveClassification(
+        quality: MoveQuality.great,
+        cpl: cpl,
+        evalBefore: evalBefore,
+        evalAfter: evalAfter,
+        bestMove: bestMove,
+        engineLines: engineLines,
+      );
+    }
+
+    // 5. Missed win: position was winning, now it's not
     if (evalBefore > 300 && evalAfter < 100) {
       return MoveClassification(
         quality: MoveQuality.miss,
@@ -202,5 +223,118 @@ abstract final class MoveClassifier {
   /// Convert centipawns to win probability (sigmoid function).
   static double winProbability(double evalCp) {
     return 1.0 / (1.0 + math.exp(-evalCp / 400.0));
+  }
+}
+
+class MoveQualityTotals {
+  const MoveQualityTotals({
+    this.brilliant = 0,
+    this.great = 0,
+    this.best = 0,
+    this.good = 0,
+    this.book = 0,
+    this.inaccuracy = 0,
+    this.mistake = 0,
+    this.blunder = 0,
+    this.miss = 0,
+    this.forced = 0,
+  });
+
+  final int brilliant;
+  final int great;
+  final int best;
+  final int good;
+  final int book;
+  final int inaccuracy;
+  final int mistake;
+  final int blunder;
+  final int miss;
+  final int forced;
+
+  MoveQualityTotals copyWith({
+    int? brilliant,
+    int? great,
+    int? best,
+    int? good,
+    int? book,
+    int? inaccuracy,
+    int? mistake,
+    int? blunder,
+    int? miss,
+    int? forced,
+  }) {
+    return MoveQualityTotals(
+      brilliant: brilliant ?? this.brilliant,
+      great: great ?? this.great,
+      best: best ?? this.best,
+      good: good ?? this.good,
+      book: book ?? this.book,
+      inaccuracy: inaccuracy ?? this.inaccuracy,
+      mistake: mistake ?? this.mistake,
+      blunder: blunder ?? this.blunder,
+      miss: miss ?? this.miss,
+      forced: forced ?? this.forced,
+    );
+  }
+
+  static MoveQualityTotals fromClassifications(
+      List<MoveClassification?> items, bool isWhite) {
+    int brilliant = 0, great = 0, best = 0, good = 0, book = 0;
+    int inaccuracy = 0, mistake = 0, blunder = 0, miss = 0, forced = 0;
+
+    for (int i = 0; i < items.length; i++) {
+      final c = items[i];
+      if (c == null) continue;
+
+      // Move index 0 is first move (White), 1 is Black, etc.
+      final itemIsWhite = i % 2 == 0;
+      if (itemIsWhite != isWhite) continue;
+
+      switch (c.quality) {
+        case MoveQuality.brilliant:
+          brilliant++;
+          break;
+        case MoveQuality.great:
+          great++;
+          break;
+        case MoveQuality.best:
+          best++;
+          break;
+        case MoveQuality.good:
+          good++;
+          break;
+        case MoveQuality.book:
+          book++;
+          break;
+        case MoveQuality.inaccuracy:
+          inaccuracy++;
+          break;
+        case MoveQuality.mistake:
+          mistake++;
+          break;
+        case MoveQuality.blunder:
+          blunder++;
+          break;
+        case MoveQuality.miss:
+          miss++;
+          break;
+        case MoveQuality.forced:
+          forced++;
+          break;
+      }
+    }
+
+    return MoveQualityTotals(
+      brilliant: brilliant,
+      great: great,
+      best: best,
+      good: good,
+      book: book,
+      inaccuracy: inaccuracy,
+      mistake: mistake,
+      blunder: blunder,
+      miss: miss,
+      forced: forced,
+    );
   }
 }

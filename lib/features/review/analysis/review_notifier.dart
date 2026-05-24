@@ -27,6 +27,8 @@ class ReviewState {
     this.retryFeedback,
     this.isExporting = false,
     this.exportProgress = 0,
+    this.whiteTotals = const MoveQualityTotals(),
+    this.blackTotals = const MoveQualityTotals(),
   });
 
   final String pgn;
@@ -44,6 +46,8 @@ class ReviewState {
   final String? retryFeedback;
   final bool isExporting;
   final double exportProgress;
+  final MoveQualityTotals whiteTotals;
+  final MoveQualityTotals blackTotals;
 
   BoardState? get currentBoardState =>
       boardStates.isNotEmpty && currentPlyIndex < boardStates.length
@@ -77,6 +81,8 @@ class ReviewState {
     String? retryFeedback,
     bool? isExporting,
     double? exportProgress,
+    MoveQualityTotals? whiteTotals,
+    MoveQualityTotals? blackTotals,
   }) {
     return ReviewState(
       pgn: pgn ?? this.pgn,
@@ -94,6 +100,8 @@ class ReviewState {
       retryFeedback: retryFeedback ?? this.retryFeedback,
       isExporting: isExporting ?? this.isExporting,
       exportProgress: exportProgress ?? this.exportProgress,
+      whiteTotals: whiteTotals ?? this.whiteTotals,
+      blackTotals: blackTotals ?? this.blackTotals,
     );
   }
 }
@@ -228,6 +236,15 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
       final boardAfter = state.boardStates[plyIndex];
       final move = state.game!.moves[plyIndex - 1];
 
+      // Detect Sacrifice
+      final materialBefore = _calculateMaterial(boardBefore.pieces);
+      final materialAfter = _calculateMaterial(boardAfter.pieces);
+      final isWhite = move.isWhite;
+      final lostMaterial = isWhite
+          ? materialBefore.white - materialAfter.white
+          : materialBefore.black - materialAfter.black;
+      final isSacrifice = lostMaterial > 0;
+
       // Check opening book
       final isBook = OpeningBook.isBookPosition(boardAfter.fen);
 
@@ -286,7 +303,7 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
         evalAfter: evalAfter,
         isBook: isBook,
         isForcedMove: false,
-        isSacrifice: false,
+        isSacrifice: isSacrifice,
         shallowEval: evalBefore,
         engineLines: response?.lines ?? [],
         bestMove: response?.lines.isNotEmpty == true
@@ -313,6 +330,10 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
         state = state.copyWith(
           classifications: List.from(classifications),
           analysisProgress: analyzed / totalMoves,
+          whiteTotals:
+              MoveQualityTotals.fromClassifications(classifications, true),
+          blackTotals:
+              MoveQualityTotals.fromClassifications(classifications, false),
         );
       }
     }
@@ -323,6 +344,28 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
   }
 
   void startAnalysis() => _startAnalysis();
+
+  ({int white, int black}) _calculateMaterial(Map<String, String> pieces) {
+    int w = 0;
+    int b = 0;
+    for (final p in pieces.values) {
+      final color = p[0];
+      final type = p[1];
+      final val = switch (type) {
+        'P' => 100,
+        'N' || 'B' => 300,
+        'R' => 500,
+        'Q' => 900,
+        _ => 0,
+      };
+      if (color == 'w') {
+        w += val;
+      } else {
+        b += val;
+      }
+    }
+    return (white: w, black: b);
+  }
 
   Future<String?> exportVideo(GlobalKey captureKey) async {
     if (state.boardStates.isEmpty) return null;
