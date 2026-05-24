@@ -71,7 +71,7 @@ class StorageService {
       _prefs.setString(StorageKeys.soundPack, pack);
 
   // ── Engine ────────────────────────────────────────────────────────────────
-  int get engineDepth => _prefs.getInt(StorageKeys.engineDepth) ?? 22;
+  int get engineDepth => _prefs.getInt(StorageKeys.engineDepth) ?? 26;
   Future<void> setEngineDepth(int depth) =>
       _prefs.setInt(StorageKeys.engineDepth, depth);
 

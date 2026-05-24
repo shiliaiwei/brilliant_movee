@@ -1,8 +1,7 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_text_styles.dart';
-import '../../../core/constants/app_spacing.dart';
-import '../../../core/widgets/cht_button.dart';
 import '../../../data/models/game_model.dart';
 
 class CelebrateOverlay extends StatefulWidget {
@@ -27,291 +26,268 @@ class CelebrateOverlay extends StatefulWidget {
 
 class _CelebrateOverlayState extends State<CelebrateOverlay>
     with TickerProviderStateMixin {
-  late AnimationController _bgController;
-  late AnimationController _cardController;
+  late AnimationController _mainController;
+  late AnimationController _kingController;
   late AnimationController _particleController;
 
-  late Animation<double> _bgOpacity;
-  late Animation<double> _cardSlide;
-  late Animation<double> _cardOpacity;
+  late Animation<double> _scale;
+  late Animation<double> _opacity;
+  late Animation<double> _kingRotation;
+  late Animation<double> _kingSlide;
 
   @override
   void initState() {
     super.initState();
 
-    _bgController = AnimationController(
+    _mainController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 800),
     );
-    _cardController = AnimationController(
+
+    _kingController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 1200),
     );
+
     _particleController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 3),
     )..repeat();
 
-    _bgOpacity = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _bgController, curve: Curves.easeIn),
-    );
-    _cardSlide = Tween<double>(begin: 100, end: 0).animate(
-      CurvedAnimation(parent: _cardController, curve: Curves.easeOutBack),
-    );
-    _cardOpacity = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _cardController, curve: Curves.easeIn),
+    _scale = Tween<double>(begin: 0.5, end: 1.0).animate(
+      CurvedAnimation(parent: _mainController, curve: Curves.elasticOut),
     );
 
-    _bgController.forward();
-    Future.delayed(const Duration(milliseconds: 200), () {
-      if (mounted) _cardController.forward();
+    _opacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+          parent: _mainController,
+          curve: const Interval(0, 0.5, curve: Curves.easeIn)),
+    );
+
+    _kingRotation =
+        Tween<double>(begin: 0, end: _isWin ? 0 : math.pi / 2.2).animate(
+      CurvedAnimation(parent: _kingController, curve: Curves.bounceOut),
+    );
+
+    _kingSlide = Tween<double>(begin: 40, end: 0).animate(
+      CurvedAnimation(parent: _kingController, curve: Curves.easeOutCubic),
+    );
+
+    _mainController.forward();
+    Future.delayed(const Duration(milliseconds: 400), () {
+      if (mounted) _kingController.forward();
     });
 
-    // AUTO DISMISS after 4 seconds
-    Future.delayed(const Duration(seconds: 4), () {
+    // AUTO DISMISS - Short and impressive as requested
+    Future.delayed(const Duration(milliseconds: 3500), () {
+      if (mounted) _dismiss();
+    });
+  }
+
+  void _dismiss() {
+    _mainController.reverse().then((_) {
       if (mounted) widget.onDismiss();
     });
   }
 
   @override
   void dispose() {
-    _bgController.dispose();
-    _cardController.dispose();
+    _mainController.dispose();
+    _kingController.dispose();
     _particleController.dispose();
     super.dispose();
   }
 
-  bool get _isWin {
-    final isWhite =
-        widget.whiteUsername.toLowerCase() == widget.username.toLowerCase();
-    return (widget.result == '1-0' && isWhite) ||
-        (widget.result == '0-1' && !isWhite);
-  }
-
   bool get _isWhiteWin => widget.result == '1-0';
-
+  bool get _isBlackWin => widget.result == '0-1';
   bool get _isDraw => widget.result == '1/2-1/2';
 
-  String get _title {
-    if (_isDraw) return 'DRAW';
-    if (_isWin) return 'VICTORY';
-    return 'DEFEATED';
-  }
+  bool get _userIsWhite =>
+      widget.username.toLowerCase() == widget.whiteUsername.toLowerCase();
 
-  List<Color> get _bgColors {
-    if (_isDraw) return [const Color(0xFF0A0F14), const Color(0xFF141F2E)];
-    if (_isWin) {
-      // Different colors for white vs black victory
-      if (_isWhiteWin) {
-        return [const Color(0xFF080C10), const Color(0xFF0D2A1A)];
-      }
-      return [const Color(0xFF080C10), const Color(0xFF1A1A2E)];
-    }
-    return AppColors.loseGradient;
-  }
-
-  Color get _titleColor {
-    if (_isDraw) return AppColors.draw;
-    if (_isWin) return AppColors.win;
-    return AppColors.textSecondary;
+  bool get _isWin {
+    if (_isWhiteWin && _userIsWhite) return true;
+    if (_isBlackWin && !_userIsWhite) return true;
+    return false;
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _bgOpacity,
-      builder: (context, _) => Opacity(
-        opacity: _bgOpacity.value,
-        child: GestureDetector(
-          onTap: widget.onDismiss,
-          child: Container(
-            color: Colors.transparent,
-            child: Stack(
-              children: [
-                // Background
-                Container(
+    final winnerText = widget.result == '1-0'
+        ? 'WHITE WON BY CHECKMATE'
+        : (widget.result == '0-1'
+            ? 'BLACK WON BY CHECKMATE'
+            : 'DRAW BY STALEMATE');
+    final statusText =
+        _isDraw ? 'STALEMATE' : (_isWin ? 'VICTORY' : 'DEFEATED');
+    final mainColor =
+        _isDraw ? AppColors.draw : (_isWin ? AppColors.win : AppColors.loss);
+
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: AnimatedBuilder(
+        animation: _mainController,
+        builder: (context, _) => Stack(
+          children: [
+            // Dark Backdrop
+            Positioned.fill(
+              child: Opacity(
+                opacity: _opacity.value * 0.9,
+                child: Container(
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: _bgColors,
+                    gradient: RadialGradient(
+                      center: Alignment.center,
+                      radius: 1.2,
+                      colors: [
+                        mainColor.withValues(alpha: 0.3),
+                        Colors.black.withValues(alpha: 0.95),
+                      ],
                     ),
                   ),
                 ),
+              ),
+            ),
 
-                // Particle system
-                AnimatedBuilder(
+            // Particles for win
+            if (_isWin && !_isDraw)
+              Positioned.fill(
+                child: AnimatedBuilder(
                   animation: _particleController,
                   builder: (context, _) => CustomPaint(
-                    painter: _CelebratePainter(
+                    painter: _ConfettiPainter(
                       progress: _particleController.value,
-                      isWin: _isWin,
-                      isDraw: _isDraw,
+                      color: mainColor,
                     ),
-                    size: MediaQuery.of(context).size,
                   ),
                 ),
+              ),
 
-                // Summary card
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: AnimatedBuilder(
-                    animation: _cardController,
-                    builder: (context, _) => Transform.translate(
-                      offset: Offset(0, _cardSlide.value),
-                      child: Opacity(
-                        opacity: _cardOpacity.value,
-                        child: _SummaryCard(
-                          title: _title,
-                          titleColor: _titleColor,
-                          analysisData: widget.analysisData,
-                          onDismiss: widget.onDismiss,
-                          resultLabel: widget.result == '1-0'
-                              ? 'White Won'
-                              : (widget.result == '0-1' ? 'Black Won' : 'Draw'),
+            // Content
+            Center(
+              child: Opacity(
+                opacity: _opacity.value,
+                child: Transform.scale(
+                  scale: _scale.value,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Status Title
+                      Text(
+                        statusText,
+                        style: AppTextStyles.display.copyWith(
+                          fontSize: 48,
+                          color: mainColor,
+                          letterSpacing: 8,
+                          shadows: [
+                            Shadow(
+                                color: mainColor.withValues(alpha: 0.5),
+                                blurRadius: 20),
+                          ],
                         ),
                       ),
-                    ),
-                  ),
-                ),
+                      const SizedBox(height: 8),
+                      Text(
+                        winnerText,
+                        style: AppTextStyles.monoLarge.copyWith(
+                          fontSize: 16,
+                          color: Colors.white70,
+                          letterSpacing: 4,
+                        ),
+                      ),
 
-                // Centered King Animation
-                Center(
-                  child: AnimatedBuilder(
-                    animation: _cardController,
-                    builder: (context, child) {
-                      return Opacity(
-                        opacity: _cardOpacity.value,
-                        child: Transform.scale(
-                          scale: 1.0 + (0.2 * _particleController.value),
-                          child: Icon(
-                            _isWin
-                                ? Icons.emoji_events_rounded
-                                : Icons.cancel_rounded,
-                            size: 120,
-                            color: _titleColor.withValues(alpha: 0.8),
+                      const SizedBox(height: 60),
+
+                      // Animated King Icon
+                      AnimatedBuilder(
+                        animation: _kingController,
+                        builder: (context, child) {
+                          return Transform.translate(
+                            offset: Offset(0, _kingSlide.value),
+                            child: Transform.rotate(
+                              angle: _kingRotation.value,
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                padding: const EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: mainColor.withValues(alpha: 0.2),
+                                      blurRadius: 40,
+                                      spreadRadius: 10,
+                                    ),
+                                  ],
+                                ),
+                                child: Icon(
+                                  _isWin || _isDraw
+                                      ? Icons.emoji_events_rounded
+                                      : Icons.person_off_rounded,
+                                  size: 140,
+                                  color: mainColor,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+
+                      const SizedBox(height: 80),
+
+                      // Quick info
+                      if (widget.analysisData != null)
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 32, vertical: 16),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.05),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                                color: Colors.white.withValues(alpha: 0.1)),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              _SummaryStat(
+                                label: 'ACCURACY',
+                                value:
+                                    '${widget.analysisData!.accuracy.toInt()}%',
+                                color: AppColors.primary,
+                              ),
+                              const SizedBox(width: 32),
+                              _SummaryStat(
+                                label: 'BRILLIANT',
+                                value: '${widget.analysisData!.brilliantCount}',
+                                color: AppColors.brilliant,
+                              ),
+                            ],
                           ),
                         ),
-                      );
-                    },
+
+                      const SizedBox(height: 40),
+
+                      // Dismiss hint
+                      Text(
+                        'TAP TO CONTINUE',
+                        style: AppTextStyles.caption.copyWith(
+                          color: Colors.white24,
+                          letterSpacing: 2,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
   }
 }
 
-class _SummaryCard extends StatelessWidget {
-  const _SummaryCard({
-    required this.title,
-    required this.titleColor,
-    required this.analysisData,
-    required this.onDismiss,
-    required this.resultLabel,
-  });
-
-  final String title;
-  final Color titleColor;
-  final GameAnalysisData? analysisData;
-  final VoidCallback onDismiss;
-  final String resultLabel;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(AppSpacing.lg),
-      padding: const EdgeInsets.all(AppSpacing.xxl),
-      decoration: BoxDecoration(
-        color: AppColors.backgroundSurface,
-        borderRadius: BorderRadius.circular(AppRadius.xxl),
-        border: Border.all(color: AppColors.primaryBorder),
-        boxShadow: [
-          BoxShadow(
-            color: titleColor.withValues(alpha: 0.2),
-            blurRadius: 30,
-            spreadRadius: 5,
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            title,
-            style: AppTextStyles.display.copyWith(
-              color: titleColor,
-              letterSpacing: 4,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            resultLabel.toUpperCase(),
-            style: AppTextStyles.caption.copyWith(
-              color: Colors.white70,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.2,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.xxl),
-
-          // Stats row
-          if (analysisData != null) ...[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _StatItem(
-                  label: 'Accuracy',
-                  value: '${analysisData!.accuracy.toStringAsFixed(1)}%',
-                  color: AppColors.primary,
-                ),
-                _StatItem(
-                  label: 'Brilliant',
-                  value: '${analysisData!.brilliantCount}',
-                  color: AppColors.brilliant,
-                ),
-                _StatItem(
-                  label: 'Blunders',
-                  value: '${analysisData!.blunderCount}',
-                  color: AppColors.blunder,
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.xxl),
-          ],
-
-          // Buttons
-          ChtButton(
-            label: 'Review Moves',
-            onPressed: onDismiss,
-            icon: Icons.replay_rounded,
-          ),
-          const SizedBox(height: AppSpacing.md),
-          ChtButton(
-            label: 'Back to History',
-            onPressed: () {
-              onDismiss();
-              Navigator.of(context).pop();
-            },
-            variant: ChtButtonVariant.secondary,
-            icon: Icons.history_rounded,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _StatItem extends StatelessWidget {
-  const _StatItem({
-    required this.label,
-    required this.value,
-    required this.color,
-  });
-
+class _SummaryStat extends StatelessWidget {
+  const _SummaryStat(
+      {required this.label, required this.value, required this.color});
   final String label;
   final String value;
   final Color color;
@@ -320,60 +296,39 @@ class _StatItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          value,
-          style: AppTextStyles.headline.copyWith(color: color),
-        ),
-        Text(label, style: AppTextStyles.caption),
+        Text(value,
+            style:
+                AppTextStyles.monoLarge.copyWith(color: color, fontSize: 24)),
+        Text(label,
+            style:
+                AppTextStyles.caption.copyWith(fontSize: 9, letterSpacing: 1)),
       ],
     );
   }
 }
 
-class _CelebratePainter extends CustomPainter {
-  const _CelebratePainter({
-    required this.progress,
-    required this.isWin,
-    required this.isDraw,
-  });
-
+class _ConfettiPainter extends CustomPainter {
+  _ConfettiPainter({required this.progress, required this.color});
   final double progress;
-  final bool isWin;
-  final bool isDraw;
+  final Color color;
+  final math.Random random = math.Random(42);
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()..style = PaintingStyle.fill;
-    final colors = isWin
-        ? (isDraw
-            ? [AppColors.draw, AppColors.textSecondary]
-            : [AppColors.win, AppColors.primary, AppColors.brilliant])
-        : [AppColors.loss, AppColors.backgroundElevated];
 
-    for (int i = 0; i < 40; i++) {
-      final color = colors[i % colors.length];
-      final x = (size.width * ((i * 43 + 17) % 100) / 100);
-      final baseY = isWin
-          ? size.height * (1 - progress) - (i * 25 % 300)
-          : size.height * progress + (i * 25 % 300);
-      final y = baseY % size.height;
-      final opacity = (0.2 + (i % 6) * 0.1).clamp(0.0, 0.7);
-      final radius = 2.0 + (i % 5).toDouble();
+    for (int i = 0; i < 50; i++) {
+      final double x = random.nextDouble() * size.width;
+      final double startY = random.nextDouble() * size.height;
+      final double y = (startY + progress * size.height) % size.height;
 
-      paint.color = color.withValues(alpha: opacity);
+      paint.color = color.withValues(alpha: 0.2 + random.nextDouble() * 0.4);
+      final double s = 2.0 + random.nextDouble() * 4.0;
 
-      // Draw dynamic shapes: Circles for win, Squares for others
-      if (isWin && !isDraw) {
-        canvas.drawCircle(Offset(x, y), radius, paint);
-      } else {
-        canvas.drawRect(
-            Rect.fromCenter(
-                center: Offset(x, y), width: radius * 2, height: radius * 2),
-            paint);
-      }
+      canvas.drawRect(Rect.fromLTWH(x, y, s, s), paint);
     }
   }
 
   @override
-  bool shouldRepaint(_CelebratePainter old) => old.progress != progress;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }

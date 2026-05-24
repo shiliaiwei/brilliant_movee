@@ -17,6 +17,7 @@ class ChessBoardWidget extends StatelessWidget {
     this.moveQuality,
     this.onSquareTap,
     this.isFlipped = false,
+    this.animate = true,
     this.captureKey,
   });
 
@@ -28,6 +29,7 @@ class ChessBoardWidget extends StatelessWidget {
   final MoveQuality? moveQuality;
   final void Function(String square)? onSquareTap;
   final bool isFlipped;
+  final bool animate;
   final GlobalKey? captureKey;
 
   @override
@@ -73,6 +75,7 @@ class ChessBoardWidget extends StatelessWidget {
                             pieceSetId: pieceSetId,
                             highlightLastMove: highlightLastMove,
                             isFlipped: isFlipped,
+                            animate: animate,
                             onSquareTap: onSquareTap,
                           ),
                         ),
@@ -314,6 +317,7 @@ class _PiecesLayer extends StatefulWidget {
     required this.pieceSetId,
     required this.highlightLastMove,
     required this.isFlipped,
+    this.animate = true,
     this.onSquareTap,
   });
 
@@ -322,6 +326,7 @@ class _PiecesLayer extends StatefulWidget {
   final String pieceSetId;
   final bool highlightLastMove;
   final bool isFlipped;
+  final bool animate;
   final void Function(String square)? onSquareTap;
 
   @override
@@ -362,6 +367,7 @@ class _PiecesLayerState extends State<_PiecesLayer> {
             squareSize: widget.squareSize,
             pieceSetId: widget.pieceSetId,
             isFlipped: widget.isFlipped,
+            animate: widget.animate,
           );
         }),
 
@@ -402,6 +408,7 @@ class _ArcadeAnimatedPiece extends StatelessWidget {
     required this.squareSize,
     required this.pieceSetId,
     required this.isFlipped,
+    this.animate = true,
   });
 
   final String piece;
@@ -409,6 +416,7 @@ class _ArcadeAnimatedPiece extends StatelessWidget {
   final double squareSize;
   final String pieceSetId;
   final bool isFlipped;
+  final bool animate;
 
   @override
   Widget build(BuildContext context) {
@@ -418,9 +426,26 @@ class _ArcadeAnimatedPiece extends StatelessWidget {
     final actualCol = isFlipped ? 7 - col : col;
     final actualRow = isFlipped ? 7 - row : row;
 
+    if (!animate) {
+      return Positioned(
+        left: actualCol * squareSize,
+        top: actualRow * squareSize,
+        width: squareSize,
+        height: squareSize,
+        child: IgnorePointer(
+          child: _PieceImage(
+            piece: piece,
+            pieceSetId: pieceSetId,
+            size: squareSize,
+          ),
+        ),
+      );
+    }
+
     return AnimatedPositioned(
-      duration: const Duration(milliseconds: 800), // Slower animation
-      curve: Curves.easeInOutBack,
+      duration: const Duration(
+          milliseconds: 300), // Faster animation for responsiveness
+      curve: Curves.easeOutCubic,
       left: actualCol * squareSize,
       top: actualRow * squareSize,
       width: squareSize,

@@ -64,6 +64,7 @@ class RecordingExportWidget extends StatelessWidget {
               highlightLastMove: true,
               moveQuality: moveQuality,
               isFlipped: isFlipped,
+              animate: false,
             ),
           ),
 

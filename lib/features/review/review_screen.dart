@@ -2,6 +2,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_styles.dart';
 import '../../core/widgets/cht_button.dart';
@@ -49,6 +51,42 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
     });
   }
 
+  Future<void> _showRecordingSettings() async {
+    // Request permission first for Android
+    if (await Permission.storage.request().isGranted ||
+        await Permission.manageExternalStorage.request().isGranted) {
+      // Permission granted
+    }
+
+    if (!mounted) return;
+
+    final state = ref.read(reviewProvider);
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.backgroundSurface,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+      builder: (context) => _RecordingSettingsSheet(
+        state: state,
+        onStart: () async {
+          final messenger = ScaffoldMessenger.of(context);
+          final path =
+              await ref.read(reviewProvider.notifier).exportVideo(_exportKey);
+          if (path != null) {
+            messenger.showSnackBar(
+              SnackBar(
+                content: Text('Video saved to: $path'),
+                backgroundColor: AppColors.success,
+              ),
+            );
+          }
+        },
+      ),
+    );
+  }
+
   void _checkGameEnd(ReviewState state) {
     if (_celebrateShown) return;
     if (state.isAtEnd && state.game != null) {
@@ -91,21 +129,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                   size: 22,
                   color:
                       state.isExporting ? AppColors.secondary : Colors.white),
-              onPressed: state.isExporting
-                  ? null
-                  : () async {
-                      final path = await ref
-                          .read(reviewProvider.notifier)
-                          .exportVideo(_exportKey);
-                      if (mounted && path != null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Video saved to: $path'),
-                            backgroundColor: AppColors.success,
-                          ),
-                        );
-                      }
-                    },
+              onPressed: state.isExporting ? null : _showRecordingSettings,
             ),
             IconButton(
               icon: const Icon(Icons.flip_camera_android_rounded,
@@ -129,8 +153,9 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                       // Off-screen widget for video export
                       if (state.isExporting)
                         Positioned(
-                          left: -2000, // Hide it far off-screen
+                          left: -3000, // Hide it far off-screen
                           child: RepaintBoundary(
+                            key: _exportKey,
                             child: RecordingExportWidget(
                               boardState: state.currentBoardState!,
                               pieceSetId: settings.pieceSet,
@@ -188,58 +213,65 @@ class _ReviewBody extends StatelessWidget {
     final boardState = state.currentBoardState;
     final classification = state.classificationAt(state.currentPlyIndex);
 
-    // Sticky opening logic: Find the latest known opening name in the current line
     String? currentOpening;
-    for (int i = 0; i <= state.currentPlyIndex; i++) {
-      if (i < state.boardStates.length) {
-        final fen = state.boardStates[i].fen;
-        final name = OpeningBook.getOpeningName(fen);
-        if (name != null) currentOpening = name;
-      }
+    for (int i = 0; i < state.boardStates.length; i++) {
+      final fen = state.boardStates[i].fen;
+      final name = OpeningBook.getOpeningName(fen);
+      if (name != null) currentOpening = name;
     }
 
     final move = state.currentPlyIndex > 0
         ? state.game!.moves[state.currentPlyIndex - 1]
         : null;
-    final currentMoveStr = move != null ? '${move.moveNumber}${move.san}' : '';
+    final currentMoveStr =
+        move != null ? '${move.moveNumber}${move.san}' : 'START';
 
     return Column(
       children: [
-        // Sticky Opening Name above the board
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
-          child: Column(
-            children: [
-              Text(
-                (currentOpening ?? '').toUpperCase(),
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 10,
-                  letterSpacing: 2.0,
-                ),
-              ),
-              if (classification != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: Text(
-                    classification.qualityLabel.toUpperCase(),
-                    style: TextStyle(
-                      color: AppColors.primary.withValues(alpha: 0.4),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 7,
-                      letterSpacing: 1.5,
-                    ),
+        SizedBox(
+          height: 80,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  (currentOpening ?? 'CHESS GAME').toUpperCase(),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 11,
+                    letterSpacing: 1.5,
                   ),
                 ),
-            ],
+                const SizedBox(height: 6),
+                if (classification != null)
+                  Text(
+                    classification.qualityLabel.toUpperCase(),
+                    style: TextStyle(
+                      color: AppColors.primary.withValues(alpha: 0.5),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 8,
+                      letterSpacing: 2.0,
+                    ),
+                  )
+                else
+                  const Text(
+                    'ANALYZING...',
+                    style: TextStyle(
+                      color: Colors.white10,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 8,
+                      letterSpacing: 2.0,
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
-
-        // Centered Stable Board Section - FITTING FULL WIDTH
         Expanded(
           child: LayoutBuilder(
             builder: (context, constraints) {
@@ -265,6 +297,7 @@ class _ReviewBody extends StatelessWidget {
                           highlightLastMove: settings.highlightLastMove,
                           moveQuality: classification?.quality,
                           isFlipped: isFlipped,
+                          animate: !state.isExporting,
                         )
                       : Container(color: AppColors.backgroundSurface),
                 ),
@@ -272,8 +305,6 @@ class _ReviewBody extends StatelessWidget {
             },
           ),
         ),
-
-        // Current Move & Navigation (Compact Row)
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: Column(
@@ -289,7 +320,7 @@ class _ReviewBody extends StatelessWidget {
                 child: Text(
                   currentMoveStr,
                   style: const TextStyle(
-                    fontSize: 14, // Smaller as requested
+                    fontSize: 14,
                     color: Colors.white,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 0.2,
@@ -326,29 +357,67 @@ class _ReviewBody extends StatelessWidget {
             ],
           ),
         ),
-
-        // Move Result Button
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
           child: ChtButton(
             label: 'RESULT OF MOVE',
             variant: ChtButtonVariant.secondary,
             onPressed: () {
-              if (classification != null) {
+              if (classification == null) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(classification.plainExplanation),
-                    backgroundColor: AppColors.backgroundSurface,
-                    behavior: SnackBarBehavior.floating,
+                  const SnackBar(
+                    content: Text('Engine still analyzing this move...'),
+                    duration: Duration(seconds: 1),
                   ),
                 );
+                return;
               }
+
+              showModalBottomSheet(
+                context: context,
+                backgroundColor: AppColors.backgroundSurface,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                ),
+                builder: (context) => Container(
+                  padding: const EdgeInsets.all(32),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _ClassificationTinyBadge(
+                              quality: classification.quality),
+                          const SizedBox(width: 12),
+                          Text(
+                            classification.qualityLabel.toUpperCase(),
+                            style:
+                                AppTextStyles.headline.copyWith(fontSize: 18),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                      Text(
+                        classification.plainExplanation,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            color: Colors.white70, fontSize: 15, height: 1.4),
+                      ),
+                      const SizedBox(height: 32),
+                      ChtButton(
+                        label: 'CLOSE',
+                        onPressed: () => Navigator.pop(context),
+                        variant: ChtButtonVariant.ghost,
+                      ),
+                    ],
+                  ),
+                ),
+              );
             },
-            height: 44,
+            height: 48,
           ),
         ),
-
-        // Compact Bottom Panel
         _AnalysisPanelSimplified(state: state),
       ],
     );
@@ -492,27 +561,6 @@ class _MoveNotationStrip extends ConsumerWidget {
           );
         },
       ),
-    );
-  }
-}
-
-class _AnalysisPanel extends ConsumerWidget {
-  const _AnalysisPanel({required this.state, required this.classification});
-  final ReviewState state;
-  final MoveClassification? classification;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(24, 24, 24, 40),
-      decoration: const BoxDecoration(
-        color: AppColors.backgroundSurface,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
-        border: Border(top: BorderSide(color: AppColors.divider, width: 1)),
-      ),
-      child:
-          _AnalysisPanelContent(state: state, classification: classification),
     );
   }
 }
@@ -766,7 +814,6 @@ class _WideReviewBody extends StatelessWidget {
 
     return Row(
       children: [
-        // Left: Eval bar and Board
         Expanded(
           flex: 3,
           child: Column(
@@ -813,8 +860,6 @@ class _WideReviewBody extends StatelessWidget {
             ],
           ),
         ),
-
-        // Right: Analysis Panel
         Expanded(
           flex: 2,
           child: Container(
@@ -832,6 +877,138 @@ class _WideReviewBody extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _RecordingSettingsSheet extends ConsumerStatefulWidget {
+  const _RecordingSettingsSheet({required this.state, required this.onStart});
+  final ReviewState state;
+  final VoidCallback onStart;
+
+  @override
+  ConsumerState<_RecordingSettingsSheet> createState() =>
+      _RecordingSettingsSheetState();
+}
+
+class _RecordingSettingsSheetState
+    extends ConsumerState<_RecordingSettingsSheet> {
+  String? _musicPath;
+  double _volume = 0.5;
+  Size _resolution = const Size(1080, 1080);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+          left: 24,
+          right: 24,
+          top: 24),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('RECORDING SETTINGS',
+              style: AppTextStyles.headline
+                  .copyWith(fontSize: 18, color: Colors.white)),
+          const SizedBox(height: 24),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            title: const Text('Background Music',
+                style: TextStyle(color: Colors.white)),
+            subtitle: Text(_musicPath?.split('/').last ?? 'None selected',
+                style: const TextStyle(color: Colors.white54)),
+            trailing: IconButton(
+              icon: const Icon(Icons.library_music_rounded,
+                  color: AppColors.primary),
+              onPressed: () async {
+                final result =
+                    await FilePicker.platform.pickFiles(type: FileType.audio);
+                if (result != null) {
+                  setState(() => _musicPath = result.files.single.path);
+                }
+              },
+            ),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              const Text('Music Volume', style: TextStyle(color: Colors.white)),
+              const Spacer(),
+              Text('${(_volume * 100).toInt()}%',
+                  style: const TextStyle(
+                      color: AppColors.primary, fontWeight: FontWeight.bold)),
+            ],
+          ),
+          Slider(
+            value: _volume,
+            activeColor: AppColors.primary,
+            inactiveColor: AppColors.divider,
+            onChanged: (v) => setState(() => _volume = v),
+          ),
+          const SizedBox(height: 16),
+          const Text('Resolution', style: TextStyle(color: Colors.white)),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              _ResChip(
+                label: '720p',
+                selected: _resolution.width == 720,
+                onTap: () => setState(() => _resolution = const Size(720, 720)),
+              ),
+              const SizedBox(width: 8),
+              _ResChip(
+                label: '1080p',
+                selected: _resolution.width == 1080,
+                onTap: () =>
+                    setState(() => _resolution = const Size(1080, 1080)),
+              ),
+              const SizedBox(width: 8),
+              _ResChip(
+                label: '4K',
+                selected: _resolution.width == 2160,
+                onTap: () =>
+                    setState(() => _resolution = const Size(2160, 2160)),
+              ),
+            ],
+          ),
+          const SizedBox(height: 32),
+          ChtButton(
+            label: 'START RECORDING',
+            onPressed: () {
+              Navigator.pop(context);
+              ref.read(reviewProvider.notifier).setRecordingConfig(
+                    musicPath: _musicPath,
+                    volume: _volume,
+                    resolution: _resolution,
+                  );
+              widget.onStart();
+            },
+          ),
+          const SizedBox(height: 32),
+        ],
+      ),
+    );
+  }
+}
+
+class _ResChip extends StatelessWidget {
+  const _ResChip(
+      {required this.label, required this.selected, required this.onTap});
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return ChoiceChip(
+      label: Text(label),
+      selected: selected,
+      onSelected: (_) => onTap(),
+      selectedColor: AppColors.primary.withValues(alpha: 0.2),
+      labelStyle:
+          TextStyle(color: selected ? AppColors.primary : Colors.white70),
     );
   }
 }

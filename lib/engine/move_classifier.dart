@@ -144,9 +144,9 @@ abstract final class MoveClassifier {
 
     // 3. Brilliant (!!)
     // A sacrifice that is at least a "Best" or "Great" move.
-    // Or a move that is much better than the second best line.
     bool isBrilliant = false;
-    if (isSacrifice && cpl <= 15) {
+    if (isSacrifice && cpl <= 20) {
+      // Slightly more lenient
       isBrilliant = true;
     }
 

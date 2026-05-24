@@ -27,6 +27,9 @@ class ReviewState {
     this.retryFeedback,
     this.isExporting = false,
     this.exportProgress = 0,
+    this.recordingMusicPath,
+    this.recordingMusicVolume = 0.5,
+    this.recordingResolution = const Size(1080, 1080),
     this.whiteTotals = const MoveQualityTotals(),
     this.blackTotals = const MoveQualityTotals(),
   });
@@ -46,6 +49,9 @@ class ReviewState {
   final String? retryFeedback;
   final bool isExporting;
   final double exportProgress;
+  final String? recordingMusicPath;
+  final double recordingMusicVolume;
+  final Size recordingResolution;
   final MoveQualityTotals whiteTotals;
   final MoveQualityTotals blackTotals;
 
@@ -81,6 +87,9 @@ class ReviewState {
     String? retryFeedback,
     bool? isExporting,
     double? exportProgress,
+    String? recordingMusicPath,
+    double? recordingMusicVolume,
+    Size? recordingResolution,
     MoveQualityTotals? whiteTotals,
     MoveQualityTotals? blackTotals,
   }) {
@@ -100,6 +109,9 @@ class ReviewState {
       retryFeedback: retryFeedback ?? this.retryFeedback,
       isExporting: isExporting ?? this.isExporting,
       exportProgress: exportProgress ?? this.exportProgress,
+      recordingMusicPath: recordingMusicPath ?? this.recordingMusicPath,
+      recordingMusicVolume: recordingMusicVolume ?? this.recordingMusicVolume,
+      recordingResolution: recordingResolution ?? this.recordingResolution,
       whiteTotals: whiteTotals ?? this.whiteTotals,
       blackTotals: blackTotals ?? this.blackTotals,
     );
@@ -367,43 +379,80 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
     return (white: w, black: b);
   }
 
+  void setRecordingConfig(
+      {String? musicPath, double? volume, Size? resolution}) {
+    state = state.copyWith(
+      recordingMusicPath: musicPath,
+      recordingMusicVolume: volume,
+      recordingResolution: resolution,
+    );
+  }
+
   Future<String?> exportVideo(GlobalKey captureKey) async {
     if (state.boardStates.isEmpty) return null;
 
     final totalPlies = state.boardStates.length;
-    // Aim for ~30-40 seconds for 60 plies, so ~0.5s per ply
-    const frameDelay = Duration(milliseconds: 500);
+    const frameDelay = Duration(milliseconds: 600); // Slower for stability
     final frames = <ui.Image>[];
 
     state = state.copyWith(isExporting: true, exportProgress: 0);
 
-    // Initial position
+    // 1. Play background music in sync
+    if (state.recordingMusicPath != null) {
+      await RecordingService.instance.startBackgroundMusic(
+        state.recordingMusicPath!,
+        state.recordingMusicVolume,
+      );
+    }
+
+    // 2. Capture Initial position
     _setCurrentPly(0);
-    await Future.delayed(const Duration(milliseconds: 100)); // Wait for render
-    final startFrame = await RecordingService.instance.captureFrame(captureKey);
+    await Future.delayed(
+        const Duration(milliseconds: 500)); // Wait for board layout
+    final startFrame = await RecordingService.instance.captureFrame(captureKey,
+        pixelRatio: state.recordingResolution.width / 1080);
     if (startFrame != null) frames.add(startFrame);
 
+    // 3. Capture all moves
     for (int i = 1; i < totalPlies; i++) {
-      if (!mounted) return null;
-      _setCurrentPly(i);
-      state = state.copyWith(exportProgress: (i / totalPlies) * 0.5);
+      if (!mounted) {
+        await RecordingService.instance.stopBackgroundMusic();
+        return null;
+      }
 
-      // Wait for UI to update
+      // Update state without triggering auto-move logic if any
+      state = state.copyWith(currentPlyIndex: i);
+      state = state.copyWith(exportProgress: (i / totalPlies) * 0.4);
+
+      // Wait for UI to update (crucial for stability)
       await Future.delayed(frameDelay);
 
-      final frame = await RecordingService.instance.captureFrame(captureKey);
+      final frame = await RecordingService.instance.captureFrame(captureKey,
+          pixelRatio: state.recordingResolution.width / 1080);
       if (frame != null) frames.add(frame);
+    }
+
+    // 4. Capture "Win Celebration" frame/pause
+    // We add a few identical frames at the end to hold the final result
+    for (int i = 0; i < 5; i++) {
+      if (frames.isNotEmpty) frames.add(frames.last);
     }
 
     if (frames.isEmpty) {
       state = state.copyWith(isExporting: false);
+      await RecordingService.instance.stopBackgroundMusic();
       return null;
     }
 
-    state = state.copyWith(exportProgress: 0.6);
+    state = state.copyWith(exportProgress: 0.5);
+
+    // 5. Generate Video with FFmpeg
     final videoPath = await RecordingService.instance.generateGameVideo(
       frames: frames,
-      fps: 2, // 2 frames per second (0.5s per move)
+      fps: 2,
+      musicPath: state.recordingMusicPath,
+      musicVolume: state.recordingMusicVolume,
+      resolution: state.recordingResolution,
     );
 
     state = state.copyWith(isExporting: false, exportProgress: 1.0);

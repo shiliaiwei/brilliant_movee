@@ -162,7 +162,7 @@ step to fi x,
 
 
 
-
+after that pls find fix the record button videos make it realy wokring well , by using  with FFmpeg to record proccess the move of chess , no auto move any more, the flow is that when user tap on icon record ing video as for sulution and size recording , and add thebackground music of that video , make 
 
 
 

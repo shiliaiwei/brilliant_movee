@@ -10,7 +10,7 @@ class StockfishRequest {
   const StockfishRequest({
     required this.type,
     required this.fen,
-    this.depth = 22,
+    this.depth = 26, // Increased from 22 for better brilliant move detection
     this.multiPv = 3,
     this.requestId = '',
   });
@@ -182,7 +182,7 @@ List<EngineLineResult> _generateMockLines(String fen, int multiPv) {
     (i) => EngineLineResult(
       moves: _generateMockMoves(fen, i),
       eval: (baseEval - i * 40).toDouble(),
-      depth: 24, // SF-18 baseline depth
+      depth: 26, // Increased SF-18 baseline depth
     ),
   );
 }

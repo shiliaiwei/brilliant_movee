@@ -41,8 +41,11 @@ dependencies:
   # Audio
   just_audio: ^0.9.40
 
-  # Video Recording & Processing (Disabled temporarily due to repository issues)
-  # ffmpeg_kit_flutter_full_gpl: ^6.0.3
+  # Video Recording & Processing
+  ffmpeg_kit_flutter_full_gpl: ^6.0.3
+  file_picker: ^8.0.0+1
+  permission_handler: ^11.3.1
+  uuid: ^4.4.0
 
   # FFI (Engine Bridge)
   ffi: ^2.1.3
