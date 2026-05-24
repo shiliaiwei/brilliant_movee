@@ -213,18 +213,34 @@ class _ReviewBody extends StatelessWidget {
         // Opening Name above the board
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-          child: Text(
-            (openingName ?? classification?.qualityLabel ?? 'BASE DATABASE')
-                .toUpperCase(),
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: AppColors.primary,
-              fontWeight: FontWeight.w900,
-              fontSize: 11,
-              letterSpacing: 2.2,
-            ),
+          child: Column(
+            children: [
+              Text(
+                (openingName ?? 'BASE DATABASE').toUpperCase(),
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 10,
+                  letterSpacing: 2.0,
+                ),
+              ),
+              if (classification != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Text(
+                    classification.qualityLabel.toUpperCase(),
+                    style: TextStyle(
+                      color: AppColors.primary.withValues(alpha: 0.5),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 8,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                ),
+            ],
           ),
         ),
 
@@ -281,7 +297,7 @@ class _ReviewBody extends StatelessWidget {
                     Text(
                       currentMoveStr,
                       style: const TextStyle(
-                        fontSize: 20,
+                        fontSize: 16, // Smaller move number
                         color: Colors.white,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 0.5,

@@ -419,7 +419,7 @@ class _ArcadeAnimatedPiece extends StatelessWidget {
     final actualRow = isFlipped ? 7 - row : row;
 
     return AnimatedPositioned(
-      duration: const Duration(milliseconds: 650),
+      duration: const Duration(milliseconds: 800), // Slower animation
       curve: Curves.easeInOutBack,
       left: actualCol * squareSize,
       top: actualRow * squareSize,
