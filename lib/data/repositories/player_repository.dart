@@ -37,14 +37,15 @@ class PlayerRepository {
       try {
         stats = await _chessCom.getPlayerStats(username);
       } catch (e) {
-        // Stats might be missing for very new or restricted accounts
+        // Stats might be missing
       }
 
       final completeProfile = profile.copyWith(stats: stats);
       _profileCache[key] = completeProfile;
       return completeProfile;
     } catch (e) {
-      // If direct profile fetch fails, try to return whatever we have or rethrow
+      // Return cached if available on error
+      if (_profileCache.containsKey(key)) return _profileCache[key]!;
       rethrow;
     }
   }

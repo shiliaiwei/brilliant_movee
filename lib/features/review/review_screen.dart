@@ -286,13 +286,13 @@ class _ReviewBody extends StatelessWidget {
             builder: (context, constraints) {
               final availableWidth = constraints.maxWidth;
               final availableHeight = constraints.maxHeight;
-              final side = math.min(availableWidth, availableHeight) * 0.92;
+              final side = math.min(availableWidth, availableHeight) * 0.95;
 
               return Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Small Eval Bar next to centered board
+                    // Eval Bar
                     AnimatedEvalBar(
                       evalCp: isFlipped ? -evalCp : evalCp,
                       height: side,
@@ -319,7 +319,7 @@ class _ReviewBody extends StatelessWidget {
                             )
                           : Container(color: AppColors.backgroundSurface),
                     ),
-                    const SizedBox(width: 18), // Balance for eval bar
+                    const SizedBox(width: 18), // Balance
                   ],
                 ),
               );
@@ -327,32 +327,35 @@ class _ReviewBody extends StatelessWidget {
           ),
         ),
 
-        // Current Move SAN & Quality
+        // Current Move & Navigation (Compact Row)
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Column(
             children: [
-              Text(
-                currentMoveStr,
-                style: AppTextStyles.monoLarge.copyWith(
-                  fontSize: 28,
-                  color: Colors.white,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    currentMoveStr,
+                    style: AppTextStyles.monoLarge.copyWith(
+                      fontSize: 32,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  if (classification != null) ...[
+                    const SizedBox(width: 16),
+                    _ClassificationTinyBadge(quality: classification.quality),
+                  ],
+                ],
               ),
-              if (classification != null) ...[
-                const SizedBox(width: 12),
-                _ClassificationTinyBadge(quality: classification.quality),
-              ],
+              const SizedBox(height: 16),
+              _NavigationControls(state: state),
             ],
           ),
         ),
 
-        // Navigation Controls at the bottom
-        _NavigationControls(state: state),
-        const SizedBox(height: 24),
-
-        // Simplified bottom panel (Remove description)
+        // Simplified Bottom Panel
         _AnalysisPanelSimplified(state: state),
       ],
     );
