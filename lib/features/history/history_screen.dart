@@ -149,31 +149,36 @@ class HistoryScreen extends ConsumerWidget {
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.backgroundSurface,
+        insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
+        scrollable: true,
         title: Text('PASTE PGN',
             style: AppTextStyles.title
                 .copyWith(color: Colors.white, letterSpacing: 1)),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text('Paste your PGN data below to start analysis.',
-                style: TextStyle(color: Colors.white70, fontSize: 12)),
-            const SizedBox(height: 16),
-            TextField(
-              controller: controller,
-              maxLines: 6,
-              style: const TextStyle(
-                  color: Colors.white, fontSize: 13, fontFamily: 'monospace'),
-              decoration: InputDecoration(
-                hintText: '[Event "Live Chess"]...',
-                hintStyle: const TextStyle(color: Colors.white24),
-                filled: true,
-                fillColor: Colors.black,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide.none),
+        content: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.8,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text('Paste your PGN data below to start analysis.',
+                  style: TextStyle(color: Colors.white70, fontSize: 12)),
+              const SizedBox(height: 16),
+              TextField(
+                controller: controller,
+                maxLines: 6,
+                style: const TextStyle(
+                    color: Colors.white, fontSize: 13, fontFamily: 'monospace'),
+                decoration: InputDecoration(
+                  hintText: '[Event "Live Chess"]...',
+                  hintStyle: const TextStyle(color: Colors.white24),
+                  filled: true,
+                  fillColor: Colors.black,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide.none),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         actions: [
           TextButton(

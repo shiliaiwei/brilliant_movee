@@ -228,12 +228,14 @@ class _ReviewBody extends ConsumerWidget {
 
     return Column(
       children: [
+        _AnalysisPanelSimplified(
+            state: state, engineVersion: settings.engineVersion),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           child: _PlayerBadge(name: opponent, isTop: true),
         ),
         SizedBox(
-          height: 60,
+          height: 50,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
@@ -253,7 +255,7 @@ class _ReviewBody extends ConsumerWidget {
                   ),
                 ),
                 if (classification != null) ...[
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 2),
                   Text(
                     classification.qualityLabel.toUpperCase(),
                     style: TextStyle(
@@ -301,38 +303,37 @@ class _ReviewBody extends ConsumerWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           child: _PlayerBadge(name: userDisplayName, isTop: false),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Column(
             children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundSurface,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.divider, width: 1),
-                ),
-                child: Text(
-                  currentMoveStr,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 0.2,
+              if (move != null)
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: AppColors.backgroundSurface,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: AppColors.divider, width: 1),
+                  ),
+                  child: Text(
+                    currentMoveStr,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 0.2,
+                    ),
                   ),
                 ),
-              ),
               const SizedBox(height: 12),
               _NavigationControls(state: state),
             ],
           ),
         ),
-        _AnalysisPanelSimplified(
-            state: state, engineVersion: settings.engineVersion),
       ],
     );
   }
@@ -377,15 +378,39 @@ class _PlayerBadge extends StatelessWidget {
   }
 }
 
-class _AnalysisPanelSimplified extends ConsumerWidget {
+class _AnalysisPanelSimplified extends ConsumerStatefulWidget {
   const _AnalysisPanelSimplified(
       {required this.state, required this.engineVersion});
   final ReviewState state;
   final int engineVersion;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    if (!state.isAnalyzing) return const SizedBox(height: 24);
+  ConsumerState<_AnalysisPanelSimplified> createState() =>
+      _AnalysisPanelSimplifiedState();
+}
+
+class _AnalysisPanelSimplifiedState
+    extends ConsumerState<_AnalysisPanelSimplified>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 1500))
+      ..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!widget.state.isAnalyzing) return const SizedBox(height: 16);
 
     final storage = ref.read(storageServiceProvider);
     final depth = storage.engineDepth;
@@ -399,60 +424,96 @@ class _AnalysisPanelSimplified extends ConsumerWidget {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+      decoration: BoxDecoration(
+        color: AppColors.primary.withValues(alpha: 0.03),
+        border: Border(
+          bottom: BorderSide(color: AppColors.primary.withValues(alpha: 0.1)),
+        ),
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'SF-$engineVersion',
+                'SF-${widget.engineVersion} • $mode',
                 style: TextStyle(
-                  color: AppColors.primary.withValues(alpha: 0.5),
+                  color: AppColors.primary.withValues(alpha: 0.6),
                   fontWeight: FontWeight.w900,
-                  fontSize: 8,
-                  letterSpacing: 1.5,
+                  fontSize: 9,
+                  letterSpacing: 1.2,
                 ),
               ),
-              const SizedBox(width: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(2),
-                ),
-                child: Text(
-                  mode,
-                  style: const TextStyle(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w900,
-                    fontSize: 7,
-                    letterSpacing: 1.0,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 8),
               Text(
-                'DEPTH $depth...',
+                'DEPTH $depth (PLY)',
                 style: TextStyle(
-                  color: AppColors.primary.withValues(alpha: 0.8),
+                  color: AppColors.primary.withValues(alpha: 0.6),
                   fontWeight: FontWeight.w900,
-                  fontSize: 8,
-                  letterSpacing: 1.5,
+                  fontSize: 9,
+                  letterSpacing: 1.2,
                 ),
               ),
             ],
           ),
           const SizedBox(height: 8),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(1),
-            child: LinearProgressIndicator(
-              value: state.analysisProgress,
-              backgroundColor: Colors.white.withValues(alpha: 0.05),
-              color: AppColors.primary,
-              minHeight: 1.5,
-            ),
+          Stack(
+            children: [
+              Container(
+                height: 2,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.05),
+                  borderRadius: BorderRadius.circular(1),
+                ),
+              ),
+              AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) {
+                  return FractionallySizedBox(
+                    alignment: Alignment.centerLeft,
+                    widthFactor: widget.state.analysisProgress,
+                    child: Container(
+                      height: 2,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(1),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.primary.withValues(alpha: 0.4),
+                            blurRadius: 4,
+                            spreadRadius: 1,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+              // Creative scanning line
+              AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) {
+                  return Positioned(
+                    left: _controller.value * MediaQuery.of(context).size.width,
+                    child: Container(
+                      width: 40,
+                      height: 2,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            AppColors.primary.withValues(alpha: 0),
+                            AppColors.primary,
+                            AppColors.primary.withValues(alpha: 0),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
         ],
       ),

@@ -213,64 +213,77 @@ void _engineIsolateEntry(SendPort mainSendPort) {
   final receivePort = ReceivePort();
   mainSendPort.send(receivePort.sendPort);
 
-  final stockfish = Stockfish();
+  try {
+    final stockfish = Stockfish();
 
-  Map<int, EngineLineResult> currentLines = {};
-  String currentRequestId = '';
-  String currentFen = '';
-  int targetDepth = 26;
+    Map<int, EngineLineResult> currentLines = {};
+    String currentRequestId = '';
+    String currentFen = '';
+    int targetDepth = 26;
 
-  stockfish.stdout.listen((line) {
-    if (line.startsWith('info')) {
-      final parsed = _parseUciInfo(line);
-      if (parsed != null) {
-        final pvIndex = _extractInt(line, 'multipv') ?? 1;
-        currentLines[pvIndex] = parsed;
+    stockfish.stdout.listen((line) {
+      if (line.startsWith('info')) {
+        final parsed = _parseUciInfo(line);
+        if (parsed != null) {
+          final pvIndex = _extractInt(line, 'multipv') ?? 1;
+          currentLines[pvIndex] = parsed;
 
-        if (pvIndex == 1) {
-          mainSendPort.send(StockfishResponse(
-            requestId: currentRequestId,
-            fen: currentFen,
-            lines: currentLines.values.toList(),
-            currentDepth: parsed.depth,
-            isComplete: false,
-          ));
+          if (pvIndex == 1) {
+            mainSendPort.send(StockfishResponse(
+              requestId: currentRequestId,
+              fen: currentFen,
+              lines: currentLines.values.toList(),
+              currentDepth: parsed.depth,
+              isComplete: false,
+            ));
+          }
         }
+      } else if (line.startsWith('bestmove')) {
+        mainSendPort.send(StockfishResponse(
+          requestId: currentRequestId,
+          fen: currentFen,
+          lines: currentLines.values.toList(),
+          currentDepth: targetDepth,
+          isComplete: true,
+        ));
       }
-    } else if (line.startsWith('bestmove')) {
+    }, onError: (e) {
       mainSendPort.send(StockfishResponse(
-        requestId: currentRequestId,
-        fen: currentFen,
-        lines: currentLines.values.toList(),
-        currentDepth: targetDepth,
-        isComplete: true,
-      ));
-    }
-  });
+          requestId: currentRequestId,
+          fen: currentFen,
+          lines: [],
+          error: e.toString()));
+    });
 
-  receivePort.listen((message) {
-    if (message is! StockfishRequest) return;
+    receivePort.listen((message) {
+      if (message is! StockfishRequest) return;
 
-    switch (message.type) {
-      case StockfishMessageType.quit:
-        stockfish.dispose();
-        receivePort.close();
-        return;
-      case StockfishMessageType.stop:
-        stockfish.stdin = 'stop';
-        return;
-      case StockfishMessageType.analyze:
-        currentRequestId = message.requestId;
-        currentFen = message.fen;
-        targetDepth = message.depth;
-        currentLines.clear();
+      switch (message.type) {
+        case StockfishMessageType.quit:
+          try {
+            stockfish.dispose();
+          } catch (_) {}
+          receivePort.close();
+          return;
+        case StockfishMessageType.stop:
+          stockfish.stdin = 'stop';
+          return;
+        case StockfishMessageType.analyze:
+          currentRequestId = message.requestId;
+          currentFen = message.fen;
+          targetDepth = message.depth;
+          currentLines.clear();
 
-        stockfish.stdin = 'stop';
-        stockfish.stdin = 'setoption name MultiPV value ${message.multiPv}';
-        stockfish.stdin = 'position fen ${message.fen}';
-        stockfish.stdin = 'go depth ${message.depth}';
-    }
-  });
+          stockfish.stdin = 'stop';
+          stockfish.stdin = 'setoption name MultiPV value ${message.multiPv}';
+          stockfish.stdin = 'position fen ${message.fen}';
+          stockfish.stdin = 'go depth ${message.depth}';
+      }
+    });
+  } catch (e) {
+    mainSendPort.send(StockfishResponse(
+        requestId: '', fen: '', lines: [], error: 'Engine Init Fail: $e'));
+  }
 }
 
 EngineLineResult? _parseUciInfo(String line) {

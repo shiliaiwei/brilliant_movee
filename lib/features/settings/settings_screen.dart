@@ -216,9 +216,13 @@ class SettingsScreen extends ConsumerWidget {
     showModalBottomSheet(
       context: context,
       backgroundColor: AppColors.backgroundSurface,
+      isScrollControlled: true,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
       builder: (context) => Container(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height * 0.85,
+        ),
         padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -226,68 +230,83 @@ class SettingsScreen extends ConsumerWidget {
             Text('ENGINE ANALYSIS PROFILE',
                 style: AppTextStyles.title.copyWith(letterSpacing: 1.2)),
             const SizedBox(height: 24),
-            ...profiles.map((p) => Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () {
-                        notifier.updateEngineProfile(
-                          version: p.version,
-                          depth: p.depth,
-                          multiPv: p.multiPv,
-                        );
-                        Navigator.pop(context);
-                      },
-                      borderRadius: BorderRadius.circular(12),
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: p.version == current
-                              ? AppColors.primary.withValues(alpha: 0.1)
-                              : AppColors.backgroundElevated,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: p.version == current
-                                ? AppColors.primary
-                                : Colors.white10,
-                            width: 1.5,
-                          ),
-                        ),
-                        child: Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(p.label,
-                                    style: TextStyle(
+            Flexible(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  children: profiles
+                      .map((p) => Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () {
+                                  notifier.updateEngineProfile(
+                                    version: p.version,
+                                    depth: p.depth,
+                                    multiPv: p.multiPv,
+                                  );
+                                  Navigator.pop(context);
+                                },
+                                borderRadius: BorderRadius.circular(12),
+                                child: Container(
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    color: p.version == current
+                                        ? AppColors.primary
+                                            .withValues(alpha: 0.1)
+                                        : AppColors.backgroundElevated,
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
                                       color: p.version == current
                                           ? AppColors.primary
-                                          : Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                      letterSpacing: 1,
-                                    )),
-                                const SizedBox(height: 4),
-                                Text(p.desc, style: AppTextStyles.caption),
-                              ],
+                                          : Colors.white10,
+                                      width: 1.5,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(p.label,
+                                                style: TextStyle(
+                                                  color: p.version == current
+                                                      ? AppColors.primary
+                                                      : Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14,
+                                                  letterSpacing: 1,
+                                                )),
+                                            const SizedBox(height: 4),
+                                            Text(p.desc,
+                                                style: AppTextStyles.caption),
+                                          ],
+                                        ),
+                                      ),
+                                      Text('SF-${p.version}',
+                                          style: AppTextStyles.bodyMedium
+                                              .copyWith(
+                                                  color:
+                                                      AppColors.textSecondary)),
+                                      const SizedBox(width: 8),
+                                      Icon(Icons.bolt_rounded,
+                                          color: p.version == current
+                                              ? AppColors.brilliant
+                                              : Colors.white10,
+                                          size: 20),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
-                            const Spacer(),
-                            Text('SF-${p.version}',
-                                style: AppTextStyles.bodyMedium
-                                    .copyWith(color: AppColors.textSecondary)),
-                            const SizedBox(width: 8),
-                            Icon(Icons.bolt_rounded,
-                                color: p.version == current
-                                    ? AppColors.brilliant
-                                    : Colors.white10,
-                                size: 20),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                )),
+                          ))
+                      .toList(),
+                ),
+              ),
+            ),
             const SizedBox(height: 16),
           ],
         ),
