@@ -191,18 +191,19 @@ class _InsightChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const shape = _ChipShape(cut: 6);
     return Material(
       color: Colors.transparent,
+      shape: shape,
+      clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(20),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          decoration: BoxDecoration(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+          decoration: ShapeDecoration(
             color: isSelected ? AppColors.primary : AppColors.backgroundSurface,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
+            shape: shape.copyWithBorder(
                 color: isSelected ? Colors.transparent : Colors.white10),
           ),
           child: Text(
@@ -210,13 +211,65 @@ class _InsightChip extends StatelessWidget {
             style: TextStyle(
               color: isSelected ? Colors.black : Colors.white70,
               fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-              fontSize: 12,
+              fontSize: 11,
             ),
           ),
         ),
       ),
     );
   }
+}
+
+class _ChipShape extends ShapeBorder {
+  const _ChipShape({required this.cut, this.borderColor, this.borderWidth = 1});
+  final double cut;
+  final Color? borderColor;
+  final double borderWidth;
+
+  _ChipShape copyWithBorder({Color? color, double? width}) {
+    return _ChipShape(
+      cut: cut,
+      borderColor: color ?? borderColor,
+      borderWidth: width ?? borderWidth,
+    );
+  }
+
+  @override
+  EdgeInsetsGeometry get dimensions =>
+      EdgeInsets.all(borderColor != null ? borderWidth : 0);
+
+  @override
+  Path getInnerPath(Rect rect, {TextDirection? textDirection}) =>
+      getOuterPath(rect.deflate(borderWidth), textDirection: textDirection);
+
+  @override
+  Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
+    return Path()
+      ..moveTo(rect.left + cut, rect.top)
+      ..lineTo(rect.right - cut, rect.top)
+      ..lineTo(rect.right, rect.top + cut)
+      ..lineTo(rect.right, rect.bottom - cut)
+      ..lineTo(rect.right - cut, rect.bottom)
+      ..lineTo(rect.left + cut, rect.bottom)
+      ..lineTo(rect.left, rect.bottom - cut)
+      ..lineTo(rect.left, rect.top + cut)
+      ..close();
+  }
+
+  @override
+  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
+    if (borderColor != null) {
+      final paint = Paint()
+        ..color = borderColor!
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = borderWidth;
+      canvas.drawPath(getOuterPath(rect, textDirection: textDirection), paint);
+    }
+  }
+
+  @override
+  ShapeBorder scale(double t) => _ChipShape(
+      cut: cut * t, borderColor: borderColor, borderWidth: borderWidth * t);
 }
 
 class _HeroSection extends StatelessWidget {

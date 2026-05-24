@@ -8,6 +8,9 @@ class SettingsState {
     required this.showCoordinates,
     required this.highlightLastMove,
     required this.autoAnalyze,
+    required this.engineVersion,
+    required this.engineDepth,
+    required this.multiPv,
   });
 
   final String boardTheme;
@@ -15,6 +18,9 @@ class SettingsState {
   final bool showCoordinates;
   final bool highlightLastMove;
   final bool autoAnalyze;
+  final int engineVersion;
+  final int engineDepth;
+  final int multiPv;
 
   SettingsState copyWith({
     String? boardTheme,
@@ -22,6 +28,9 @@ class SettingsState {
     bool? showCoordinates,
     bool? highlightLastMove,
     bool? autoAnalyze,
+    int? engineVersion,
+    int? engineDepth,
+    int? multiPv,
   }) {
     return SettingsState(
       boardTheme: boardTheme ?? this.boardTheme,
@@ -29,6 +38,9 @@ class SettingsState {
       showCoordinates: showCoordinates ?? this.showCoordinates,
       highlightLastMove: highlightLastMove ?? this.highlightLastMove,
       autoAnalyze: autoAnalyze ?? this.autoAnalyze,
+      engineVersion: engineVersion ?? this.engineVersion,
+      engineDepth: engineDepth ?? this.engineDepth,
+      multiPv: multiPv ?? this.multiPv,
     );
   }
 }
@@ -41,9 +53,29 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
           showCoordinates: _storage.showCoordinates,
           highlightLastMove: _storage.highlightLastMove,
           autoAnalyze: _storage.autoAnalyze,
+          engineVersion: _storage.engineVersion,
+          engineDepth: _storage.engineDepth,
+          multiPv: _storage.multiPv,
         ));
 
   final StorageService _storage;
+
+  Future<void> updateEngineProfile(
+      {required int version, required int depth, required int multiPv}) async {
+    await _storage.setEngineVersion(version);
+    await _storage.setEngineDepth(depth);
+    await _storage.setMultiPv(multiPv);
+    state = state.copyWith(
+      engineVersion: version,
+      engineDepth: depth,
+      multiPv: multiPv,
+    );
+  }
+
+  Future<void> updateEngineVersion(int version) async {
+    await _storage.setEngineVersion(version);
+    state = state.copyWith(engineVersion: version);
+  }
 
   Future<void> updateBoardTheme(String theme) async {
     await _storage.setBoardTheme(theme);

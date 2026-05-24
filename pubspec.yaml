@@ -42,7 +42,6 @@ dependencies:
   just_audio: ^0.9.40
 
   # Video Recording & Processing
-  ffmpeg_kit_flutter_full_gpl: ^6.0.3
   file_picker: ^8.0.0+1
   permission_handler: ^11.3.1
   uuid: ^4.4.0
@@ -59,6 +58,8 @@ dependencies:
   connectivity_plus: ^6.0.3
   package_info_plus: ^8.0.2
   shared_preferences: ^2.3.2
+  ffmpeg_kit_flutter_new: ^4.1.0
+  stockfish_chess_engine: ^0.8.2
 
 dev_dependencies:
   flutter_test:

@@ -143,10 +143,14 @@ abstract final class MoveClassifier {
     final cpl = (evalBefore - evalAfter).round().clamp(0, 9999);
 
     // 3. Brilliant (!!)
-    // A sacrifice that is at least a "Best" or "Great" move.
+    // Defined as a sacrifice that is a top engine move and results in a good position.
+    // We require a minimum depth of 20 to accurately confirm brilliance.
     bool isBrilliant = false;
-    if (isSacrifice && cpl <= 20) {
-      // Slightly more lenient
+    final maxDepth = engineLines.isNotEmpty
+        ? engineLines.map((l) => l.depth).reduce(math.max)
+        : 0;
+
+    if (isSacrifice && cpl <= 15 && evalAfter > -100 && maxDepth >= 20) {
       isBrilliant = true;
     }
 
@@ -162,9 +166,20 @@ abstract final class MoveClassifier {
     }
 
     // 4. Great (!)
-    // Maintains a significant advantage or is the only move that doesn't lose.
-    if (cpl <= 10 &&
-        (evalBefore > 200 || (evalBefore < -100 && evalAfter > -50))) {
+    // Only move that maintains evaluation (eval swing detection).
+    // Or a move that significantly improves a bad position.
+    bool isGreat = false;
+    if (engineLines.length >= 2) {
+      final bestEval = engineLines[0].eval;
+      final secondBestEval = engineLines[1].eval;
+      final evalDiff = (bestEval - secondBestEval).abs();
+
+      if (cpl <= 5 && evalDiff >= 150) {
+        isGreat = true;
+      }
+    }
+
+    if (isGreat) {
       return MoveClassification(
         quality: MoveQuality.great,
         cpl: cpl,

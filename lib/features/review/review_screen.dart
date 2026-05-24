@@ -6,7 +6,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_styles.dart';
-import '../../core/widgets/cht_button.dart';
 import '../../core/widgets/cht_error_state.dart';
 import '../../core/widgets/eval_bar.dart';
 import '../../core/services/storage_service.dart';
@@ -18,6 +17,7 @@ import 'board/chess_board_widget.dart';
 import 'analysis/review_notifier.dart';
 import 'analysis/recording_export_widget.dart';
 import 'celebrate/celebrate_overlay.dart';
+import 'widgets/review_cyber_action_button.dart';
 
 class ReviewScreen extends ConsumerStatefulWidget {
   const ReviewScreen({super.key, required this.gameId, required this.pgn});
@@ -32,7 +32,6 @@ class ReviewScreen extends ConsumerStatefulWidget {
 class _ReviewScreenState extends ConsumerState<ReviewScreen> {
   bool _showCelebrate = false;
   bool _celebrateShown = false;
-  bool _isFlipped = false;
   final GlobalKey _exportKey = GlobalKey();
 
   @override
@@ -131,11 +130,6 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                       state.isExporting ? AppColors.secondary : Colors.white),
               onPressed: state.isExporting ? null : _showRecordingSettings,
             ),
-            IconButton(
-              icon: const Icon(Icons.flip_camera_android_rounded,
-                  size: 22, color: Colors.white),
-              onPressed: () => setState(() => _isFlipped = !_isFlipped),
-            ),
           ],
         ),
         body: state.isLoading
@@ -170,21 +164,15 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                               moveQuality: state
                                   .classificationAt(state.currentPlyIndex)
                                   ?.quality,
-                              isFlipped: _isFlipped,
+                              isFlipped: false,
                               captureKey: _exportKey,
                             ),
                           ),
                         ),
 
                       context.isWide
-                          ? _WideReviewBody(
-                              state: state,
-                              settings: settings,
-                              isFlipped: _isFlipped)
-                          : _ReviewBody(
-                              state: state,
-                              settings: settings,
-                              isFlipped: _isFlipped),
+                          ? _WideReviewBody(state: state, settings: settings)
+                          : _ReviewBody(state: state, settings: settings),
                       if (_showCelebrate)
                         CelebrateOverlay(
                           result: state.game?.result ?? '*',
@@ -201,20 +189,32 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
   }
 }
 
-class _ReviewBody extends StatelessWidget {
-  const _ReviewBody(
-      {required this.state, required this.settings, required this.isFlipped});
+class _ReviewBody extends ConsumerWidget {
+  const _ReviewBody({required this.state, required this.settings});
   final ReviewState state;
   final SettingsState settings;
-  final bool isFlipped;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final boardState = state.currentBoardState;
     final classification = state.classificationAt(state.currentPlyIndex);
+    final storage = ref.read(storageServiceProvider);
+    final user = storage.connectedUsername?.toLowerCase() ?? '';
+
+    final white = state.game?.white ?? 'White';
+    final black = state.game?.black ?? 'Black';
+
+    final isUserWhite = white.toLowerCase() == user;
+    final opponent = isUserWhite ? black : white;
+    final userDisplayName = isUserWhite ? white : black;
+
+    // Board flipping logic fixed: User at bottom, Opponent at top.
+    // Standard board orientation (white at bottom) should be flipped if user is black.
+    final bool boardFlipped = !isUserWhite;
 
     String? currentOpening;
-    for (int i = 0; i < state.boardStates.length; i++) {
+    for (int i = 0; i <= state.currentPlyIndex; i++) {
+      if (i >= state.boardStates.length) break;
       final fen = state.boardStates[i].fen;
       final name = OpeningBook.getOpeningName(fen);
       if (name != null) currentOpening = name;
@@ -228,12 +228,17 @@ class _ReviewBody extends StatelessWidget {
 
     return Column(
       children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: _PlayerBadge(name: opponent, isTop: true),
+        ),
         SizedBox(
-          height: 80,
+          height: 60,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   (currentOpening ?? 'CHESS GAME').toUpperCase(),
@@ -243,12 +248,12 @@ class _ReviewBody extends StatelessWidget {
                   style: const TextStyle(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w900,
-                    fontSize: 11,
-                    letterSpacing: 1.5,
+                    fontSize: 10,
+                    letterSpacing: 1.2,
                   ),
                 ),
-                const SizedBox(height: 6),
-                if (classification != null)
+                if (classification != null) ...[
+                  const SizedBox(height: 4),
                   Text(
                     classification.qualityLabel.toUpperCase(),
                     style: TextStyle(
@@ -257,17 +262,8 @@ class _ReviewBody extends StatelessWidget {
                       fontSize: 8,
                       letterSpacing: 2.0,
                     ),
-                  )
-                else
-                  const Text(
-                    'ANALYZING...',
-                    style: TextStyle(
-                      color: Colors.white10,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 8,
-                      letterSpacing: 2.0,
-                    ),
                   ),
+                ],
               ],
             ),
           ),
@@ -275,9 +271,8 @@ class _ReviewBody extends StatelessWidget {
         Expanded(
           child: LayoutBuilder(
             builder: (context, constraints) {
-              final availableWidth = constraints.maxWidth;
-              final availableHeight = constraints.maxHeight;
-              final side = math.min(availableWidth, availableHeight) * 0.98;
+              final side =
+                  math.min(constraints.maxWidth, constraints.maxHeight) * 0.98;
 
               return Center(
                 child: SizedBox(
@@ -296,7 +291,7 @@ class _ReviewBody extends StatelessWidget {
                           showCoordinates: settings.showCoordinates,
                           highlightLastMove: settings.highlightLastMove,
                           moveQuality: classification?.quality,
-                          isFlipped: isFlipped,
+                          isFlipped: boardFlipped,
                           animate: !state.isExporting,
                         )
                       : Container(color: AppColors.backgroundSurface),
@@ -306,12 +301,16 @@ class _ReviewBody extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: _PlayerBadge(name: userDisplayName, isTop: false),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: Column(
             children: [
               Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                 decoration: BoxDecoration(
                   color: AppColors.backgroundSurface,
                   borderRadius: BorderRadius.circular(12),
@@ -327,110 +326,76 @@ class _ReviewBody extends StatelessWidget {
                   ),
                 ),
               ),
-              if (move != null) ...[
-                const SizedBox(height: 6),
-                Builder(builder: (context) {
-                  final piece =
-                      move.san.replaceAll(RegExp(r'[0-9a-hx+#=]'), '');
-                  final label = piece.isEmpty
-                      ? 'PAWN'
-                      : switch (piece) {
-                          'K' => 'KING',
-                          'Q' => 'QUEEN',
-                          'R' => 'ROOK',
-                          'B' => 'BISHOP',
-                          'N' => 'KNIGHT',
-                          _ => piece,
-                        };
-                  return Text(
-                    'PIECE: $label',
-                    style: const TextStyle(
-                        color: Colors.white24,
-                        fontSize: 7,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 1.2),
-                  );
-                }),
-              ],
               const SizedBox(height: 12),
               _NavigationControls(state: state),
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-          child: ChtButton(
-            label: 'RESULT OF MOVE',
-            variant: ChtButtonVariant.secondary,
-            onPressed: () {
-              if (classification == null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Engine still analyzing this move...'),
-                    duration: Duration(seconds: 1),
-                  ),
-                );
-                return;
-              }
+        _AnalysisPanelSimplified(
+            state: state, engineVersion: settings.engineVersion),
+      ],
+    );
+  }
+}
 
-              showModalBottomSheet(
-                context: context,
-                backgroundColor: AppColors.backgroundSurface,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-                ),
-                builder: (context) => Container(
-                  padding: const EdgeInsets.all(32),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          _ClassificationTinyBadge(
-                              quality: classification.quality),
-                          const SizedBox(width: 12),
-                          Text(
-                            classification.qualityLabel.toUpperCase(),
-                            style:
-                                AppTextStyles.headline.copyWith(fontSize: 18),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 24),
-                      Text(
-                        classification.plainExplanation,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            color: Colors.white70, fontSize: 15, height: 1.4),
-                      ),
-                      const SizedBox(height: 32),
-                      ChtButton(
-                        label: 'CLOSE',
-                        onPressed: () => Navigator.pop(context),
-                        variant: ChtButtonVariant.ghost,
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-            height: 48,
+class _PlayerBadge extends StatelessWidget {
+  const _PlayerBadge({required this.name, required this.isTop});
+  final String name;
+  final bool isTop;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 32,
+          height: 32,
+          decoration: BoxDecoration(
+            color: AppColors.backgroundSurface,
+            borderRadius: BorderRadius.circular(6),
+            border: Border.all(color: Colors.white10),
+          ),
+          child:
+              const Icon(Icons.person_rounded, size: 18, color: Colors.white24),
+        ),
+        const SizedBox(width: 12),
+        Text(
+          name,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 14,
           ),
         ),
-        _AnalysisPanelSimplified(state: state),
+        const Spacer(),
+        if (isTop)
+          const Icon(Icons.arrow_drop_up_rounded, color: Colors.white10)
+        else
+          const Icon(Icons.arrow_drop_down_rounded, color: Colors.white10),
       ],
     );
   }
 }
 
 class _AnalysisPanelSimplified extends ConsumerWidget {
-  const _AnalysisPanelSimplified({required this.state});
+  const _AnalysisPanelSimplified(
+      {required this.state, required this.engineVersion});
   final ReviewState state;
+  final int engineVersion;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (!state.isAnalyzing) return const SizedBox(height: 24);
+
+    final storage = ref.read(storageServiceProvider);
+    final depth = storage.engineDepth;
+    final mode = depth >= 30
+        ? 'GRANDMASTER'
+        : depth >= 26
+            ? 'PREMIUM'
+            : depth >= 22
+                ? 'BALANCED'
+                : 'FAST';
 
     return Container(
       width: double.infinity,
@@ -438,14 +403,46 @@ class _AnalysisPanelSimplified extends ConsumerWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            'SF-18 CALCULATING...',
-            style: TextStyle(
-              color: AppColors.primary.withValues(alpha: 0.8),
-              fontWeight: FontWeight.w900,
-              fontSize: 8,
-              letterSpacing: 1.5,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'SF-$engineVersion',
+                style: TextStyle(
+                  color: AppColors.primary.withValues(alpha: 0.5),
+                  fontWeight: FontWeight.w900,
+                  fontSize: 8,
+                  letterSpacing: 1.5,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+                child: Text(
+                  mode,
+                  style: const TextStyle(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 7,
+                    letterSpacing: 1.0,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'DEPTH $depth...',
+                style: TextStyle(
+                  color: AppColors.primary.withValues(alpha: 0.8),
+                  fontWeight: FontWeight.w900,
+                  fontSize: 8,
+                  letterSpacing: 1.5,
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 8),
           ClipRRect(
@@ -526,41 +523,83 @@ class _NavIconButton extends StatelessWidget {
   }
 }
 
-class _MoveNotationStrip extends ConsumerWidget {
-  const _MoveNotationStrip({required this.state});
+class _WideReviewBody extends StatelessWidget {
+  const _WideReviewBody({
+    required this.state,
+    required this.settings,
+  });
+
   final ReviewState state;
+  final SettingsState settings;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    if (state.game == null) return const SizedBox.shrink();
-    return SizedBox(
-      height: 54,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        itemCount: state.game!.moves.length,
-        itemBuilder: (context, i) {
-          final ply = i + 1;
-          final move = state.game!.moves[i];
-          final isActive = ply == state.currentPlyIndex;
-          return Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: ChoiceChip(
-              label: Text(move.san,
-                  style: TextStyle(
-                      color: isActive ? Colors.white : Colors.white70,
-                      fontWeight: isActive ? FontWeight.bold : null)),
-              selected: isActive,
-              onSelected: (_) => ref.read(reviewProvider.notifier).goToPly(ply),
-              selectedColor: AppColors.color3,
-              backgroundColor: AppColors.color1,
-              side: BorderSide(
-                  color: isActive ? AppColors.primary : AppColors.divider),
-              showCheckmark: false,
+  Widget build(BuildContext context) {
+    final boardState = state.currentBoardState;
+    final classification = state.classificationAt(state.currentPlyIndex);
+    final evalCp = classification?.evalAfter ?? 0.0;
+
+    return Row(
+      children: [
+        Expanded(
+          flex: 3,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(32),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AnimatedEvalBar(
+                      evalCp: evalCp,
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      width: 12,
+                    ),
+                    const SizedBox(width: 32),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.height * 0.7,
+                        maxHeight: MediaQuery.of(context).size.height * 0.7,
+                      ),
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: boardState != null
+                            ? ChessBoardWidget(
+                                boardState: boardState,
+                                pieceSetId: settings.pieceSet,
+                                boardThemeId: settings.boardTheme,
+                                showCoordinates: settings.showCoordinates,
+                                highlightLastMove: settings.highlightLastMove,
+                                moveQuality: classification?.quality,
+                              )
+                            : Container(color: AppColors.backgroundSurface),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              _NavigationControls(state: state),
+            ],
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: Container(
+            height: double.infinity,
+            decoration: const BoxDecoration(
+              color: AppColors.backgroundSurface,
+              border:
+                  Border(left: BorderSide(color: AppColors.divider, width: 1)),
             ),
-          );
-        },
-      ),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
+              child: _AnalysisPanelContent(
+                  state: state, classification: classification),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -592,13 +631,13 @@ class _AnalysisPanelContent extends ConsumerWidget {
               'Try to find a better move than the one played. The best move is now highlighted with an arrow as a hint!',
               style: TextStyle(color: Colors.white70, fontSize: 14)),
           const SizedBox(height: 24),
-          ChtButton(
+          ReviewCyberActionButton(
             label: 'EXIT RETRY',
             onPressed: () =>
                 ref.read(reviewProvider.notifier).toggleRetryMode(),
             icon: Icons.close_rounded,
-            height: 48,
-            variant: ChtButtonVariant.ghost,
+            variant: CyberButtonVariant.tertiary,
+            size: CyberButtonSize.medium,
           ),
         ],
       );
@@ -674,22 +713,24 @@ class _AnalysisPanelContent extends ConsumerWidget {
                 classification!.quality == MoveQuality.inaccuracy))
           Padding(
             padding: const EdgeInsets.only(bottom: 12),
-            child: ChtButton(
+            child: ReviewCyberActionButton(
               label: 'RETRY THIS MOVE',
               onPressed: () =>
                   ref.read(reviewProvider.notifier).toggleRetryMode(),
               icon: Icons.refresh_rounded,
-              height: 48,
-              variant: ChtButtonVariant.secondary,
+              variant: CyberButtonVariant.secondary,
+              size: CyberButtonSize.medium,
             ),
           ),
-        ChtButton(
+        ReviewCyberActionButton(
           label: state.isAnalyzing ? 'ANALYZING...' : 'RUN DEEP ANALYSIS',
           onPressed: state.isAnalyzing
               ? null
               : () => ref.read(reviewProvider.notifier).startAnalysis(),
           icon: Icons.psychology_rounded,
-          height: 52,
+          variant: CyberButtonVariant.primary,
+          size: CyberButtonSize.large,
+          isLoading: state.isAnalyzing,
         ),
       ],
     );
@@ -795,92 +836,6 @@ class _ClassificationTinyBadge extends StatelessWidget {
   }
 }
 
-class _WideReviewBody extends StatelessWidget {
-  const _WideReviewBody({
-    required this.state,
-    required this.settings,
-    required this.isFlipped,
-  });
-
-  final ReviewState state;
-  final SettingsState settings;
-  final bool isFlipped;
-
-  @override
-  Widget build(BuildContext context) {
-    final boardState = state.currentBoardState;
-    final classification = state.classificationAt(state.currentPlyIndex);
-    final evalCp = classification?.evalAfter ?? 0.0;
-
-    return Row(
-      children: [
-        Expanded(
-          flex: 3,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(32),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    AnimatedEvalBar(
-                      evalCp: isFlipped ? -evalCp : evalCp,
-                      height: MediaQuery.of(context).size.height * 0.6,
-                      width: 12,
-                    ),
-                    const SizedBox(width: 32),
-                    ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.height * 0.7,
-                        maxHeight: MediaQuery.of(context).size.height * 0.7,
-                      ),
-                      child: AspectRatio(
-                        aspectRatio: 1,
-                        child: boardState != null
-                            ? ChessBoardWidget(
-                                boardState: boardState,
-                                pieceSetId: settings.pieceSet,
-                                boardThemeId: settings.boardTheme,
-                                showCoordinates: settings.showCoordinates,
-                                highlightLastMove: settings.highlightLastMove,
-                                moveQuality: classification?.quality,
-                                isFlipped: isFlipped,
-                              )
-                            : Container(color: AppColors.backgroundSurface),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 16),
-              _NavigationControls(state: state),
-              const SizedBox(height: 24),
-              _MoveNotationStrip(state: state),
-            ],
-          ),
-        ),
-        Expanded(
-          flex: 2,
-          child: Container(
-            height: double.infinity,
-            decoration: const BoxDecoration(
-              color: AppColors.backgroundSurface,
-              border:
-                  Border(left: BorderSide(color: AppColors.divider, width: 1)),
-            ),
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
-              child: _AnalysisPanelContent(
-                  state: state, classification: classification),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class _RecordingSettingsSheet extends ConsumerStatefulWidget {
   const _RecordingSettingsSheet({required this.state, required this.onStart});
   final ReviewState state;
@@ -974,7 +929,7 @@ class _RecordingSettingsSheetState
             ],
           ),
           const SizedBox(height: 32),
-          ChtButton(
+          ReviewCyberActionButton(
             label: 'START RECORDING',
             onPressed: () {
               Navigator.pop(context);
@@ -985,6 +940,8 @@ class _RecordingSettingsSheetState
                   );
               widget.onStart();
             },
+            variant: CyberButtonVariant.primary,
+            size: CyberButtonSize.large,
           ),
           const SizedBox(height: 32),
         ],

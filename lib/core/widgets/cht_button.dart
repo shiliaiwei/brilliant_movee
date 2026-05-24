@@ -5,7 +5,7 @@ import '../constants/app_spacing.dart';
 
 enum ChtButtonVariant { primary, secondary, ghost, danger }
 
-/// Primary branded button with gradient, glow, and glassmorphism variants.
+/// FUI-inspired branded button with clipped corners (45-degree cuts).
 class ChtButton extends StatelessWidget {
   const ChtButton({
     super.key,
@@ -88,23 +88,25 @@ class _GradientButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDisabled = onPressed == null || isLoading;
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        gradient: isDisabled
-            ? null
-            : LinearGradient(
-                colors: colors,
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              ),
-        color: isDisabled ? AppColors.backgroundElevated : null,
-        borderRadius: BorderRadius.circular(AppRadius.button),
-      ),
-      child: Material(
-        color: Colors.transparent,
+    const shape = _ChtButtonShape(cornerCut: 10);
+
+    return Material(
+      color: Colors.transparent,
+      shape: shape,
+      clipBehavior: Clip.antiAlias,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: isDisabled
+              ? null
+              : LinearGradient(
+                  colors: colors,
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                ),
+          color: isDisabled ? AppColors.backgroundElevated : null,
+        ),
         child: InkWell(
           onTap: isDisabled ? null : onPressed,
-          borderRadius: BorderRadius.circular(AppRadius.button),
           splashColor: Colors.white12,
           child: Center(
             child: isLoading
@@ -158,17 +160,17 @@ class _GlassButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.glassOverlay,
-        borderRadius: BorderRadius.circular(AppRadius.button),
-        border: Border.all(color: AppColors.primary, width: 1),
-      ),
-      child: Material(
-        color: Colors.transparent,
+    const shape = _ChtButtonShape(cornerCut: 10);
+    return Material(
+      color: AppColors.glassOverlay,
+      shape: shape,
+      clipBehavior: Clip.antiAlias,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          shape: shape.copyWithBorder(color: AppColors.primary, width: 1),
+        ),
         child: InkWell(
           onTap: onPressed,
-          borderRadius: BorderRadius.circular(AppRadius.button),
           splashColor: AppColors.primaryGlow,
           child: Center(
             child: isLoading
@@ -241,4 +243,66 @@ class _GhostButton extends StatelessWidget {
       ),
     );
   }
+}
+
+class _ChtButtonShape extends ShapeBorder {
+  const _ChtButtonShape({
+    required this.cornerCut,
+    this.borderColor = Colors.transparent,
+    this.borderWidth = 0,
+  });
+
+  final double cornerCut;
+  final Color borderColor;
+  final double borderWidth;
+
+  _ChtButtonShape copyWithBorder({Color? color, double? width}) {
+    return _ChtButtonShape(
+      cornerCut: cornerCut,
+      borderColor: color ?? borderColor,
+      borderWidth: width ?? borderWidth,
+    );
+  }
+
+  @override
+  EdgeInsetsGeometry get dimensions => EdgeInsets.all(borderWidth);
+
+  @override
+  Path getInnerPath(Rect rect, {TextDirection? textDirection}) {
+    return getOuterPath(rect.deflate(borderWidth),
+        textDirection: textDirection);
+  }
+
+  @override
+  Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
+    final cut = cornerCut;
+    return Path()
+      ..moveTo(rect.left + cut, rect.top)
+      ..lineTo(rect.right - cut, rect.top)
+      ..lineTo(rect.right, rect.top + cut)
+      ..lineTo(rect.right, rect.bottom - cut)
+      ..lineTo(rect.right - cut, rect.bottom)
+      ..lineTo(rect.left + cut, rect.bottom)
+      ..lineTo(rect.left, rect.bottom - cut)
+      ..lineTo(rect.left, rect.top + cut)
+      ..close();
+  }
+
+  @override
+  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
+    if (borderWidth > 0) {
+      final paint = Paint()
+        ..color = borderColor
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = borderWidth;
+      canvas.drawPath(getOuterPath(rect, textDirection: textDirection), paint);
+    }
+  }
+
+  @override
+  ShapeBorder scale(double t) => _ChtButtonShape(
+        cornerCut: cornerCut * t,
+        borderColor: borderColor,
+        borderWidth: borderWidth * t,
+      );
 }

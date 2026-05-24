@@ -263,9 +263,9 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
       // Request engine analysis for position before move
       final requestId = 'ply_$plyIndex';
       final responseFuture = _engine.responses
-          .where((r) => r.requestId == requestId)
+          .where((r) => r.requestId == requestId && r.isComplete)
           .first
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 15));
 
       _engine.analyze(StockfishRequest(
         type: StockfishMessageType.analyze,
@@ -280,7 +280,7 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
       try {
         response = await responseFuture;
       } catch (_) {
-        // Timeout
+        // Timeout or error
       }
 
       final evalBefore =
@@ -289,9 +289,9 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
       // Request analysis for position after move
       final requestId2 = 'ply_${plyIndex}_after';
       final responseFuture2 = _engine.responses
-          .where((r) => r.requestId == requestId2)
+          .where((r) => r.requestId == requestId2 && r.isComplete)
           .first
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 10));
 
       _engine.analyze(StockfishRequest(
         type: StockfishMessageType.analyze,

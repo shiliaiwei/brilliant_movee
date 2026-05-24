@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:isolate';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:stockfish_chess_engine/stockfish_chess_engine.dart';
 import 'move_classifier.dart';
 
 /// Message types for Stockfish isolate communication.
@@ -10,7 +11,7 @@ class StockfishRequest {
   const StockfishRequest({
     required this.type,
     required this.fen,
-    this.depth = 26, // Increased from 22 for better brilliant move detection
+    this.depth = 26,
     this.multiPv = 3,
     this.requestId = '',
   });
@@ -27,6 +28,7 @@ class StockfishResponse {
     required this.requestId,
     required this.fen,
     required this.lines,
+    this.currentDepth = 0,
     this.isComplete = false,
     this.error,
   });
@@ -34,14 +36,12 @@ class StockfishResponse {
   final String requestId;
   final String fen;
   final List<EngineLineResult> lines;
+  final int currentDepth;
   final bool isComplete;
   final String? error;
 }
 
-/// Stockfish engine runner.
-/// ARCH-04: Engine MUST NOT run on main UI thread (uses Isolate).
-/// Web fallback: Runs directly in async tasks (as Stockfish isn't easily
-/// usable on Web without WASM/Workers, this maintains simulation mode).
+/// Stockfish engine runner using real UCI wiring.
 class StockfishIsolate {
   StockfishIsolate._();
 
@@ -81,14 +81,12 @@ class StockfishIsolate {
       }
     });
 
-    // Wait for isolate to be ready
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future.delayed(const Duration(milliseconds: 200));
   }
 
   void analyze(StockfishRequest request) {
     if (kIsWeb) {
-      // Simulate engine thinking on Web directly
-      _analyzePosition(request, null);
+      _analyzePositionMock(request);
       return;
     }
     _sendPort?.send(request);
@@ -121,7 +119,28 @@ class StockfishIsolate {
     await _responseController.close();
   }
 
-  /// Internal bridge for Web to emit responses
+  void _analyzePositionMock(StockfishRequest request) {
+    final thinkingTime = request.depth * 25;
+    Future.delayed(Duration(milliseconds: thinkingTime), () {
+      final hash = request.fen.hashCode;
+      final baseEval = (hash % 400) - 200;
+      final lines = List.generate(
+        request.multiPv.clamp(1, 3),
+        (i) => EngineLineResult(
+          moves: ['e2e4', 'd2d4'],
+          eval: (baseEval - i * 40).toDouble(),
+          depth: request.depth,
+        ),
+      );
+      _emitResponse(StockfishResponse(
+        requestId: request.requestId,
+        fen: request.fen,
+        lines: lines,
+        isComplete: true,
+      ));
+    });
+  }
+
   void _emitResponse(StockfishResponse response) {
     if (!_responseController.isClosed) {
       _responseController.add(response);
@@ -129,76 +148,102 @@ class StockfishIsolate {
   }
 }
 
-/// Isolate entry point — runs on separate thread.
+/// Isolate entry point.
 void _engineIsolateEntry(SendPort mainSendPort) {
   final receivePort = ReceivePort();
   mainSendPort.send(receivePort.sendPort);
+
+  final stockfish = Stockfish();
+
+  // Buffers for multi-PV results
+  Map<int, EngineLineResult> currentLines = {};
+  String currentRequestId = '';
+  String currentFen = '';
+  int targetDepth = 26;
+
+  stockfish.stdout.listen((line) {
+    if (line.startsWith('info')) {
+      final parsed = _parseUciInfo(line);
+      if (parsed != null) {
+        final pvIndex = _extractInt(line, 'multipv') ?? 1;
+        currentLines[pvIndex] = parsed;
+
+        // Periodically emit intermediate results for progress tracking
+        if (pvIndex == 1) {
+          mainSendPort.send(StockfishResponse(
+            requestId: currentRequestId,
+            fen: currentFen,
+            lines: currentLines.values.toList(),
+            currentDepth: parsed.depth,
+            isComplete: false,
+          ));
+        }
+      }
+    } else if (line.startsWith('bestmove')) {
+      mainSendPort.send(StockfishResponse(
+        requestId: currentRequestId,
+        fen: currentFen,
+        lines: currentLines.values.toList(),
+        currentDepth: targetDepth,
+        isComplete: true,
+      ));
+    }
+  });
 
   receivePort.listen((message) {
     if (message is! StockfishRequest) return;
 
     switch (message.type) {
       case StockfishMessageType.quit:
+        stockfish.dispose();
         receivePort.close();
         return;
       case StockfishMessageType.stop:
+        stockfish.stdin = 'stop';
         return;
       case StockfishMessageType.analyze:
-        _analyzePosition(message, mainSendPort);
+        currentRequestId = message.requestId;
+        currentFen = message.fen;
+        targetDepth = message.depth;
+        currentLines.clear();
+
+        stockfish.stdin = 'stop';
+        stockfish.stdin = 'setoption name MultiPV value ${message.multiPv}';
+        stockfish.stdin = 'position fen ${message.fen}';
+        stockfish.stdin = 'go depth ${message.depth}';
     }
   });
 }
 
-/// Simulates Stockfish analysis for development.
-/// In production, this sends UCI commands to the Stockfish binary.
-void _analyzePosition(StockfishRequest request, SendPort? sendPort) {
-  // Simulate engine thinking time
-  Future.delayed(const Duration(milliseconds: 200), () {
-    // Generate mock engine lines based on FEN
-    final lines = _generateMockLines(request.fen, request.multiPv);
+EngineLineResult? _parseUciInfo(String line) {
+  final depth = _extractInt(line, 'depth');
+  if (depth == null) return null;
 
-    final response = StockfishResponse(
-      requestId: request.requestId,
-      fen: request.fen,
-      lines: lines,
-      isComplete: true,
-    );
+  double eval = 0.0;
+  bool isMate = false;
+  int? mateIn;
 
-    if (sendPort != null) {
-      sendPort.send(response);
-    } else if (kIsWeb) {
-      StockfishIsolate.instance._emitResponse(response);
-    }
-  });
-}
+  if (line.contains('score cp')) {
+    eval = _extractInt(line, 'cp')?.toDouble() ?? 0.0;
+  } else if (line.contains('score mate')) {
+    isMate = true;
+    mateIn = _extractInt(line, 'mate');
+    eval = (mateIn ?? 0) > 0 ? 10000.0 : -10000.0;
+  }
 
-List<EngineLineResult> _generateMockLines(String fen, int multiPv) {
-  // Generate a pseudo-random but stable evaluation based on the FEN string
-  final hash = fen.hashCode;
-  final baseEval = (hash % 400) - 200; // Eval between -2.00 and +2.00
+  final pvMatch = RegExp(r' pv (.+)$').firstMatch(line);
+  final pvMoves = pvMatch?.group(1)?.split(' ') ?? [];
 
-  return List.generate(
-    multiPv.clamp(1, 3),
-    (i) => EngineLineResult(
-      moves: _generateMockMoves(fen, i),
-      eval: (baseEval - i * 40).toDouble(),
-      depth: 26, // Increased SF-18 baseline depth
-    ),
+  return EngineLineResult(
+    moves: pvMoves,
+    eval: eval,
+    depth: depth,
+    isMate: isMate,
+    mateIn: mateIn,
   );
 }
 
-List<String> _generateMockMoves(String fen, int index) {
-  // Very simple mock move generation
-  final moves = [
-    'e2e4',
-    'd2d4',
-    'g1f3',
-    'b1c3',
-    'e7e5',
-    'd7d5',
-    'g8f6',
-    'b8c6'
-  ];
-  final start = (fen.length + index) % moves.length;
-  return [moves[start], moves[(start + 1) % moves.length]];
+int? _extractInt(String line, String key) {
+  final match = RegExp('$key (\\-?\\d+)').firstMatch(line);
+  return match != null ? int.tryParse(match.group(1)!) : null;
 }

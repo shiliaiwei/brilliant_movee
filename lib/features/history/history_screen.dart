@@ -181,20 +181,19 @@ class HistoryScreen extends ConsumerWidget {
             child: const Text('CANCEL',
                 style: TextStyle(color: AppColors.textSecondary)),
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: Colors.black,
+          SizedBox(
+            width: 120,
+            child: ChtButton(
+              label: 'ANALYZE',
+              height: 40,
+              onPressed: () {
+                final pgn = controller.text.trim();
+                if (pgn.isNotEmpty) {
+                  Navigator.pop(ctx);
+                  context.push(AppRoutes.review, extra: pgn);
+                }
+              },
             ),
-            onPressed: () {
-              final pgn = controller.text.trim();
-              if (pgn.isNotEmpty) {
-                Navigator.pop(ctx);
-                context.push(AppRoutes.review, extra: pgn);
-              }
-            },
-            child: const Text('ANALYZE',
-                style: TextStyle(fontWeight: FontWeight.bold)),
           ),
         ],
       ),
@@ -247,12 +246,8 @@ class _GameFeedItem extends ConsumerWidget {
         ? AppColors.win
         : (res == '0-1' ? AppColors.loss : AppColors.draw);
 
-    final isWhite =
-        game.whiteUsername.toLowerCase() == currentUsername.toLowerCase();
-    final myResult = isWhite ? game.whiteResult : game.blackResult;
-    final prefix = myResult == 'win' ? 'WON BY ' : 'LOST BY ';
     final termination = game.terminationFor(currentUsername).toUpperCase();
-    final fullLabel = (res == '1/2-1/2') ? 'DRAW' : '$prefix$termination';
+    final fullLabel = (res == '1/2-1/2') ? 'DRAW' : termination;
 
     final opponent = game.whiteUsername == currentUsername
         ? game.blackUsername
@@ -300,21 +295,24 @@ class _GameFeedItem extends ConsumerWidget {
                   const SizedBox(height: 2),
                   Row(
                     children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 6, vertical: 2),
-                        decoration: BoxDecoration(
-                          color: statusColor.withValues(alpha: 0.15),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Text(
-                          fullLabel,
-                          maxLines: 1,
-                          style: TextStyle(
-                            color: statusColor,
-                            fontSize: 9,
-                            fontWeight: FontWeight.w900,
-                            letterSpacing: 0.5,
+                      Flexible(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 6, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: statusColor.withValues(alpha: 0.15),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Text(
+                            fullLabel,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: statusColor,
+                              fontSize: 9,
+                              fontWeight: FontWeight.w900,
+                              letterSpacing: 0.5,
+                            ),
                           ),
                         ),
                       ),
@@ -328,6 +326,7 @@ class _GameFeedItem extends ConsumerWidget {
                 ],
               ),
             ),
+            const SizedBox(width: 8),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [

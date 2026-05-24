@@ -8,6 +8,7 @@ import '../../features/search/search_screen.dart';
 import '../../features/profile/profile_screen.dart';
 import '../../features/history/history_screen.dart';
 import '../../features/review/review_screen.dart';
+import '../../features/review/widgets/cyber_button_demo_screen.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/settings/board_selector_screen.dart';
 import '../../features/profile/brilliant_games_screen.dart';
@@ -28,6 +29,7 @@ abstract final class AppRoutes {
   static const String boardSelector = '/settings/board';
   static const String tips = '/tips';
   static const String brilliant = '/brilliant';
+  static const String cyberDemo = '/cyber-demo';
 }
 
 class _TabItem {
@@ -273,6 +275,9 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
           path: AppRoutes.brilliant,
           builder: (context, state) => const BrilliantGamesScreen()),
+      GoRoute(
+          path: AppRoutes.cyberDemo,
+          builder: (context, state) => const CyberButtonDemoScreen()),
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) =>
             _ShellScaffold(navigationShell: shell),

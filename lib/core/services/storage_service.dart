@@ -20,6 +20,7 @@ abstract final class StorageKeys {
   static const String highlightLastMove = 'highlight_last_move';
   static const String moveAnimationSpeed = 'move_animation_speed';
   static const String brilliantSensitivity = 'brilliant_sensitivity';
+  static const String engineVersion = 'engine_version';
   static const String brilliantGames = 'brilliant_games'; // List of JSON
 }
 
@@ -58,11 +59,11 @@ class StorageService {
   }
 
   // ── Board & Pieces ────────────────────────────────────────────────────────
-  String get boardTheme => _prefs.getString(StorageKeys.boardTheme) ?? 'wood';
+  String get boardTheme => _prefs.getString(StorageKeys.boardTheme) ?? 'wood4';
   Future<void> setBoardTheme(String theme) =>
       _prefs.setString(StorageKeys.boardTheme, theme);
 
-  String get pieceSet => _prefs.getString(StorageKeys.pieceSet) ?? 'cburnett';
+  String get pieceSet => _prefs.getString(StorageKeys.pieceSet) ?? 'maestro';
   Future<void> setPieceSet(String set) =>
       _prefs.setString(StorageKeys.pieceSet, set);
 
@@ -117,6 +118,10 @@ class StorageService {
       _prefs.getString(StorageKeys.brilliantSensitivity) ?? 'medium';
   Future<void> setBrilliantSensitivity(String sensitivity) =>
       _prefs.setString(StorageKeys.brilliantSensitivity, sensitivity);
+
+  int get engineVersion => _prefs.getInt(StorageKeys.engineVersion) ?? 18;
+  Future<void> setEngineVersion(int version) =>
+      _prefs.setInt(StorageKeys.engineVersion, version);
 
   // ── Analysis Stats ────────────────────────────────────────────────────────
   List<String> get brilliantGamesData =>

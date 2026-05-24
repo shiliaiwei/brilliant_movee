@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.shiliaiwei.brilliant_movee"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
