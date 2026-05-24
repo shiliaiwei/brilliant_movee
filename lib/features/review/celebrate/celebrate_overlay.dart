@@ -83,6 +83,8 @@ class _CelebrateOverlayState extends State<CelebrateOverlay>
         (widget.result == '0-1' && !isWhite);
   }
 
+  bool get _isWhiteWin => widget.result == '1-0';
+
   bool get _isDraw => widget.result == '1/2-1/2';
 
   String get _title {
@@ -93,7 +95,13 @@ class _CelebrateOverlayState extends State<CelebrateOverlay>
 
   List<Color> get _bgColors {
     if (_isDraw) return [const Color(0xFF0A0F14), const Color(0xFF141F2E)];
-    if (_isWin) return [const Color(0xFF080C10), const Color(0xFF0D2A1A)];
+    if (_isWin) {
+      // Different colors for white vs black victory
+      if (_isWhiteWin) {
+        return [const Color(0xFF080C10), const Color(0xFF0D2A1A)];
+      }
+      return [const Color(0xFF080C10), const Color(0xFF1A1A2E)];
+    }
     return AppColors.loseGradient;
   }
 
@@ -216,8 +224,7 @@ class _SummaryCard extends StatelessWidget {
               children: [
                 _StatItem(
                   label: 'Accuracy',
-                  value:
-                      '${analysisData!.accuracy.toStringAsFixed(1)}%',
+                  value: '${analysisData!.accuracy.toStringAsFixed(1)}%',
                   color: AppColors.primary,
                 ),
                 _StatItem(
@@ -297,23 +304,32 @@ class _CelebratePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()..style = PaintingStyle.fill;
     final colors = isWin
-        ? [AppColors.win, AppColors.primary, AppColors.brilliant]
-        : isDraw
+        ? (isDraw
             ? [AppColors.draw, AppColors.textSecondary]
-            : [AppColors.loss, AppColors.backgroundElevated];
+            : [AppColors.win, AppColors.primary, AppColors.brilliant])
+        : [AppColors.loss, AppColors.backgroundElevated];
 
-    for (int i = 0; i < 30; i++) {
+    for (int i = 0; i < 40; i++) {
       final color = colors[i % colors.length];
-      final x = (size.width * ((i * 37 + 13) % 100) / 100);
+      final x = (size.width * ((i * 43 + 17) % 100) / 100);
       final baseY = isWin
-          ? size.height * (1 - progress) - (i * 20 % 200)
-          : size.height * progress + (i * 20 % 200);
+          ? size.height * (1 - progress) - (i * 25 % 300)
+          : size.height * progress + (i * 25 % 300);
       final y = baseY % size.height;
-      final opacity = (0.2 + (i % 5) * 0.1).clamp(0.0, 0.8);
-      final radius = 3.0 + (i % 4).toDouble();
+      final opacity = (0.2 + (i % 6) * 0.1).clamp(0.0, 0.7);
+      final radius = 2.0 + (i % 5).toDouble();
 
       paint.color = color.withValues(alpha: opacity);
-      canvas.drawCircle(Offset(x, y), radius, paint);
+
+      // Draw dynamic shapes: Circles for win, Squares for others
+      if (isWin && !isDraw) {
+        canvas.drawCircle(Offset(x, y), radius, paint);
+      } else {
+        canvas.drawRect(
+            Rect.fromCenter(
+                center: Offset(x, y), width: radius * 2, height: radius * 2),
+            paint);
+      }
     }
   }
 

@@ -7,24 +7,28 @@ class SettingsState {
     required this.pieceSet,
     required this.showCoordinates,
     required this.highlightLastMove,
+    required this.autoAnalyze,
   });
 
   final String boardTheme;
   final String pieceSet;
   final bool showCoordinates;
   final bool highlightLastMove;
+  final bool autoAnalyze;
 
   SettingsState copyWith({
     String? boardTheme,
     String? pieceSet,
     bool? showCoordinates,
     bool? highlightLastMove,
+    bool? autoAnalyze,
   }) {
     return SettingsState(
       boardTheme: boardTheme ?? this.boardTheme,
       pieceSet: pieceSet ?? this.pieceSet,
       showCoordinates: showCoordinates ?? this.showCoordinates,
       highlightLastMove: highlightLastMove ?? this.highlightLastMove,
+      autoAnalyze: autoAnalyze ?? this.autoAnalyze,
     );
   }
 }
@@ -36,6 +40,7 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
           pieceSet: _storage.pieceSet,
           showCoordinates: _storage.showCoordinates,
           highlightLastMove: _storage.highlightLastMove,
+          autoAnalyze: _storage.autoAnalyze,
         ));
 
   final StorageService _storage;
@@ -58,6 +63,11 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
   Future<void> toggleHighlight(bool value) async {
     await _storage.setHighlightLastMove(value);
     state = state.copyWith(highlightLastMove: value);
+  }
+
+  Future<void> toggleAutoAnalyze(bool value) async {
+    await _storage.setAutoAnalyze(value);
+    state = state.copyWith(autoAnalyze: value);
   }
 }
 

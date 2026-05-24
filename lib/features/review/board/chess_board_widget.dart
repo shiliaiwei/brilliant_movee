@@ -143,11 +143,11 @@ class _BlurInsideCoordinatesOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textStyle = AppTextStyles.monoSmall.copyWith(
-      fontSize: 10,
-      color: Colors.white.withValues(alpha: 0.6),
+      fontSize: 9,
+      color: Colors.white.withValues(alpha: 0.5),
       fontWeight: FontWeight.bold,
       shadows: [
-        const Shadow(color: Colors.black45, blurRadius: 4),
+        const Shadow(color: Colors.black38, blurRadius: 3),
       ],
     );
 
@@ -159,8 +159,8 @@ class _BlurInsideCoordinatesOverlay extends StatelessWidget {
               ? String.fromCharCode('h'.codeUnitAt(0) - i)
               : String.fromCharCode('a'.codeUnitAt(0) + i);
           return Positioned(
-            left: (i * squareSize) + squareSize - 12,
-            bottom: 2,
+            left: (i * squareSize) + squareSize - 10,
+            bottom: 1,
             child: Text(file, style: textStyle),
           );
         }),
@@ -169,7 +169,7 @@ class _BlurInsideCoordinatesOverlay extends StatelessWidget {
           final rank = isFlipped ? '${i + 1}' : '${8 - i}';
           return Positioned(
             left: 2,
-            top: (i * squareSize) + 2,
+            top: (i * squareSize) + 1,
             child: Text(rank, style: textStyle),
           );
         }),

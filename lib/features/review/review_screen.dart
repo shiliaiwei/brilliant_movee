@@ -140,21 +140,6 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                   size: 22, color: Colors.white),
               onPressed: () => setState(() => _isFlipped = !_isFlipped),
             ),
-            if (state.isAnalyzing)
-              Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: Center(
-                  child: SizedBox(
-                    width: 18,
-                    height: 18,
-                    child: CircularProgressIndicator(
-                      value: state.analysisProgress,
-                      strokeWidth: 2,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                ),
-              ),
           ],
         ),
         body: state.isLoading
@@ -230,7 +215,6 @@ class _ReviewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final boardState = state.currentBoardState;
     final classification = state.classificationAt(state.currentPlyIndex);
-    final evalCp = classification?.evalAfter ?? 0.0;
     final openingName =
         boardState != null ? OpeningBook.getOpeningName(boardState.fen) : null;
 
@@ -256,47 +240,34 @@ class _ReviewBody extends StatelessWidget {
           ),
         ),
 
-        // Centered Stable Board Section
+        // Centered Stable Board Section - FITTING FULL WIDTH
         Expanded(
           child: LayoutBuilder(
             builder: (context, constraints) {
               final availableWidth = constraints.maxWidth;
               final availableHeight = constraints.maxHeight;
-              final side = math.min(availableWidth, availableHeight) * 0.95;
+              final side = math.min(availableWidth, availableHeight) * 0.92;
 
               return Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Eval Bar
-                    AnimatedEvalBar(
-                      evalCp: isFlipped ? -evalCp : evalCp,
-                      height: side,
-                      width: 6,
-                    ),
-                    const SizedBox(width: 12),
-                    SizedBox(
-                      width: side,
-                      height: side,
-                      child: boardState != null
-                          ? ChessBoardWidget(
-                              boardState: state.isRetryMode
-                                  ? boardState.copyWith(
-                                      bestMoveFrom: boardState.lastMoveFrom,
-                                      bestMoveTo: boardState.lastMoveTo,
-                                    )
-                                  : boardState,
-                              pieceSetId: settings.pieceSet,
-                              boardThemeId: settings.boardTheme,
-                              showCoordinates: settings.showCoordinates,
-                              highlightLastMove: settings.highlightLastMove,
-                              moveQuality: classification?.quality,
-                              isFlipped: isFlipped,
-                            )
-                          : Container(color: AppColors.backgroundSurface),
-                    ),
-                    const SizedBox(width: 18), // Balance
-                  ],
+                child: SizedBox(
+                  width: side,
+                  height: side,
+                  child: boardState != null
+                      ? ChessBoardWidget(
+                          boardState: state.isRetryMode
+                              ? boardState.copyWith(
+                                  bestMoveFrom: boardState.lastMoveFrom,
+                                  bestMoveTo: boardState.lastMoveTo,
+                                )
+                              : boardState,
+                          pieceSetId: settings.pieceSet,
+                          boardThemeId: settings.boardTheme,
+                          showCoordinates: settings.showCoordinates,
+                          highlightLastMove: settings.highlightLastMove,
+                          moveQuality: classification?.quality,
+                          isFlipped: isFlipped,
+                        )
+                      : Container(color: AppColors.backgroundSurface),
                 ),
               );
             },
@@ -305,7 +276,7 @@ class _ReviewBody extends StatelessWidget {
 
         // Current Move & Navigation (Compact Row)
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 12),
           child: Column(
             children: [
               Row(
@@ -314,7 +285,7 @@ class _ReviewBody extends StatelessWidget {
                   Text(
                     currentMoveStr,
                     style: AppTextStyles.monoLarge.copyWith(
-                      fontSize: 32,
+                      fontSize: 24, // Smaller
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
@@ -325,7 +296,7 @@ class _ReviewBody extends StatelessWidget {
                   ],
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
               _NavigationControls(state: state),
             ],
           ),
@@ -352,13 +323,32 @@ class _AnalysisPanelSimplified extends ConsumerWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
         border: Border(top: BorderSide(color: AppColors.divider, width: 1)),
       ),
-      child: ChtButton(
-        label: state.isAnalyzing ? 'ANALYZING...' : 'RUN DEEP ANALYSIS',
-        onPressed: state.isAnalyzing
-            ? null
-            : () => ref.read(reviewProvider.notifier).startAnalysis(),
-        icon: Icons.psychology_rounded,
-        height: 52,
+      child: Column(
+        children: [
+          if (state.isAnalyzing) ...[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(2),
+              child: LinearProgressIndicator(
+                value: state.analysisProgress,
+                backgroundColor: Colors.white10,
+                color: AppColors.primary,
+                minHeight: 4,
+              ),
+            ),
+            const SizedBox(height: 12),
+          ],
+          ChtButton(
+            label:
+                state.isAnalyzing ? 'ENGINE ANALYZING...' : 'RUN DEEP ANALYSIS',
+            onPressed: state.isAnalyzing
+                ? null
+                : () => ref.read(reviewProvider.notifier).startAnalysis(),
+            icon: state.isAnalyzing
+                ? Icons.sync_rounded
+                : Icons.psychology_rounded,
+            height: 52,
+          ),
+        ],
       ),
     );
   }

@@ -110,6 +110,28 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.xl),
+              const _SectionHeader(title: 'Engine & Analysis'),
+              ChtCard(
+                padding: EdgeInsets.zero,
+                child: Column(
+                  children: [
+                    _SwitchTile(
+                      icon: Icons.psychology_rounded,
+                      title: 'Auto Deep Analysis',
+                      subtitle: 'Start Stockfish analysis automatically',
+                      value: settings.autoAnalyze,
+                      onChanged: notifier.toggleAutoAnalyze,
+                    ),
+                    const Divider(height: 1, indent: 52),
+                    const _SettingsTile(
+                      icon: Icons.bolt_rounded,
+                      title: 'Engine Power',
+                      subtitle: 'Stockfish 16 (NNUE Optimized)',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xl),
               const _SectionHeader(title: 'Social & Friends'),
               ChtCard(
                 padding: EdgeInsets.zero,
