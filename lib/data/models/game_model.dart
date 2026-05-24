@@ -50,6 +50,14 @@ class GameModel {
     final wRes = white['result'] as String? ?? '';
     final bRes = black['result'] as String? ?? '';
 
+    final acc = json['accuracies'] as Map<String, dynamic>?;
+
+    double? parseAcc(dynamic v) {
+      if (v == null) return null;
+      if (v is num) return v.toDouble();
+      return null;
+    }
+
     return GameModel(
       id: json['uuid'] as String? ?? json['url'] as String? ?? '',
       url: json['url'] as String? ?? '',
@@ -67,10 +75,8 @@ class GameModel {
           : bRes == 'win'
               ? '0-1'
               : '1/2-1/2',
-      whiteAccuracy:
-          (json['accuracies'] as Map<String, dynamic>?)?['white'] as double?,
-      blackAccuracy:
-          (json['accuracies'] as Map<String, dynamic>?)?['black'] as double?,
+      whiteAccuracy: parseAcc(acc?['white']),
+      blackAccuracy: parseAcc(acc?['black']),
     );
   }
 

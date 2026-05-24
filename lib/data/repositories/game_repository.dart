@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/services/storage_service.dart';
 import '../models/game_model.dart';
@@ -29,30 +30,28 @@ class GameRepository {
 
       final List<String> targets = [];
 
-      // Proactively fetch current month AND previous month
-      final now = DateTime.now();
-      final lastMonth = now.month == 1 ? 12 : now.month - 1;
-      final lastMonthYear = now.month == 1 ? now.year - 1 : now.year;
-
-      final currentMonthUrl =
-          'https://api.chess.com/pub/player/${username.toLowerCase()}/games/${now.year}/${now.month.toString().padLeft(2, '0')}';
-      final prevMonthUrl =
-          'https://api.chess.com/pub/player/${username.toLowerCase()}/games/$lastMonthYear/${lastMonth.toString().padLeft(2, '0')}';
-
-      targets.add(currentMonthUrl);
-      targets.add(prevMonthUrl);
-
+      // 1. Start with reliable archives from Chess.com
       if (archives.isNotEmpty) {
         final sortedArchives = List<String>.from(archives)
           ..sort((a, b) => b.compareTo(a));
-        for (final url in sortedArchives) {
-          if (!targets.contains(url)) targets.add(url);
-          if (targets.length >= 10) break; // Fetch up to 10 months of depth
-        }
+        targets.addAll(sortedArchives.take(15)); // Fetch up to 15 months
       }
 
-      final results = await Future.wait(targets.map((url) =>
-          _chessCom.getGamesFromArchive(url).catchError((_) => <GameModel>[])));
+      // 2. Proactively add current month in case archives list is stale
+      final now = DateTime.now();
+      final currentMonthUrl =
+          'https://api.chess.com/pub/player/${username.toLowerCase()}/games/${now.year}/${now.month.toString().padLeft(2, '0')}';
+
+      if (!targets.contains(currentMonthUrl)) {
+        targets.insert(0, currentMonthUrl);
+      }
+
+      final results = await Future.wait(targets
+          .toSet()
+          .map((url) => _chessCom.getGamesFromArchive(url).catchError((e) {
+                debugPrint('Archive fetch fail for $url: $e');
+                return <GameModel>[];
+              })));
 
       final List<GameModel> allGames = [];
       final Set<String> seenIds = {};

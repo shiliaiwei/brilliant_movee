@@ -135,3 +135,70 @@ redesgin the  home screen showing soemthing  more creative remove last game and 
 
 -all in use of icon classification icon pls remove th background white make it transparent no background that icon,  and change the icon miss win, change the icon to soemthing new not use sigma or brillaint icon change it ,
 
+
+
+
+Game Result Board Animations:
+-after player win or lost, draw, resign, abandon , showing celebration screen from the color if black get win result aniamtion black win and nimation the king celatbration if white win showing the same but change color and also ad alabel win by reault
+
+Piece Animations Arcade:
+make animation move  of the piece item in the board slow as style like chess.com and style arcade,
+-make classification a little smaller, in the baord
+-
+-
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
