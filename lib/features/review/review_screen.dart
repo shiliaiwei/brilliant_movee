@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_styles.dart';
 import '../../core/widgets/cht_error_state.dart';
@@ -108,6 +109,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
       canPop: true,
       child: Scaffold(
         backgroundColor: AppColors.backgroundDeep,
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text('GAME REVIEW',
               style: AppTextStyles.headline.copyWith(
@@ -170,9 +172,32 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                           ),
                         ),
 
-                      context.isWide
-                          ? _WideReviewBody(state: state, settings: settings)
-                          : _ReviewBody(state: state, settings: settings),
+                      Column(
+                        children: [
+                          _AnalysisPanelSimplified(
+                              state: state,
+                              engineVersion: settings.engineVersion),
+                          Expanded(
+                            child: context.isWide
+                                ? _WideReviewBody(
+                                    state: state, settings: settings)
+                                : _ReviewBody(state: state, settings: settings),
+                          ),
+                        ],
+                      ),
+
+                      if (state.brilliantAlert)
+                        Positioned(
+                          top: 100,
+                          left: 0,
+                          right: 0,
+                          child: _BrilliantAlert(
+                            onDismiss: () => ref
+                                .read(reviewProvider.notifier)
+                                .dismissBrilliantAlert(),
+                          ),
+                        ),
+
                       if (_showCelebrate)
                         CelebrateOverlay(
                           result: state.game?.result ?? '*',
@@ -207,9 +232,6 @@ class _ReviewBody extends ConsumerWidget {
     final isUserWhite = white.toLowerCase() == user;
     final opponent = isUserWhite ? black : white;
     final userDisplayName = isUserWhite ? white : black;
-
-    // Board flipping logic fixed: User at bottom, Opponent at top.
-    // Standard board orientation (white at bottom) should be flipped if user is black.
     final bool boardFlipped = !isUserWhite;
 
     String? currentOpening;
@@ -228,8 +250,6 @@ class _ReviewBody extends ConsumerWidget {
 
     return Column(
       children: [
-        _AnalysisPanelSimplified(
-            state: state, engineVersion: settings.engineVersion),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           child: _PlayerBadge(name: opponent, isTop: true),
@@ -458,7 +478,7 @@ class _AnalysisPanelSimplifiedState
                 ],
               ),
               Text(
-                'CALCULATING DEPTH $depth',
+                '${(widget.state.analysisProgress * 100).toInt()}% · DEPTH $depth',
                 style: TextStyle(
                   color: AppColors.primary.withValues(alpha: 0.5),
                   fontWeight: FontWeight.w900,
@@ -558,6 +578,54 @@ class _PulsingIcon extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _BrilliantAlert extends StatelessWidget {
+  const _BrilliantAlert({required this.onDismiss});
+  final VoidCallback onDismiss;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: GestureDetector(
+        onTap: onDismiss,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          decoration: BoxDecoration(
+            color: const Color(0xFFE9B200).withValues(alpha: 0.9),
+            borderRadius: BorderRadius.circular(30),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFFE9B200).withValues(alpha: 0.4),
+                blurRadius: 20,
+                spreadRadius: 2,
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset('assets/classification/brilliant.png',
+                  width: 24, height: 24),
+              const SizedBox(width: 12),
+              const Text(
+                'BRILLIANT MOVE !!',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 16,
+                  letterSpacing: 1.5,
+                ),
+              ),
+            ],
+          ),
+        )
+            .animate()
+            .scale(duration: 400.ms, curve: Curves.elasticOut)
+            .fadeOut(delay: 2.seconds, duration: 500.ms),
+      ),
     );
   }
 }

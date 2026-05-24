@@ -32,6 +32,7 @@ class ReviewState {
     this.recordingResolution = const Size(1080, 1080),
     this.whiteTotals = const MoveQualityTotals(),
     this.blackTotals = const MoveQualityTotals(),
+    this.brilliantAlert = false,
   });
 
   final String pgn;
@@ -54,6 +55,7 @@ class ReviewState {
   final Size recordingResolution;
   final MoveQualityTotals whiteTotals;
   final MoveQualityTotals blackTotals;
+  final bool brilliantAlert;
 
   BoardState? get currentBoardState =>
       boardStates.isNotEmpty && currentPlyIndex < boardStates.length
@@ -92,6 +94,7 @@ class ReviewState {
     Size? recordingResolution,
     MoveQualityTotals? whiteTotals,
     MoveQualityTotals? blackTotals,
+    bool? brilliantAlert,
   }) {
     return ReviewState(
       pgn: pgn ?? this.pgn,
@@ -114,6 +117,7 @@ class ReviewState {
       recordingResolution: recordingResolution ?? this.recordingResolution,
       whiteTotals: whiteTotals ?? this.whiteTotals,
       blackTotals: blackTotals ?? this.blackTotals,
+      brilliantAlert: brilliantAlert ?? this.brilliantAlert,
     );
   }
 }
@@ -185,7 +189,7 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
 
     final clamped = ply.clamp(0, state.boardStates.length - 1);
     if (clamped != state.currentPlyIndex) {
-      state = state.copyWith(currentPlyIndex: clamped);
+      state = state.copyWith(currentPlyIndex: clamped, brilliantAlert: false);
 
       // Play move sound
       if (clamped > 0) {
@@ -196,10 +200,11 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
           _audio.play(SoundEvent.move);
         }
 
-        // Play special sound for brilliant moves
+        // Trigger Brilliant Alert if needed
         final classification = state.classificationAt(clamped);
         if (classification?.quality == MoveQuality.brilliant) {
           _audio.play(SoundEvent.brilliant);
+          state = state.copyWith(brilliantAlert: true);
         }
       }
     }
@@ -343,6 +348,10 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
       analyzed++;
 
       if (mounted) {
+        final currentClamped = state.currentPlyIndex;
+        final isNowBrilliant = currentClamped == plyIndex &&
+            classification.quality == MoveQuality.brilliant;
+
         state = state.copyWith(
           classifications: List.from(classifications),
           analysisProgress: analyzed / totalMoves,
@@ -350,6 +359,7 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
               MoveQualityTotals.fromClassifications(classifications, true),
           blackTotals:
               MoveQualityTotals.fromClassifications(classifications, false),
+          brilliantAlert: isNowBrilliant ? true : state.brilliantAlert,
         );
       }
     }
@@ -360,6 +370,10 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
   }
 
   void startAnalysis() => _startAnalysis();
+
+  void dismissBrilliantAlert() {
+    state = state.copyWith(brilliantAlert: false);
+  }
 
   ({int white, int black}) _calculateMaterial(Map<String, String> pieces) {
     int w = 0;

@@ -539,7 +539,7 @@ class _EngineNetworkSelectorState
                   Expanded(
                     child: _NetworkButton(
                       label: 'SF 17.1 Lite',
-                      desc: 'Loads faster (~7MB)',
+                      desc: 'Loads faster (~7MB). Ideal for mobile battery.',
                       isSelected: currentNet == 'lite',
                       onTap: () => storage.setEngineNetwork('lite'),
                     ),
@@ -547,8 +547,9 @@ class _EngineNetworkSelectorState
                   const SizedBox(width: 12),
                   Expanded(
                     child: _NetworkButton(
-                      label: 'SF 17.1',
-                      desc: 'Maximum strength (~78MB)',
+                      label: 'SF 17.1 Full',
+                      desc:
+                          'Maximum accuracy (~78MB). Catches deep sacrifices.',
                       isSelected: currentNet == 'full',
                       isLoading: _isDownloading,
                       progress: _downloadProgress,
