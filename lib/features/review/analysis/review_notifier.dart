@@ -214,6 +214,8 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
 
     final depth = _storage.engineDepth;
     final multiPv = _storage.multiPv;
+    final nnuePath =
+        _storage.engineNetwork == 'full' ? _storage.fullNetPath : null;
     final totalMoves = state.game?.moves.length ?? 0;
 
     if (totalMoves == 0) {
@@ -273,6 +275,7 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
         depth: depth,
         multiPv: multiPv,
         requestId: requestId,
+        nnuePath: nnuePath,
       ));
 
       // Wait for response
@@ -299,6 +302,7 @@ class ReviewNotifier extends StateNotifier<ReviewState> {
         depth: depth,
         multiPv: 1,
         requestId: requestId2,
+        nnuePath: nnuePath,
       ));
 
       StockfishResponse? response2;

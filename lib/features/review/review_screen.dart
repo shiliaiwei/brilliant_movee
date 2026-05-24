@@ -391,20 +391,25 @@ class _AnalysisPanelSimplified extends ConsumerStatefulWidget {
 
 class _AnalysisPanelSimplifiedState
     extends ConsumerState<_AnalysisPanelSimplified>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+    with TickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final AnimationController _pulseController;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1500))
+        vsync: this, duration: const Duration(milliseconds: 2000))
       ..repeat();
+    _pulseController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 1000))
+      ..repeat(reverse: true);
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _pulseController.dispose();
     super.dispose();
   }
 
@@ -424,11 +429,11 @@ class _AnalysisPanelSimplifiedState
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
       decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.03),
+        color: AppColors.backgroundDeep,
         border: Border(
-          bottom: BorderSide(color: AppColors.primary.withValues(alpha: 0.1)),
+          bottom: BorderSide(color: AppColors.primary.withValues(alpha: 0.15)),
         ),
       ),
       child: Column(
@@ -437,74 +442,80 @@ class _AnalysisPanelSimplifiedState
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'SF-${widget.engineVersion} • $mode',
-                style: TextStyle(
-                  color: AppColors.primary.withValues(alpha: 0.6),
-                  fontWeight: FontWeight.w900,
-                  fontSize: 9,
-                  letterSpacing: 1.2,
-                ),
+              Row(
+                children: [
+                  _PulsingIcon(controller: _pulseController),
+                  const SizedBox(width: 10),
+                  Text(
+                    'SF-${widget.engineVersion} • $mode',
+                    style: TextStyle(
+                      color: AppColors.primary.withValues(alpha: 0.8),
+                      fontWeight: FontWeight.w900,
+                      fontSize: 10,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                ],
               ),
               Text(
-                'DEPTH $depth (PLY)',
+                'CALCULATING DEPTH $depth',
                 style: TextStyle(
-                  color: AppColors.primary.withValues(alpha: 0.6),
+                  color: AppColors.primary.withValues(alpha: 0.5),
                   fontWeight: FontWeight.w900,
-                  fontSize: 9,
+                  fontSize: 8,
                   letterSpacing: 1.2,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Stack(
             children: [
               Container(
-                height: 2,
+                height: 3,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white.withValues(alpha: 0.05),
-                  borderRadius: BorderRadius.circular(1),
+                  borderRadius: BorderRadius.circular(1.5),
                 ),
               ),
-              AnimatedBuilder(
-                animation: _controller,
-                builder: (context, child) {
-                  return FractionallySizedBox(
-                    alignment: Alignment.centerLeft,
-                    widthFactor: widget.state.analysisProgress,
-                    child: Container(
-                      height: 2,
-                      decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(1),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primary.withValues(alpha: 0.4),
-                            blurRadius: 4,
-                            spreadRadius: 1,
-                          ),
-                        ],
-                      ),
+              // Main Progress
+              FractionallySizedBox(
+                alignment: Alignment.centerLeft,
+                widthFactor: widget.state.analysisProgress,
+                child: Container(
+                  height: 3,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [AppColors.primary, Color(0xFF00E5FF)],
                     ),
-                  );
-                },
+                    borderRadius: BorderRadius.circular(1.5),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primary.withValues(alpha: 0.5),
+                        blurRadius: 6,
+                        spreadRadius: 1,
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              // Creative scanning line
+              // Technical Scanning Line
               AnimatedBuilder(
                 animation: _controller,
                 builder: (context, child) {
                   return Positioned(
                     left: _controller.value * MediaQuery.of(context).size.width,
                     child: Container(
-                      width: 40,
-                      height: 2,
+                      width: 60,
+                      height: 3,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
                             AppColors.primary.withValues(alpha: 0),
-                            AppColors.primary,
+                            AppColors.primary.withValues(alpha: 0.8),
+                            Colors.white,
+                            AppColors.primary.withValues(alpha: 0.8),
                             AppColors.primary.withValues(alpha: 0),
                           ],
                         ),
@@ -517,6 +528,36 @@ class _AnalysisPanelSimplifiedState
           ),
         ],
       ),
+    );
+  }
+}
+
+class _PulsingIcon extends StatelessWidget {
+  const _PulsingIcon({required this.controller});
+  final AnimationController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: controller,
+      builder: (context, child) {
+        return Container(
+          width: 8,
+          height: 8,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: AppColors.primary,
+            boxShadow: [
+              BoxShadow(
+                color:
+                    AppColors.primary.withValues(alpha: 0.6 * controller.value),
+                blurRadius: 8 * controller.value,
+                spreadRadius: 4 * controller.value,
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

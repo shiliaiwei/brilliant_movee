@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:isolate';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stockfish_chess_engine/stockfish_chess_engine.dart';
 import 'move_classifier.dart';
 
@@ -14,6 +15,7 @@ class StockfishRequest {
     this.depth = 26,
     this.multiPv = 3,
     this.requestId = '',
+    this.nnuePath,
   });
 
   final StockfishMessageType type;
@@ -21,6 +23,7 @@ class StockfishRequest {
   final int depth;
   final int multiPv;
   final String requestId;
+  final String? nnuePath;
 }
 
 class StockfishResponse {
@@ -40,6 +43,10 @@ class StockfishResponse {
   final bool isComplete;
   final String? error;
 }
+
+final engineLastResponseProvider = StreamProvider<StockfishResponse>((ref) {
+  return StockfishIsolate.instance.responses;
+});
 
 /// Stockfish engine runner using real UCI wiring for both App and Web.
 class StockfishIsolate {
@@ -127,7 +134,6 @@ class StockfishIsolate {
   void analyze(StockfishRequest request) {
     if (kIsWeb) {
       if (_webEngine == null) {
-        // Fallback to high-quality mock if engine failed to load (missing WASM)
         _analyzePositionMock(request);
         return;
       }
@@ -137,6 +143,9 @@ class StockfishIsolate {
       _webLines.clear();
 
       _webEngine!.stdin = 'stop';
+      if (request.nnuePath != null) {
+        _webEngine!.stdin = 'setoption name EvalFile value ${request.nnuePath}';
+      }
       _webEngine!.stdin = 'setoption name MultiPV value ${request.multiPv}';
       _webEngine!.stdin = 'position fen ${request.fen}';
       _webEngine!.stdin = 'go depth ${request.depth}';
@@ -208,7 +217,6 @@ class StockfishIsolate {
   }
 }
 
-/// Isolate entry point for mobile/desktop.
 void _engineIsolateEntry(SendPort mainSendPort) {
   final receivePort = ReceivePort();
   mainSendPort.send(receivePort.sendPort);
@@ -275,6 +283,10 @@ void _engineIsolateEntry(SendPort mainSendPort) {
           currentLines.clear();
 
           stockfish.stdin = 'stop';
+          if (message.nnuePath != null) {
+            stockfish.stdin =
+                'setoption name EvalFile value ${message.nnuePath}';
+          }
           stockfish.stdin = 'setoption name MultiPV value ${message.multiPv}';
           stockfish.stdin = 'position fen ${message.fen}';
           stockfish.stdin = 'go depth ${message.depth}';

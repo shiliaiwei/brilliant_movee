@@ -21,6 +21,8 @@ abstract final class StorageKeys {
   static const String moveAnimationSpeed = 'move_animation_speed';
   static const String brilliantSensitivity = 'brilliant_sensitivity';
   static const String engineVersion = 'engine_version';
+  static const String engineNetwork = 'engine_network';
+  static const String fullNetPath = 'full_net_path';
   static const String brilliantGames = 'brilliant_games'; // List of JSON
 }
 
@@ -122,6 +124,15 @@ class StorageService {
   int get engineVersion => _prefs.getInt(StorageKeys.engineVersion) ?? 18;
   Future<void> setEngineVersion(int version) =>
       _prefs.setInt(StorageKeys.engineVersion, version);
+
+  String get engineNetwork =>
+      _prefs.getString(StorageKeys.engineNetwork) ?? 'lite';
+  Future<void> setEngineNetwork(String network) =>
+      _prefs.setString(StorageKeys.engineNetwork, network);
+
+  String? get fullNetPath => _prefs.getString(StorageKeys.fullNetPath);
+  Future<void> setFullNetPath(String path) =>
+      _prefs.setString(StorageKeys.fullNetPath, path);
 
   // ── Analysis Stats ────────────────────────────────────────────────────────
   List<String> get brilliantGamesData =>

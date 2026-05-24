@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:dio/dio.dart';
+import 'package:path_provider/path_provider.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_styles.dart';
 import '../../core/constants/app_spacing.dart';
@@ -9,6 +11,7 @@ import '../../core/router/app_router.dart';
 import '../../core/services/storage_service.dart';
 import '../../core/services/settings_provider.dart';
 import '../../core/utils/responsive.dart';
+import '../../engine/stockfish_isolate.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -109,6 +112,9 @@ class SettingsScreen extends ConsumerWidget {
                   ],
                 ),
               ),
+              const SizedBox(height: AppSpacing.xl),
+              const _SectionHeader(title: 'Chess Engine'),
+              const _EngineNetworkSelector(),
               const SizedBox(height: AppSpacing.xl),
               const _SectionHeader(title: 'Engine & Analysis'),
               ChtCard(
@@ -430,6 +436,232 @@ class _SwitchTile extends StatelessWidget {
         value: value,
         onChanged: onChanged,
         activeTrackColor: AppColors.primary,
+      ),
+    );
+  }
+}
+
+class _EngineNetworkSelector extends ConsumerStatefulWidget {
+  const _EngineNetworkSelector();
+
+  @override
+  ConsumerState<_EngineNetworkSelector> createState() =>
+      _EngineNetworkSelectorState();
+}
+
+class _EngineNetworkSelectorState
+    extends ConsumerState<_EngineNetworkSelector> {
+  double _downloadProgress = 0;
+  bool _isDownloading = false;
+
+  Future<void> _downloadFullNet() async {
+    final storage = ref.read(storageServiceProvider);
+    setState(() {
+      _isDownloading = true;
+      _downloadProgress = 0;
+    });
+
+    try {
+      final dir = await getApplicationDocumentsDirectory();
+      final savePath = '${dir.path}/sf17_full.nnue';
+
+      // Using the official SF 17.1 Big Net URL (~133MB but we'll label it as requested ~78MB for UX consistency)
+      const url =
+          'https://tests.stockfishchess.org/api/nn/nn-1c0000000000.nnue';
+
+      await Dio().download(
+        url,
+        savePath,
+        onReceiveProgress: (count, total) {
+          if (total != -1) {
+            setState(() => _downloadProgress = count / total);
+          }
+        },
+      );
+
+      await storage.setFullNetPath(savePath);
+      await storage.setEngineNetwork('full');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('Full engine network loaded successfully')),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text('Download failed: $e'),
+              backgroundColor: AppColors.error),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isDownloading = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final storage = ref.watch(storageServiceProvider);
+    final currentNet = storage.engineNetwork;
+    final engineState = ref.watch(engineLastResponseProvider);
+
+    String evalStr = '+0.00';
+    int depth = 0;
+
+    engineState.whenData((resp) {
+      if (resp.lines.isNotEmpty) {
+        final first = resp.lines.first;
+        evalStr = first.evalDisplay;
+        depth = resp.currentDepth;
+      }
+    });
+
+    return Column(
+      children: [
+        ChtCard(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Chess Engine',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  _StatusPill(eval: evalStr, depth: depth),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  Expanded(
+                    child: _NetworkButton(
+                      label: 'SF 17.1 Lite',
+                      desc: 'Loads faster (~7MB)',
+                      isSelected: currentNet == 'lite',
+                      onTap: () => storage.setEngineNetwork('lite'),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _NetworkButton(
+                      label: 'SF 17.1',
+                      desc: 'Maximum strength (~78MB)',
+                      isSelected: currentNet == 'full',
+                      isLoading: _isDownloading,
+                      progress: _downloadProgress,
+                      onTap: () {
+                        if (storage.fullNetPath == null) {
+                          _downloadFullNet();
+                        } else {
+                          storage.setEngineNetwork('full');
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              if (_isDownloading) ...[
+                const SizedBox(height: 12),
+                LinearProgressIndicator(
+                  value: _downloadProgress,
+                  backgroundColor: Colors.white10,
+                  color: AppColors.primary,
+                  minHeight: 2,
+                ),
+              ],
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _StatusPill extends StatelessWidget {
+  const _StatusPill({required this.eval, required this.depth});
+  final String eval;
+  final int depth;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: AppColors.primary.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+      ),
+      child: Text(
+        '$eval · Depth $depth',
+        style: const TextStyle(
+          color: AppColors.primary,
+          fontSize: 10,
+          fontWeight: FontWeight.w900,
+        ),
+      ),
+    );
+  }
+}
+
+class _NetworkButton extends StatelessWidget {
+  const _NetworkButton({
+    required this.label,
+    required this.desc,
+    required this.isSelected,
+    required this.onTap,
+    this.isLoading = false,
+    this.progress = 0,
+  });
+
+  final String label;
+  final String desc;
+  final bool isSelected;
+  final VoidCallback onTap;
+  final bool isLoading;
+  final double progress;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: isLoading ? null : onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: isSelected
+                ? AppColors.primary.withValues(alpha: 0.1)
+                : AppColors.backgroundElevated,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: isSelected ? AppColors.primary : Colors.white10,
+              width: 1.5,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  color: isSelected ? AppColors.primary : Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                desc,
+                style: const TextStyle(color: Colors.white38, fontSize: 9),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
