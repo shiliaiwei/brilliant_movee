@@ -1,6 +1,24 @@
 # Brilliant Movee - Chess Analysis Application
 
-Brilliant Movee is a Dart/Flutter application that connects Chess.com with advanced chess engine analysis, delivering professional tactical coaching through an elegant interface. This application brings the power of deep position analysis to chess players of all levels, transforming raw engine evaluations into actionable coaching insights.
+Brilliant Movee is a premium Dart/Flutter application that connects Chess.com with advanced UCI chess engine analysis, delivering professional tactical coaching through an elegant Futuristic User Interface (FUI). This application brings the power of deep position analysis to chess players of all levels, transforming raw engine evaluations into actionable coaching insights.
+
+---
+
+## 🚀 Version 1.3.0 - The Engine Upgrade
+
+The latest release brings **Stockfish 17.1** directly into the application with professional-grade analysis profiles and a high-fidelity redesign.
+
+### Key Upgrades
+
+- **Real UCI Stockfish Wiring**: Direct communication with Stockfish 17.1 (not simulated) for accurate evaluations.
+- **Dual-Net System**: Switch between **Lite** (~7MB) for speed/battery and **Full** (~133MB) for maximum grandmaster-level strength.
+- **Analysis Profiles**:
+  - **Fast**: Quick scan, low battery usage.
+  - **Balanced**: Standard mobile accuracy.
+  - **Premium (Depth 26)**: Industry standard for Brilliant (!!) detection.
+  - **Grandmaster (Depth 32)**: Ultimate precision for deep sacrifices and positional mastery.
+- **Brilliant Move Detection (!!)**: Refined heuristics that identify sacrifices and game-changing moves using high-depth validation.
+- **FUI Aesthetic**: A complete visual overhaul featuring 45-degree clipped corners, technical scanning animations, and real-time progress indicators.
 
 ---
 
@@ -12,15 +30,14 @@ The platform features real-time rankings, detailed performance analytics, and au
 
 ### Core Features
 
-- Deep Engine Analysis: Advanced chess engine integration running analysis at significant depth levels
-- Performance Dashboard: Professional dashboard displaying move quality breakdowns and performance metrics
-- Global Rankings: Real-time rankings across multiple game categories (Rapid, Blitz, Bullet, and more)
-- Move Classification: Automatic identification and classification of significant moves with detailed analysis
-- Video Export: Automated recording and export of game reviews for sharing
-- Cross-Platform Support: Seamless experience across mobile devices, tablets, and web browsers
-- Game Archive Integration: Access to complete game history from Chess.com
-- Natural Language Analysis: AI-powered coaching and move explanations
-- High-Fidelity Rendering: Professional-quality board and UI rendering
+- **Deep Engine Analysis**: Advanced chess engine integration running analysis at significant depth levels (up to Depth 32).
+- **Performance Dashboard**: Professional dashboard displaying move quality breakdowns and performance metrics.
+- **Global Rankings**: Real-time rankings across multiple game categories (Rapid, Blitz, Bullet, and more).
+- **Move Classification**: Automatic identification and classification of significant moves (Brilliant, Great, Best, etc.) with detailed analysis.
+- **Tips & Tricks**: A curated library of instructional content categorized for Opening, Middlegame, Endgame, Tactics, and Mindset.
+- **Video Export**: Automated recording and export of game reviews for sharing on social media.
+- **Cross-Platform Support**: Seamless experience across mobile devices, tablets, and web browsers.
+- **Game Archive Integration**: Access to complete game history from Chess.com.
 
 ---
 
@@ -28,14 +45,14 @@ The platform features real-time rankings, detailed performance analytics, and au
 
 For detailed system architecture and workflow diagrams, see **[FLOWCHARTS.md](./FLOWCHARTS.md)** which contains:
 
-1. **Complete System Architecture Flowchart** - Full user journey covering authentication, dashboard navigation, game history, player profiles, leaderboard search, game review, and video export
-2. **Detailed Game Analysis Process** - Step-by-step flow for game data fetching, PGN parsing, board state generation, engine initialization, and move-by-move analysis
-3. **Engine Analysis Deep Dive** - In-depth view of engine startup, position setup, move tree search, best move calculation, and result caching
-4. **Data Flow Architecture** - System data movement from UI layer through state management, business logic, repositories to external services
-5. **Authentication and Session Management** - Complete flow for session validation, OAuth authorization, token management, and user profile loading
-6. **Video Export and Rendering Pipeline** - Full process including format selection, frame rendering, video encoding, audio/subtitles, and export destinations
-7. **Error Handling and Recovery** - Comprehensive error management for network, authentication, engine, storage, and parsing errors with recovery strategies
-8. **Performance Metrics Monitoring** - Continuous monitoring of memory usage, CPU performance, network activity, and automatic optimization triggers
+1. **Complete System Architecture Flowchart** - Full user journey covering authentication, dashboard navigation, game history, player profiles, leaderboard search, game review, and video export.
+2. **Detailed Game Analysis Process** - Step-by-step flow for game data fetching, PGN parsing, board state generation, engine initialization, and move-by-move analysis.
+3. **Engine Analysis Deep Dive** - In-depth view of engine startup, position setup, move tree search, best move calculation, and result caching.
+4. **Data Flow Architecture** - System data movement from UI layer through state management, business logic, repositories to external services.
+5. **Authentication and Session Management** - Complete flow for session validation, OAuth authorization, token management, and user profile loading.
+6. **Video Export and Rendering Pipeline** - Full process including format selection, frame rendering, video encoding, audio/subtitles, and export destinations.
+7. **Error Handling and Recovery** - Comprehensive error management for network, authentication, engine, storage, and parsing errors with recovery strategies.
+8. **Performance Metrics Monitoring** - Continuous monitoring of memory usage, CPU performance, network activity, and automatic optimization triggers.
 
 ---
 
@@ -44,58 +61,44 @@ For detailed system architecture and workflow diagrams, see **[FLOWCHARTS.md](./
 ```
 lib/
   core/
-    - Global theme configuration
-    - Application constants
-    - Shared utilities and helpers
-    - Style definitions
+    - Global theme configuration (Dark FUI)
+    - Application constants (AppColors, AppSpacing)
+    - Shared widgets (CyberButton, ChtCard)
     - Error handling utilities
     
   data/
     - Chess.com API models
     - Data repositories
     - API integration services
-    - Local storage models
+    - Local storage models (StorageService)
     - Cache management
     
   engine/
-    - Chess engine bridge
+    - UCI Engine bridge (StockfishIsolate)
     - PGN notation parser
     - Board state manager
-    - Move classifier
+    - Move classifier (Brilliant Detection)
     - Position evaluator
-    - Variation calculator
     
   features/
     home/
       - Application dashboard
       - Global leaderboard display
-      - Player search functionality
-      - Quick stats view
-      
     history/
-      - Game history browser
-      - Archive access interface
-      - Game list display
-      - Filtering and sorting
-      
+      - Game history browser (Analysis Tab)
+    tips/
+      - Curated chess improvement library
     profile/
       - Performance analytics dashboard
-      - Statistical breakdowns
-      - Progress tracking
-      - Achievement display
-      
     review/
       - Interactive analysis board
-      - Move-by-move analysis
-      - AI coaching interface
-      - Variation exploration
-      - Export controls
+      - Real-time engine status (Depth/Eval)
+      - Video export service
       
 assets/
-  - Board and piece graphics
-  - UI icons and graphics
-  - Theme assets
-  - Custom visualizations
+  - High-quality Board (Wood 4) and Piece (Maestro) graphics
+  - FUI icons and graphics
+  - Data (tips.json)
 ```
 
 ---
@@ -108,20 +111,19 @@ assets/
 - HTML for web components (16.1% of codebase)
 
 ### State Management
-- Reactive programming patterns
-- Efficient state updates
-- Local state caching
+- **Riverpod**: Reactive programming patterns and efficient state updates.
+- **StorageService**: Persistent settings and game history.
 
 ### Data Storage
-- Local persistence system
-- Encrypted credential storage
+- Local persistence system (SharedPreferences)
 - Game cache management
+- On-demand NNUE file downloading (Dio)
 
 ### Integration Points
 - Chess.com public API integration
-- External engine support
-- Video encoding services
-- Platform-specific services
+- Stockfish UCI Engine support
+- FFmpeg Kit for video encoding
+- Platform-specific services (Isolates, FFI)
 
 ---
 
@@ -131,7 +133,7 @@ assets/
 - Dart SDK version 3.4.0 or higher
 - Flutter Framework compatible version
 - Minimum 2GB RAM for engine analysis
-- Internet connection for API access
+- Internet connection for API access and "Full" Engine Network download
 
 ### Development Setup
 
@@ -163,22 +165,12 @@ Build for Android:
 flutter build apk --release
 ```
 
-Build for iOS:
-```bash
-flutter build ios --release
-```
-
 Build for Web:
 ```bash
 flutter build web --release
 ```
 
-Build for macOS:
-```bash
-flutter build macos --release
-```
-
-The compiled artifacts are available in the build/ directory.
+The compiled artifacts will be available in the `build/` directory. For pre-built releases, check the `release/` folder.
 
 ---
 
@@ -186,76 +178,15 @@ The compiled artifacts are available in the build/ directory.
 
 ### Game Analysis Process
 
-1. User initiates game review through the history interface
-2. Application loads game data from local cache or Chess.com
-3. PGN notation is parsed into individual moves and positions
-4. Engine begins position analysis from game start
-5. Each position is evaluated with comprehensive analysis
-6. Move quality is determined based on engine evaluation
-7. Coaching feedback is generated for significant moves
-8. UI renders interactive board with analysis overlay
-9. User can explore variations and alternative moves
-10. Optional export generates shareable video content
-
-### Performance Optimization
-
-- Background isolate processing for engine analysis
-- Incremental data loading and caching
-- Lazy rendering of board positions
-- Network request optimization
-- Local storage for frequently accessed games
-
-### Data Management
-
-- Automatic cache management
-- Secure credential storage
-- Efficient game history caching
-- Bandwidth optimization
-- Storage space management
-
----
-
-## Configuration
-
-### API Configuration
-- Chess.com API endpoint configuration
-- Rate limiting settings
-- Timeout parameters
-- Connection retry policies
-
-### Engine Configuration
-- Analysis depth settings
-- Time control parameters
-- Multi-threaded processing options
-- Memory allocation settings
-
-### UI Configuration
-- Theme customization
-- Layout preferences
-- Animation settings
-- Accessibility options
-
----
-
-## Performance Metrics
-
-### Analysis Speed
-- Real-time board evaluation
-- Sub-second move classification
-- Efficient position caching
-- Optimized variation calculation
-
-### Memory Usage
-- Efficient data structures
-- Smart cache management
-- Memory pooling for common objects
-- Garbage collection optimization
-
-### Network Performance
-- Minimal API requests
-- Efficient data compression
-- Connection pooling
-- Request batching
+1. User initiates game review through the **Analysis** interface.
+2. Application loads game data from local cache or Chess.com.
+3. PGN notation is parsed into individual moves and positions.
+4. Engine begins position analysis from game start using the selected **Analysis Profile**.
+5. Each position is evaluated with real-time UCI feedback.
+6. Move quality is determined based on evaluation swings and sacrifice detection.
+7. Brilliant Moves (!!) trigger immediate UI alerts and haptic feedback.
+8. User can explore the game with an automatic board orientation (User always at bottom).
+9. Optional export generates shareable video content with background music.
 
 ---
 
@@ -263,98 +194,43 @@ The compiled artifacts are available in the build/ directory.
 
 ### Common Issues
 
-Engine Analysis Not Starting
-- Verify system has sufficient RAM
-- Check engine process initialization
-- Review engine configuration settings
-- Ensure no conflicting processes
+**Engine Analysis Not Starting**
+- Verify system has sufficient RAM (especially for Grandmaster mode).
+- Ensure the engine process is not locked (Try restarting the Review screen).
+- Check if the "Full" network has completed downloading.
 
-Chess.com Connection Failed
-- Verify internet connectivity
-- Check API endpoint availability
-- Review authentication credentials
-- Check rate limiting status
+**Brilliant Moves Not Detected**
+- Ensure you are using **Premium** or **Grandmaster** mode.
+- Brilliancy requires a minimum of **Depth 20** to be accurately verified.
 
-Video Export Issues
-- Verify sufficient disk space
-- Check video encoding configuration
-- Ensure platform has codec support
-- Review file permissions
-
-Game Data Not Loading
-- Clear local cache
-- Verify Chess.com account access
-- Check API response status
-- Review game format compatibility
-
----
-
-## Development Guidelines
-
-### Code Organization
-- Feature-based folder structure
-- Separation of concerns
-- Clear dependency flow
-- Reusable component design
-
-### Testing
-- Unit test coverage for business logic
-- Widget tests for UI components
-- Integration tests for workflows
-- Performance benchmarks
-
-### Naming Conventions
-- Clear, descriptive variable names
-- Consistent method naming patterns
-- Organized import statements
-- Meaningful class and file names
+**Video Export Issues**
+- Verify sufficient disk space for temporary frames.
+- Ensure the app has storage permissions enabled.
 
 ---
 
 ## Roadmap and Future Enhancements
 
 ### Planned Features
-- Enhanced AI coaching with more detailed variations
-- Advanced statistics and trend analysis
-- Multiplayer game analysis features
+- Multi-engine support (Lc0, Komodo)
+- Interactive puzzle solver based on your own blunders
 - Tournament integration and analysis
-- Advanced filtering and search capabilities
-- Expanded performance metrics
-- Additional export formats
-- Mobile app optimizations
+- Real-time multiplayer analysis features
+- Expanded piece and board marketplace
 
 ### Optimization Goals
-- Faster engine analysis
-- Improved memory efficiency
-- Better offline capabilities
-- Enhanced UI responsiveness
-- Expanded platform support
-
----
-
-## Community and Support
-
-### Getting Help
-- Documentation available in project repository
-- Code comments and inline documentation
-- Example implementations in features
-- Common issues and solutions in documentation
-- Detailed flowcharts in FLOWCHARTS.md
-
-### Contributing
-- Code contributions welcome
-- Bug reports and feature requests accepted
-- Documentation improvements encouraged
-- Performance optimization suggestions valued
+- Faster NNUE loading on low-end devices
+- Improved frame-rate during video encoding
+- Offline-first profile caching
 
 ---
 
 ## Version Information
 
-Current Version: Active Development
-Last Updated: 2026
-Platform Support: Flutter (Multi-platform)
-Minimum SDK Requirements: Flutter 3.4.0 or higher
+- **Current Version**: 1.3.0 (Grandmaster Update)
+- **Last Updated**: 2026
+- **Platform Support**: Flutter (Multi-platform)
+- **Minimum SDK Requirements**: Flutter 3.4.0 or higher
 
 ---
 
