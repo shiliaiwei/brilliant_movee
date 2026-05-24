@@ -150,7 +150,7 @@ class _BlurInsideCoordinatesOverlay extends StatelessWidget {
           return Positioned(
             left: (i * squareSize) + squareSize - 10,
             bottom: 1,
-            child: Text(file, style: textStyle),
+            child: Opacity(opacity: 0.2, child: Text(file, style: textStyle)),
           );
         }),
         // Ranks (1-8) - Top Left of each square in first column
@@ -159,7 +159,7 @@ class _BlurInsideCoordinatesOverlay extends StatelessWidget {
           return Positioned(
             left: 2,
             top: (i * squareSize) + 1,
-            child: Text(rank, style: textStyle),
+            child: Opacity(opacity: 0.2, child: Text(rank, style: textStyle)),
           );
         }),
       ],
@@ -419,7 +419,7 @@ class _ArcadeAnimatedPiece extends StatelessWidget {
     final actualRow = isFlipped ? 7 - row : row;
 
     return AnimatedPositioned(
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 650),
       curve: Curves.easeInOutBack,
       left: actualCol * squareSize,
       top: actualRow * squareSize,

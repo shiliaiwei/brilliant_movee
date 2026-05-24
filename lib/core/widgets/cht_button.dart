@@ -126,10 +126,9 @@ class _GradientButton extends StatelessWidget {
                       Text(
                         label.toUpperCase(),
                         style: AppTextStyles.bodyMedium.copyWith(
-                          fontFamily: 'SpaceGrotesk',
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                          letterSpacing: 1.2,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 13,
+                          letterSpacing: 1.5,
                           color: isDisabled
                               ? AppColors.textSecondary
                               : AppColors.backgroundDeep,
@@ -191,10 +190,9 @@ class _GlassButton extends StatelessWidget {
                       Text(
                         label.toUpperCase(),
                         style: AppTextStyles.bodyMedium.copyWith(
-                          fontFamily: 'SpaceGrotesk',
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                          letterSpacing: 1.2,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 13,
+                          letterSpacing: 1.5,
                           color: AppColors.primary,
                         ),
                       ),

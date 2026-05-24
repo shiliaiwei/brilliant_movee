@@ -287,8 +287,12 @@ class _LeaderboardItem extends StatelessWidget {
                 children: [
                   Text(
                     player.username,
-                    style: AppTextStyles.bodyMedium
-                        .copyWith(fontWeight: FontWeight.bold),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13, // Smaller font size
+                    ),
                   ),
                   if (player.name != null)
                     Text(
