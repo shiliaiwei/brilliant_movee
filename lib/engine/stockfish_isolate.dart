@@ -41,7 +41,7 @@ class StockfishResponse {
   final String? error;
 }
 
-/// Stockfish engine runner using real UCI wiring.
+/// Stockfish engine runner using real UCI wiring for both App and Web.
 class StockfishIsolate {
   StockfishIsolate._();
 
@@ -49,6 +49,15 @@ class StockfishIsolate {
 
   Isolate? _isolate;
   SendPort? _sendPort;
+
+  // Web specific instance
+  Stockfish? _webEngine;
+  StreamSubscription? _webSubscription;
+  final Map<int, EngineLineResult> _webLines = {};
+  String _webRequestId = '';
+  String _webFen = '';
+  int _webTargetDepth = 26;
+
   final StreamController<StockfishResponse> _responseController =
       StreamController.broadcast();
 
@@ -61,7 +70,7 @@ class StockfishIsolate {
     if (_isRunning) return;
 
     if (kIsWeb) {
-      _isRunning = true;
+      _startWeb();
       return;
     }
 
@@ -84,16 +93,63 @@ class StockfishIsolate {
     await Future.delayed(const Duration(milliseconds: 200));
   }
 
+  void _startWeb() {
+    _webEngine = Stockfish();
+    _webSubscription = _webEngine!.stdout.listen((line) {
+      if (line.startsWith('info')) {
+        final parsed = _parseUciInfo(line);
+        if (parsed != null) {
+          final pvIndex = _extractInt(line, 'multipv') ?? 1;
+          _webLines[pvIndex] = parsed;
+          if (pvIndex == 1) {
+            _emitResponse(StockfishResponse(
+              requestId: _webRequestId,
+              fen: _webFen,
+              lines: _webLines.values.toList(),
+              currentDepth: parsed.depth,
+              isComplete: false,
+            ));
+          }
+        }
+      } else if (line.startsWith('bestmove')) {
+        _emitResponse(StockfishResponse(
+          requestId: _webRequestId,
+          fen: _webFen,
+          lines: _webLines.values.toList(),
+          currentDepth: _webTargetDepth,
+          isComplete: true,
+        ));
+      }
+    });
+    _isRunning = true;
+  }
+
   void analyze(StockfishRequest request) {
     if (kIsWeb) {
-      _analyzePositionMock(request);
+      if (_webEngine == null) {
+        // Fallback to high-quality mock if engine failed to load (missing WASM)
+        _analyzePositionMock(request);
+        return;
+      }
+      _webRequestId = request.requestId;
+      _webFen = request.fen;
+      _webTargetDepth = request.depth;
+      _webLines.clear();
+
+      _webEngine!.stdin = 'stop';
+      _webEngine!.stdin = 'setoption name MultiPV value ${request.multiPv}';
+      _webEngine!.stdin = 'position fen ${request.fen}';
+      _webEngine!.stdin = 'go depth ${request.depth}';
       return;
     }
     _sendPort?.send(request);
   }
 
   void stop() {
-    if (kIsWeb) return;
+    if (kIsWeb) {
+      _webEngine?.stdin = 'stop';
+      return;
+    }
     _sendPort?.send(
       const StockfishRequest(
         type: StockfishMessageType.stop,
@@ -104,7 +160,11 @@ class StockfishIsolate {
   }
 
   Future<void> dispose() async {
-    if (!kIsWeb) {
+    if (kIsWeb) {
+      _webSubscription?.cancel();
+      _webEngine?.dispose();
+      _webEngine = null;
+    } else {
       _sendPort?.send(
         const StockfishRequest(
           type: StockfishMessageType.quit,
@@ -148,14 +208,13 @@ class StockfishIsolate {
   }
 }
 
-/// Isolate entry point.
+/// Isolate entry point for mobile/desktop.
 void _engineIsolateEntry(SendPort mainSendPort) {
   final receivePort = ReceivePort();
   mainSendPort.send(receivePort.sendPort);
 
   final stockfish = Stockfish();
 
-  // Buffers for multi-PV results
   Map<int, EngineLineResult> currentLines = {};
   String currentRequestId = '';
   String currentFen = '';
@@ -168,7 +227,6 @@ void _engineIsolateEntry(SendPort mainSendPort) {
         final pvIndex = _extractInt(line, 'multipv') ?? 1;
         currentLines[pvIndex] = parsed;
 
-        // Periodically emit intermediate results for progress tracking
         if (pvIndex == 1) {
           mainSendPort.send(StockfishResponse(
             requestId: currentRequestId,
