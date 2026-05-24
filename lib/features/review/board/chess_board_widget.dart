@@ -111,13 +111,12 @@ class ChessBoardWidget extends StatelessWidget {
                     ),
                   ),
 
-                  // Coordinates (Placed OUTSIDE the board)
+                  // Coordinates (Inside and Blur style)
                   if (showCoordinates)
                     Positioned.fill(
                       child: IgnorePointer(
-                        child: _OutsideCoordinatesOverlay(
-                          boardSize: boardSize,
-                          margin: boardMargin,
+                        child: _BlurInsideCoordinatesOverlay(
+                          squareSize: squareSize,
                           isFlipped: isFlipped,
                         ),
                       ),
@@ -132,45 +131,45 @@ class ChessBoardWidget extends StatelessWidget {
   }
 }
 
-class _OutsideCoordinatesOverlay extends StatelessWidget {
-  const _OutsideCoordinatesOverlay({
-    required this.boardSize,
-    required this.margin,
+class _BlurInsideCoordinatesOverlay extends StatelessWidget {
+  const _BlurInsideCoordinatesOverlay({
+    required this.squareSize,
     required this.isFlipped,
   });
 
-  final double boardSize;
-  final double margin;
+  final double squareSize;
   final bool isFlipped;
 
   @override
   Widget build(BuildContext context) {
-    final squareSize = boardSize / 8;
     final textStyle = AppTextStyles.monoSmall.copyWith(
       fontSize: 10,
-      color: Colors.white.withValues(alpha: 0.5),
+      color: Colors.white.withValues(alpha: 0.6),
       fontWeight: FontWeight.bold,
+      shadows: [
+        const Shadow(color: Colors.black45, blurRadius: 4),
+      ],
     );
 
     return Stack(
       children: [
-        // Files (a-h) - Bottom
+        // Files (a-h) - Bottom Right of each square in last row
         ...List.generate(8, (i) {
           final file = isFlipped
               ? String.fromCharCode('h'.codeUnitAt(0) - i)
               : String.fromCharCode('a'.codeUnitAt(0) + i);
           return Positioned(
-            left: margin + (i * squareSize) + (squareSize / 2) - 4,
-            bottom: 4,
+            left: (i * squareSize) + squareSize - 12,
+            bottom: 2,
             child: Text(file, style: textStyle),
           );
         }),
-        // Ranks (1-8) - Left
+        // Ranks (1-8) - Top Left of each square in first column
         ...List.generate(8, (i) {
           final rank = isFlipped ? '${i + 1}' : '${8 - i}';
           return Positioned(
-            left: 6,
-            top: margin + (i * squareSize) + (squareSize / 2) - 6,
+            left: 2,
+            top: (i * squareSize) + 2,
             child: Text(rank, style: textStyle),
           );
         }),
@@ -319,7 +318,7 @@ class _FallbackBoardPainter extends CustomPainter {
   bool shouldRepaint(_FallbackBoardPainter old) => false;
 }
 
-class _PiecesLayer extends StatelessWidget {
+class _PiecesLayer extends StatefulWidget {
   const _PiecesLayer({
     required this.boardState,
     required this.squareSize,
@@ -337,63 +336,61 @@ class _PiecesLayer extends StatelessWidget {
   final void Function(String square)? onSquareTap;
 
   @override
+  State<_PiecesLayer> createState() => _PiecesLayerState();
+}
+
+class _PiecesLayerState extends State<_PiecesLayer> {
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         // Highlight squares
-        if (highlightLastMove && boardState.lastMoveFrom != null)
+        if (widget.highlightLastMove && widget.boardState.lastMoveFrom != null)
           _HighlightSquare(
-            square: boardState.lastMoveFrom!,
-            squareSize: squareSize,
+            square: widget.boardState.lastMoveFrom!,
+            squareSize: widget.squareSize,
             color: AppColors.boardHighlightFrom,
-            isFlipped: isFlipped,
+            isFlipped: widget.isFlipped,
           ),
-        if (highlightLastMove && boardState.lastMoveTo != null)
+        if (widget.highlightLastMove && widget.boardState.lastMoveTo != null)
           _HighlightSquare(
-            square: boardState.lastMoveTo!,
-            squareSize: squareSize,
+            square: widget.boardState.lastMoveTo!,
+            squareSize: widget.squareSize,
             color: AppColors.boardHighlightTo,
-            isFlipped: isFlipped,
+            isFlipped: widget.isFlipped,
           ),
 
-        // Pieces
-        ...boardState.pieces.entries.map((entry) {
+        // Pieces (Animated Arcade Style)
+        ...widget.boardState.pieces.entries.map((entry) {
           final square = entry.key;
           final piece = entry.value;
-          final (col, row) = _squareToColRow(square, isFlipped);
 
-          return Positioned(
-            left: col * squareSize,
-            top: row * squareSize,
-            child: GestureDetector(
-              onTap: () => onSquareTap?.call(square),
-              child: SizedBox(
-                width: squareSize,
-                height: squareSize,
-                child: _PieceImage(
-                  piece: piece,
-                  pieceSetId: pieceSetId,
-                  size: squareSize,
-                ),
-              ),
-            ),
+          return _ArcadeAnimatedPiece(
+            key: ValueKey(
+                piece + square), // Identify piece by code+square for animation
+            piece: piece,
+            square: square,
+            squareSize: widget.squareSize,
+            pieceSetId: widget.pieceSetId,
+            isFlipped: widget.isFlipped,
           );
         }),
 
-        // Tap targets for empty squares
+        // Tap targets for ALL squares (to ensure responsive tapping)
         ...List.generate(64, (i) {
           final col = i % 8;
           final row = i ~/ 8;
-          final square = _colRowToSquare(col, row, isFlipped);
-          if (boardState.pieces.containsKey(square)) {
-            return const SizedBox.shrink();
-          }
+          final square = _colRowToSquare(col, row, widget.isFlipped);
           return Positioned(
-            left: col * squareSize,
-            top: row * squareSize,
+            left: col * widget.squareSize,
+            top: row * widget.squareSize,
             child: GestureDetector(
-              onTap: () => onSquareTap?.call(square),
-              child: SizedBox(width: squareSize, height: squareSize),
+              onTap: () => widget.onSquareTap?.call(square),
+              child: SizedBox(
+                width: widget.squareSize,
+                height: widget.squareSize,
+                child: Container(color: Colors.transparent),
+              ),
             ),
           );
         }),
@@ -401,18 +398,52 @@ class _PiecesLayer extends StatelessWidget {
     );
   }
 
-  (int col, int row) _squareToColRow(String square, bool flipped) {
-    if (square.length < 2) return (0, 0);
-    final col = square.codeUnitAt(0) - 'a'.codeUnitAt(0);
-    final row = 8 - int.parse(square[1]);
-    if (flipped) return (7 - col, 7 - row);
-    return (col, row);
-  }
-
   String _colRowToSquare(int col, int row, bool flipped) {
     final actualCol = flipped ? 7 - col : col;
     final actualRow = flipped ? 7 - row : row;
     return '${String.fromCharCode('a'.codeUnitAt(0) + actualCol)}${8 - actualRow}';
+  }
+}
+
+class _ArcadeAnimatedPiece extends StatelessWidget {
+  const _ArcadeAnimatedPiece({
+    super.key,
+    required this.piece,
+    required this.square,
+    required this.squareSize,
+    required this.pieceSetId,
+    required this.isFlipped,
+  });
+
+  final String piece;
+  final String square;
+  final double squareSize;
+  final String pieceSetId;
+  final bool isFlipped;
+
+  @override
+  Widget build(BuildContext context) {
+    final col = square.codeUnitAt(0) - 'a'.codeUnitAt(0);
+    final row = 8 - int.parse(square[1]);
+
+    final actualCol = isFlipped ? 7 - col : col;
+    final actualRow = isFlipped ? 7 - row : row;
+
+    return AnimatedPositioned(
+      duration: const Duration(milliseconds: 350),
+      curve: Curves.easeInOutCubic,
+      left: actualCol * squareSize,
+      top: actualRow * squareSize,
+      width: squareSize,
+      height: squareSize,
+      child: IgnorePointer(
+        child: _PieceImage(
+          piece: piece,
+          pieceSetId: pieceSetId,
+          size: squareSize,
+        ),
+      ),
+    );
   }
 }
 

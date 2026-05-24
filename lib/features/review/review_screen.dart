@@ -96,14 +96,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) => _checkGameEnd(state));
 
     return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, _) async {
-        if (didPop) return;
-        final shouldPop = await _onWillPop();
-        if (shouldPop && mounted) {
-          context.pop();
-        }
-      },
+      canPop: true,
       child: Scaffold(
         backgroundColor: AppColors.backgroundDeep,
         appBar: AppBar(
@@ -115,10 +108,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios_new_rounded,
                 size: 20, color: Colors.white),
-            onPressed: () async {
-              final shouldPop = await _onWillPop();
-              if (shouldPop && mounted) context.pop();
-            },
+            onPressed: () => context.pop(),
           ),
           actions: [
             IconButton(
@@ -144,20 +134,6 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                         );
                       }
                     },
-            ),
-            IconButton(
-              icon: const Icon(Icons.share_rounded,
-                  size: 20, color: Colors.white),
-              onPressed: () {
-                final ply = state.currentPlyIndex;
-                final move = ply > 0 ? state.game?.moves[ply - 1].san : 'start';
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Game state at move $move shared!'),
-                    backgroundColor: AppColors.primary,
-                  ),
-                );
-              },
             ),
             IconButton(
               icon: const Icon(Icons.flip_camera_android_rounded,

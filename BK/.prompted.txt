@@ -144,8 +144,9 @@ Game Result Board Animations:
 Piece Animations Arcade:
 make animation move  of the piece item in the board slow as style like chess.com and style arcade,
 -make classification a little smaller, in the baord
--
--
+-in the game review , chess analysis board , make coodinaet inside blur ,  remove share button, recreate animation engine stockfis being wokring to ananlyze
+- remove the leave ask in the game review dont ask when it elaving ask when user leave the application , to confirm ,
+
 
 
 
