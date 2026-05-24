@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:isolate';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:stockfish_chess_engine/stockfish_chess_engine.dart';
+import 'stockfish_wrapper.dart';
 import 'move_classifier.dart';
 
 /// Message types for Stockfish isolate communication.

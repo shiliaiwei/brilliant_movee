@@ -169,7 +169,7 @@ Build for Web:
 ```bash
 flutter build web --release
 ```
-
+elease on GitHub and uploaded the APK directly from here.
 The compiled artifacts will be available in the `build/` directory. For pre-built releases, check the `release/` folder.
 
 ---
