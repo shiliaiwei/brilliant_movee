@@ -187,23 +187,31 @@ class _ReviewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final boardState = state.currentBoardState;
     final classification = state.classificationAt(state.currentPlyIndex);
-    final openingName =
-        boardState != null ? OpeningBook.getOpeningName(boardState.fen) : null;
+
+    // Sticky opening logic: Find the latest known opening name in the current line
+    String? currentOpening;
+    for (int i = 0; i <= state.currentPlyIndex; i++) {
+      if (i < state.boardStates.length) {
+        final fen = state.boardStates[i].fen;
+        final name = OpeningBook.getOpeningName(fen);
+        if (name != null) currentOpening = name;
+      }
+    }
 
     final move = state.currentPlyIndex > 0
         ? state.game!.moves[state.currentPlyIndex - 1]
         : null;
-    final currentMoveStr = move != null ? '${move.moveNumber}${move.san}' : '•';
+    final currentMoveStr = move != null ? '${move.moveNumber}${move.san}' : '';
 
     return Column(
       children: [
-        // Opening Name above the board
+        // Sticky Opening Name above the board
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+          padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
           child: Column(
             children: [
               Text(
-                (openingName ?? '•').toUpperCase(),
+                (currentOpening ?? '').toUpperCase(),
                 textAlign: TextAlign.center,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -220,9 +228,9 @@ class _ReviewBody extends StatelessWidget {
                   child: Text(
                     classification.qualityLabel.toUpperCase(),
                     style: TextStyle(
-                      color: AppColors.primary.withValues(alpha: 0.5),
+                      color: AppColors.primary.withValues(alpha: 0.4),
                       fontWeight: FontWeight.bold,
-                      fontSize: 8,
+                      fontSize: 7,
                       letterSpacing: 1.5,
                     ),
                   ),
@@ -267,38 +275,29 @@ class _ReviewBody extends StatelessWidget {
 
         // Current Move & Navigation (Compact Row)
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 12),
           child: Column(
             children: [
               Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                 decoration: BoxDecoration(
                   color: AppColors.backgroundSurface,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: AppColors.divider, width: 1),
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      currentMoveStr,
-                      style: const TextStyle(
-                        fontSize: 14, // Smaller
-                        color: Colors.white,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 0.2,
-                      ),
-                    ),
-                    if (classification != null) ...[
-                      const SizedBox(width: 12),
-                      _ClassificationTinyBadge(quality: classification.quality),
-                    ],
-                  ],
+                child: Text(
+                  currentMoveStr,
+                  style: const TextStyle(
+                    fontSize: 14, // Smaller as requested
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 0.2,
+                  ),
                 ),
               ),
               if (move != null) ...[
-                const SizedBox(height: 8),
+                const SizedBox(height: 6),
                 Builder(builder: (context) {
                   final piece =
                       move.san.replaceAll(RegExp(r'[0-9a-hx+#=]'), '');
@@ -315,14 +314,14 @@ class _ReviewBody extends StatelessWidget {
                   return Text(
                     'PIECE: $label',
                     style: const TextStyle(
-                        color: Colors.white38,
-                        fontSize: 8,
+                        color: Colors.white24,
+                        fontSize: 7,
                         fontWeight: FontWeight.w900,
-                        letterSpacing: 1.5),
+                        letterSpacing: 1.2),
                   );
                 }),
               ],
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
               _NavigationControls(state: state),
             ],
           ),
