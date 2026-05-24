@@ -182,7 +182,7 @@ List<EngineLineResult> _generateMockLines(String fen, int multiPv) {
     (i) => EngineLineResult(
       moves: _generateMockMoves(fen, i),
       eval: (baseEval - i * 40).toDouble(),
-      depth: 22,
+      depth: 24, // SF-18 baseline depth
     ),
   );
 }

@@ -182,7 +182,17 @@ class _GameFeedItem extends ConsumerWidget {
         ? AppColors.win
         : (res == '0-1' ? AppColors.loss : AppColors.draw);
 
-    final shortResult = _getShortResult(game, currentUsername);
+    final isWhite =
+        game.whiteUsername.toLowerCase() == currentUsername.toLowerCase();
+    final myResult = isWhite ? game.whiteResult : game.blackResult;
+    final prefix = myResult == 'win' ? 'WON BY ' : 'LOST BY ';
+    final termination = game.terminationFor(currentUsername).toUpperCase();
+    final fullLabel = (res == '1/2-1/2') ? 'DRAW' : '$prefix$termination';
+
+    final opponent = game.whiteUsername == currentUsername
+        ? game.blackUsername
+        : game.whiteUsername;
+
     final storage = ref.watch(storageServiceProvider);
     final isReviewed =
         storage.brilliantGamesData.any((json) => json.contains(game.id));
@@ -195,16 +205,16 @@ class _GameFeedItem extends ConsumerWidget {
         child: Row(
           children: [
             Container(
-              width: 48,
-              height: 48,
+              width: 44,
+              height: 44,
               decoration: BoxDecoration(
                 color: statusColor.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
                 _getStatusIcon(res),
                 color: statusColor,
-                size: 22,
+                size: 20,
               ),
             ),
             const SizedBox(width: 16),
@@ -213,31 +223,41 @@ class _GameFeedItem extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    game.whiteUsername == currentUsername
-                        ? game.blackUsername
-                        : game.whiteUsername,
+                    opponent,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.bodyMedium.copyWith(
                       fontWeight: FontWeight.bold,
+                      fontSize: 16,
                       color: Colors.white,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 2),
                   Row(
                     children: [
-                      Text(
-                        game.timeControlLabel,
-                        style: AppTextStyles.caption.copyWith(fontSize: 10),
-                      ),
-                      const SizedBox(width: 8),
-                      if (isReviewed)
-                        const Text(
-                          '• REVIEWED',
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 6, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: statusColor.withValues(alpha: 0.15),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          fullLabel,
+                          maxLines: 1,
                           style: TextStyle(
-                            color: AppColors.primary,
-                            fontSize: 8,
-                            fontWeight: FontWeight.bold,
+                            color: statusColor,
+                            fontSize: 9,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 0.5,
                           ),
                         ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        game.timeControlLabel,
+                        style: AppTextStyles.caption.copyWith(fontSize: 9),
+                      ),
                     ],
                   ),
                 ],
@@ -246,24 +266,18 @@ class _GameFeedItem extends ConsumerWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: statusColor.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Text(
-                    shortResult.toUpperCase(),
-                    style: TextStyle(
-                      color: statusColor,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 0.5,
+                if (isReviewed)
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 4),
+                    child: Text(
+                      'REVIEWED',
+                      style: TextStyle(
+                        color: AppColors.primary,
+                        fontSize: 7,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 4),
                 Text(
                   DateFormat('HH:mm').format(game.endDateTime),
                   style: AppTextStyles.caption.copyWith(fontSize: 9),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_text_styles.dart';
 import '../constants/app_spacing.dart';
@@ -8,12 +7,14 @@ import '../constants/app_spacing.dart';
 /// Builds the Material 3 dark theme (Pure Black) for Stupid Brilliant.
 abstract final class AppTheme {
   static ThemeData get darkTheme {
+    const primaryFont = 'StackSansNotch';
     final colorScheme = AppColors.m3DarkScheme;
 
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
       colorScheme: colorScheme,
+      fontFamily: primaryFont,
 
       // ── Scaffold ──────────────────────────────────────────────────────────
       scaffoldBackgroundColor: AppColors.backgroundDeep,
@@ -65,7 +66,6 @@ abstract final class AppTheme {
             borderRadius: BorderRadius.circular(AppRadius.button),
           ),
           textStyle: AppTextStyles.bodyMedium.copyWith(
-            fontFamily: 'SpaceGrotesk',
             fontWeight: FontWeight.w700,
             letterSpacing: 1.0,
           ),
@@ -108,7 +108,8 @@ abstract final class AppTheme {
       ),
 
       // ── Text Theme ────────────────────────────────────────────────────────
-      textTheme: GoogleFonts.interTextTheme().apply(
+      textTheme: const TextTheme().apply(
+        fontFamily: primaryFont,
         bodyColor: AppColors.textPrimary,
         displayColor: AppColors.textPrimary,
       ),

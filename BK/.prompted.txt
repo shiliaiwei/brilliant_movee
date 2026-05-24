@@ -149,10 +149,16 @@ make animation move  of the piece item in the board slow as style like chess.com
 
 
 
+step to fi x,
 
+-in history card label showing username oponent above and won by result , use the color brand change the color cureent style in history  make the font more smaller no break line
 
+-next,  inthe game review  remove the words chess ananlysis , replace wanting label book opengind style naem , wha toepng call will display here,
+-put the code number coordine inside white text no blur white no shadow ,,, remove the icon near the video record , auot run deep
+- pls add aniamtion move in the baord chess move slow style fun, and belwo the board chess,  pls showing small label of code of that move peice , no label  add more of clasiscation no rank number with code move just only move number here  move the button run deep ananlysis to the right of video record ing and change the animationo
+-animation game result winby result animation showing the king center deepfeat or lose celabration jsut showrt aniamtion and auto bck to the board of chess
 
-
+- and change entire block   font sytyle using this font call Stack_Sans_Notch in asset
 
 
 

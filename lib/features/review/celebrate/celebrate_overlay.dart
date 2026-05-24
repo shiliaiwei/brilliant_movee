@@ -66,6 +66,11 @@ class _CelebrateOverlayState extends State<CelebrateOverlay>
     Future.delayed(const Duration(milliseconds: 200), () {
       if (mounted) _cardController.forward();
     });
+
+    // AUTO DISMISS after 4 seconds
+    Future.delayed(const Duration(seconds: 4), () {
+      if (mounted) widget.onDismiss();
+    });
   }
 
   @override
@@ -167,6 +172,28 @@ class _CelebrateOverlayState extends State<CelebrateOverlay>
                         ),
                       ),
                     ),
+                  ),
+                ),
+
+                // Centered King Animation
+                Center(
+                  child: AnimatedBuilder(
+                    animation: _cardController,
+                    builder: (context, child) {
+                      return Opacity(
+                        opacity: _cardOpacity.value,
+                        child: Transform.scale(
+                          scale: 1.0 + (0.2 * _particleController.value),
+                          child: Icon(
+                            _isWin
+                                ? Icons.emoji_events_rounded
+                                : Icons.cancel_rounded,
+                            size: 120,
+                            color: _titleColor.withValues(alpha: 0.8),
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],

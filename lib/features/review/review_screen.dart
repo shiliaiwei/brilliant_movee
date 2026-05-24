@@ -59,34 +59,6 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
     }
   }
 
-  Future<bool> _onWillPop() async {
-    final result = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        backgroundColor: AppColors.backgroundSurface,
-        title: Text('EXIT REVIEW?',
-            style: AppTextStyles.title
-                .copyWith(color: Colors.white, letterSpacing: 1)),
-        content: const Text('Do you want to stop analysis and return?',
-            style: TextStyle(color: Colors.white70)),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('CANCEL',
-                style: TextStyle(color: AppColors.textSecondary)),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('EXIT',
-                style: TextStyle(
-                    color: AppColors.loss, fontWeight: FontWeight.bold)),
-          ),
-        ],
-      ),
-    );
-    return result ?? false;
-  }
-
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(reviewProvider);
@@ -134,6 +106,18 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                         );
                       }
                     },
+            ),
+            IconButton(
+              icon: Icon(
+                state.isAnalyzing
+                    ? Icons.sync_rounded
+                    : Icons.psychology_rounded,
+                size: 22,
+                color: state.isAnalyzing ? AppColors.primary : Colors.white,
+              ),
+              onPressed: state.isAnalyzing
+                  ? null
+                  : () => ref.read(reviewProvider.notifier).startAnalysis(),
             ),
             IconButton(
               icon: const Icon(Icons.flip_camera_android_rounded,
@@ -218,24 +202,27 @@ class _ReviewBody extends StatelessWidget {
     final openingName =
         boardState != null ? OpeningBook.getOpeningName(boardState.fen) : null;
 
-    final currentMoveStr = state.currentPlyIndex > 0
-        ? state.game!.moves[state.currentPlyIndex - 1].fullNotation
-        : 'START';
+    final move = state.currentPlyIndex > 0
+        ? state.game!.moves[state.currentPlyIndex - 1]
+        : null;
+    final currentMoveStr =
+        move != null ? '${move.moveNumber} ${move.san}' : 'START';
 
     return Column(
       children: [
         // Opening Name above the board
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
           child: Text(
-            openingName ?? 'CHESS ANALYSIS',
+            (openingName ?? 'STUPID BRILLIANT').toUpperCase(),
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.bodyMedium.copyWith(
+            style: const TextStyle(
               color: AppColors.primary,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 0.5,
+              fontWeight: FontWeight.w900,
+              fontSize: 10,
+              letterSpacing: 2.2,
             ),
           ),
         ),
@@ -276,7 +263,7 @@ class _ReviewBody extends StatelessWidget {
 
         // Current Move & Navigation (Compact Row)
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 12),
           child: Column(
             children: [
               Row(
@@ -284,25 +271,50 @@ class _ReviewBody extends StatelessWidget {
                 children: [
                   Text(
                     currentMoveStr,
-                    style: AppTextStyles.monoLarge.copyWith(
-                      fontSize: 32,
+                    style: const TextStyle(
+                      fontSize: 22,
                       color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w900,
                     ),
                   ),
                   if (classification != null) ...[
-                    const SizedBox(width: 16),
+                    const SizedBox(width: 10),
                     _ClassificationTinyBadge(quality: classification.quality),
                   ],
                 ],
               ),
-              const SizedBox(height: 16),
+              if (move != null) ...[
+                const SizedBox(height: 4),
+                Builder(builder: (context) {
+                  final piece =
+                      move.san.replaceAll(RegExp(r'[0-9a-hx+#=]'), '');
+                  final label = piece.isEmpty
+                      ? 'PAWN'
+                      : switch (piece) {
+                          'K' => 'KING',
+                          'Q' => 'QUEEN',
+                          'R' => 'ROOK',
+                          'B' => 'BISHOP',
+                          'N' => 'KNIGHT',
+                          _ => piece,
+                        };
+                  return Text(
+                    'PIECE: $label',
+                    style: const TextStyle(
+                        color: Colors.white38,
+                        fontSize: 8,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 1.0),
+                  );
+                }),
+              ],
+              const SizedBox(height: 12),
               _NavigationControls(state: state),
             ],
           ),
         ),
 
-        // Simplified Bottom Panel
+        // Compact Bottom Panel
         _AnalysisPanelSimplified(state: state),
       ],
     );
@@ -315,44 +327,31 @@ class _AnalysisPanelSimplified extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    if (!state.isAnalyzing) return const SizedBox(height: 24);
+
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
-      decoration: const BoxDecoration(
-        color: AppColors.backgroundSurface,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-        border: Border(top: BorderSide(color: AppColors.divider, width: 1)),
-      ),
+      padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          if (state.isAnalyzing) ...[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(2),
-              child: LinearProgressIndicator(
-                value: state.analysisProgress,
-                backgroundColor: Colors.white10,
-                color: AppColors.primary,
-                minHeight: 4,
-              ),
+          Text(
+            'SF-18 CALCULATING...',
+            style: TextStyle(
+              color: AppColors.primary.withValues(alpha: 0.8),
+              fontWeight: FontWeight.w900,
+              fontSize: 8,
+              letterSpacing: 1.5,
             ),
-            const SizedBox(height: 12),
-          ],
-          ChtButton(
-            label:
-                state.isAnalyzing ? 'ENGINE ANALYZING...' : 'RUN DEEP ANALYSIS',
-            onPressed: state.isAnalyzing
-                ? null
-                : () => ref.read(reviewProvider.notifier).startAnalysis(),
-            icon: state.isAnalyzing
-                ? Icons.sync_rounded
-                : Icons.psychology_rounded,
-            height: 52,
           ),
           const SizedBox(height: 8),
-          const Center(
-            child: Text(
-              'Stockfish-sf_18 Engine',
-              style: TextStyle(color: Colors.white24, fontSize: 8),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(1),
+            child: LinearProgressIndicator(
+              value: state.analysisProgress,
+              backgroundColor: Colors.white.withValues(alpha: 0.05),
+              color: AppColors.primary,
+              minHeight: 1.5,
             ),
           ),
         ],

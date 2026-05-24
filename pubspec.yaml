@@ -103,3 +103,6 @@ flutter:
         - asset: assets/fonts/Google_Sans/GoogleSans-VariableFont_GRAD,opsz,wght.ttf
         - asset: assets/fonts/Google_Sans/GoogleSans-Italic-VariableFont_GRAD,opsz,wght.ttf
           style: italic
+    - family: StackSansNotch
+      fonts:
+        - asset: assets/fonts/Stack_Sans_Notch/StackSansNotch-VariableFont_wght.ttf

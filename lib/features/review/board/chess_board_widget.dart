@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import '../../../core/constants/app_colors.dart';
-import '../../../core/constants/app_text_styles.dart';
 import '../../../core/services/asset_service.dart';
 import '../../../engine/move_classifier.dart';
 import 'board_state.dart';
@@ -134,13 +133,11 @@ class _BlurInsideCoordinatesOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = AppTextStyles.monoSmall.copyWith(
-      fontSize: 9,
-      color: Colors.white.withValues(alpha: 0.4),
+    const textStyle = TextStyle(
+      fontFamily: 'StackSansNotch',
+      fontSize: 8.5,
+      color: Colors.white,
       fontWeight: FontWeight.bold,
-      shadows: [
-        const Shadow(color: Colors.black26, blurRadius: 2),
-      ],
     );
 
     return Stack(
@@ -422,8 +419,8 @@ class _ArcadeAnimatedPiece extends StatelessWidget {
     final actualRow = isFlipped ? 7 - row : row;
 
     return AnimatedPositioned(
-      duration: const Duration(milliseconds: 350),
-      curve: Curves.easeInOutCubic,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOutBack,
       left: actualCol * squareSize,
       top: actualRow * squareSize,
       width: squareSize,
