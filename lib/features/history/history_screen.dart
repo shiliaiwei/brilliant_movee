@@ -6,6 +6,7 @@ import '../../core/constants/app_text_styles.dart';
 import '../../core/constants/app_spacing.dart';
 import '../../core/widgets/cht_card.dart';
 import '../../core/widgets/cht_button.dart';
+import '../../core/widgets/cht_error_state.dart';
 import '../../core/services/storage_service.dart';
 import '../../core/router/app_router.dart';
 import '../../data/models/game_model.dart';
@@ -67,6 +68,11 @@ class HistoryScreen extends ConsumerWidget {
         backgroundColor: AppColors.backgroundDeep,
         actions: [
           IconButton(
+            icon: const Icon(Icons.paste_rounded, size: 20),
+            tooltip: 'Paste PGN',
+            onPressed: () => _showPastePgnDialog(context),
+          ),
+          IconButton(
             icon: const Icon(Icons.refresh_rounded, size: 20),
             onPressed: () => ref.invalidate(_historyGamesProvider),
           ),
@@ -76,9 +82,10 @@ class HistoryScreen extends ConsumerWidget {
         child: gamesAsync.when(
           loading: () => const Center(
               child: CircularProgressIndicator(color: AppColors.primary)),
-          error: (e, _) => Center(
-            child:
-                Text('Failed to load history', style: AppTextStyles.bodyMuted),
+          error: (e, _) => ChtErrorState(
+            title: 'HISTORY ERROR',
+            description: 'Failed to load your game history from Chess.com',
+            onRetry: () => ref.invalidate(_historyGamesProvider),
           ),
           data: (games) {
             if (games.isEmpty) {
@@ -132,6 +139,64 @@ class HistoryScreen extends ConsumerWidget {
             );
           },
         ),
+      ),
+    );
+  }
+
+  void _showPastePgnDialog(BuildContext context) {
+    final controller = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppColors.backgroundSurface,
+        title: Text('PASTE PGN',
+            style: AppTextStyles.title
+                .copyWith(color: Colors.white, letterSpacing: 1)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('Paste your PGN data below to start analysis.',
+                style: TextStyle(color: Colors.white70, fontSize: 12)),
+            const SizedBox(height: 16),
+            TextField(
+              controller: controller,
+              maxLines: 6,
+              style: const TextStyle(
+                  color: Colors.white, fontSize: 13, fontFamily: 'monospace'),
+              decoration: InputDecoration(
+                hintText: '[Event "Live Chess"]...',
+                hintStyle: const TextStyle(color: Colors.white24),
+                filled: true,
+                fillColor: Colors.black,
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide.none),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('CANCEL',
+                style: TextStyle(color: AppColors.textSecondary)),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: Colors.black,
+            ),
+            onPressed: () {
+              final pgn = controller.text.trim();
+              if (pgn.isNotEmpty) {
+                Navigator.pop(ctx);
+                context.push(AppRoutes.review, extra: pgn);
+              }
+            },
+            child: const Text('ANALYZE',
+                style: TextStyle(fontWeight: FontWeight.bold)),
+          ),
+        ],
       ),
     );
   }

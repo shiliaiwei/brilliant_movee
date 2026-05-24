@@ -11,24 +11,52 @@ class ChessComApi {
   final Dio _dio;
 
   static Dio _buildDio() {
-    return Dio(
+    final dio = Dio(
       BaseOptions(
         baseUrl: 'https://api.chess.com/pub',
-        connectTimeout: const Duration(seconds: 10),
-        receiveTimeout: const Duration(seconds: 15),
+        connectTimeout: const Duration(seconds: 15),
+        receiveTimeout: const Duration(seconds: 20),
         headers: {
           'User-Agent':
-              'Mozilla/5.0 (compatible; StupidBrilliant/1.1; +https://github.com/shiliaiwei/brilliant_movee)',
+              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 StupidBrilliant/1.2',
+          'Accept': 'application/json',
         },
       ),
-    )..interceptors.add(
-        InterceptorsWrapper(
-          onError: (error, handler) {
-            // Retry logic handled at repository level
-            handler.next(error);
-          },
-        ),
-      );
+    );
+
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onError: (error, handler) async {
+          // Simple retry for 429 Rate Limit or transient errors
+          if (error.response?.statusCode == 429 ||
+              error.type == DioExceptionType.connectionTimeout ||
+              error.type == DioExceptionType.receiveTimeout) {
+            // Wait a bit before retrying if rate limited
+            if (error.response?.statusCode == 429) {
+              await Future.delayed(const Duration(seconds: 2));
+            }
+
+            try {
+              final response = await dio.request(
+                error.requestOptions.path,
+                options: Options(
+                  method: error.requestOptions.method,
+                  headers: error.requestOptions.headers,
+                ),
+                data: error.requestOptions.data,
+                queryParameters: error.requestOptions.queryParameters,
+              );
+              return handler.resolve(response);
+            } catch (e) {
+              // If retry fails, continue with original error
+            }
+          }
+          handler.next(error);
+        },
+      ),
+    );
+
+    return dio;
   }
 
   /// Fetch player profile.

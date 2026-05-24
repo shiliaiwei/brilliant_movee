@@ -7,6 +7,7 @@ import '../../core/constants/app_text_styles.dart';
 import '../../core/constants/app_spacing.dart';
 import '../../core/widgets/cht_button.dart';
 import '../../core/widgets/cht_card.dart';
+import '../../core/widgets/cht_error_state.dart';
 import '../../core/services/storage_service.dart';
 import '../../core/router/app_router.dart';
 import '../../data/models/leaderboard_model.dart';
@@ -169,9 +170,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               child: leaderboardAsync.when(
                 loading: () => const Center(
                     child: CircularProgressIndicator(color: AppColors.primary)),
-                error: (e, _) => const Center(
-                    child: Text('Failed to load leaderboard',
-                        style: TextStyle(color: Colors.white38))),
+                error: (e, _) => ChtErrorState(
+                  title: 'LEADERBOARD ERROR',
+                  description: 'Failed to load top players from Chess.com',
+                  onRetry: () => ref.invalidate(_leaderboardProvider),
+                ),
                 data: (players) {
                   return ListView.builder(
                     physics: const BouncingScrollPhysics(),
