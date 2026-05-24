@@ -60,6 +60,8 @@ dependencies:
   shared_preferences: ^2.3.2
   ffmpeg_kit_flutter_new: ^4.1.0
   stockfish_chess_engine: ^0.8.2
+  equatable: ^2.0.8
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:
@@ -99,6 +101,7 @@ flutter:
     - assets/sounds/futuristic/
     - assets/sounds/lisp/
     - assets/data/
+    - assets/data/tips.json
     - assets/fonts/Google_Sans/
 
   fonts:

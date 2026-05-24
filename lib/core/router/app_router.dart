@@ -12,6 +12,7 @@ import '../../features/review/widgets/cyber_button_demo_screen.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/settings/board_selector_screen.dart';
 import '../../features/profile/brilliant_games_screen.dart';
+import '../../features/tips/tips_screen.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_text_styles.dart';
 import '../utils/responsive.dart';
@@ -55,13 +56,13 @@ const _tabs = [
   _TabItem(
     icon: Icons.sports_esports_outlined,
     selectedIcon: Icons.sports_esports_rounded,
-    label: 'Games',
+    label: 'Analysis',
     route: AppRoutes.history,
   ),
   _TabItem(
-    icon: Icons.lightbulb_outline_rounded,
+    icon: Icons.lightbulb_outline,
     selectedIcon: Icons.lightbulb_rounded,
-    label: 'Tips',
+    label: 'Tip Menu',
     route: AppRoutes.tips,
   ),
   _TabItem(
@@ -295,8 +296,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           StatefulShellBranch(routes: [
             GoRoute(
                 path: AppRoutes.tips,
-                builder: (context, state) =>
-                    const _PlaceholderScreen(title: 'Tips & Tricks'))
+                builder: (context, state) => const TipsScreen())
           ]),
           StatefulShellBranch(routes: [
             GoRoute(
@@ -308,13 +308,3 @@ final routerProvider = Provider<GoRouter>((ref) {
     ],
   );
 });
-
-class _PlaceholderScreen extends StatelessWidget {
-  const _PlaceholderScreen({required this.title});
-  final String title;
-  @override
-  Widget build(BuildContext context) => Scaffold(
-      backgroundColor: AppColors.backgroundDeep,
-      appBar: AppBar(title: Text(title)),
-      body: Center(child: Text('Coming Soon', style: AppTextStyles.bodyMuted)));
-}
