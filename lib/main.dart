@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,8 +34,8 @@ void main() async {
   final prefs = await SharedPreferences.getInstance();
   final storageService = StorageService(prefs);
 
-  // Initialize asset service
-  await AssetService.instance.initialize();
+  // Start asset initialization in background to avoid blocking first frame.
+  unawaited(AssetService.instance.initialize());
 
   runApp(
     ProviderScope(

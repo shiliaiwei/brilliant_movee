@@ -29,6 +29,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   late Animation<double> _textSlide;
 
   int _typewriterIndex = 0;
+  bool _didNavigate = false;
   static const String _tagline = 'Replay. Analyze. Evolve.';
   final List<String> _displayedTagline = [];
 
@@ -36,6 +37,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   void initState() {
     super.initState();
     _setupAnimations();
+    // Safety net: never allow startup to stay on splash indefinitely.
+    Future.delayed(const Duration(seconds: 8), () {
+      if (mounted && !_didNavigate) {
+        _navigate();
+      }
+    });
     _startSequence();
   }
 
@@ -75,28 +82,36 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   }
 
   Future<void> _startSequence() async {
-    // Initialize services
-    await AssetService.instance.initialize();
+    try {
+      // Keep startup resilient: continue even if asset manifest loading is slow.
+      await AssetService.instance
+          .initialize()
+          .timeout(const Duration(seconds: 2));
+    } catch (_) {
+      // Ignore and continue; AssetService has internal defaults.
+    }
 
-    // Particle burst
+    if (!mounted) return;
     await Future.delayed(const Duration(milliseconds: 200));
+    if (!mounted) return;
     _particleController.forward();
 
-    // Logo materializes
     await Future.delayed(const Duration(milliseconds: 400));
+    if (!mounted) return;
     _logoController.forward();
 
-    // App name fades in
     await Future.delayed(const Duration(milliseconds: 700));
+    if (!mounted) return;
     _textController.forward();
 
-    // Typewriter tagline
     await Future.delayed(const Duration(milliseconds: 900));
+    if (!mounted) return;
     _startTypewriter();
 
-    // Navigate after splash duration
     await Future.delayed(const Duration(milliseconds: 2500));
-    if (mounted) _navigate();
+    if (mounted && !_didNavigate) {
+      _navigate();
+    }
   }
 
   void _startTypewriter() {
@@ -112,11 +127,19 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   }
 
   void _navigate() {
-    final storage = ref.read(storageServiceProvider);
-    if (!storage.hasSeenOnboarding) {
-      context.go(AppRoutes.onboarding);
-    } else {
-      // Direct to Home screen. If no username is set, Home screen shows "Connect Account"
+    if (_didNavigate || !mounted) return;
+    _didNavigate = true;
+
+    try {
+      final storage = ref.read(storageServiceProvider);
+      if (!storage.hasSeenOnboarding) {
+        context.go(AppRoutes.onboarding);
+      } else {
+        // Direct to Home screen. If no username is set, Home shows "Connect Account".
+        context.go(AppRoutes.home);
+      }
+    } catch (_) {
+      // Last-resort fallback to keep the app usable after splash.
       context.go(AppRoutes.home);
     }
   }
