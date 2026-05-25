@@ -138,8 +138,8 @@ class _BlurInsideCoordinatesOverlay extends StatelessWidget {
     const textStyle = TextStyle(
       fontFamily: 'StackSansNotch',
       fontSize: 8.5,
-      color: Colors.white,
-      fontWeight: FontWeight.bold,
+      color: Colors.black, // High contrast black as requested
+      fontWeight: FontWeight.w900,
     );
 
     return Stack(

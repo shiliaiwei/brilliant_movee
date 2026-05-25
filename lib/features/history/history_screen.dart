@@ -166,8 +166,7 @@ class HistoryScreen extends ConsumerWidget {
               TextField(
                 controller: controller,
                 maxLines: 6,
-                style: const TextStyle(
-                    color: Colors.white, fontSize: 13, fontFamily: 'monospace'),
+                style: const TextStyle(color: Colors.white, fontSize: 13),
                 decoration: InputDecoration(
                   hintText: '[Event "Live Chess"]...',
                   hintStyle: const TextStyle(color: Colors.white24),

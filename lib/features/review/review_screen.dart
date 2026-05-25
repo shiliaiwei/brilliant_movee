@@ -112,9 +112,20 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
         backgroundColor: AppColors.backgroundDeep,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: Text('GAME REVIEW',
-              style: AppTextStyles.headline.copyWith(
-                  fontSize: 16, letterSpacing: 2, color: Colors.white)),
+          title: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('GAME REVIEW',
+                  style: AppTextStyles.headline.copyWith(
+                      fontSize: 16, letterSpacing: 2, color: Colors.white)),
+              Text('BRILLIANT MOVEE',
+                  style: AppTextStyles.monoSmall.copyWith(
+                      fontSize: 8,
+                      letterSpacing: 4,
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.bold)),
+            ],
+          ),
           centerTitle: true,
           backgroundColor: AppColors.backgroundDeep,
           leading: IconButton(
@@ -251,45 +262,51 @@ class _ReviewBody extends ConsumerWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: _PlayerBadge(name: opponent, isTop: true),
         ),
-        SizedBox(
-          height: 50,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+        // Stable Opening Label Container
+        Container(
+          height: 44,
+          width: double.infinity,
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
+            color: AppColors.backgroundSurface,
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
+          ),
+          child: Center(
             child: Column(
-              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   (currentOpening ?? 'CHESS GAME').toUpperCase(),
                   textAlign: TextAlign.center,
-                  maxLines: 2,
+                  maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
+                    fontFamily: 'StackSansNotch',
                     color: AppColors.primary,
                     fontWeight: FontWeight.w900,
-                    fontSize: 10,
-                    letterSpacing: 1.2,
+                    fontSize: 11,
+                    letterSpacing: 1.5,
                   ),
                 ),
-                if (classification != null) ...[
-                  const SizedBox(height: 2),
-                  Text(
-                    classification.qualityLabel.toUpperCase(),
-                    style: TextStyle(
-                      color: AppColors.primary.withValues(alpha: 0.5),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 8,
-                      letterSpacing: 2.0,
-                    ),
+                Text(
+                  (classification?.qualityLabel ?? 'BOOK').toUpperCase(),
+                  style: TextStyle(
+                    fontFamily: 'StackSansNotch',
+                    color: AppColors.textSecondary.withValues(alpha: 0.5),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 7,
+                    letterSpacing: 2.0,
                   ),
-                ],
+                ),
               ],
             ),
           ),
         ),
+        const SizedBox(height: 12),
         Expanded(
           child: LayoutBuilder(
             builder: (context, constraints) {
@@ -323,33 +340,35 @@ class _ReviewBody extends ConsumerWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: _PlayerBadge(name: userDisplayName, isTop: false),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.only(bottom: 24, top: 8),
           child: Column(
             children: [
-              if (move != null)
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: AppColors.backgroundSurface,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: AppColors.divider, width: 1),
-                  ),
-                  child: Text(
-                    currentMoveStr,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 0.2,
-                    ),
+              // Stable Move Label
+              Container(
+                height: 40,
+                width: 100,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: AppColors.backgroundSurface,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.white10),
+                ),
+                child: Text(
+                  currentMoveStr,
+                  style: const TextStyle(
+                    fontFamily: 'StackSansNotch',
+                    fontSize: 15,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 1.0,
                   ),
                 ),
-              const SizedBox(height: 12),
+              ),
+              const SizedBox(height: 20),
               _NavigationControls(state: state),
             ],
           ),
@@ -383,9 +402,10 @@ class _PlayerBadge extends StatelessWidget {
         Text(
           name,
           style: const TextStyle(
+            fontFamily: 'StackSansNotch',
             color: Colors.white,
             fontWeight: FontWeight.bold,
-            fontSize: 14,
+            fontSize: 16,
           ),
         ),
         const Spacer(),
@@ -493,7 +513,6 @@ class _AnalysisPanelSimplifiedState
                   color: AppColors.primary,
                   fontWeight: FontWeight.w900,
                   fontSize: 28,
-                  fontFamily: 'monospace',
                 ),
               ),
             ],
@@ -631,52 +650,88 @@ class _NavigationControls extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _NavIconButton(
-            icon: Icons.first_page_rounded,
-            onTap: state.isAtStart ? null : notifier.goToStart),
-        const SizedBox(width: 16),
+            icon: Icons.keyboard_double_arrow_left_rounded,
+            onTap: state.isAtStart ? null : notifier.goToStart,
+            onLongPress: state.isAtStart ? null : notifier.goToStart),
+        const SizedBox(width: 12),
         _NavIconButton(
-            icon: Icons.chevron_left_rounded,
+            icon: Icons.keyboard_arrow_left_rounded,
             onTap: state.isAtStart ? null : notifier.goBack,
+            onLongPress: state.isAtStart ? null : notifier.goBack,
             large: true),
-        const SizedBox(width: 32),
+        const SizedBox(width: 24),
         _NavIconButton(
-            icon: Icons.chevron_right_rounded,
+            icon: Icons.keyboard_arrow_right_rounded,
             onTap: state.isAtEnd ? null : notifier.goForward,
+            onLongPress: state.isAtEnd ? null : notifier.goForward,
             large: true),
-        const SizedBox(width: 16),
+        const SizedBox(width: 12),
         _NavIconButton(
-            icon: Icons.last_page_rounded,
-            onTap: state.isAtEnd ? null : notifier.goToEnd),
+            icon: Icons.keyboard_double_arrow_right_rounded,
+            onTap: state.isAtEnd ? null : notifier.goToEnd,
+            onLongPress: state.isAtEnd ? null : notifier.goToEnd),
       ],
     );
   }
 }
 
-class _NavIconButton extends StatelessWidget {
-  const _NavIconButton({required this.icon, this.onTap, this.large = false});
+class _NavIconButton extends StatefulWidget {
+  const _NavIconButton({
+    required this.icon,
+    this.onTap,
+    this.onLongPress,
+    this.large = false,
+  });
   final IconData icon;
   final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
   final bool large;
+
+  @override
+  State<_NavIconButton> createState() => _NavIconButtonState();
+}
+
+class _NavIconButtonState extends State<_NavIconButton> {
+  bool _isHolding = false;
+
+  void _startHolding() async {
+    if (widget.onLongPress == null) return;
+    _isHolding = true;
+    while (_isHolding) {
+      widget.onLongPress!();
+      await Future.delayed(const Duration(milliseconds: 100));
+    }
+  }
+
+  void _stopHolding() {
+    _isHolding = false;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: onTap,
+        onTap: widget.onTap,
+        onLongPress: _startHolding,
+        onTapUp: (_) => _stopHolding(),
+        onTapCancel: _stopHolding,
         borderRadius: BorderRadius.circular(40),
         child: Container(
-          padding: EdgeInsets.all(large ? 14 : 10),
+          padding: EdgeInsets.all(widget.large ? 12 : 8),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: onTap == null ? Colors.transparent : Colors.white10,
-            border: onTap == null
+            color: widget.onTap == null
+                ? Colors.transparent
+                : Colors.white.withValues(alpha: 0.05),
+            border: widget.onTap == null
                 ? null
-                : Border.all(color: Colors.white24, width: 1),
+                : Border.all(color: Colors.white10, width: 1),
           ),
-          child: Icon(icon,
-              color: onTap == null ? AppColors.textDisabled : Colors.white,
-              size: large ? 32 : 24),
+          child: Icon(widget.icon,
+              color:
+                  widget.onTap == null ? AppColors.textDisabled : Colors.white,
+              size: widget.large ? 36 : 24),
         ),
       ),
     );
@@ -852,8 +907,7 @@ class _AnalysisPanelContent extends ConsumerWidget {
                       style: const TextStyle(
                           color: AppColors.primary,
                           fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'monospace')),
+                          fontWeight: FontWeight.bold)),
                 ],
               ),
             ),
