@@ -86,6 +86,8 @@ flutter:
     - assets/brand/
     - assets/classification/
     - assets/boards/
+    - assets/pieces/defaultP/
+    - assets/pieces/Merida15/
     - assets/pieces/cburnett/
     - assets/pieces/alpha/
     - assets/pieces/merida/
