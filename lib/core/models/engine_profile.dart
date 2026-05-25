@@ -9,6 +9,7 @@ class EngineProfile {
   final int multiPv;
   final String label;
   final String description;
+  final String technicalImpact;
   final bool requiresFullNet;
   final IconData icon;
 
@@ -19,6 +20,7 @@ class EngineProfile {
     required this.multiPv,
     required this.label,
     required this.description,
+    required this.technicalImpact,
     required this.requiresFullNet,
     required this.icon,
   });
@@ -31,6 +33,8 @@ class EngineProfile {
       multiPv: 1,
       label: 'SF 16 LITE',
       description: 'Maximum speed, minimum battery impact.',
+      technicalImpact:
+          'FASTEST. Uses minimal CPU. Best for preserving battery life during quick reviews.',
       requiresFullNet: false,
       icon: Icons.bolt_outlined,
     ),
@@ -40,17 +44,21 @@ class EngineProfile {
       depth: 20,
       multiPv: 3,
       label: 'SF 17 STANDARD',
-      description: 'Standard analysis used for basic reviews.',
+      description: 'Balanced performance for general use.',
+      technicalImpact:
+          'BALANCED. Standard reliable analysis. Good balance of speed and depth for daily study.',
       requiresFullNet: false,
       icon: Icons.bolt_rounded,
     ),
     EngineProfile(
-      version: 171, // Special ID for 17.1 Full
+      version: 171, // 17.1 Full
       level: EngineLevel.premium,
       depth: 24,
       multiPv: 3,
       label: 'SF 17.1 FULL',
-      description: 'Deep NNUE (78MB). Precise Brilliant move detection.',
+      description: 'Precise Brilliant move detection.',
+      technicalImpact:
+          'PRECISE. Loads a 78MB Neural Network. Drastically improves accuracy and tactical sensitivity.',
       requiresFullNet: true,
       icon: Icons.offline_bolt_rounded,
     ),
@@ -60,7 +68,9 @@ class EngineProfile {
       depth: 28,
       multiPv: 4,
       label: 'SF 18 ELITE',
-      description: 'High precision for competitive analysis.',
+      description: 'Deep awareness for competitive play.',
+      technicalImpact:
+          'PROFESSIONAL. Deeper tactical awareness. Requires more processing power but catches subtle errors.',
       requiresFullNet: true,
       icon: Icons.psychology_rounded,
     ),
@@ -70,7 +80,9 @@ class EngineProfile {
       depth: 32,
       multiPv: 5,
       label: 'SF 19 ULTRA',
-      description: 'Ultra-deep search for complex positions.',
+      description: 'Ultra-deep search for complex lines.',
+      technicalImpact:
+          'EXTREME. For deep theoretical study. Slowest speed, but finds moves that other versions miss.',
       requiresFullNet: true,
       icon: Icons.auto_awesome_rounded,
     ),
@@ -80,7 +92,9 @@ class EngineProfile {
       depth: 38,
       multiPv: 6,
       label: 'SF 20 GRANDMASTER',
-      description: 'The ultimate chess truth. Infinite depth logic.',
+      description: 'The absolute chess truth.',
+      technicalImpact:
+          'ULTIMATE. Peak performance. Infinite analysis logic for the absolute truth of the position.',
       requiresFullNet: true,
       icon: Icons.workspace_premium_rounded,
     ),

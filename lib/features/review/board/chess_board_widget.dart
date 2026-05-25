@@ -500,15 +500,6 @@ class _PieceImage extends StatelessWidget {
     }
 
     return Container(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.15),
-            blurRadius: 4,
-            offset: const Offset(1, 1),
-          ),
-        ],
-      ),
       child: isSvg
           ? SvgPicture.asset(
               assetPath,

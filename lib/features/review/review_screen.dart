@@ -115,13 +115,16 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
           title: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Image.asset(
+                'assets/brand/288bc158-5999-425d-846e-4c0824f2294e.png',
+                height: 24,
+                fit: BoxFit.contain,
+              ),
+              const SizedBox(height: 2),
               Text('GAME REVIEW',
-                  style: AppTextStyles.headline.copyWith(
-                      fontSize: 16, letterSpacing: 2, color: Colors.white)),
-              Text('BRILLIANT MOVEE',
-                  style: AppTextStyles.monoSmall.copyWith(
+                  style: AppTextStyles.badge.copyWith(
                       fontSize: 8,
-                      letterSpacing: 4,
+                      letterSpacing: 2,
                       color: AppColors.primary,
                       fontWeight: FontWeight.bold)),
             ],
@@ -262,14 +265,14 @@ class _ReviewBody extends ConsumerWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: _PlayerBadge(name: opponent, isTop: true),
         ),
         // Stable Opening Label Container
         Container(
-          height: 44,
+          height: 48,
           width: double.infinity,
-          margin: const EdgeInsets.symmetric(horizontal: 16),
+          margin: const EdgeInsets.symmetric(horizontal: 20),
           decoration: BoxDecoration(
             color: AppColors.backgroundSurface,
             borderRadius: BorderRadius.circular(4),
@@ -288,30 +291,30 @@ class _ReviewBody extends ConsumerWidget {
                     fontFamily: 'StackSansNotch',
                     color: AppColors.primary,
                     fontWeight: FontWeight.w900,
-                    fontSize: 11,
-                    letterSpacing: 1.5,
+                    fontSize: 12,
+                    letterSpacing: 1.2,
                   ),
                 ),
                 Text(
                   (classification?.qualityLabel ?? 'BOOK').toUpperCase(),
                   style: TextStyle(
                     fontFamily: 'StackSansNotch',
-                    color: AppColors.textSecondary.withValues(alpha: 0.5),
+                    color: AppColors.textSecondary.withValues(alpha: 0.4),
                     fontWeight: FontWeight.bold,
-                    fontSize: 7,
-                    letterSpacing: 2.0,
+                    fontSize: 8,
+                    letterSpacing: 1.5,
                   ),
                 ),
               ],
             ),
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 16),
         Expanded(
           child: LayoutBuilder(
             builder: (context, constraints) {
               final side =
-                  math.min(constraints.maxWidth, constraints.maxHeight) * 0.98;
+                  math.min(constraints.maxWidth, constraints.maxHeight) * 0.95;
 
               return Center(
                 child: SizedBox(
@@ -327,7 +330,8 @@ class _ReviewBody extends ConsumerWidget {
                               : boardState,
                           pieceSetId: settings.pieceSet,
                           boardThemeId: settings.boardTheme,
-                          showCoordinates: settings.showCoordinates,
+                          showCoordinates:
+                              true, // Always show in review as requested
                           highlightLastMove: settings.highlightLastMove,
                           moveQuality: classification?.quality,
                           isFlipped: boardFlipped,
@@ -339,8 +343,9 @@ class _ReviewBody extends ConsumerWidget {
             },
           ),
         ),
+        const SizedBox(height: 16),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: _PlayerBadge(name: userDisplayName, isTop: false),
         ),
         Padding(

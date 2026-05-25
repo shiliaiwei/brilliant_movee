@@ -635,6 +635,24 @@ class _EngineUnifiedSelectorState
                   minHeight: 2,
                 ),
               ],
+              const SizedBox(height: 16),
+              const Divider(),
+              const SizedBox(height: 16),
+              const Text('TECHNICAL IMPACT',
+                  style: TextStyle(
+                      color: AppColors.primary,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 1.2)),
+              const SizedBox(height: 8),
+              Text(
+                EngineProfile.getByVersion(widget.currentVersion)
+                    .technicalImpact,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.textPrimary.withValues(alpha: 0.7),
+                  height: 1.5,
+                ),
+              ),
             ],
           ),
         ),
