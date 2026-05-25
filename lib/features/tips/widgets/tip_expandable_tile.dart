@@ -4,7 +4,6 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_text_styles.dart';
 import '../../../core/providers/language_provider.dart';
 import '../tip_model.dart';
-import 'tip_visual_cover.dart';
 
 class TipExpandableTile extends ConsumerWidget {
   final Tip tip;
@@ -21,8 +20,8 @@ class TipExpandableTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final languageCode = ref.watch(languageProvider);
-    final title = tip.getTitle(languageCode);
-    final explanation = tip.getExplanation(languageCode);
+    final title = _cleanText(tip.getTitle(languageCode));
+    final explanation = _cleanText(tip.getExplanation(languageCode));
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
@@ -81,44 +80,33 @@ class TipExpandableTile extends ConsumerWidget {
 
           // Expanded Content (Drop Down Style)
           if (isExpanded) ...[
-            TipVisualCover(tip: tip, isDetailed: true),
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    explanation,
-                    style: AppTextStyles.body.copyWith(
-                      color: AppColors.textPrimary.withValues(alpha: 0.9),
-                      height: 1.6,
-                      fontSize: 13,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: const BoxDecoration(
-                      color: AppColors.backgroundDeep,
-                      border: Border(
-                        left: BorderSide(color: AppColors.primary, width: 2),
-                      ),
-                    ),
-                    child: const Text(
-                      "STRATEGIC ADVICE: Focus on key development and center control.",
-                      style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        color: AppColors.textSecondary,
-                        fontSize: 11,
-                      ),
-                    ),
-                  ),
-                ],
+              child: Text(
+                explanation,
+                textAlign: TextAlign.justify,
+                style: AppTextStyles.body.copyWith(
+                  color: AppColors.textPrimary.withValues(alpha: 0.9),
+                  height: 1.8,
+                  fontSize: 13,
+                ),
               ),
             ),
           ],
         ],
       ),
     );
+  }
+
+  String _cleanText(String text) {
+    return text
+        .replaceAll(
+            RegExp(
+                r'["“”'
+                "'"
+                r'#@\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E6}-\u{1F1FF}]',
+                unicode: true),
+            '')
+        .trim();
   }
 }

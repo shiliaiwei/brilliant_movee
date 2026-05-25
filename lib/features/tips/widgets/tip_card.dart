@@ -3,7 +3,6 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_text_styles.dart';
 import '../../../core/widgets/cht_card.dart';
 import '../tip_model.dart';
-import 'tip_visual_cover.dart';
 
 class TipCard extends StatelessWidget {
   final Tip tip;
@@ -27,7 +26,8 @@ class TipCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TipVisualCover(tip: tip),
+          // Visual cover removed per design request; keep compact spacing
+          const SizedBox(height: 8),
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
             child: Column(

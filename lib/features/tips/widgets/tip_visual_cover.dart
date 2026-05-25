@@ -17,13 +17,13 @@ class TipVisualCover extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Main Opening Diagram (B&W Style)
+        // Main Opening Diagram (White Illustrator Style)
         if (tip.imageUrl != null && tip.imageUrl!.isNotEmpty)
-          _buildBwImage(tip.imageUrl!, isDetailed ? 160 : 80)
+          _buildWhiteIllustratorImage(tip.imageUrl!, isDetailed ? 160 : 80)
         else
           _buildFallback(isDetailed ? 160 : 80),
 
-        // Author Profile Overlay (B&W Style)
+        // Author Profile Overlay (White Illustrator Style)
         if (tip.authorImageUrl != null && tip.authorImageUrl!.isNotEmpty)
           Positioned(
             right: 12,
@@ -36,91 +36,78 @@ class TipVisualCover extends StatelessWidget {
                 border: Border.all(color: AppColors.primary, width: 1.5),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.5),
-                    blurRadius: 4,
+                    color: Colors.black.withValues(alpha: 0.2),
+                    blurRadius: 10,
                   )
                 ],
               ),
               clipBehavior: Clip.antiAlias,
-              child: ColorFiltered(
-                colorFilter: const ColorFilter.matrix([
-                  0.2126,
-                  0.7152,
-                  0.0722,
-                  0,
-                  0,
-                  0.2126,
-                  0.7152,
-                  0.0722,
-                  0,
-                  0,
-                  0.2126,
-                  0.7152,
-                  0.0722,
-                  0,
-                  0,
-                  0,
-                  0,
-                  0,
-                  1,
-                  0,
-                ]),
-                child: CachedNetworkImage(
-                  imageUrl: tip.authorImageUrl!,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) =>
-                      Container(color: AppColors.backgroundElevated),
-                  errorWidget: (context, url, error) =>
-                      const Icon(Icons.person, size: 16),
-                ),
-              ),
+              child: _buildWhiteIllustratorImage(
+                  tip.authorImageUrl!, isDetailed ? 48 : 32),
             ),
           ),
       ],
     );
   }
 
-  Widget _buildBwImage(String url, double height) {
+  Widget _buildWhiteIllustratorImage(String url, double height) {
     return ColorFiltered(
       colorFilter: const ColorFilter.matrix([
-        0.2126,
-        0.7152,
-        0.0722,
+        1.8,
         0,
         0,
-        0.2126,
-        0.7152,
-        0.0722,
+        0,
+        -20,
+        0,
+        1.8,
         0,
         0,
-        0.2126,
-        0.7152,
-        0.0722,
+        -20,
         0,
         0,
+        1.8,
+        0,
+        -20,
         0,
         0,
         0,
         1,
         0,
-      ]),
-      child: CachedNetworkImage(
-        imageUrl: url,
-        height: height,
-        width: double.infinity,
-        fit: BoxFit.cover,
-        placeholder: (context, url) => Container(
+      ]), // Ultra-bright White Illustrator look
+      child: ColorFiltered(
+        colorFilter: const ColorFilter.matrix([
+          0.2126,
+          0.7152,
+          0.0722,
+          0,
+          0,
+          0.2126,
+          0.7152,
+          0.0722,
+          0,
+          0,
+          0.2126,
+          0.7152,
+          0.0722,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+        ]),
+        child: CachedNetworkImage(
+          imageUrl: url,
           height: height,
-          color: AppColors.backgroundElevated,
-          child: const Center(
-            child: SizedBox(
-              width: 20,
-              height: 20,
-              child: CircularProgressIndicator(strokeWidth: 2),
-            ),
+          width: double.infinity,
+          fit: BoxFit.cover,
+          placeholder: (context, url) => Container(
+            height: height,
+            color: AppColors.backgroundElevated,
           ),
+          errorWidget: (context, url, error) => _buildFallback(height),
         ),
-        errorWidget: (context, url, error) => _buildFallback(height),
       ),
     );
   }
