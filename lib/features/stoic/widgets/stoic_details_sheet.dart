@@ -40,13 +40,7 @@ class StoicDetailsSheet extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    Text(
-                      _cleanText(lesson.content),
-                      style: AppTextStyles.body.copyWith(
-                        height: 1.6,
-                        color: AppColors.textPrimary.withValues(alpha: 0.9),
-                      ),
-                    ),
+                    ..._buildFormattedContent(lesson.content),
                     const SizedBox(height: 24),
                     Container(
                       padding: const EdgeInsets.all(16),
@@ -93,6 +87,118 @@ class StoicDetailsSheet extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List<Widget> _buildFormattedContent(String content) {
+    final List<Widget> widgets = [];
+    final lines = content.split('\n');
+
+    final List<String> metaLines = [];
+    final List<String> bodyLines = [];
+
+    for (var line in lines) {
+      if (line.startsWith('[VISUAL]') ||
+          line.startsWith('[GRAMMAR]') ||
+          line.startsWith('[STRATEGY]') ||
+          line.startsWith('[GRAPH]') ||
+          line.startsWith('[DATA]')) {
+        metaLines.add(line);
+      } else {
+        bodyLines.add(line);
+      }
+    }
+
+    // Build Metadata Section with Icons
+    if (metaLines.isNotEmpty) {
+      widgets.add(
+        Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.03),
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
+          ),
+          child: Column(
+            children: metaLines.map((meta) {
+              IconData icon = Icons.info_outline_rounded;
+              String label = "";
+              String value = "";
+
+              if (meta.startsWith('[VISUAL]')) {
+                icon = Icons.visibility_rounded;
+                label = "VISUAL";
+                value = meta.replaceFirst('[VISUAL]', '').trim();
+              } else if (meta.startsWith('[GRAMMAR]')) {
+                icon = Icons.spellcheck_rounded;
+                label = "GRAMMAR";
+                value = meta.replaceFirst('[GRAMMAR]', '').trim();
+              } else if (meta.startsWith('[STRATEGY]')) {
+                icon = Icons.account_tree_rounded;
+                label = "STRATEGY";
+                value = meta.replaceFirst('[STRATEGY]', '').trim();
+              } else if (meta.startsWith('[GRAPH]')) {
+                icon = Icons.auto_graph_rounded;
+                label = "DATA GRAPH";
+                value = meta.replaceFirst('[GRAPH]', '').trim();
+              } else if (meta.startsWith('[DATA]')) {
+                icon = Icons.analytics_rounded;
+                label = "METRICS";
+                value = meta.replaceFirst('[DATA]', '').trim();
+              }
+
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(icon, size: 12, color: AppColors.primary),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: RichText(
+                        text: TextSpan(
+                          style: AppTextStyles.caption.copyWith(fontSize: 10),
+                          children: [
+                            TextSpan(
+                              text: "$label: ",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primary),
+                            ),
+                            TextSpan(text: _cleanText(value)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+      );
+      widgets.add(const SizedBox(height: 20));
+    }
+
+    // Build Body Content
+    if (bodyLines.isNotEmpty) {
+      widgets.add(
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Text(
+            _cleanText(bodyLines.join('\n')),
+            textAlign: TextAlign.justify,
+            style: AppTextStyles.body.copyWith(
+              height: 1.8,
+              fontSize: 14,
+              color: AppColors.textPrimary.withValues(alpha: 0.9),
+              letterSpacing: 0.2,
+            ),
+          ),
+        ),
+      );
+    }
+
+    return widgets;
   }
 
   String _cleanText(String text) {

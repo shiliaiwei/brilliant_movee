@@ -51,7 +51,7 @@ class _TipsScreenState extends ConsumerState<TipsScreen> {
       backgroundColor: AppColors.backgroundDeep,
       appBar: AppBar(
         title: Text(
-          "TIPS & OPENINGS",
+          "TIPS & TRICKS",
           style: AppTextStyles.monoLarge.copyWith(
             letterSpacing: 4,
             fontSize: 18,

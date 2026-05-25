@@ -48,8 +48,7 @@ class TipsNotifier extends StateNotifier<TipsState> {
   Future<void> loadTips() async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
-      final jsonString =
-          await rootBundle.loadString('assets/data/tips_v2.json');
+      final jsonString = await rootBundle.loadString('assets/data/tips.json');
       final List<dynamic> jsonList = json.decode(jsonString);
       final List<Tip> tips =
           jsonList.map((j) => Tip.fromJson(j as Map<String, dynamic>)).toList();

@@ -25,14 +25,62 @@ class StoicVisualCover extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          CachedNetworkImage(
-            imageUrl: _getCategoryImageUrl(),
-            fit: BoxFit.cover,
-            color: Colors.black.withValues(alpha: 0.4),
-            colorBlendMode: BlendMode.darken,
-            placeholder: (context, url) =>
-                Container(color: AppColors.backgroundElevated),
-            errorWidget: (context, url, error) => _buildFallback(),
+          ColorFiltered(
+            colorFilter: const ColorFilter.matrix([
+              1.8,
+              0,
+              0,
+              0,
+              -20,
+              0,
+              1.8,
+              0,
+              0,
+              -20,
+              0,
+              0,
+              1.8,
+              0,
+              -20,
+              0,
+              0,
+              0,
+              1,
+              0,
+            ]), // Ultra-bright White Illustrator look
+            child: ColorFiltered(
+              colorFilter: const ColorFilter.matrix([
+                0.2126,
+                0.7152,
+                0.0722,
+                0,
+                0,
+                0.2126,
+                0.7152,
+                0.0722,
+                0,
+                0,
+                0.2126,
+                0.7152,
+                0.0722,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+              ]),
+              child: CachedNetworkImage(
+                imageUrl: _getCategoryImageUrl(),
+                fit: BoxFit.cover,
+                color: Colors.white.withValues(alpha: 0.05),
+                colorBlendMode: BlendMode.lighten,
+                placeholder: (context, url) =>
+                    Container(color: AppColors.backgroundElevated),
+                errorWidget: (context, url, error) => _buildFallback(),
+              ),
+            ),
           ),
           if (category == StoicCategory.pragmatism) _buildFinanceGraph(),
           _buildIntensityIndicator(),
@@ -42,30 +90,30 @@ class StoicVisualCover extends StatelessWidget {
   }
 
   String _getCategoryImageUrl() {
-    // HD 4K Source Images from Unsplash with specific keywords
+    // 4K High-Contrast Illustrator/Minimalist Source Images
     switch (category) {
       case StoicCategory.dominance:
-        return 'https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?q=80&w=1000&auto=format&fit=crop'; // Lightning/Power
+        return 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000&auto=format'; // Dark Lightning
       case StoicCategory.unshakeable:
-        return 'https://images.unsplash.com/photo-1449156001447-f69973873981?q=80&w=1000&auto=format&fit=crop'; // Architecture/Solid
+        return 'https://images.unsplash.com/photo-1494145904049-0dca59b4bbad?q=80&w=1000&auto=format'; // Brutalist Architecture
       case StoicCategory.theVoid:
-        return 'https://images.unsplash.com/photo-1470770903676-69b98201ea1c?q=80&w=1000&auto=format&fit=crop'; // Minimalist Silence
+        return 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1000&auto=format'; // Deep Horizon
       case StoicCategory.pragmatism:
-        return 'https://images.unsplash.com/photo-1611974714158-bf8984920555?q=80&w=1000&auto=format&fit=crop'; // Trading/Graph
+        return 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format'; // Geometric Data
       case StoicCategory.humanNature:
-        return 'https://images.unsplash.com/photo-1554188248-986adbb73be4?q=80&w=1000&auto=format&fit=crop'; // Statue/Human Nature
+        return 'https://images.unsplash.com/photo-1549490349-8643362247b5?q=80&w=1000&auto=format'; // Classical Torso
       case StoicCategory.asceticism:
-        return 'https://images.unsplash.com/photo-1507413245164-6160d8298b31?q=80&w=1000&auto=format&fit=crop'; // Study/Books
+        return 'https://images.unsplash.com/photo-1491843384429-30494622eb90?q=80&w=1000&auto=format'; // Ancient Scrolls
       case StoicCategory.wisdom:
-        return 'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1000&auto=format&fit=crop'; // Mountains/Vastness
+        return 'https://images.unsplash.com/photo-1506318137071-a8e063b4b4bf?q=80&w=1000&auto=format'; // Cosmos Diagram
       case StoicCategory.technology:
-        return 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop'; // Cyber/Tech
+        return 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format'; // Circuit Board
       case StoicCategory.modernSociety:
-        return 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop'; // Skyscraper/City
+        return 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=1000&auto=format'; // Urban Grid
       case StoicCategory.purpose:
-        return 'https://images.unsplash.com/photo-1508672019048-805c876b67e2?q=80&w=1000&auto=format&fit=crop'; // Horizon/Purpose
+        return 'https://images.unsplash.com/photo-1500673922987-e212871fec22?q=80&w=1000&auto=format'; // Target/Path
       case StoicCategory.emotionalControl:
-        return 'https://images.unsplash.com/photo-1477332552946-cfb384aeaf1c?q=80&w=1000&auto=format&fit=crop'; // Storm/Calm
+        return 'https://images.unsplash.com/photo-1502481851512-e9e2529bbbf5?q=80&w=1000&auto=format'; // Still Lake
     }
   }
 
