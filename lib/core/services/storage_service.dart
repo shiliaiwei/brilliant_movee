@@ -62,11 +62,11 @@ class StorageService {
   }
 
   // ── Board & Pieces ────────────────────────────────────────────────────────
-  String get boardTheme => _prefs.getString(StorageKeys.boardTheme) ?? 'wood4';
+  String get boardTheme => _prefs.getString(StorageKeys.boardTheme) ?? '200';
   Future<void> setBoardTheme(String theme) =>
       _prefs.setString(StorageKeys.boardTheme, theme);
 
-  String get pieceSet => _prefs.getString(StorageKeys.pieceSet) ?? 'maestro';
+  String get pieceSet => _prefs.getString(StorageKeys.pieceSet) ?? 'defaultP';
   Future<void> setPieceSet(String set) =>
       _prefs.setString(StorageKeys.pieceSet, set);
 

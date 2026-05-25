@@ -176,18 +176,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   onRetry: () => ref.invalidate(_leaderboardProvider),
                 ),
                 data: (players) {
-                  return ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    itemCount: players.length,
-                    itemBuilder: (context, i) {
-                      final p = players[i];
-                      // Highlight connected user if found
-                      final isMe =
-                          p.username.toLowerCase() == username.toLowerCase();
-                      return _LeaderboardItem(player: p, isMe: isMe);
-                    },
+                  return RefreshIndicator(
+                    onRefresh: () async => ref.invalidate(_leaderboardProvider),
+                    color: AppColors.primary,
+                    backgroundColor: AppColors.backgroundSurface,
+                    child: ListView.builder(
+                      physics: const BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics()),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                      itemCount: players.length,
+                      itemBuilder: (context, i) {
+                        final p = players[i];
+                        // Highlight connected user if found
+                        final isMe =
+                            p.username.toLowerCase() == username.toLowerCase();
+                        return _LeaderboardItem(player: p, isMe: isMe);
+                      },
+                    ),
                   );
                 },
               ),

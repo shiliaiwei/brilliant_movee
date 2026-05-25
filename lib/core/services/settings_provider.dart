@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../models/engine_profile.dart';
 import 'storage_service.dart';
 
 class SettingsState {
@@ -70,15 +71,20 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
 
   final StorageService _storage;
 
-  Future<void> updateEngineProfile(
-      {required int version, required int depth, required int multiPv}) async {
-    await _storage.setEngineVersion(version);
-    await _storage.setEngineDepth(depth);
-    await _storage.setMultiPv(multiPv);
+  Future<void> updateEngineProfile(EngineProfile profile) async {
+    await _storage.setEngineVersion(profile.version);
+    await _storage.setEngineDepth(profile.depth);
+    await _storage.setMultiPv(profile.multiPv);
+    if (profile.requiresFullNet) {
+      await _storage.setEngineNetwork('full');
+    } else {
+      await _storage.setEngineNetwork('lite');
+    }
+
     state = state.copyWith(
-      engineVersion: version,
-      engineDepth: depth,
-      multiPv: multiPv,
+      engineVersion: profile.version,
+      engineDepth: profile.depth,
+      multiPv: profile.multiPv,
     );
   }
 

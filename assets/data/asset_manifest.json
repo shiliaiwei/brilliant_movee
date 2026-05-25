@@ -1,117 +1,47 @@
 {
     "piece_sets": [
-        {
-            "id": "cburnett",
-            "name": "CBurnett",
-            "preview": "assets/pieces/cburnett/wK.png"
-        },
-        {
-            "id": "alpha",
-            "name": "Alpha",
-            "preview": "assets/pieces/alpha/wK.png"
-        },
-        {
-            "id": "merida",
-            "name": "Merida",
-            "preview": "assets/pieces/merida/wK.png"
-        },
-        {
-            "id": "maestro",
-            "name": "Maestro",
-            "preview": "assets/pieces/maestro/wK.png"
-        },
-        {
-            "id": "tatiana",
-            "name": "Tatiana",
-            "preview": "assets/pieces/tatiana/wK.png"
-        },
-        {
-            "id": "staunty",
-            "name": "Staunty",
-            "preview": "assets/pieces/staunty/wK.png"
-        },
-        {
-            "id": "california",
-            "name": "California",
-            "preview": "assets/pieces/california/wK.png"
-        },
-        {
-            "id": "pirouetti",
-            "name": "Pirouetti",
-            "preview": "assets/pieces/pirouetti/wK.png"
-        }
+        { "id": "defaultP", "name": "Professional (SVG)", "preview": "assets/pieces/defaultP/white_king.svg" },
+        { "id": "Merida15", "name": "Merida Vector", "preview": "assets/pieces/Merida15/wk.svg" },
+        { "id": "cburnett", "name": "CBurnett", "preview": "assets/pieces/cburnett/wK.png" },
+        { "id": "alpha", "name": "Alpha", "preview": "assets/pieces/alpha/wK.png" },
+        { "id": "merida", "name": "Merida Classic", "preview": "assets/pieces/merida/wK.png" },
+        { "id": "maestro", "name": "Maestro", "preview": "assets/pieces/maestro/wK.png" },
+        { "id": "tatiana", "name": "Tatiana", "preview": "assets/pieces/tatiana/wK.png" },
+        { "id": "staunty", "name": "Staunty", "preview": "assets/pieces/staunty/wK.png" },
+        { "id": "california", "name": "California", "preview": "assets/pieces/california/wK.png" },
+        { "id": "pirouetti", "name": "Pirouetti", "preview": "assets/pieces/pirouetti/wK.png" }
     ],
     "board_themes": [
-        {
-            "id": "blue2",
-            "name": "Blue",
-            "file": "assets/boards/blue2.jpg"
-        },
-        {
-            "id": "grey",
-            "name": "Grey",
-            "file": "assets/boards/grey.jpg"
-        },
-        {
-            "id": "maple",
-            "name": "Maple",
-            "file": "assets/boards/maple.jpg"
-        },
-        {
-            "id": "olive",
-            "name": "Olive",
-            "file": "assets/boards/olive.jpg"
-        },
-        {
-            "id": "wood",
-            "name": "Wood",
-            "file": "assets/boards/wood.jpg"
-        },
-        {
-            "id": "wood2",
-            "name": "Wood 2",
-            "file": "assets/boards/wood2.jpg"
-        },
-        {
-            "id": "wood4",
-            "name": "Wood 4",
-            "file": "assets/boards/wood4.jpg"
-        },
-        {
-            "id": "green-plastic",
-            "name": "Green Plastic",
-            "file": "assets/boards/green-plastic.png"
-        },
-        {
-            "id": "newspaper",
-            "name": "Newspaper",
-            "file": "assets/boards/newspaper.png"
-        }
+        { "id": "200", "name": "Classic Brown", "file": "assets/boards/200.png" },
+        { "id": "blue2", "name": "Ocean Blue", "file": "assets/boards/blue2.jpg" },
+        { "id": "grey", "name": "Industrial Grey", "file": "assets/boards/grey.jpg" },
+        { "id": "maple", "name": "Maple Wood", "file": "assets/boards/maple.jpg" },
+        { "id": "wood4", "name": "Dark Walnut", "file": "assets/boards/wood4.jpg" },
+        { "id": "marble", "name": "Marble", "file": "assets/boards/marble.png" },
+        { "id": "glass", "name": "Glass", "file": "assets/boards/glass.png" },
+        { "id": "neon", "name": "Cyber Neon", "file": "assets/boards/neon.png" },
+        { "id": "graffiti", "name": "Graffiti", "file": "assets/boards/graffiti.png" },
+        { "id": "8_bit", "name": "8-Bit Retro", "file": "assets/boards/8_bit.png" },
+        { "id": "newspaper", "name": "Newspaper", "file": "assets/boards/newspaper.png" },
+        { "id": "checkers", "name": "Checkers", "file": "assets/boards/checkers.png" },
+        { "id": "icy_sea", "name": "Icy Sea", "file": "assets/boards/icy_sea.png" },
+        { "id": "parchment", "name": "Parchment", "file": "assets/boards/parchment.png" },
+        { "id": "stone", "name": "Stone", "file": "assets/boards/stone.png" },
+        { "id": "tournament", "name": "Tournament", "file": "assets/boards/tournament.png" },
+        { "id": "purple", "name": "Royal Purple", "file": "assets/boards/purple.png" },
+        { "id": "green-plastic", "name": "Green Plastic", "file": "assets/boards/green-plastic.png" },
+        { "id": "walnut", "name": "Walnut", "file": "assets/boards/walnut.png" },
+        { "id": "sand", "name": "Sand", "file": "assets/boards/sand.png" },
+        { "id": "metal", "name": "Metal", "file": "assets/boards/metal.png" },
+        { "id": "olive", "name": "Olive", "file": "assets/boards/olive.jpg" },
+        { "id": "dark_wood", "name": "Dark Wood", "file": "assets/boards/dark_wood.png" }
     ],
     "sound_packs": [
-        {
-            "id": "standard",
-            "name": "Standard"
-        },
-        {
-            "id": "piano",
-            "name": "Piano"
-        },
-        {
-            "id": "nes",
-            "name": "NES Retro"
-        },
-        {
-            "id": "sfx",
-            "name": "Modern SFX"
-        },
-        {
-            "id": "futuristic",
-            "name": "Cybernetic"
-        },
-        {
-            "id": "lisp",
-            "name": "Voice Cues"
-        }
+        { "id": "standard", "name": "Standard" },
+        { "id": "piano", "name": "Piano" },
+        { "id": "nes", "name": "NES Retro" },
+        { "id": "sfx", "name": "Modern SFX" },
+        { "id": "futuristic", "name": "Cybernetic" },
+        { "id": "lisp", "name": "Voice Cues" }
     ]
 }

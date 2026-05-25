@@ -81,7 +81,8 @@ class HistoryScreen extends ConsumerWidget {
       ),
       body: SafeArea(
         child: gamesAsync.when(
-          loading: () => Center(child: FuiLoading(label: 'FETCHING GAMES')),
+          loading: () =>
+              const Center(child: FuiLoading(label: 'FETCHING GAMES')),
           error: (e, _) => ChtErrorState(
             title: 'HISTORY ERROR',
             description: 'Failed to load your game history from Chess.com',
@@ -248,8 +249,8 @@ class _GameFeedItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final res = game.resultFor(currentUsername);
     final statusColor = res == '1-0'
-        ? AppColors.win
-        : (res == '0-1' ? AppColors.loss : AppColors.draw);
+        ? AppColors.success
+        : (res == '0-1' ? AppColors.error : AppColors.draw);
 
     final termination = game.terminationFor(currentUsername).toUpperCase();
     final fullLabel = (res == '1/2-1/2') ? 'DRAW' : termination;
@@ -274,12 +275,13 @@ class _GameFeedItem extends ConsumerWidget {
               height: 44,
               decoration: BoxDecoration(
                 color: statusColor.withValues(alpha: 0.1),
+                border: Border.all(color: statusColor.withValues(alpha: 0.2)),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
                 _getStatusIcon(res),
                 color: statusColor,
-                size: 20,
+                size: 22,
               ),
             ),
             const SizedBox(width: 16),
@@ -360,9 +362,9 @@ class _GameFeedItem extends ConsumerWidget {
   }
 
   IconData _getStatusIcon(String res) {
-    if (res == '1/2-1/2') return Icons.handshake_rounded;
-    if (res == '1-0') return Icons.emoji_events_rounded;
-    return Icons.close_rounded;
+    if (res == '1/2-1/2') return Icons.drag_handle_rounded;
+    if (res == '1-0') return Icons.keyboard_double_arrow_up_rounded;
+    return Icons.keyboard_double_arrow_down_rounded;
   }
 }
 

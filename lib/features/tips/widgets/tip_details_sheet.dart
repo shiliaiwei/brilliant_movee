@@ -17,69 +17,83 @@ class TipDetailsSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChtElevatedCard(
-      padding: EdgeInsets.zero,
-      cornerCut: 20,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TipVisualCover(tip: tip),
-          Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  tip.getTitle(languageCode).toUpperCase(),
-                  style: AppTextStyles.headline.copyWith(
-                    letterSpacing: 2,
-                    fontSize: 18,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  tip.getExplanation(languageCode),
-                  style: AppTextStyles.body.copyWith(
-                    height: 1.6,
-                    color: AppColors.textPrimary.withValues(alpha: 0.9),
-                  ),
-                ),
-                const SizedBox(height: 24),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    color: AppColors.backgroundDeep,
-                    border: Border(
-                      left: BorderSide(color: AppColors.primary, width: 2),
+    return Container(
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.85,
+      ),
+      child: ChtElevatedCard(
+        padding: EdgeInsets.zero,
+        cornerCut: 20,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TipVisualCover(tip: tip, isDetailed: true),
+            Flexible(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      tip.getTitle(languageCode).toUpperCase(),
+                      style: AppTextStyles.headline.copyWith(
+                        letterSpacing: 2,
+                        fontSize: 18,
+                      ),
                     ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "PRACTICAL APPLICATION",
-                        style: AppTextStyles.badge.copyWith(
-                          color: AppColors.primary,
-                          letterSpacing: 1,
+                    const SizedBox(height: 16),
+                    Text(
+                      tip.getExplanation(languageCode),
+                      style: AppTextStyles.body.copyWith(
+                        height: 1.6,
+                        color: AppColors.textPrimary.withValues(alpha: 0.9),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                        color: AppColors.backgroundDeep,
+                        border: Border(
+                          left: BorderSide(color: AppColors.primary, width: 2),
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        "Study this concept during your next analysis session. Recognition is the first step to mastery.",
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          fontStyle: FontStyle.italic,
-                          fontSize: 12,
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(Icons.psychology_rounded,
+                                  size: 14, color: AppColors.primary),
+                              const SizedBox(width: 8),
+                              Text(
+                                "STRATEGIC ADVICE",
+                                style: AppTextStyles.badge.copyWith(
+                                  color: AppColors.primary,
+                                  letterSpacing: 1,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            "Master the key squares and positional goals of this line. Recognition leads to dominance.",
+                            style: AppTextStyles.bodyMedium.copyWith(
+                              fontStyle: FontStyle.italic,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 16),
+                  ],
                 ),
-                const SizedBox(height: 16),
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

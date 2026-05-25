@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:math' as math;
 import '../../../core/constants/app_colors.dart';
 import '../../../core/services/asset_service.dart';
@@ -474,12 +475,29 @@ class _PieceImage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Standard piece mapping for 2D assets
     // We expect pieces like 'wP', 'wN', 'wB', 'wR', 'wQ', 'wK'
-    // Ensure naming is consistent: first char lowercase color, second char uppercase type
     final color = piece[0].toLowerCase();
-    final type = piece[1].toUpperCase();
-    final normalizedPiece = '$color$type';
+    final type = piece[1].toLowerCase(); // Use lower for easier mapping
 
-    final assetPath = 'assets/pieces/$pieceSetId/$normalizedPiece.png';
+    final bool isSvg = pieceSetId == 'defaultP' || pieceSetId == 'Merida15';
+    String assetPath;
+
+    if (pieceSetId == 'defaultP') {
+      final colorLong = color == 'w' ? 'white' : 'black';
+      final typeLong = switch (type) {
+        'k' => 'king',
+        'q' => 'queen',
+        'r' => 'rook',
+        'b' => 'bishop',
+        'n' => 'knight',
+        'p' => 'pawn',
+        _ => 'pawn',
+      };
+      assetPath = 'assets/pieces/defaultP/${colorLong}_$typeLong.svg';
+    } else if (pieceSetId == 'Merida15') {
+      assetPath = 'assets/pieces/Merida15/$color$type.svg';
+    } else {
+      assetPath = 'assets/pieces/$pieceSetId/$color${type.toUpperCase()}.png';
+    }
 
     return Container(
       decoration: BoxDecoration(
@@ -491,16 +509,24 @@ class _PieceImage extends StatelessWidget {
           ),
         ],
       ),
-      child: Image.asset(
-        assetPath,
-        width: size,
-        height: size,
-        fit: BoxFit.contain,
-        errorBuilder: (context, error, stackTrace) {
-          // Log error and fallback
-          return _FallbackPiece(piece: piece, size: size);
-        },
-      ),
+      child: isSvg
+          ? SvgPicture.asset(
+              assetPath,
+              width: size,
+              height: size,
+              fit: BoxFit.contain,
+              placeholderBuilder: (_) =>
+                  _FallbackPiece(piece: piece, size: size),
+            )
+          : Image.asset(
+              assetPath,
+              width: size,
+              height: size,
+              fit: BoxFit.contain,
+              errorBuilder: (context, error, stackTrace) {
+                return _FallbackPiece(piece: piece, size: size);
+              },
+            ),
     );
   }
 }

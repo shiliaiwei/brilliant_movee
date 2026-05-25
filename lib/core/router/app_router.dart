@@ -68,8 +68,8 @@ const _tabs = [
     route: AppRoutes.tips,
   ),
   _TabItem(
-    icon: Icons.account_tree_outlined,
-    selectedIcon: Icons.account_tree_rounded,
+    icon: Icons.psychology_outlined,
+    selectedIcon: Icons.psychology_rounded,
     label: 'Stoic',
     route: AppRoutes.stoic,
   ),

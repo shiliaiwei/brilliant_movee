@@ -133,23 +133,31 @@ class _StoicScreenState extends ConsumerState<StoicScreen> {
                     child: CircularProgressIndicator(color: AppColors.primary))
                 : state.error != null
                     ? Center(child: Text(state.error!))
-                    : GridView.builder(
-                        padding: const EdgeInsets.all(16),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
-                          childAspectRatio: 0.82,
+                    : RefreshIndicator(
+                        onRefresh: () async =>
+                            ref.read(stoicProvider.notifier).loadContent(),
+                        color: AppColors.primary,
+                        backgroundColor: AppColors.backgroundSurface,
+                        child: GridView.builder(
+                          physics: const BouncingScrollPhysics(
+                              parent: AlwaysScrollableScrollPhysics()),
+                          padding: const EdgeInsets.all(16),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 12,
+                            childAspectRatio: 0.82,
+                          ),
+                          itemCount: state.filteredLessons.length,
+                          itemBuilder: (context, index) {
+                            final lesson = state.filteredLessons[index];
+                            return StoicCard(
+                              lesson: lesson,
+                              onTap: () => _showDetails(context, lesson),
+                            );
+                          },
                         ),
-                        itemCount: state.filteredLessons.length,
-                        itemBuilder: (context, index) {
-                          final lesson = state.filteredLessons[index];
-                          return StoicCard(
-                            lesson: lesson,
-                            onTap: () => _showDetails(context, lesson),
-                          );
-                        },
                       ),
           ),
         ],

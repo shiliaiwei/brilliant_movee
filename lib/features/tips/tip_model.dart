@@ -16,6 +16,7 @@ class Tip extends Equatable {
   final Map<String, String> titleMap;
   final Map<String, String> explanationMap;
   final String? imageUrl; // For opening images
+  final String? authorImageUrl; // For author profiles
 
   const Tip({
     required this.id,
@@ -23,6 +24,7 @@ class Tip extends Equatable {
     required this.titleMap,
     required this.explanationMap,
     this.imageUrl,
+    this.authorImageUrl,
   });
 
   String getTitle(String languageCode) {
@@ -43,6 +45,7 @@ class Tip extends Equatable {
       titleMap: _parseLanguageMap(json['title']),
       explanationMap: _parseLanguageMap(json['explanation']),
       imageUrl: json['imageUrl'] as String?,
+      authorImageUrl: json['authorImageUrl'] as String?,
     );
   }
 
@@ -60,9 +63,11 @@ class Tip extends Equatable {
       'title': titleMap,
       'explanation': explanationMap,
       'imageUrl': imageUrl,
+      'authorImageUrl': authorImageUrl,
     };
   }
 
   @override
-  List<Object?> get props => [id, category, titleMap, explanationMap, imageUrl];
+  List<Object?> get props =>
+      [id, category, titleMap, explanationMap, imageUrl, authorImageUrl];
 }

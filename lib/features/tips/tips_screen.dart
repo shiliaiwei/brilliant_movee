@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_styles.dart';
-import '../../core/providers/language_provider.dart';
 import 'tips_provider.dart';
 import 'tip_model.dart';
-import 'widgets/tip_card.dart';
-import 'widgets/tip_details_sheet.dart';
+import 'widgets/tip_expandable_tile.dart';
 
 class TipsScreen extends ConsumerStatefulWidget {
   const TipsScreen({super.key});
@@ -17,10 +15,36 @@ class TipsScreen extends ConsumerStatefulWidget {
 
 class _TipsScreenState extends ConsumerState<TipsScreen> {
   TipCategory _selectedCategory = TipCategory.openingNames;
+  int? _expandedId;
+
+  final ScrollController _filterController = ScrollController();
+  final Map<TipCategory, GlobalKey> _categoryKeys = {
+    for (var cat in TipCategory.values) cat: GlobalKey(),
+  };
+
+  @override
+  void dispose() {
+    _filterController.dispose();
+    super.dispose();
+  }
+
+  void _scrollToCategory(TipCategory category) {
+    final key = _categoryKeys[category];
+    if (key == null) return;
+
+    final context = key.currentContext;
+    if (context == null) return;
+
+    Scrollable.ensureVisible(
+      context,
+      alignment: 0.5,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final languageCode = ref.watch(languageProvider);
     final state = ref.watch(tipsProvider);
 
     return Scaffold(
@@ -39,17 +63,17 @@ class _TipsScreenState extends ConsumerState<TipsScreen> {
       ),
       body: Column(
         children: [
-          // Filter Bar
+          // Filter Bar with auto-centering
           _buildCategoryFilter(),
 
-          // Content Grid
+          // Content List (Drop Down Style)
           Expanded(
             child: state.isLoading
                 ? const Center(
                     child: CircularProgressIndicator(color: AppColors.primary))
                 : state.errorMessage != null
                     ? Center(child: Text(state.errorMessage!))
-                    : _buildContentGrid(state, languageCode),
+                    : _buildContentList(state),
           ),
         ],
       ),
@@ -57,13 +81,25 @@ class _TipsScreenState extends ConsumerState<TipsScreen> {
   }
 
   Widget _buildCategoryFilter() {
+    final orderedCategories = [
+      TipCategory.openingNames,
+      TipCategory.opening,
+      TipCategory.middlegame,
+      TipCategory.endgame,
+      TipCategory.tactics,
+      TipCategory.mindset,
+      TipCategory.stoic,
+    ];
+
     return SingleChildScrollView(
+      controller: _filterController,
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
-        children: TipCategory.values.map((category) {
+        children: orderedCategories.map((category) {
           final isSelected = _selectedCategory == category;
           return Padding(
+            key: _categoryKeys[category],
             padding: const EdgeInsets.only(right: 8),
             child: ChoiceChip(
               label: Text(
@@ -78,7 +114,13 @@ class _TipsScreenState extends ConsumerState<TipsScreen> {
               selected: isSelected,
               selectedColor: AppColors.primary,
               backgroundColor: AppColors.backgroundSurface,
-              onSelected: (_) => setState(() => _selectedCategory = category),
+              onSelected: (_) {
+                setState(() {
+                  _selectedCategory = category;
+                  _expandedId = null; // Close any open items when switching
+                });
+                _scrollToCategory(category);
+              },
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4),
               ),
@@ -110,7 +152,7 @@ class _TipsScreenState extends ConsumerState<TipsScreen> {
     }
   }
 
-  Widget _buildContentGrid(TipsState state, String languageCode) {
+  Widget _buildContentList(TipsState state) {
     final filteredTips =
         state.allTips.where((t) => t.category == _selectedCategory).toList();
 
@@ -123,34 +165,27 @@ class _TipsScreenState extends ConsumerState<TipsScreen> {
       );
     }
 
-    return GridView.builder(
-      padding: const EdgeInsets.all(16),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: 0.85,
-      ),
-      itemCount: filteredTips.length,
-      itemBuilder: (context, index) {
-        final tip = filteredTips[index];
-        return TipCard(
-          tip: tip,
-          languageCode: languageCode,
-          onTap: () => _showDetails(tip, languageCode),
-        );
-      },
-    );
-  }
-
-  void _showDetails(Tip tip, String languageCode) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      builder: (context) => TipDetailsSheet(
-        tip: tip,
-        languageCode: languageCode,
+    return RefreshIndicator(
+      onRefresh: () async => ref.read(tipsProvider.notifier).reload(),
+      color: AppColors.primary,
+      backgroundColor: AppColors.backgroundSurface,
+      child: ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics()),
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        itemCount: filteredTips.length,
+        itemBuilder: (context, index) {
+          final tip = filteredTips[index];
+          return TipExpandableTile(
+            tip: tip,
+            isExpanded: _expandedId == tip.id,
+            onToggle: () {
+              setState(() {
+                _expandedId = (_expandedId == tip.id) ? null : tip.id;
+              });
+            },
+          );
+        },
       ),
     );
   }

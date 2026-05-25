@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_styles.dart';
 import '../../core/constants/app_spacing.dart';
@@ -235,6 +236,16 @@ class _PieceSelectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isSvg = pieceId == 'defaultP' || pieceId == 'Merida15';
+    String previewPath;
+    if (pieceId == 'defaultP') {
+      previewPath = 'assets/pieces/defaultP/white_king.svg';
+    } else if (pieceId == 'Merida15') {
+      previewPath = 'assets/pieces/Merida15/wk.svg';
+    } else {
+      previewPath = 'assets/pieces/$pieceId/wK.png';
+    }
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -250,11 +261,16 @@ class _PieceSelectionCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/pieces/$pieceId/wK.png',
+            SizedBox(
               width: 48,
               height: 48,
-              errorBuilder: (_, __, ___) => const Icon(Icons.grid_view_rounded),
+              child: isSvg
+                  ? SvgPicture.asset(previewPath)
+                  : Image.asset(
+                      previewPath,
+                      errorBuilder: (_, __, ___) =>
+                          const Icon(Icons.grid_view_rounded),
+                    ),
             ),
             const SizedBox(height: 4),
             Text(

@@ -87,9 +87,11 @@ class AssetService {
       'assets/pieces/$pieceSetId/$piece.png';
 
   static const _defaultPieceSets = [
+    PieceSetInfo(id: 'defaultP', name: 'Professional (SVG)'),
+    PieceSetInfo(id: 'Merida15', name: 'Merida Vector'),
     PieceSetInfo(id: 'cburnett', name: 'CBurnett'),
     PieceSetInfo(id: 'alpha', name: 'Alpha'),
-    PieceSetInfo(id: 'merida', name: 'Merida'),
+    PieceSetInfo(id: 'merida', name: 'Merida Classic'),
     PieceSetInfo(id: 'maestro', name: 'Maestro'),
     PieceSetInfo(id: 'tatiana', name: 'Tatiana'),
     PieceSetInfo(id: 'staunty', name: 'Staunty'),
@@ -98,23 +100,57 @@ class AssetService {
   ];
 
   static const _defaultBoardThemes = [
-    BoardThemeInfo(id: 'wood', name: 'Wood', file: 'assets/boards/wood.jpg'),
-    BoardThemeInfo(id: 'blue2', name: 'Blue', file: 'assets/boards/blue2.jpg'),
-    BoardThemeInfo(id: 'grey', name: 'Grey', file: 'assets/boards/grey.jpg'),
-    BoardThemeInfo(id: 'maple', name: 'Maple', file: 'assets/boards/maple.jpg'),
-    BoardThemeInfo(id: 'olive', name: 'Olive', file: 'assets/boards/olive.jpg'),
     BoardThemeInfo(
-        id: 'wood2', name: 'Wood 2', file: 'assets/boards/wood2.jpg'),
+        id: '200', name: 'Classic Brown', file: 'assets/boards/200.png'),
     BoardThemeInfo(
-        id: 'wood4', name: 'Wood 4', file: 'assets/boards/wood4.jpg'),
+        id: 'blue2', name: 'Ocean Blue', file: 'assets/boards/blue2.jpg'),
+    BoardThemeInfo(
+        id: 'grey', name: 'Industrial Grey', file: 'assets/boards/grey.jpg'),
+    BoardThemeInfo(
+        id: 'maple', name: 'Maple Wood', file: 'assets/boards/maple.jpg'),
+    BoardThemeInfo(
+        id: 'wood4', name: 'Dark Walnut', file: 'assets/boards/wood4.jpg'),
+    BoardThemeInfo(
+        id: 'marble', name: 'Marble', file: 'assets/boards/marble.png'),
+    BoardThemeInfo(id: 'glass', name: 'Glass', file: 'assets/boards/glass.png'),
+    BoardThemeInfo(
+        id: 'neon', name: 'Cyber Neon', file: 'assets/boards/neon.png'),
+    BoardThemeInfo(
+        id: 'graffiti', name: 'Graffiti', file: 'assets/boards/graffiti.png'),
+    BoardThemeInfo(
+        id: '8_bit', name: '8-Bit Retro', file: 'assets/boards/8_bit.png'),
+    BoardThemeInfo(
+        id: 'newspaper',
+        name: 'Newspaper',
+        file: 'assets/boards/newspaper.png'),
+    BoardThemeInfo(
+        id: 'checkers', name: 'Checkers', file: 'assets/boards/checkers.png'),
+    BoardThemeInfo(
+        id: 'icy_sea', name: 'Icy Sea', file: 'assets/boards/icy_sea.png'),
+    BoardThemeInfo(
+        id: 'parchment',
+        name: 'Parchment',
+        file: 'assets/boards/parchment.png'),
+    BoardThemeInfo(id: 'stone', name: 'Stone', file: 'assets/boards/stone.png'),
+    BoardThemeInfo(
+        id: 'tournament',
+        name: 'Tournament',
+        file: 'assets/boards/tournament.png'),
+    BoardThemeInfo(
+        id: 'purple', name: 'Royal Purple', file: 'assets/boards/purple.png'),
     BoardThemeInfo(
         id: 'green-plastic',
         name: 'Green Plastic',
         file: 'assets/boards/green-plastic.png'),
     BoardThemeInfo(
-        id: 'newspaper',
-        name: 'Newspaper',
-        file: 'assets/boards/newspaper.png'),
+        id: 'walnut', name: 'Walnut', file: 'assets/boards/walnut.png'),
+    BoardThemeInfo(id: 'sand', name: 'Sand', file: 'assets/boards/sand.png'),
+    BoardThemeInfo(id: 'metal', name: 'Metal', file: 'assets/boards/metal.png'),
+    BoardThemeInfo(id: 'olive', name: 'Olive', file: 'assets/boards/olive.jpg'),
+    BoardThemeInfo(
+        id: 'dark_wood',
+        name: 'Dark Wood',
+        file: 'assets/boards/dark_wood.png'),
   ];
 
   static const _defaultSoundPacks = [
