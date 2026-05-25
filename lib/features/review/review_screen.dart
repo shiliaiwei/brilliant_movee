@@ -9,6 +9,7 @@ import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_styles.dart';
 import '../../core/widgets/cht_error_state.dart';
 import '../../core/widgets/eval_bar.dart';
+import '../../core/widgets/fui_loading.dart';
 import '../../core/services/storage_service.dart';
 import '../../core/services/settings_provider.dart';
 import '../../core/utils/responsive.dart';
@@ -135,8 +136,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
           ],
         ),
         body: state.isLoading
-            ? const Center(
-                child: CircularProgressIndicator(color: AppColors.primary))
+            ? const Center(child: FuiLoading(label: 'INITIALIZING ANALYSIS'))
             : state.error != null
                 ? ChtErrorState(
                     title: 'ERROR',
@@ -449,135 +449,125 @@ class _AnalysisPanelSimplifiedState
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
       decoration: BoxDecoration(
         color: AppColors.backgroundDeep,
         border: Border(
-          bottom: BorderSide(color: AppColors.primary.withValues(alpha: 0.15)),
+          bottom: BorderSide(color: AppColors.primary.withValues(alpha: 0.1)),
         ),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _PulsingIcon(controller: _pulseController),
-                  const SizedBox(width: 10),
+                  const Text(
+                    'ANALYZING...',
+                    style: TextStyle(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 14,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
                   Text(
                     'SF-${widget.engineVersion} • $mode',
-                    style: TextStyle(
-                      color: AppColors.primary.withValues(alpha: 0.8),
-                      fontWeight: FontWeight.w900,
+                    style: const TextStyle(
+                      color: AppColors.textSecondary,
+                      fontWeight: FontWeight.bold,
                       fontSize: 10,
-                      letterSpacing: 1.5,
+                      letterSpacing: 1,
                     ),
                   ),
                 ],
               ),
+              const Spacer(),
               Text(
-                '${(widget.state.analysisProgress * 100).toInt()}% · DEPTH $depth',
-                style: TextStyle(
-                  color: AppColors.primary.withValues(alpha: 0.5),
+                '${(widget.state.analysisProgress * 100).toInt()}%',
+                style: const TextStyle(
+                  color: AppColors.primary,
                   fontWeight: FontWeight.w900,
-                  fontSize: 8,
-                  letterSpacing: 1.2,
+                  fontSize: 28,
+                  fontFamily: 'monospace',
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
-          Stack(
-            children: [
-              Container(
-                height: 3,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.05),
-                  borderRadius: BorderRadius.circular(1.5),
-                ),
-              ),
-              // Main Progress
-              FractionallySizedBox(
-                alignment: Alignment.centerLeft,
-                widthFactor: widget.state.analysisProgress,
-                child: Container(
-                  height: 3,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [AppColors.primary, Color(0xFF00E5FF)],
-                    ),
-                    borderRadius: BorderRadius.circular(1.5),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primary.withValues(alpha: 0.5),
-                        blurRadius: 6,
-                        spreadRadius: 1,
+          const SizedBox(height: 16),
+          // Thicker Fill Loading Bar
+          Container(
+            height: 12,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.05),
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(color: Colors.white10, width: 1),
+            ),
+            child: Stack(
+              children: [
+                // Progressive Fill
+                FractionallySizedBox(
+                  alignment: Alignment.centerLeft,
+                  widthFactor: widget.state.analysisProgress,
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 400),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [AppColors.primary, Color(0xFF00E5FF)],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
                       ),
-                    ],
+                      borderRadius: BorderRadius.circular(3),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withValues(alpha: 0.3),
+                          blurRadius: 10,
+                          spreadRadius: 2,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              // Technical Scanning Line
-              AnimatedBuilder(
-                animation: _controller,
-                builder: (context, child) {
-                  return Positioned(
-                    left: _controller.value * MediaQuery.of(context).size.width,
-                    child: Container(
-                      width: 60,
-                      height: 3,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            AppColors.primary.withValues(alpha: 0),
-                            AppColors.primary.withValues(alpha: 0.8),
-                            Colors.white,
-                            AppColors.primary.withValues(alpha: 0.8),
-                            AppColors.primary.withValues(alpha: 0),
-                          ],
-                        ),
-                      ),
+                // Shimmer Effect Overlay
+                Positioned.fill(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(3),
+                    child: AnimatedBuilder(
+                      animation: _controller,
+                      builder: (context, child) {
+                        return Transform.translate(
+                          offset: Offset(
+                              (_controller.value * 2 - 1) *
+                                  MediaQuery.of(context).size.width,
+                              0),
+                          child: Container(
+                            width: 150,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.white.withValues(alpha: 0),
+                                  Colors.white.withValues(alpha: 0.2),
+                                  Colors.white.withValues(alpha: 0),
+                                ],
+                                transform: const GradientRotation(0.5),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
-            ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
-    );
-  }
-}
-
-class _PulsingIcon extends StatelessWidget {
-  const _PulsingIcon({required this.controller});
-  final AnimationController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: controller,
-      builder: (context, child) {
-        return Container(
-          width: 8,
-          height: 8,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColors.primary,
-            boxShadow: [
-              BoxShadow(
-                color:
-                    AppColors.primary.withValues(alpha: 0.6 * controller.value),
-                blurRadius: 8 * controller.value,
-                spreadRadius: 4 * controller.value,
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }

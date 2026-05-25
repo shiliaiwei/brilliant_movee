@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
-/// Typography system for Stupid Brilliant.
-/// Uses custom StackSansNotch as primary font.
+/// Typography system for Brilliant Movee.
+/// Inherits font family from Theme (GoogleSans or StackSansNotch).
 abstract final class AppTextStyles {
-  // ── Base configuration ──────────────────────────────────────────────────
-  static const String primaryFont = 'StackSansNotch';
-
   // ── Display ─────────────────────────────────────────────────────────────
   static TextStyle get display => const TextStyle(
-        fontFamily: primaryFont,
         fontWeight: FontWeight.w700,
         fontSize: 32,
         letterSpacing: -0.5,
@@ -19,7 +15,6 @@ abstract final class AppTextStyles {
 
   // ── Headline ────────────────────────────────────────────────────────────
   static TextStyle get headline => const TextStyle(
-        fontFamily: primaryFont,
         fontWeight: FontWeight.w600,
         fontSize: 24,
         letterSpacing: -0.2,
@@ -29,7 +24,6 @@ abstract final class AppTextStyles {
 
   // ── Title ───────────────────────────────────────────────────────────────
   static TextStyle get title => const TextStyle(
-        fontFamily: primaryFont,
         fontWeight: FontWeight.w600,
         fontSize: 18,
         color: AppColors.textPrimary,
@@ -38,7 +32,6 @@ abstract final class AppTextStyles {
 
   // ── Body ────────────────────────────────────────────────────────────────
   static TextStyle get body => const TextStyle(
-        fontFamily: primaryFont,
         fontWeight: FontWeight.w400,
         fontSize: 14,
         color: AppColors.textPrimary,
@@ -46,7 +39,6 @@ abstract final class AppTextStyles {
       );
 
   static TextStyle get bodyMedium => const TextStyle(
-        fontFamily: primaryFont,
         fontWeight: FontWeight.w500,
         fontSize: 14,
         color: AppColors.textPrimary,
@@ -55,7 +47,6 @@ abstract final class AppTextStyles {
 
   // ── Label ───────────────────────────────────────────────────────────────
   static TextStyle get label => const TextStyle(
-        fontFamily: primaryFont,
         fontWeight: FontWeight.w500,
         fontSize: 12,
         color: AppColors.textPrimary,
@@ -65,7 +56,6 @@ abstract final class AppTextStyles {
 
   // ── Caption ─────────────────────────────────────────────────────────────
   static TextStyle get caption => const TextStyle(
-        fontFamily: primaryFont,
         fontWeight: FontWeight.w400,
         fontSize: 11,
         color: AppColors.textSecondary,
@@ -74,7 +64,6 @@ abstract final class AppTextStyles {
 
   // ── Badge ───────────────────────────────────────────────────────────────
   static TextStyle get badge => const TextStyle(
-        fontFamily: primaryFont,
         fontWeight: FontWeight.w700,
         fontSize: 10,
         letterSpacing: 0.5,
@@ -84,7 +73,6 @@ abstract final class AppTextStyles {
 
   // ── Mono large ──────────────────────────────────────────────────────────
   static TextStyle get monoLarge => const TextStyle(
-        fontFamily: primaryFont,
         fontWeight: FontWeight.w700,
         fontSize: 20,
         color: AppColors.textPrimary,
@@ -92,7 +80,6 @@ abstract final class AppTextStyles {
       );
 
   static TextStyle get monoSmall => const TextStyle(
-        fontFamily: primaryFont,
         fontWeight: FontWeight.w400,
         fontSize: 11,
         color: AppColors.textSecondary,
@@ -101,7 +88,6 @@ abstract final class AppTextStyles {
 
   // ── App name / brand ─────────────────────────────────────────────────────
   static TextStyle get appName => const TextStyle(
-        fontFamily: primaryFont,
         fontWeight: FontWeight.w800,
         fontSize: 28,
         letterSpacing: -1.0,
@@ -110,7 +96,6 @@ abstract final class AppTextStyles {
       );
 
   static TextStyle get tagline => const TextStyle(
-        fontFamily: primaryFont,
         fontWeight: FontWeight.w400,
         fontSize: 13,
         letterSpacing: 0.5,

@@ -1,0 +1,920 @@
+[
+  {
+    "id": "intro_01",
+    "title": "HOW TO INTRODUCE YOURSELF",
+    "content": "1. Basic Introduction\nHello! My name is Ana.\nI'm from beautiful Singapore.\nI live in Woodlands.\nI work as a passionate content creator.\nIt's a pleasure to meet you!\n\n2. Student Introduction\nHi! My name is Riya.\nI am a dedicated student in Class 8.\nMy favorite subject is English because I love learning new words and ideas.\nMy dream is to become a doctor and help people live healthier lives.\nThank you for listening to my introduction.\n\n3. Job Interview Introduction\nGood morning, and thank you for this opportunity.\nMy name is Emma.\nI graduated in Business Studies.\nI bring two years of hands-on experience in marketing.\nI am hardworking, quick to learn, and always ready to embrace new challenges.\nI'm excited about the opportunity to contribute and grow with your team.",
+    "directive": "Master your narrative. You are the protagonist of your life story.",
+    "category": "HUMAN NATURE",
+    "intensity": 1,
+    "icon": "favorite"
+  },
+  {
+    "id": "vocab_01",
+    "title": "50 SMART ENGLISH WORDS",
+    "content": "Articulate – able to express ideas clearly\nAstute – clever and quick to understand\nBenevolent – kind and generous\nCandid – honest and direct\nComposed – calm and in control\nConscientious – careful and responsible\nCordial – warm and friendly\nCynical – doubtful about people's sincerity\nDiligent – hardworking and careful\nEloquent – fluent and persuasive in speaking\nEmpathetic – understanding others' feelings\nErudite – very knowledgeable\nExquisite – extremely beautiful\nHumble – modest, not arrogant\nImpeccable – flawless\nIndispensable – absolutely necessary\nIngenious – clever and inventive\nInsightful – showing deep understanding\nIntriguing – fascinating and mysterious\nJudicious – wise and fair\nLucid – clear and easy to understand\nMeticulous – very careful and precise\nPlausible – seemingly reasonable\nPragmatic – practical, concerned with results\nProficient – skilled, competent\nResilient – recovering quickly from difficulties",
+    "directive": "Expand your vocabulary to expand your world. Words are tools for precision.",
+    "category": "ASCETICISM",
+    "intensity": 2,
+    "icon": "psychology"
+  },
+  {
+    "id": "destiny_01",
+    "title": "THE ALGORITHM OF DESTINY",
+    "content": "Yes, everything happens for a reason—but that reason is not to stay stuck, stay small, or silently suffer. The purpose behind every challenge is to awaken your power, not to keep you asleep. Life doesn't ask you to bypass pain, it invites you to transform through it. Wounds rise not to define you, but to guide you toward healing. Karmic cycles are not prisons—they are crossroads. You are not here to repeat the past—you are here to rewrite it. An awakened soul is always in motion—choosing evolution over comfort, freedom over fear. It no longer lives as a slave to fate, but walks the path with conscious choice, not by chance. It learns to stay in flow with alignment and awareness, moving with intention rather than reaction. This is how you enter the algorithm of the wheel of life—where every choice becomes a thread in your unfolding destiny. You are not just here to observe the cosmos—you are here to activate the cosmic body within you, to move in rhythm with your divine blueprint. You came to remember your role as a conscious creator, a soul who turns pain into wisdom, and resistance into growth. You are the living bridge between what has been and what could be. This path was never about passive acceptance—it was about alchemy. You were born to meet life with courage, to shape it with presence, to expand it through choice. Your story isn't over, and the power to change it lives in you. It begins now.",
+    "directive": "You are the living bridge between what has been and what could be. Act now.",
+    "category": "DOMINANCE",
+    "intensity": 3,
+    "icon": "bolt"
+  },
+  {
+    "id": "nwo_01",
+    "title": "NEW WORLD ORDER ORGANIZATIONAL CHART",
+    "content": "Illuminati Royal Bloodlines: Rothschild, Collins, Dupont, Freeman, Astor, Bundy, Kennedy, Li, Onassis, Rockefeller, Disney, Russell, Van Duyn, Merovingian, Reynolds\n\nFoundation Nations of the New World Order\nAmerica (Financial Groups): IHF, Central Banks, World Bank, Federal Reserve, Bank of International Settlement\nEngland (Research Institutions): Institute for Policy Studies, Stanford Research Institute, Brookings Institute, Tavistock Institute, Committee of 300, Aspen Institute, Jason Society\nIsrael (Secret Societies): P2/Opus Dei, Rosicrucians, Freemasonry, Skull & Bones, Bohemian Club, The Knights of Malta\nAustralia (Intelligence): MI5, CIA, NSA/FBI, KGB, Interpol, MOSSAD, Drug Cartels, Homeland Security, Military Intelligence\nChina (Religious): World Parliament of Religions, National Council of Churches, Temple of Understanding, Universalist Churches, New Age Cults, Vatican, Satanists\nEducational: UNESCO, Lucius Trust, World Union, World Goodwill, Esalen Institute, Planetary Congress, Media Establishment, World Federalist Assoc., World Constitution Assoc.\n\nCorporations, Multinationals and Banks Supporting the New World Agenda\nBechtel, Carlyle Group, TRW, Raytheon, Rand, Atlantic Richfield-Arco, Exxon-Esso-Mobil, Texaco, Shell Oil, Tenneco, Corning, Dow Jones, Citigroup, Chase Manhattan, Bank of America, Bankers Trust, Glaxo SmithKline, Archer Daniels Midland, Chemical Banking, Schering Plough, Goldman Sachs, American Express, AT&T, Philip Morris, Boeing, Amtrak, Nabisco, Coca-cola, PepsiCo, Anheuser Busch, Blackstone Group, Chevron-Texaco (Caltex), BP-Amoco, GE, Daimler/Chrysler, Unisys, ITT, Xerox, Intel, IBM, Motorola, Dell, Levi Strauss, Motorola, Bristol Myers, Squibb, Eli Lilli, Pfizer, Kissinger Assoc, Monsanto/Solutia, Dow Chemical, News Corp Limited Inc, Time Warner/AOL, Disney, CBS, NBC, PBS, AP, NCC, Reuters, Washington Times, Children's TV Workshop, U.S. News & World Report, New York Times, Newsweek, Washington Post, Wall Street",
+    "directive": "Identify the systems that govern the world. Knowledge is the first step toward autonomy.",
+    "category": "MODERN SOCIETY",
+    "intensity": 3,
+    "icon": "security"
+  },
+  {
+    "id": "strat_01",
+    "title": "A PLAN IS NOT A STRATEGY",
+    "content": "STRATEGY\nWhat is it? Your theory of how to win. Defines your competitive advantage and unique position in the market.\nThe 5M Framework: Money, Means, Magic, Market, Meaning -> Strategic Goals\n• Market: Where will we compete? (target segments)\n• Means: What capabilities set us apart? (core competencies)\n• Money: How will we fund growth? (financial model)\n• Meaning: Why do we exist? (purpose/mission)\n• Magic: What's our unfair advantage? (secret sauce)\nTime Horizon: 3-5 years (until market conditions fundamentally shift)\nFlexibility: Stable unless market disruption occurs\nWhen to Use: Define the vision, Make directional choices, Say NO to opportunities, Say NO to distractions\nBest Practices: Start with 'why' not 'what', Keep it to 1-2 pages max, Review quarterly, revise annually\nCommon Mistakes: Having 10+ priorities, Confusing goals with strategy, Changing strategy every quarter\nExample: Own 40% of the sustainable packaging market for mid-market retailers by offering the only 100% compostable solution at price parity with plastic.\n\nPLAN\nWhat is it? The roadmap. Breaks down how, when, and by whom you'll get there.\nActivities: What specific tasks need completion\nTimeline: When each milestone must be hit\nResources: Who owns each deliverable\nDependencies: What must happen in sequence\nMetrics: How we measure progress\nTime Horizon: Weeks to months (by project phase)\nFlexibility: Updates continuously as progress is made or missed\nWhen to Use: Coordinate execution, Break strategy into steps, Manage timelines clearly, Track accountability daily\nBest Practices: Update progress weekly, Assign clear owners, Stay aligned to strategy\nCommon Mistakes: Planning without clear strategy, Too much detail too early, Ignoring dependencies\nExample: Q2: Launch pilots with Target, Whole Foods, Kroger. Q3: Scale to 10 retailers achieving 95% satisfaction. Q4: Hire VP Sales, secure $5M Series A funding.",
+    "directive": "Strategy is your theory of how to win. Plan is the roadmap. Do not confuse the two.",
+    "category": "DOMINANCE",
+    "intensity": 2,
+    "icon": "trending_up"
+  },
+  {
+    "id": "research_01",
+    "title": "TYPES OF RESEARCH QUESTIONS",
+    "content": "Descriptive | To describe characteristics, patterns, or properties of a subject. | What are the properties of A? | Example: What are the common symptoms reported by patients with post-COVID fatigue?\nComparative | To identify similarities and differences between two or more entities. | What are the similarities & distinctions between A and B? | Example: How do online and offline students differ in terms of academic performance?\nCorrelational | To examine relationships or associations between two or more variables. | What can you do to correlate A and B? | Example: Is there a relationship between daily screen time and sleep quality?\nExploratory | To explore new, complex, or poorly understood phenomena or ideas. | What factors affect the rate of C's growth? Are A and B influencing C? | Example: What factors influence AI adoption among university faculty in developing countries?\nExplanatory | To determine the causes or underlying reasons for a phenomenon. | What are the causes for C? What does A do to B? | Example: What causes low voter turnout among young adults in urban areas?\nEvaluation | To assess the effectiveness, outcomes, or impact of a program or policy. | What is the impact of C? What role does B have? | Example: What is the impact of telemedicine on patient satisfaction in rural areas?\nAction based | To find practical solutions or interventions for improvement. | What can you do to improve X? | Example: What strategies can reduce employee burnout in remote work environments?",
+    "directive": "Choose your question wisely. The question determines the depth of the answer.",
+    "category": "WISDOM",
+    "intensity": 2,
+    "icon": "psychology"
+  },
+  {
+    "id": "sys_design_01",
+    "title": "SYSTEM DESIGN CONCEPTS",
+    "content": "Scalability, Load Balancers, Object Storage, Message Queues, Microservices, Caching, Database, CAP Theorem, Rate Limiting, Partitioning, CDN, Stream Processing",
+    "directive": "Understand the architecture of the digital world. These are the building blocks of modern systems.",
+    "category": "TECHNOLOGY",
+    "intensity": 2,
+    "icon": "terminal"
+  },
+  {
+    "id": "online_vocab_01",
+    "title": "NEGATIVE ONLINE VOCABULARY",
+    "content": "AI hallucination - false or misleading information made by AI\ncatfishing - pretending to be someone else online\nclickbait - a misleading headline or thumbnail intended to gain clicks\ndata harvesting - collecting large amounts of user data, often without clear consent\ndeepfake - AI-generated fake video/audio that looks real\ndogpiling - many users attacking one person at once\ndoomscrolling - endlessly scrolling through negative news or content\nenshittification - gradual decline in quality of online platforms as they prioritise profit\nghosting - suddenly cutting off communication online\nparasocial relationship - one-sided emotional attachment to an online figure\nphishing - a deceptive cyberattack where attackers pose as legitimate entities\nragebait - the manipulative tactic of eliciting outrage with the goal of increasing internet traffic\nrug pull - when developers abandon a project and take investors' money\nslop - mass-produced content with no real value\ntechnofeudalism - the idea that a few big companies own the digital landscape and profit from the work of content creators\ntrolling - deliberately provoking or upsetting others online",
+    "directive": "Identify the traps of the digital age. Awareness is your first line of defense.",
+    "category": "MODERN SOCIETY",
+    "intensity": 2,
+    "icon": "security"
+  },
+  {
+    "id": "timeframes_01",
+    "title": "DISCOVER THE POWER OF TIMEFRAMES",
+    "content": "4H\n- Direction\n- Liquidity\n- Supply and Demand\n\n1H\n- Trend\n- Breakout\n- Reversals\n- Order Blocks (OB)\n- FVG\n- Liquidity\n\n15M, 5M, 1M\n- Confirmations",
+    "directive": "Master the layers of time. Direction starts at the macro level; execution happens at the micro.",
+    "category": "PRAGMATISM",
+    "intensity": 2,
+    "icon": "account_balance"
+  },
+  {
+    "id": "bank_accounts_01",
+    "title": "4 BANK ACCOUNTS YOU MUST HAVE",
+    "content": "1. INCOME ACCOUNT\nWhere your money lands\n- Job salary\n- Side hustle income\n- Business or asset cash flow\nThis is the entry point.\nNothing stays here for long.\n\n2. ESSENTIALS ACCOUNT\nCovers your survival:\n- Rent or mortgage\n- Groceries\n- Utilities\n- Insurance\nYou live through this account - not from it.\n\n3. INVESTMENT ACCOUNT\nYour wealth engine.\n- Stocks & ETFs\n- Crypto\n- Real estate\n- Retirement funds\nThis is where money starts working harder than you do.\n\n4. FUN/ FREEDOM ACCOUNT\n- You enjoy life guilt free.\n- Vacations\n- Dates\n- Coffee\n- Streaming & lifestyle perks\nThis isn't waste. It's maintenance for your mind.",
+    "directive": "You live through your essentials account - not from it. Build your wealth engine.",
+    "category": "PRAGMATISM",
+    "intensity": 2,
+    "icon": "payments"
+  },
+  {
+    "id": "universe_laws_01",
+    "title": "THE 12 LAWS OF THE UNIVERSE",
+    "content": "1. Law of Divine Oneness: Everything is connected.\n2. Law of Vibration: Everything is made up of energy vibrating at a specific frequency.\n3. Law of Correspondence: External reality is a direct reflection of internal state.\n4. Law of Attraction: Like unto itself is drawn.\n5. Law of Inspired Action: Inspiration comes when aligned with Source.\n6. Law of Perpetual Transmutation of Energy: Energy is constantly evolving.\n7. Law of Cause and Effect: Every cause has an effect; thinking is the cause.\n8. Law of Compensation: You reap what you sow.\n9. Law of Relativity: Everything is relative; perception varies.\n10. Law of Polarity: Everything has an opposite (problems/solutions).\n11. Law of Rhythm: Cycles are a natural part of the Universe.\n12. Law of Gender: Balance divine masculine and feminine energies.",
+    "directive": "Prioritize inner peace over defending 'truth' because truth is relative. Align your vibration.",
+    "category": "WISDOM",
+    "intensity": 2,
+    "icon": "visibility"
+  },
+  {
+    "id": "llm_cheat_sheet_01",
+    "title": "LOCAL LLM CHEAT SHEET 32GB RAM",
+    "content": "CLASS A - FLAGSHIP | 18 GB+\nQwen3.5 27B: 16.90 GB RAM, Medium speed, 262K context. Best for general assistant, research, writing, agent workflow.\nQwen3.6-35B-A3B: 22.10 GB RAM, Medium-fast speed, 256K context. Best MoE flagship, agentic coding, tool use.\nGemma 4 31B: 21.66 GB RAM, Heavy speed, 256K context. Best dense quality, writing, analysis, high-end local chat.\n\nCLASS B - FAST FLAGSHIPS | 16-22 GB\nGemma 4 26B A4B: 21.15 GB RAM, Medium-fast speed, 256K context. Best fast flagship, general assistant, coding, agents, research.\nDeepSeek-R1 Distill Qwen 32B: 19.90 GB RAM, Medium speed, 32K context. Best reasoning, math, logic, deliberate analysis, offline problem solving.\nMistral Small 24B: 16.80 GB RAM, Medium-fast speed, 32K context. Best tool caller, assistants, chat, local business workflows.\n\nCLASS C - COMPANIONS | 5-6.5 GB\nQwen3.5 9B: 6.36 GB RAM, Fast speed, 262K context. Best sidekick, secondary agent, fast stuff, cheap retries.\nLlama 3.1 8B: 5.73 GB RAM, Fast speed, 128K context. Best long-doc sidekick, RAG, doc ingestion, codebase chat, long prompts.\n\nBottom line: The strongest combo is usually one flagship plus one companion. Qwen3.5 27B + Qwen3.5 9B is the easy recommendation.",
+    "directive": "Master the tools of the new era. Local AI is your private high-end assistant.",
+    "category": "TECHNOLOGY",
+    "intensity": 2,
+    "icon": "terminal"
+  },
+  {
+    "id": "seduction_01",
+    "title": "28 LAWS OF SEDUCTION",
+    "content": "Law #1 - Women are mirrors\nLaw #2 - Attraction forms from insecurity\nLaw #3 - Beat her at her own game\nLaw #4 - She will reject you just to stroke her own ego\nLaw #5 - Women don't date men better looking than them\nLaw #6 - Acknowledge her attraction to you\nLaw #7 - She'd rather be miserable than bored\nLaw #8 - Talk more with your eyes than your mouth\nLaw #9 - Always say less than necessary\nLaws #10 - Make her feel not think\nLaw #11 - She is unconscious of her own nature\nLaw #12 - Don't be her friend\nLaw #13 - No woman is truly ever single\nLaw #14 - Women hate men who understand female nature\nLaw #15 - How to tell she is lying\nLaw #16 - She doesn't want to be saved\nLaw #17 - Confidence determines what you experience\nLaw #18 - Energy speaks before you do\nLaw #19 - Body language tells all\nLaw #20 - Never say I love you first\nLaw #21 - Never make her your top priority\nLaw #22 - Don't play by her rules\nLaw #23 - Only say sorry when necessary\nLaw #24 - Take irrational amounts of action\nLaw #25 - Never be afraid to lose her\nLaw #26 - Golden ratio\nLaw #27 - Dark side to being a playboy\nLaw #28 - We all start as simps",
+    "directive": "Attraction is the play of energy. Understand the laws to navigate the game.",
+    "category": "HUMAN NATURE",
+    "intensity": 3,
+    "icon": "favorite"
+  },
+  {
+    "id": "seduction_25",
+    "title": "LAW #25: NEVER BE AFRAID TO LOSE HER",
+    "content": "Women are like cats, the more you chase them the more they run away. But when you just sit there calmly they come up and see you. The more you show her that you're afraid of losing her the more she will start to think you're unhappy and desperate. She desires the man who needs no one to be happy. If you aren't willing to show her the door when she misbehaves then you are programming her to walk all over you. You must set boundaries from the beginning and not hesitate to enforce them.\n\nWomen are like children, they will test to see how much they can get away with. The more you allow her to disrespect you the more she will. Eventually she will realize you are a pushover and leave you. Never bend your knee to please her. Love forms from respect so before you seek love from her you must make her respect you. I see so many men avoid disciplining their girl or threatening to leave her simply because they want to avoid an argument. All they are doing is giving their power away. Stop making excuses for her actions and show her that she will not be in your life unless she meets these standards.\n\nDeep down all women want to be treated like a little girl who gets told what to do by a dominant figure. This is why women call their boyfriends 'daddy'. She wants you to replace the role of her father, not be her equal. She must know you are a man who will just go find another girl if she doesn't listen. Men think they will push her away if they do this and sometimes they will but that just means she was never that serious about you in the first place. This saves you time and heartbreak. The faster you convey the rules to being with you, the faster she will either leave you or submit to them. You are basically training a dog as bad as that sounds. Reward good behavior, discipline bad behavior. Otherwise she will never love you or be loyal. Why would she? She wants a man, not an equal. She will only respect you if she looks up to you.\n\n'You must not fear. Fear is the love-killer. Fear is the ego-triumph that brings abject loneliness. You will face your fear. You will permit it to pass over and through you. And when your ego-fear is gone you will turn and face your lover, and only your heart will remain. You will walk away from her when she has violated your integrity, and you will let her walk when her heart is closed to you. She who can destroy you, controls you. Don't give her that power over yourself. Love yourself before you love her.' - Chateau Heartiste",
+    "directive": "She who can destroy you, controls you. Don't give her that power.",
+    "category": "HUMAN NATURE",
+    "intensity": 3,
+    "icon": "favorite"
+  },
+  {
+    "id": "seduction_14",
+    "title": "LAW #14: WOMEN HATE MEN WHO UNDERSTAND FEMALE NATURE",
+    "content": "Look at social media these days, these women lie to themselves constantly. She will preach for days about how she wants a good man but meanwhile she is going to the bar to find a new douchebag to fvck almost every week. But as soon as you call a girl out for this behavior all hell breaks loose. Women are pushing a narrative that men are trash when in reality they are attracted to trash. They refuse to face this reality so they lie to themselves. Some women are self aware enough to understand that she has certain dark tastes in men. But for the majority this is not the case.\n\nAnother reason behind the title of this law is that women don't like when you mansplain. They hate being told why and when they are wrong. They want you to cater to their illusions of reality so they can maintain the emotions they feel. Truth does not matter to women. They will bend the truth to suit how they desire to feel. For example, women will tell a fat girl she is beautiful the way she is to her face but in her mind she is judging this girl. This highlights how women will lie to each other, pretend to be each other's friends, but behind closed doors they all hate each other. A man who will bring this truth to the surface immediately gets attacked by women.\n\nWomen will go to any end to make sure their reputation is not damaged. She will have friends who are complete hOes, she knows they are hOes. But if a guy ever says one of her friends is a hOe she will scream bloody mvrdcr. You must be careful when talking to women as they cannot process the truth. All you will do is piss her off.",
+    "directive": "Truth does not matter to women. They will bend the truth to suit how they desire to feel.",
+    "category": "HUMAN NATURE",
+    "intensity": 3,
+    "icon": "favorite"
+  },
+  {
+    "id": "seduction_05",
+    "title": "LAW #5: WOMEN DON'T DATE MEN BETTER LOOKING THAN THEM",
+    "content": "If you've been paying attention over the last few years you'll notice a lot of ugly ass dudes are dating hot ass girls. You'll be sitting there wondering... how on god's green earth did he get her. The reason for this again.. Is women's egos. You see, some women don't want love, they want the upper hand. They want to be the star of the show, the one in charge of the relationship.\n\nThis is due to the increase of the disease of f3minism and women desiring to be masculine. These women seek power instead of companionship because they have been brainwashed into thinking it will make them happy. On the other hand, women who have been heartbroken by the alpha will do this because they believe that the nice and not as good looking guy will never cheat on or hurt her. She will date betas until she realizes that he does not fulfill her needs. Yes these men treat her very well but these relationships are BORING. She wonders why she can't feel the same spark she felt with the uncontrollable alpha with the nice beta.\n\nShe is unconscious of her addiction to drama and chasing after the man other women want. When the bad boys break their souls, they go to the good guys who act as a temporary comfort while she heals from the heartbreak of an alpha. She will stay in a relationship with a beta until going back to the alpha for more... repeating the same cycle over and over like a snake eating its own tail. The circle continues until she realizes her own infatuation with trying to control an uncontrollable man.",
+    "directive": "She is unconscious of her addiction to drama. Understand the cycle to stay out of it.",
+    "category": "HUMAN NATURE",
+    "intensity": 3,
+    "icon": "favorite"
+  },
+  {
+    "id": "originality_01",
+    "title": "YOU DON'T HAVE ORIGINAL THOUGHT",
+    "content": "The Illusion of Originality\nThere is a quiet belief most of us carry: that somewhere inside us exists something purely ours. A thought untouched, an idea born in isolation, a spark of originality that belongs to no one else.\nIt is a comforting belief. It makes us feel unique, self-made, and independent.\nBut what if it is not true?\nWhat if every thought you have is less like a creation and more like a reflection?\nFrom the moment we are born, we are immersed in a world that shapes us before we are even aware of it. We learn language that we did not invent, adopt beliefs we did not question, and absorb values we did not consciously choose. Our minds are not empty spaces waiting to create; they are active receivers, constantly collecting and organizing the world around us.\n\nThe Mind as a Mirror\nWe like to think of ourselves as originators, as people who generate ideas from within. In reality, we are often arrangers.\nWe gather pieces from different places, a sentence from a book, a tone from a mentor, a belief from our upbringing, a perspective from the internet, and we rearrange them until they feel coherent enough to call our own.\n\nWhere Something Real Begins\nAwareness creates space. Space to question what you have absorbed, to examine what you have accepted without thinking, and to decide whether those ideas still serve you.\nOriginality is not about creating something from nothing. It is about conscious selection. Choosing what to keep, what to discard, and what to reshape into something more intentional.\nYour mind is not a factory producing entirely new ideas. It is a mirror reflecting everything it has encountered. But unlike a passive mirror, you have the ability to adjust the angle, to decide what to reflect and what to let fade.",
+    "directive": "Originality is conscious selection. Choose what to reflect and what to let fade.",
+    "category": "THE VOID",
+    "intensity": 3,
+    "icon": "volume_off"
+  },
+  {
+    "id": "hooks_01",
+    "title": "30 STORYTELLING HOOKS",
+    "content": "RELATABLE STRUGGLE HOOKS\n1. POV: YOU KEEP POSTING BUT NOTHING'S WORKING\n2. THAT FEELING WHEN YOU _ _ _ AND STILL _ _ _\n3. ME: 'I'LL START TOMORROW' ALSO ME: _ _ _\n\nTRANSFORMATION HOOKS\n1. 6 MONTHS AGO I COULDN'T _ _ _. TODAY I _ _ _\n2. I USED TO THINK _ _ _ WAS IMPOSSIBLE UNTIL _ _ _\n3. THE DAY I STOPPED _ _ _ EVERYTHING CHANGED\n\nCURIOSITY HOOKS\n1. NOBODY TALKS ABOUT _ _ _ BUT IT'S THE REASON I _ _ _\n2. I IGNORED _ _ _ FOR MONTHS. THEN I TRIED IT AND _ _ _\n3. THE THING ABOUT _ _ _ NOBODY TELLS YOU: _ _ _\n\nVULNERABLE HOOKS\n1. I WAS TERRIFIED TO SHARE _ _ _ BUT HERE'S WHY IT MATTERS\n2. MY BIGGEST FAILURE WITH _ _ _ TAUGHT ME _ _ _\n\nBOLD STATEMENT HOOKS\n1. EVERYONE SAYS _ _ _ BUT THE TRUTH IS _ _ _\n2. STOP DOING _ _ _ IF YOU WANT TO _ _ _\n3. _ _ _ IS DEAD. HERE'S WHAT ACTUALLY WORKS NOW",
+    "directive": "Hooks are the gateway to attention. Use them to bridge the gap between your value and their curiosity.",
+    "category": "DOMINANCE",
+    "intensity": 2,
+    "icon": "bolt"
+  },
+  {
+    "id": "investments_01",
+    "title": "6 TYPES OF INVESTMENTS",
+    "content": "1: INDIVIDUAL STOCKS - Owning a small piece of a company. Higher risk, higher reward.\n2: DIVIDEND STOCKS - Stocks that pay you just for owning it (small %). Passive income while investment grows.\n3: ETFS (EXCHANGE TRADED FUNDS) - A bundle of companies traded like a single stock. Instantly diversified.\n4: MUTUAL FUNDS - Expertly managed funds (higher fees usually).\n5: INDEX FUNDS - Specifically tracks a market index (S&P 500). Outperforms most active investors long-term.\n6: TARGET DATE MUTUAL FUNDS - Auto-adjusting investments for retirement. Starts aggressive -> becomes safer.",
+    "directive": "Diversification is protection against ignorance. Index funds are for those who want to win without the work.",
+    "category": "PRAGMATISM",
+    "intensity": 2,
+    "icon": "account_balance"
+  },
+  {
+    "id": "read_character_01",
+    "title": "HOW TO READ SOMEONE'S CHARACTER",
+    "content": "1. Life level: seen from shoes.\n2. Health: seen from nails.\n3. Family: seen from how they sit.\n4. Attitude: seen from the corner of the eye.\n5. Personality: seen from how they laugh.\n6. Self-confidence: seen from how they walk\n7. Loyalty: seen from how they look at their partner.\n8. Honesty: Seen when given a mandate (responsibility).",
+    "directive": "The eyes never lie, but the walk tells the whole truth. Observe.",
+    "category": "HUMAN NATURE",
+    "intensity": 2,
+    "icon": "visibility"
+  },
+  {
+    "id": "chess_openings_01",
+    "title": "CHESS OPENINGS",
+    "content": "The most Controversial Chess openings Of all time:\nThe French Defense (Too Passive/Slow)\nThe Ruy Lopez (Too Aggressive/Tactical)\nThe Dutch Defense (Too Aggressive/Not Dynamic)\nThe Pirc Defense (Very Unambitious)",
+    "directive": "Choose your opening based on the battle you want to fight. Aggression is a choice.",
+    "category": "DOMINANCE",
+    "intensity": 2,
+    "icon": "bolt"
+  },
+  {
+    "id": "trauma_dates_01",
+    "title": "BORN ON DATES: TRAUMA & SOULMATES",
+    "content": "Born on 5, 14, 30: Trauma - Restricted freedom. Fear - Feeling trapped. Passion - Change.\nBorn on 3, 16, 28: Trauma - Not being taken seriously. Fear - Lack of meaning. Passion - Self-expression.\nBorn on 2, 17, 29: Trauma - Being overlooked. Fear - Abandonment. Passion - Emotional bonds.\nBorn on 6, 19, 27: Trauma - Emotional responsibility for others. Fear - Unrequited love. Passion - Nurturing.\nBorn on 1, 13, 26: Trauma - Having to be 'the strong one'. Fear - Losing control. Passion - Building meaning.\nBorn on 7, 10, 25: Trauma - Feeling alone. Fear - Misunderstanding. Passion - Deep understanding.\nBorn on 8, 18, 22: Trauma - Having to prove worth. Fear - Failure. Passion - Success/Power.\nBorn on 4, 11, 23: Trauma - Instability. Fear - Losing built life. Passion - Stability.",
+    "directive": "Identify your baseline trauma to understand your adult motivations. Awareness breaks the loop.",
+    "category": "WISDOM",
+    "intensity": 2,
+    "icon": "psychology"
+  },
+  {
+    "id": "restricted_laws_01",
+    "title": "LAWS THEY DON'T WANT YOU TO FIGURE OUT",
+    "content": "4. THE LAW OF POLARITY: Everything has an opposite. They're not enemies; they're extremes of the same force.\n1. THE LAW OF PERCEPTION: Reality doesn't exist the way you think. Your brain filters to keep you sane. Truth: You only see what your mind allows.\n7. THE LAW OF ONE: Separation is the greatest illusion. Everything is one consciousness pretending to be many.\n2. THE LAW OF ATTENTION: What you focus on expands. Your brain strengthens neural pathways of what you notice. Your life is programmable by you.\n6. THE LAW OF CORRESPONDENCE: 'As above, so below. As within, so without.' Outer world mirrors inner state.\n5. THE LAW OF CAUSE AND VIBRATION: Every thought sends out a frequency. The universe reads energy, not words.\n3. THE LAW OF MIRRORS: Everyone you meet is a reflection of something you hide, deny, or crave within yourself.",
+    "directive": "Your life is programmable. By you. Access the settings.",
+    "category": "UNSHAKEABLE",
+    "intensity": 3,
+    "icon": "visibility"
+  },
+  {
+    "id": "research_topics_01",
+    "title": "TOPICS TO RESEARCH WHEN BORED",
+    "content": "Philosophy: Existentialism, Stoicism, Nihilism, Utilitarianism, The social contract, Determinism vs free will, Moral relativism, Absurdism.\nTechnology: Technological singularity, Algorithmic bias, Surveillance capitalism, Moore's law, AGI, Blockchain, Quantum computing.\nCulture: Cultural capital, Soft power, Orientalism, Beauty standards evolution, Prestige signalling.\nScience: Chaos theory, The Fermi paradox, Entropy, The double-slit experiment, String theory, Dark matter, The multiverse, Schrodinger's cat.\nFinance: Inflation targeting, Quantitative easing, Asset bubbles, Opportunity cost, Behavioral finance.\nPsychology: Projection, Scarcity mindset, Imposter syndrome, Learned helplessness, Cognitive dissonance, Confirmation bias.\nNeuroscience: Neuroplasticity, Dopamine reward pathways, Mirror neurons, Amygdala hijack, Default mode network.",
+    "directive": "Curiosity is the engine of high-end education. Choose one and go deep.",
+    "category": "ASCETICISM",
+    "intensity": 2,
+    "icon": "psychology"
+  },
+  {
+    "id": "linux_devops_01",
+    "title": "LINUX / DEVOPS COMMANDS REFERENCE",
+    "content": "1. File: ls, cd, pwd, cp, mv, rm, mkdir, find, locate, chmod, chown.\n2. Viewing: cat, more, less, head, tail, nano, vim, grep, sed, awk, sort.\n3. Process: ps, top, htop, kill, bg, fg, jobs, uptime, time.\n4. Disk: df, du, fdisk, lsblk, mount, umount, fsck.\n5. Networking: ifconfig, ip, ping, netstat, ss, traceroute, nslookup, dig, wget, curl, scp, ssh.\n6. User: useradd, usermod, passwd, whoami, who, id, groups.\n7. Monitoring: dmesg, free, vmstat, iostat, mpstat, journalctl, strace, lsof.\n8. Archiving: tar, zip, unzip, gzip.\n9. Containers: docker run/ps/build/exec/stop/logs, kubectl get pods/nodes/services.\n10. Automation: ansible-playbook, terraform init/plan/apply/destroy.",
+    "directive": "Command the machine. These are the spells of the modern wizard.",
+    "category": "TECHNOLOGY",
+    "intensity": 2,
+    "icon": "terminal"
+  },
+  {
+    "id": "documentaries_01",
+    "title": "DOCUMENTARIES TO MAKE YOU SMARTER",
+    "content": "01/ Exit Through the Gift Shop: Lesson on how the art market is a joke; hype over talent.\n02/ AlphaGo: Understanding the AI revolution and intelligence beyond humans.\n03/ Particle Fever: High-stakes thriller about particle physics and the LHC.\n04/ Three Identical Strangers: Dark conspiracy about a secret psychological experiment (Nature vs Nurture).\n05/ Fantastic Fungi: How fungi connect everything on the planet; environmental healing.\n06/ Abstract: The Art of Design: Notice the intentionality behind every chair, car, and app you use.",
+    "directive": "Train your eye to see the hidden logic in the chaos around you.",
+    "category": "WISDOM",
+    "intensity": 1,
+    "icon": "visibility"
+  },
+  {
+    "id": "backend_interview_01",
+    "title": "TOP BACKEND INTERVIEW QUESTIONS",
+    "content": "1. Server: System providing resources to clients.\n2. REST: Architectural style for networked applications.\n3. API: Interface for software communication.\n4. CRUD: Create, Read, Update, Delete.\n5. Database: Organized collection of data.\n6. SQL: Structured Query Language for relational DBs.\n7. NoSQL: Non-relational DBs for large-scale data.\n8. Indexing: Improves data retrieval speed.\n9. Normalization: Reducing redundancy.\n10. ACID: Atomicity, Consistency, Isolation, Durability.\n15. Docker: Platform for running containers.\n17. Kubernetes: Automating deployment of containerized apps.\n18. Load Balancing: Distributes traffic across servers.\n22. Caching: Temporary storage to reduce access time.\n25. JWT: Securely transmitting info as JSON object.\n50. Rate Limiting: Controls request rate to prevent abuse.",
+    "directive": "Know the fundamentals. Every complex system is built on these blocks.",
+    "category": "TECHNOLOGY",
+    "intensity": 2,
+    "icon": "terminal"
+  },
+  {
+    "id": "voices_01",
+    "title": "SIX VOICES IN YOUR HEAD",
+    "content": "THE CRITIC: Formed at 7, grades everything. Voice of the first adult who told you you were wrong.\nTHE PROTECTOR: Anticipates everything, scans rooms, predicts the worst. Ancient anti-threat system.\nTHE CHILD: Wants, fully, without apology. Original you before strategy.\nTHE MANAGER: Schedules, plans, optimises. Believes the system will save you.\nTHE EXILE: Holds the grief and shame. Formed when feeling was dangerous.\nTHE SELF: The witness. Not a voice. Notices the others are talking. Quieter than all combined.",
+    "directive": "The Self isn't louder than the others. It's quieter than all of them combined. That's how you find it.",
+    "category": "EMOTIONAL CONTROL",
+    "intensity": 3,
+    "icon": "psychology"
+  },
+  {
+    "id": "relationship_truth_01",
+    "title": "THE UNCOMFORTABLE RELATIONSHIP TRUTH",
+    "content": "She can look you in the eyes and say, 'I love you. I'll never leave.' And in that moment, she probably means it. But the second she meets someone she perceives as a better option... everything can change. Fast. It's driven by what she feels she's missing: excitement, validation, security, attraction, novelty. Emotions fluctuate. If you don't understand what keeps a woman emotionally invested, you're always one 'better option' away from losing everything. She doesn't even feel like she's doing something wrong; she's just 'following her heart'.",
+    "directive": "You can't negotiate with fluctuating emotions. Understand emotional investment and retention.",
+    "category": "HUMAN NATURE",
+    "intensity": 3,
+    "icon": "favorite"
+  },
+  {
+    "id": "scientist_thinking_01",
+    "title": "THINK LIKE A SCIENTIST",
+    "content": "CHESS: Trains pattern recognition and multi-step planning. Forces brain to simulate future outcomes.\nSUDOKU: Strengthens working memory and pattern detection. Decision making under constrained info.\nPROGRAMMING: Thinking in strict structures: input, process, output. Trains attention to detail.\nCHAOS THEORY: Systems that look random but follow precise rules. Butterfly effect.\nQUANTUM SUPERPOSITION: Particles exist in multiple states until measured.\nFIBONACCI SEQUENCE: Patterns naturally in plants, shells, hurricanes.\nRELATIVITY OF TIME: Time depends on speed and gravity.\nGAME THEORY: How people make decisions when outcomes depend on others' choices.",
+    "directive": "Master these topics to move from hasty conclusions to careful analysis.",
+    "category": "WISDOM",
+    "intensity": 2,
+    "icon": "psychology"
+  },
+  {
+    "id": "dom_market_01",
+    "title": "DEPTH OF MARKET (DOM) EXPLAINED",
+    "content": "VOLUME PROFILE: Total bought/sold at each price level. Delta shows who dominated.\nBID / ASK: Bid = passive buyers below market. Ask = passive sellers above market.\nORDERFLOW: Absorption (stall/reversal), Spoofing (fake orders), Stacking (bias forming), Sweeping (aggressive momentum), Fading liquidity (weakness).",
+    "directive": "The DOM is the closest thing to seeing the market's intentions in real time.",
+    "category": "PRAGMATISM",
+    "intensity": 3,
+    "icon": "account_balance"
+  },
+  {
+    "id": "personal_branding_01",
+    "title": "PRINCIPLES OF PERSONAL BRANDING",
+    "content": "1. Position with Intention: Find a problem you can solve and solve it. Don't try to be everything.\n2. Be Clear About Values: Craft a personal mission to prevent confusion.\n3. Stay Consistent: Reinforce trust through message and visuals.\n4. Share Value, Not Noise: Prioritize education/inspiration over popularity trends.\n5. Be Authentic, Not Perfect: Showing your real self builds genuine connections.",
+    "directive": "You don't need to be loved by all. You just need to solve a problem worth solving.",
+    "category": "DOMINANCE",
+    "intensity": 2,
+    "icon": "bolt"
+  },
+  {
+    "id": "ten_k_playbook_01",
+    "title": "HOW TO READ A 10-K IN 20 MINUTES",
+    "content": "1. Item 1 - Business description: Revenue model, customers, key products.\n2. Item 1A - Risk factors: Scan for specific risks (regulatory, technology, key person).\n3. Item 7 - MD&A: Management's explanation of what happened and forward outlook.\n4. Financials: Anchoring key numbers (Revenue, EBITDA, Capex, FCF, Debt).\n5. Item 3 - Legal & Related Party: Material litigation and insider transactions.",
+    "directive": "Management Discussion (Item 7) is the gold. It explains the numbers before you look at them.",
+    "category": "PRAGMATISM",
+    "intensity": 3,
+    "icon": "account_balance"
+  },
+  {
+    "id": "valuation_methods_01",
+    "title": "TOP 5 VALUATION METHODS",
+    "content": "1. DCF (Discounted Cash Flow): Project future flows, discount back. Most rigorous, most assumptions.\n2. Trading Comps: EV/EBITDA. What public markets pay for similar businesses.\n3. Precedent Transactions: What acquirers actually paid. Includes control premium (20-40%).\n4. LBO Analysis: What a PE buyer can pay and hit 20% IRR. Sets the floor valuation.\n5. Sum-of-the-Parts (SOTP): Value each division separately. Used for conglomerates.",
+    "directive": "A DCF does not tell you what a company is worth. It tells you what it is worth if your assumptions are right.",
+    "category": "PRAGMATISM",
+    "intensity": 2,
+    "icon": "account_balance"
+  },
+  {
+    "id": "banking_terms_01",
+    "title": "8 TERMS EVERY BANKER KNOWS",
+    "content": "TERM 01: EBITDA - Proxy for core operating cash flow.\nTERM 02: WACC - Blended rate to satisfy debt and equity investors.\nTERM 03 & 04: FCF - Unlevered (UFCF) before debt; Levered (LFCF) after interest.\nTERM 05: LBO - Acquisition financed with 60-80% debt.\nTERM 06: Accretion vs Dilution - Accretive (EPS up), Dilutive (EPS down).\nQUICK QUIZ: If no debt/cash, EV = Market Cap.",
+    "directive": "Bankers don't speak in sentences. They speak in acronyms. Master the language.",
+    "category": "DOMINANCE",
+    "intensity": 3,
+    "icon": "bolt"
+  },
+  {
+    "id": "mvp_build_01",
+    "title": "HOW TO BUILD YOUR MVP",
+    "content": "1. Spot a pain point worth solving.\n2. Validate: Build a waitlist or capture pre-orders.\n3. Simple Landing Page: Explain problem + solution clearly.\n4. Core Feature: Strip away nice-to-haves. One feature that changes workflow.\n5. Add Payments early: Even $5 proves real demand.\n6. Feedback & Iterate: Talk to paying customers to prioritize real pain.",
+    "directive": "Get this thing in the hands of your customers as soon as possible. Validation is money.",
+    "category": "DOMINANCE",
+    "intensity": 2,
+    "icon": "bolt"
+  },
+  {
+    "id": "well_educated_01",
+    "title": "HOW TO BE DANGEROUSLY WELL EDUCATED",
+    "content": "READING: Real books, classics, philosophy. Expand vocabulary.\nJOURNALING: Reflecting on what you learned. Third perspective clarity.\nHOBBIES: Chess, Sudoku, crosswords. Brain stimulation.\nPODCASTS: Complex topics. Different perspectives.\nDEBATING: Strengthen speech and critical thinking.\nDETOX: Artificial dopamine detox to heal attention span.\nHISTORY: Trains pattern recognition for politics and society.\nWRITING: Forces clarity and finds knowledge gaps.",
+    "directive": "Writing forces clarity. Clear communication creates clear thinking. Recognize the patterns.",
+    "category": "ASCETICISM",
+    "intensity": 3,
+    "icon": "psychology"
+  },
+  {
+    "id": "social_life_01",
+    "title": "HOW TO IMPROVE YOUR SOCIAL LIFE",
+    "content": "1. Conversation continuer: Add related thoughts, react with emotion.\n2. Invite casually: Low pressure (e.g., 'going to the cafe later, join?').\n3. Don't try to impress: Connect with curiosity and listening instead of trying to seem cool.\n4. Intellectualize: Use podcasts and books to aid learning and share knowledge.",
+    "directive": "Someone who listens is more liked. Become a curiosity-driven attractor.",
+    "category": "HUMAN NATURE",
+    "intensity": 1,
+    "icon": "favorite"
+  },
+  {
+    "id": "habits_success_01",
+    "title": "HABITS OF SUCCESSFUL INDIVIDUALS",
+    "content": "1. Constant learning: Podcasts, books, YouTube.\n2. Intentional mornings: Protect time, no phone.\n3. Surround yourself with the right people: You are who you surround yourself with.\n4. Habit track: Monitor both good and bad habits.\n5. Discipline over motivation: Practice until mastery, regardless of mood.",
+    "directive": "Work so hard your future self is proud of your past decisions. Discipline shapes everything.",
+    "category": "PURPOSE",
+    "intensity": 3,
+    "icon": "track_changes"
+  },
+  {
+    "id": "machiavelli_01",
+    "title": "MACHIAVELLIAN RUTHLESSNESS",
+    "content": "Universities teach cooperation. Reality rewards ruthlessness. It is better to be feared than loved, if you cannot be both. Love is held by a chain of obligation which, because men are selfish, is broken whenever their self-interest is served; but fear is maintained by a dread of punishment which never fails.",
+    "directive": "If you must strike, strike so hard that you never have to fear retaliation.",
+    "category": "DOMINANCE",
+    "intensity": 3,
+    "icon": "bolt"
+  },
+  {
+    "id": "power_01",
+    "title": "48 LAWS OF POWER: SUMMARY",
+    "content": "1. Never outshine the master. 3. Conceal your intentions. 4. Always say less than necessary. 6. Court attention at all cost. 9. Win through your actions, never through argument. 10. Infection: Avoid the unhappy and unlucky. 15. Crush your enemy totally.",
+    "directive": "The world is a game of power. If you don't play, you are the piece.",
+    "category": "DOMINANCE",
+    "intensity": 3,
+    "icon": "bolt"
+  },
+  {
+    "id": "dark_psych_01",
+    "title": "COGNITIVE DISSONANCE AS A WEAPON",
+    "content": "People cannot hold two conflicting beliefs. When you force a target to choose between their identity and your narrative, they will experience extreme mental stress. They will often choose the narrative that preserves their ego, even if it's false. This is how cults and high-control organizations operate.",
+    "directive": "Recognize when your ego is being used against you. Kill the ego to see the truth.",
+    "category": "HUMAN NATURE",
+    "intensity": 3,
+    "icon": "favorite"
+  },
+  {
+    "id": "warfare_01",
+    "title": "THE ART OF WAR: DECEPTION",
+    "content": "All warfare is based on deception. Hence, when we are able to attack, we must seem unable; when using our forces, we must appear inactive; when we are near, we must make the enemy believe we are far away; when far away, we must make him believe we are near.",
+    "directive": "Appear weak when you are strong, and strong when you are weak.",
+    "category": "DOMINANCE",
+    "intensity": 3,
+    "icon": "bolt"
+  },
+  {
+    "id": "projection_01",
+    "title": "PSYCHOLOGICAL PROJECTION",
+    "content": "People project their own insecurities, failures, and dark traits onto others. If someone constantly accuses you of being 'fake' or 'untrustworthy' without evidence, they are likely describing themselves. This is a subconscious defense mechanism to avoid facing their own reality.",
+    "directive": "When someone attacks you, ask: 'Is this about me, or are they confessing?'",
+    "category": "HUMAN NATURE",
+    "intensity": 2,
+    "icon": "visibility"
+  },
+  {
+    "id": "scarcity_01",
+    "title": "THE SCARCITY PRINCIPLE",
+    "content": "Value is derived from perceived scarcity. If you are always available, you are cheap. If your time is difficult to obtain, you are valuable. This applies to relationships, jobs, and market goods. High-end brands create artificial scarcity to maintain premium pricing.",
+    "directive": "Withdraw your presence. Let them feel the weight of your absence.",
+    "category": "HUMAN NATURE",
+    "intensity": 2,
+    "icon": "favorite"
+  },
+  {
+    "id": "sunk_cost_01",
+    "title": "SUNK COST FALLACY",
+    "content": "The tendency to continue an endeavor once an investment in money, effort, or time has been made. Universities teach 'grit.' Reality teaches 'cut your losses.' If a project, relationship, or investment is failing, the resources you've already spent are gone. Don't throw good money after bad.",
+    "directive": "If the ship is sinking, don't keep bailing. Jump.",
+    "category": "PRAGMATISM",
+    "intensity": 3,
+    "icon": "payments"
+  },
+  {
+    "id": "reciprocity_01",
+    "title": "RECIPROCITY AS A TRAP",
+    "content": "A powerful social trigger: people feel obligated to return a favor. Dark manipulators give small, unsolicited 'gifts' to trigger a debt that they can collect later at a much higher price. Be wary of 'free' things from those who want something from you.",
+    "directive": "Never accept a gift you didn't ask for. It is a leash.",
+    "category": "HUMAN NATURE",
+    "intensity": 2,
+    "icon": "favorite"
+  },
+  {
+    "id": "gaslighting_01",
+    "title": "GASLIGHTING: NEUTRALIZATION",
+    "content": "Gaslighting is a form of psychological manipulation where a person or group makes someone question their own sanity, perception of reality, or memories. Neutralize it by keeping a record of facts and refusing to engage in circular arguments about what 'really happened.'",
+    "directive": "Trust your eyes more than their words. Your reality is not up for debate.",
+    "category": "HUMAN NATURE",
+    "intensity": 3,
+    "icon": "favorite"
+  },
+  {
+    "id": "bystander_01",
+    "title": "THE BYSTANDER EFFECT",
+    "content": "In a group, individual responsibility is diluted. People are less likely to help a victim when others are present. In the corporate world, this is why 'group projects' fail and why no one takes ownership of a crisis. If you want something done, you must assign it to one specific individual.",
+    "directive": "If you are in trouble, point at one person and give them a direct command.",
+    "category": "MODERN SOCIETY",
+    "intensity": 2,
+    "icon": "security"
+  },
+  {
+    "id": "surveillance_01",
+    "title": "SURVEILLANCE CAPITALISM",
+    "content": "The monetization of data acquired through surveillance. Your attention is the product. Every click, scroll, and 'like' is a data point used to build a model of your behavior that can be predicted and manipulated for profit.",
+    "directive": "If the service is free, you are the product. Opt out of the model.",
+    "category": "MODERN SOCIETY",
+    "intensity": 3,
+    "icon": "security"
+  },
+  {
+    "id": "pareto_01",
+    "title": "THE PARETO PRINCIPLE (80/20)",
+    "content": "80% of outcomes come from 20% of causes. In your life, 20% of your friends cause 80% of your drama. 20% of your tasks produce 80% of your results. 20% of your knowledge provides 80% of your value.",
+    "directive": "Identify the critical 20%. Cut the remaining 80% with a meat cleaver.",
+    "category": "PRAGMATISM",
+    "intensity": 2,
+    "icon": "bolt"
+  },
+  {
+    "id": "lindy_01",
+    "title": "THE LINDY EFFECT",
+    "content": "The future life expectancy of non-perishable things (ideas, books, systems) is proportional to their current age. If a book has been in print for 50 years, it will likely be in print for another 50. If a tweet was posted 10 minutes ago, it will likely be forgotten in 10 minutes.",
+    "directive": "Read old books. They have survived the filter of time. New information is mostly noise.",
+    "category": "WISDOM",
+    "intensity": 2,
+    "icon": "visibility"
+  },
+  {
+    "id": "occams_01",
+    "title": "OCCAM'S RAZOR",
+    "content": "The simplest explanation is usually the correct one. If you have two competing theories, the one with the fewest assumptions is the winner. Don't look for complex conspiracies when incompetence or simple greed explain the outcome.",
+    "directive": "Stop overcomplicating. Most people are not smart enough to execute complex plots.",
+    "category": "WISDOM",
+    "intensity": 2,
+    "icon": "psychology"
+  },
+  {
+    "id": "first_principles_01",
+    "title": "FIRST PRINCIPLES THINKING",
+    "content": "Universities teach reasoning by analogy (copying what others do). First principles thinking means breaking down a problem into its basic truths and building up from there. It is the only way to innovate or solve 'impossible' problems.",
+    "directive": "Ask 'Why?' until you reach a fundamental truth. Everything else is just a guess.",
+    "category": "WISDOM",
+    "intensity": 3,
+    "icon": "psychology"
+  },
+  {
+    "id": "discomfort_01",
+    "title": "VOLUNTARY DISCOMFORT",
+    "content": "The practice of exposing yourself to small, controlled amounts of hardship (cold showers, fasting, sleeping on the floor). It breaks your addiction to comfort and builds the 'Inner Citadel' that can withstand actual crisis.",
+    "directive": "If you cannot survive without your luxuries, you are a slave to them.",
+    "category": "ASCETICISM",
+    "intensity": 2,
+    "icon": "psychology"
+  },
+  {
+    "id": "amor_fati_01",
+    "title": "AMOR FATI",
+    "content": "Love of fate. Not just accepting what happens, but embracing it as necessary and good. Whether it is a win or a total loss, it is fuel for your growth. Nothing is 'bad'—it is just another data point in the algorithm of your life.",
+    "directive": "Stop wishing for things to be different. Use what is in front of you.",
+    "category": "UNSHAKEABLE",
+    "intensity": 3,
+    "icon": "shield"
+  },
+  {
+    "id": "memento_mori_01",
+    "title": "MEMENTO MORI",
+    "content": "Remember you will die. This is not morbid; it is a prioritization tool. If you were going to die tomorrow, would you care about that email? That person's opinion? That small failure? Death is the only true perspective shifter.",
+    "directive": "You have a finite amount of time. Stop acting like you have forever.",
+    "category": "UNSHAKEABLE",
+    "intensity": 3,
+    "icon": "shield"
+  },
+  {
+    "id": "premeditatio_01",
+    "title": "PREMEDITATIO MALORUM",
+    "content": "The premeditation of evils. Imagine every possible thing that could go wrong in your plan. If you have already faced the catastrophe in your mind, you cannot be surprised. You are always ready.",
+    "directive": "Optimism is a weakness. Preparation is strength.",
+    "category": "UNSHAKEABLE",
+    "intensity": 3,
+    "icon": "shield"
+  },
+  {
+    "id": "citadel_01",
+    "title": "THE INNER CITADEL",
+    "content": "Your mind is a fortress. External events can lay siege to it, but they can only enter if you open the gates. Your judgment of an event is the only thing that can disturb you. If you refuse to label a loss as 'bad,' it has no power over you.",
+    "directive": "Build your fortress. Let the world scream at the walls. Stay silent inside.",
+    "category": "UNSHAKEABLE",
+    "intensity": 3,
+    "icon": "shield"
+  },
+  {
+    "id": "contract_01",
+    "title": "THE SOCIAL CONTRACT: ILLUSION",
+    "content": "Universities teach that the social contract is a fair agreement for protection. Reality: It is a set of rules designed by the powerful to maintain order. It is only 'fair' as long as you have the power to negotiate your place within it.",
+    "directive": "Follow the rules for safety, but understand them for profit.",
+    "category": "MODERN SOCIETY",
+    "intensity": 2,
+    "icon": "security"
+  },
+  {
+    "id": "nihilism_01",
+    "title": "NIHILISM AS FREEDOM",
+    "content": "If nothing matters, then the weight of expectation is gone. You are free to create your own meaning, your own values, and your own path. Nihilism is not a black hole; it is a blank canvas.",
+    "directive": "If life is meaningless, then you are the god of your own micro-universe. Build something.",
+    "category": "THE VOID",
+    "intensity": 2,
+    "icon": "volume_off"
+  },
+  {
+    "id": "dread_01",
+    "title": "EXISTENTIAL DREAD AS FUEL",
+    "content": "The feeling of deep anxiety about the meaning of life. Don't suppress it. Use it. It is your soul screaming that you are wasting your potential. That dread is the energy you need to break out of your comfort zone.",
+    "directive": "When you feel the void staring back, start building your legacy.",
+    "category": "PURPOSE",
+    "intensity": 3,
+    "icon": "track_changes"
+  },
+  {
+    "id": "attention_01",
+    "title": "THE ATTENTION ECONOMY: WAR",
+    "content": "Every app, notification, and headline is a soldier in a war for your focus. If you lose your attention, you lose your life. Whoever controls your focus controls your reality.",
+    "directive": "Delete the noise. Guard your focus like your life depends on it. It does.",
+    "category": "MODERN SOCIETY",
+    "intensity": 3,
+    "icon": "security"
+  },
+  {
+    "id": "data_oil_01",
+    "title": "DATA AS THE NEW OIL",
+    "content": "Data is the raw material of the 21st century. Those who extract, refine, and own it control the world. Your personal data is being harvested to build models that know you better than you know yourself.",
+    "directive": "Control your data. If you don't own it, it will be used to own you.",
+    "category": "TECHNOLOGY",
+    "intensity": 2,
+    "icon": "terminal"
+  },
+  {
+    "id": "crypto_01",
+    "title": "CRYPTO: SEPARATION OF STATE",
+    "content": "The true meaning of cryptocurrency is the separation of money and state. It is a trustless, decentralized system that renders central banks and government surveillance obsolete. It is the ultimate tool for financial sovereignty.",
+    "directive": "Don't buy for the hype. Buy for the exit from the system.",
+    "category": "PRAGMATISM",
+    "intensity": 3,
+    "icon": "payments"
+  },
+  {
+    "id": "blockchain_01",
+    "title": "BLOCKCHAIN: TRUSTLESS SYSTEM",
+    "content": "A blockchain is a decentralized ledger that requires no central authority. It replaces trust with math. It is the architecture of a future where we don't need 'institutions' to verify the truth.",
+    "directive": "Understand the math. Trust the code. Ignore the middleman.",
+    "category": "TECHNOLOGY",
+    "intensity": 2,
+    "icon": "terminal"
+  },
+  {
+    "id": "biohacking_01",
+    "title": "BIOHACKING: THE UPGRADED HUMAN",
+    "content": "The art and science of using technology and biology to optimize your body and mind. Universities teach 'health' as the absence of disease. Biohacking treats health as the pursuit of performance.",
+    "directive": "Your body is hardware. Your habits are the OS. Upgrade everything.",
+    "category": "ASCETICISM",
+    "intensity": 2,
+    "icon": "psychology"
+  },
+  {
+    "id": "dopamine_01",
+    "title": "DOPAMINE FASTING",
+    "content": "The practice of withdrawing from all artificial stimulation (phones, sugar, music, social media) for 24-48 hours. It resets your brain's reward system and restores your ability to focus on difficult, long-term goals.",
+    "directive": "If you are addicted to the cheap hit, you will never earn the big win.",
+    "category": "ASCETICISM",
+    "intensity": 3,
+    "icon": "psychology"
+  },
+  {
+    "id": "shadow_01",
+    "title": "SHADOW WORK",
+    "content": "The process of exploring your repressed dark traits, desires, and impulses. Universities teach you to be 'nice.' Shadow work teaches you to be 'whole.' A man who has integrated his shadow is far more dangerous—and far more effective—than a man who suppresses it.",
+    "directive": "Face the monster in your head. Put it on a leash. Use its power.",
+    "category": "EMOTIONAL CONTROL",
+    "intensity": 3,
+    "icon": "psychology"
+  },
+  {
+    "id": "transference_01",
+    "title": "TRANSFERENCE",
+    "content": "A psychological phenomenon where a person redirects their feelings from one person to another. Manipulators use this to make you view them as a parental figure or a savior, bypassing your critical thinking.",
+    "directive": "Observe your emotional reactions. Are they about the person in front of you, or a ghost from your past?",
+    "category": "HUMAN NATURE",
+    "intensity": 2,
+    "icon": "favorite"
+  },
+  {
+    "id": "halo_01",
+    "title": "THE HALO EFFECT",
+    "content": "The tendency for an impression created in one area to influence opinion in another. If someone is attractive, we subconsciously assume they are also smart, kind, and trustworthy. Dark psychology uses this to sell lies via a polished facade.",
+    "directive": "Strip away the appearance. Evaluate the logic alone.",
+    "category": "HUMAN NATURE",
+    "intensity": 2,
+    "icon": "visibility"
+  },
+  {
+    "id": "confirmation_01",
+    "title": "CONFIRMATION BIAS",
+    "content": "The tendency to search for, interpret, and favor information in a way that confirms one's preexisting beliefs. This is how bubbles are formed and why people stay stuck in failing ideologies.",
+    "directive": "Actively look for evidence that you are wrong. It is the only way to be right.",
+    "category": "WISDOM",
+    "intensity": 2,
+    "icon": "psychology"
+  },
+  {
+    "id": "pygmalion_01",
+    "title": "THE PYGMALION EFFECT",
+    "content": "High expectations lead to improved performance in a given area. If you treat someone as if they are competent and powerful, they will often become so. Conversely, low expectations will crush potential.",
+    "directive": "Set impossible standards for yourself. Your brain will adapt to meet them.",
+    "category": "HUMAN NATURE",
+    "intensity": 2,
+    "icon": "favorite"
+  },
+  {
+    "id": "prisoner_01",
+    "title": "THE PRISONER'S DILEMMA",
+    "content": "A standard example of a game analyzed in game theory that shows why two completely rational individuals might not cooperate, even if it appears that it is in their best interests to do so. It explains the inherent instability of alliances.",
+    "directive": "Never assume loyalty. Assume the other party will act in their own self-interest when the pressure is on.",
+    "category": "WISDOM",
+    "intensity": 3,
+    "icon": "psychology"
+  },
+  {
+    "id": "zero_sum_01",
+    "title": "ZERO-SUM GAMES",
+    "content": "A situation in which one person's gain is equivalent to another's loss, so the net change in wealth or benefit is zero. Universities teach that 'everyone can win.' Reality: Most power and status games are zero-sum.",
+    "directive": "If you are in a zero-sum game, win. There is no middle ground.",
+    "category": "WISDOM",
+    "intensity": 2,
+    "icon": "bolt"
+  },
+  {
+    "id": "commons_01",
+    "title": "TRAGEDY OF THE COMMONS",
+    "content": "An economic problem in which every individual has an incentive to consume a resource, but at the expense of every other individual—with no way to exclude anyone from consuming. It leads to the inevitable collapse of shared systems.",
+    "directive": "Don't rely on the 'common' good. Build your own private reserves.",
+    "category": "MODERN SOCIETY",
+    "intensity": 2,
+    "icon": "security"
+  },
+  {
+    "id": "overton_01",
+    "title": "THE OVERTON WINDOW",
+    "content": "The range of policies acceptable to the mainstream population at a given time. Politicians and media work to shift this window to make radical ideas seem 'normal.' If you control the window, you control what people think is possible.",
+    "directive": "Observe what is currently 'unthinkable.' That is where the next shift will happen.",
+    "category": "MODERN SOCIETY",
+    "intensity": 3,
+    "icon": "security"
+  },
+  {
+    "id": "straw_man_01",
+    "title": "STRAW MAN ARGUMENT",
+    "content": "Misrepresenting someone's argument to make it easier to attack. By exaggerating or distorting the position, you create a 'straw man' that is easily knocked down, giving the illusion that you've won the actual debate.",
+    "directive": "When you are being attacked, bring the argument back to the original facts. Don't chase their ghost.",
+    "category": "HUMAN NATURE",
+    "intensity": 2,
+    "icon": "favorite"
+  },
+  {
+    "id": "ad_hominem_01",
+    "title": "AD HOMINEM ATTACK",
+    "content": "Attacking the person instead of the argument. This is the last resort of someone who has lost the logical battle. They want to discredit the source because they cannot discredit the message.",
+    "directive": "If they attack your character, it means they have no answer for your logic. Take the win.",
+    "category": "HUMAN NATURE",
+    "intensity": 2,
+    "icon": "favorite"
+  },
+  {
+    "id": "slippery_01",
+    "title": "SLIPPERY SLOPE FALLACY",
+    "content": "The argument that a small first step will inevitably lead to a chain of related (and typically negative) events. While sometimes true, it is often used to paralyze action via fear of the 'unknown' future.",
+    "directive": "Take the step. If the slope gets slippery, use spikes. Don't fear the outcome before you start.",
+    "category": "HUMAN NATURE",
+    "intensity": 2,
+    "icon": "favorite"
+  },
+  {
+    "id": "false_dilemma_01",
+    "title": "FALSE DILEMMA",
+    "content": "Presenting only two options when many more exist. 'You're either with us or against us.' This is a tool of control used to force people into a binary choice that serves the manipulator's narrative.",
+    "directive": "When given two options, look for the third. And the fourth. The binary is a cage.",
+    "category": "HUMAN NATURE",
+    "intensity": 2,
+    "icon": "favorite"
+  },
+  {
+    "id": "circular_01",
+    "title": "CIRCULAR REASONING",
+    "content": "A logical fallacy in which the reasoner begins with what they are trying to end with. 'The system is right because the system says it's right.' It is a closed loop of logic that avoids external validation.",
+    "directive": "Break the loop. Look for evidence outside the system's own claims.",
+    "category": "HUMAN NATURE",
+    "intensity": 2,
+    "icon": "favorite"
+  },
+  {
+    "id": "power_48",
+    "title": "LAW #48: ASSUME FORMLESSNESS",
+    "content": "By taking a shape, by having a visible plan, you open yourself to attack. Instead of a form that your enemy can grasp, keep yourself adaptable and on the move. Accept the fact that nothing is certain and no law is fixed. The best way to protect yourself is to be as fluid and formless as water; never bet on stability or lasting order. Everything changes.",
+    "directive": "Do not let them pin you down. A moving target is impossible to hit.",
+    "category": "DOMINANCE",
+    "intensity": 3,
+    "icon": "bolt"
+  },
+  {
+    "id": "art_of_war_subdue",
+    "title": "SUBDUE WITHOUT FIGHTING",
+    "content": "The supreme art of war is to subdue the enemy without fighting. To win one hundred victories in one hundred battles is not the acme of skill. To subdue the enemy without fighting is the acme of skill. Break the enemy's resistance without a single shot being fired by attacking their strategy and their alliances.",
+    "directive": "Win the war in their mind before you ever step onto the battlefield.",
+    "category": "DOMINANCE",
+    "intensity": 3,
+    "icon": "bolt"
+  },
+  {
+    "id": "neg_flinch",
+    "title": "NEGOTIATION: THE FLINCH",
+    "content": "A physical or verbal reaction to a proposal. When the other party gives you a price or a term, flinch. Act shocked. Even if the deal is good, the flinch signals that their offer is unacceptable. It forces them to justify their position or make an immediate concession.",
+    "directive": "Never accept the first offer without a visible flinch. Make them earn the 'yes'.",
+    "category": "DOMINANCE",
+    "intensity": 2,
+    "icon": "bolt"
+  },
+  {
+    "id": "ben_franklin",
+    "title": "THE BENJAMIN FRANKLIN EFFECT",
+    "content": "A person who has already performed a favor for another is more likely to do another favor for the other than if they had received a favor from that person. By asking for a small favor, you make the other person justify their action by believing they must like you.",
+    "directive": "Ask your enemy for a small favor. Watch their resentment turn into compliance.",
+    "category": "HUMAN NATURE",
+    "intensity": 2,
+    "icon": "favorite"
+  },
+  {
+    "id": "foot_in_door",
+    "title": "FOOT-IN-THE-DOOR TECHNIQUE",
+    "content": "A compliance tactic that involves getting a person to agree to a large request by first setting them up by having them agree to a modest request. The small 'yes' creates a psychological bond that makes the large 'yes' feel like a natural progression.",
+    "directive": "Start small. The path to 'total surrender' begins with a simple request.",
+    "category": "HUMAN NATURE",
+    "intensity": 2,
+    "icon": "favorite"
+  },
+  {
+    "id": "social_proof_war",
+    "title": "SOCIAL PROOF AS A WEAPON",
+    "content": "People look to others to determine correct behavior, especially in uncertain situations. Manipulators manufacture 'crowds' or 'consensus' to force you into compliance. If everyone else is doing it, your brain tells you it must be right. It is often a trap.",
+    "directive": "Identify the 'manufactured consensus'. Stand alone if the crowd is heading for a cliff.",
+    "category": "HUMAN NATURE",
+    "intensity": 3,
+    "icon": "favorite"
+  },
+  {
+    "id": "compound_8th",
+    "title": "COMPOUND INTEREST: 8TH WONDER",
+    "content": "Compound interest is the eighth wonder of the world. He who understands it, earns it; he who doesn't, pays it. It applies not just to money, but to skills, reputation, and relationships. Small, consistent efforts over time produce explosive, exponential results.",
+    "directive": "Choose your daily actions based on what they will look like in 10 years.",
+    "category": "PRAGMATISM",
+    "intensity": 2,
+    "icon": "payments"
+  },
+  {
+    "id": "margin_safety",
+    "title": "THE MARGIN OF SAFETY",
+    "content": "Never invest, build, or plan to the absolute edge of your resources. Always leave a buffer. If you think a bridge can hold 10,000 lbs, only drive a 6,000 lb truck across it. The margin of safety is your protection against the 'unknown unknowns' of the universe.",
+    "directive": "Always assume you are wrong about the limit. Build the buffer.",
+    "category": "PRAGMATISM",
+    "intensity": 2,
+    "icon": "shield"
+  },
+  {
+    "id": "power_of_no",
+    "title": "THE POWER OF NO",
+    "content": "Every time you say 'yes' to something you don't want, you are saying 'no' to something you do want. 'No' is a complete sentence. It is the ultimate tool for boundary enforcement and time management. It signals that your time and energy are not public property.",
+    "directive": "Say 'No' until only the essential 'Yes' remains. Be ruthless with your time.",
+    "category": "THE VOID",
+    "intensity": 2,
+    "icon": "volume_off"
+  },
+  {
+    "id": "warrior_fast",
+    "title": "THE WARRIOR'S FAST",
+    "content": "Going 24 hours without food or water (if safe). It is not about health; it is about dominance over the animal self. When you prove to your brain that you can survive without its most basic demands, you gain a level of mental clarity and confidence that cannot be bought.",
+    "directive": "Kill the 'need'. Prove that you are the master of the machine.",
+    "category": "ASCETICISM",
+    "intensity": 3,
+    "icon": "psychology"
+  },
+  {
+    "id": "fortitude_40",
+    "title": "THE 40% RULE",
+    "content": "When your mind tells you that you are finished, that you are exhausted and cannot go any further, you are actually only 40% through your actual capacity. Your brain is a governor designed to keep you safe. To achieve greatness, you must learn to ignore the alarm and push into the remaining 60%.",
+    "directive": "When you want to quit, realize you've only just started. Push.",
+    "category": "ASCETICISM",
+    "intensity": 3,
+    "icon": "psychology"
+  },
+  {
+    "id": "stoic_fork",
+    "title": "THE STOIC FORK",
+    "content": "Every situation in life can be split into two paths: what you control and what you do not. Most people waste 90% of their energy on the path of 'no control'. The Stoic fork is the mental act of discarding the useless path immediately and focusing 100% of your power on your own response.",
+    "directive": "Identify the fork. Stop feeding the side that doesn't belong to you.",
+    "category": "UNSHAKEABLE",
+    "intensity": 3,
+    "icon": "shield"
+  },
+  {
+    "id": "authority_bias",
+    "title": "AUTHORITY BIAS",
+    "content": "The tendency to attribute greater accuracy to the opinion of an authority figure and be more influenced by that opinion. Universities rely on this to maintain the hierarchy. In reality, authorities are often wrong, compromised, or simply following an outdated script.",
+    "directive": "Question the expert. Evaluate the data, not the degree.",
+    "category": "HUMAN NATURE",
+    "intensity": 2,
+    "icon": "security"
+  },
+  {
+    "id": "jomo_wisdom",
+    "title": "JOMO: JOY OF MISSING OUT",
+    "content": "The intentional decision to withdraw from the digital and social noise to focus on deep work and self-reflection. While others are frantic about 'staying relevant' or 'keeping up,' you are building your empire in the quiet. Silence is where power is refined.",
+    "directive": "Unplug. Let them have the noise. You take the progress.",
+    "category": "THE VOID",
+    "intensity": 2,
+    "icon": "volume_off"
+  },
+  {
+    "id": "propaganda_tech",
+    "title": "PROPAGANDA ARCHITECTURE",
+    "content": "Modern propaganda is not about telling lies; it's about framing the truth in a way that leads to a specific conclusion. By controlling the narrative flow and omitting key context, the system can make you hate your allies and love your oppressors without ever breaking a law.",
+    "directive": "Look for what is NOT being said. The omission is where the truth is hidden.",
+    "category": "MODERN SOCIETY",
+    "intensity": 3,
+    "icon": "security"
+  },
+  {
+    "id": "financial_sovereignty",
+    "title": "FINANCIAL SOVEREIGNTY",
+    "content": "The state of being independent from any single system for your survival. If you rely on one employer, one bank, or one government, you are a hostage. Sovereignty requires multiple streams of income, offshore assets (where legal), and a portable skillset.",
+    "directive": "Build your exit strategy. Dependence is a slow-motion disaster.",
+    "category": "PRAGMATISM",
+    "intensity": 3,
+    "icon": "payments"
+  },
+  {
+    "id": "dark_stoicism",
+    "title": "DARK STOICISM: DETACHMENT",
+    "content": "Detachment is not about being cold; it is about being untouchable. If you care about nothing external, you cannot be manipulated. By realizing that everything—your house, your job, even your family—can be taken away in a second, you gain a terrifying level of freedom.",
+    "directive": "Visualize losing everything today. If you are still standing, you are powerful.",
+    "category": "UNSHAKEABLE",
+    "intensity": 3,
+    "icon": "shield"
+  },
+  {
+    "id": "nash_eq",
+    "title": "NASH EQUILIBRIUM",
+    "content": "A stable state of a system involving the interaction of different participants, in which no participant can gain by a unilateral change of strategy if the strategies of the others remain unchanged. It explains why systems stay stuck in 'bad' states even when everyone knows a better one exists.",
+    "directive": "Don't try to change the system from within the equilibrium. Break the rules to force a new state.",
+    "category": "WISDOM",
+    "intensity": 2,
+    "icon": "psychology"
+  },
+  {
+    "id": "turing_trap",
+    "title": "THE TURING TRAP",
+    "content": "As AI becomes better at mimicking human behavior, we will enter an era where trust is impossible. Every voice, face, and text could be a machine. The 'Turing Trap' is the moment we start treating machines like humans and humans like machines. It is the end of traditional social contracts.",
+    "directive": "Verify everything. Trust nothing that cannot be proven in the physical world.",
+    "category": "TECHNOLOGY",
+    "intensity": 3,
+    "icon": "terminal"
+  },
+  {
+    "id": "bio_hack_mental",
+    "title": "BIOHACKING: NEUROPLASTICITY",
+    "content": "The brain's ability to reorganize itself by forming new neural connections. You can literally 're-wire' your personality, your fears, and your intelligence. It requires intense focus, repetition, and the right biochemical environment (sleep, nutrients, low stress).",
+    "directive": "Stop saying 'I am like this'. You are whatever you decide to build.",
+    "category": "ASCETICISM",
+    "intensity": 2,
+    "icon": "psychology"
+  }
+]

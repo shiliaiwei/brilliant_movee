@@ -13,7 +13,8 @@ class PieceSetInfo {
 
 /// Describes a board theme available locally.
 class BoardThemeInfo {
-  const BoardThemeInfo({required this.id, required this.name, required this.file});
+  const BoardThemeInfo(
+      {required this.id, required this.name, required this.file});
   final String id;
   final String name;
   final String file;
@@ -74,13 +75,11 @@ class AssetService {
   List<BoardThemeInfo> get boardThemes => List.unmodifiable(_boardThemes);
   List<SoundPackInfo> get soundPacks => List.unmodifiable(_soundPacks);
 
-  PieceSetInfo pieceSetById(String id) =>
-      _pieceSets.firstWhere((p) => p.id == id,
-          orElse: () => _defaultPieceSets.first);
+  PieceSetInfo pieceSetById(String id) => _pieceSets
+      .firstWhere((p) => p.id == id, orElse: () => _defaultPieceSets.first);
 
-  BoardThemeInfo boardThemeById(String id) =>
-      _boardThemes.firstWhere((b) => b.id == id,
-          orElse: () => _defaultBoardThemes.first);
+  BoardThemeInfo boardThemeById(String id) => _boardThemes
+      .firstWhere((b) => b.id == id, orElse: () => _defaultBoardThemes.first);
 
   /// Returns the asset path for a piece image.
   /// piece: e.g. 'wK', 'bQ', 'wP'
@@ -104,17 +103,27 @@ class AssetService {
     BoardThemeInfo(id: 'grey', name: 'Grey', file: 'assets/boards/grey.jpg'),
     BoardThemeInfo(id: 'maple', name: 'Maple', file: 'assets/boards/maple.jpg'),
     BoardThemeInfo(id: 'olive', name: 'Olive', file: 'assets/boards/olive.jpg'),
-    BoardThemeInfo(id: 'wood2', name: 'Wood 2', file: 'assets/boards/wood2.jpg'),
-    BoardThemeInfo(id: 'wood4', name: 'Wood 4', file: 'assets/boards/wood4.jpg'),
-    BoardThemeInfo(id: 'green-plastic', name: 'Green Plastic', file: 'assets/boards/green-plastic.png'),
-    BoardThemeInfo(id: 'newspaper', name: 'Newspaper', file: 'assets/boards/newspaper.png'),
+    BoardThemeInfo(
+        id: 'wood2', name: 'Wood 2', file: 'assets/boards/wood2.jpg'),
+    BoardThemeInfo(
+        id: 'wood4', name: 'Wood 4', file: 'assets/boards/wood4.jpg'),
+    BoardThemeInfo(
+        id: 'green-plastic',
+        name: 'Green Plastic',
+        file: 'assets/boards/green-plastic.png'),
+    BoardThemeInfo(
+        id: 'newspaper',
+        name: 'Newspaper',
+        file: 'assets/boards/newspaper.png'),
   ];
 
   static const _defaultSoundPacks = [
     SoundPackInfo(id: 'standard', name: 'Standard'),
     SoundPackInfo(id: 'piano', name: 'Piano'),
-    SoundPackInfo(id: 'robot', name: 'Robot'),
-    SoundPackInfo(id: 'nature', name: 'Nature'),
+    SoundPackInfo(id: 'nes', name: 'NES Retro'),
+    SoundPackInfo(id: 'sfx', name: 'Modern SFX'),
+    SoundPackInfo(id: 'futuristic', name: 'Cybernetic'),
+    SoundPackInfo(id: 'lisp', name: 'Voice Cues'),
   ];
 }
 

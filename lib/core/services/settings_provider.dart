@@ -11,6 +11,8 @@ class SettingsState {
     required this.engineVersion,
     required this.engineDepth,
     required this.multiPv,
+    required this.soundEnabled,
+    required this.soundPack,
   });
 
   final String boardTheme;
@@ -21,6 +23,8 @@ class SettingsState {
   final int engineVersion;
   final int engineDepth;
   final int multiPv;
+  final bool soundEnabled;
+  final String soundPack;
 
   SettingsState copyWith({
     String? boardTheme,
@@ -31,6 +35,8 @@ class SettingsState {
     int? engineVersion,
     int? engineDepth,
     int? multiPv,
+    bool? soundEnabled,
+    String? soundPack,
   }) {
     return SettingsState(
       boardTheme: boardTheme ?? this.boardTheme,
@@ -41,6 +47,8 @@ class SettingsState {
       engineVersion: engineVersion ?? this.engineVersion,
       engineDepth: engineDepth ?? this.engineDepth,
       multiPv: multiPv ?? this.multiPv,
+      soundEnabled: soundEnabled ?? this.soundEnabled,
+      soundPack: soundPack ?? this.soundPack,
     );
   }
 }
@@ -56,6 +64,8 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
           engineVersion: _storage.engineVersion,
           engineDepth: _storage.engineDepth,
           multiPv: _storage.multiPv,
+          soundEnabled: _storage.soundEnabled,
+          soundPack: _storage.soundPack,
         ));
 
   final StorageService _storage;
@@ -100,6 +110,16 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
   Future<void> toggleAutoAnalyze(bool value) async {
     await _storage.setAutoAnalyze(value);
     state = state.copyWith(autoAnalyze: value);
+  }
+
+  Future<void> toggleSound(bool value) async {
+    await _storage.setSoundEnabled(value);
+    state = state.copyWith(soundEnabled: value);
+  }
+
+  Future<void> updateSoundPack(String pack) async {
+    await _storage.setSoundPack(pack);
+    state = state.copyWith(soundPack: pack);
   }
 }
 

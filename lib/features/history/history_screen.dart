@@ -6,6 +6,7 @@ import '../../core/constants/app_text_styles.dart';
 import '../../core/constants/app_spacing.dart';
 import '../../core/widgets/cht_card.dart';
 import '../../core/widgets/cht_button.dart';
+import '../../core/widgets/fui_loading.dart';
 import '../../core/widgets/cht_error_state.dart';
 import '../../core/services/storage_service.dart';
 import '../../core/router/app_router.dart';
@@ -80,8 +81,7 @@ class HistoryScreen extends ConsumerWidget {
       ),
       body: SafeArea(
         child: gamesAsync.when(
-          loading: () => const Center(
-              child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: FuiLoading(label: 'FETCHING GAMES')),
           error: (e, _) => ChtErrorState(
             title: 'HISTORY ERROR',
             description: 'Failed to load your game history from Chess.com',

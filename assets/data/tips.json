@@ -1,282 +1,43 @@
 [
   {
     "id": 1,
-    "category": "opening",
-    "title": "Control the Center",
-    "explanation": "Controlling the center (e4, d4, e5, d5) is fundamental. It provides your pieces with the greatest mobility and restricts your opponent's development. By occupying or attacking these squares early with pawns and minor pieces, you establish a solid foundation for your middle game strategy.",
-    "resourceUrl": "https://www.chess.com/article/view/the-importance-of-the-center"
+    "category": "openingNames",
+    "title": {"en": "Italian Game", "km": "Italian Game"},
+    "explanation": {"en": "1.e4 e5 2.Nf3 Nc6 3.Bc4. The Italian Game is one of the oldest and most popular chess openings. It focuses on rapid development and controlling the center while targeting the f7 square.", "km": "1.e4 e5 2.Nf3 Nc6 3.Bc4។ Italian Game គឺជាការបើកអុកដែលចំណាស់ជាងគេ និងពេញនិយមបំផុតមួយ។ វាផ្តោតលើការអភិវឌ្ឍន៍រហ័ស និងការគ្រប់គ្រងចំណុចកណ្តាល ខណៈពេលដែលកំណត់គោលដៅលើការ៉េ f7។"},
+    "imageUrl": "https://images.chesscomfiles.com/proxy/guides.chess.com/images_users/tiny_mce/AnishGiri/phpP9yF5f.png"
   },
   {
     "id": 2,
-    "category": "opening",
-    "title": "Develop Pieces Quickly",
-    "explanation": "Speed is essential in the opening. Aim to bring your knights and bishops out to active squares within the first 10-12 moves. Delayed development often leads to a cramped position where your pieces are uncoordinated, making it easier for your opponent to launch an early attack.",
-    "resourceUrl": "https://lichess.org/practice/basic-tactics/opening-principles"
+    "category": "openingNames",
+    "title": {"en": "Sicilian Defense", "km": "Sicilian Defense"},
+    "explanation": {"en": "1.e4 c5. The Sicilian Defense is the most popular and best-scoring response to White's first move 1.e4. It is a combative opening that leads to complex and asymmetrical positions.", "km": "1.e4 c5។ Sicilian Defense គឺជាការឆ្លើយតបដែលពេញនិយមបំផុត និងទទួលបានពិន្ទុល្អបំផុតចំពោះការផ្លាស់ទីដំបូងរបស់ស 1.e4។ វាគឺជាការបើកសមរភូមិដែលនាំទៅរកទីតាំងស្មុគស្មាញ និងមិនស៊ីមេទ្រី។"},
+    "imageUrl": "https://images.chesscomfiles.com/proxy/guides.chess.com/images_users/tiny_mce/CHESScom/phpYqXW0E.png"
   },
   {
     "id": 3,
-    "category": "opening",
-    "title": "Castle Early",
-    "explanation": "King safety should be your top priority. Castling early moves your king away from the vulnerable center and brings one of your rooks into play. Most grandmaster games feature castling within the first 10 moves to ensure a secure defensive perimeter before the game opens up.",
-    "resourceUrl": "https://www.youtube.com/watch?v=A8vE2u6W7D8"
+    "category": "openingNames",
+    "title": {"en": "Ruy Lopez", "km": "Ruy Lopez"},
+    "explanation": {"en": "1.e4 e5 2.Nf3 Nc6 3.Bb5. Also known as the Spanish Opening, the Ruy Lopez is named after a 16th-century Spanish priest. It creates immediate pressure on the e5 pawn by attacking its defender.", "km": "1.e4 e5 2.Nf3 Nc6 3.Bb5។ ត្រូវបានគេស្គាល់ផងដែរថាជាការបើករបស់អេស្ប៉ាញ Ruy Lopez ត្រូវបានដាក់ឈ្មោះតាមបូជាចារ្យអេស្ប៉ាញសតវត្សទី 16 ។ វាបង្កើតសម្ពាធភ្លាមៗលើកូនអុក e5 ដោយវាយលុកអ្នកការពាររបស់វា។"},
+    "imageUrl": "https://images.chesscomfiles.com/proxy/guides.chess.com/images_users/tiny_mce/CHESScom/phphM3C9H.png"
   },
   {
     "id": 4,
-    "category": "opening",
-    "title": "Don't Move the Same Piece Twice",
-    "explanation": "In the opening, every move counts. Moving the same piece twice before your other pieces are developed is usually a waste of time (tempo). Unless you are winning material or forced to move, focus on bringing new pieces into the game to maintain pressure.",
-    "resourceUrl": null
+    "category": "openingNames",
+    "title": {"en": "French Defense", "km": "French Defense"},
+    "explanation": {"en": "1.e4 e6. The French Defense is a solid and resilient opening for Black. It immediately challenges the center with d5 after 1...e6, leading to strategic and closed pawn structures.", "km": "1.e4 e6។ French Defense គឺជាការបើកដ៏រឹងមាំ និងធន់សម្រាប់ខ្មៅ។ វាប្រកួតប្រជែងភ្លាមៗជាមួយមជ្ឈមណ្ឌលជាមួយ d5 បន្ទាប់ពី 1...e6 ដែលនាំទៅរកការរៀបចំកូនអុកជាយុទ្ធសាស្ត្រ និងបិទជិត។"},
+    "imageUrl": "https://images.chesscomfiles.com/proxy/guides.chess.com/images_users/tiny_mce/CHESScom/phpE7hO4p.png"
   },
   {
     "id": 5,
-    "category": "opening",
-    "title": "Knights Before Bishops",
-    "explanation": "Generally, it is better to develop knights before bishops. Knights are shorter-range pieces and their ideal squares (f3, c3 for White) are often more obvious. Developing bishops too early can expose them to being attacked or traded for a knight, losing the bishop pair advantage.",
-    "resourceUrl": null
+    "category": "openingNames",
+    "title": {"en": "Caro-Kann Defense", "km": "Caro-Kann Defense"},
+    "explanation": {"en": "1.e4 c6. Known for its extreme solidity, the Caro-Kann is often called the 'Iron Wall.' It is a safe choice for Black that prioritizes a strong pawn structure and endgame safety.", "km": "1.e4 c6។ ត្រូវបានគេស្គាល់ថាសម្រាប់ភាពរឹងមាំខ្លាំងរបស់វា Caro-Kann ជារឿយៗត្រូវបានគេហៅថា 'ជញ្ជាំងដែក'។ វាគឺជាជម្រើសដ៏មានសុវត្ថិភាពសម្រាប់ខ្មៅដែលផ្តល់អាទិភាពដល់រចនាសម្ព័ន្ធកូនអុកដ៏រឹងមាំ និងសុវត្ថិភាពចុងហ្គេម។"},
+    "imageUrl": "https://images.chesscomfiles.com/proxy/guides.chess.com/images_users/tiny_mce/CHESScom/phpJ6vT7H.png"
   },
   {
     "id": 6,
     "category": "opening",
-    "title": "Connect Your Rooks",
-    "explanation": "Connecting your rooks means having no pieces between them along your back rank. This is achieved by developing minor pieces and moving the queen. Connected rooks are powerful because they can defend each other and double up on files to exert maximum pressure.",
-    "resourceUrl": "https://www.chess.com/terms/rook-chess"
-  },
-  {
-    "id": 7,
-    "category": "opening",
-    "title": "Don't Bring the Queen Out Early",
-    "explanation": "The queen is your most valuable piece, and bringing her out early makes her a target. Opponents can develop their minor pieces while simultaneously harassing your queen, forcing you to move her multiple times and falling behind in development.",
-    "resourceUrl": null
-  },
-  {
-    "id": 8,
-    "category": "opening",
-    "title": "Fight for Center Space",
-    "explanation": "Space is a significant advantage in chess. By pushing pawns into the center, you create more room for your pieces to move and restrict your opponent's options. A space advantage allows you to switch your attack between different areas of the board more efficiently.",
-    "resourceUrl": null
-  },
-  {
-    "id": 9,
-    "category": "middlegame",
-    "title": "Coordinate Your Pieces",
-    "explanation": "In the middlegame, your pieces must work together as a unit. Isolated pieces are easy targets for tactical strikes. Look for ways to have your pieces support each other's attacks and defenses, creating a harmonious and resilient position.",
-    "resourceUrl": "https://www.chess.com/article/view/piece-coordination"
-  },
-  {
-    "id": 10,
-    "category": "middlegame",
-    "title": "Look for Weaknesses",
-    "explanation": "Always scan your opponent's position for weaknesses like isolated pawns, weak squares, or an exposed king. Once identified, direct your efforts toward exploiting these vulnerabilities. Forcing your opponent to defend weak points often creates new opportunities elsewhere.",
-    "resourceUrl": null
-  },
-  {
-    "id": 11,
-    "category": "middlegame",
-    "title": "Improve Your Worst Piece",
-    "explanation": "A common grandmaster technique is to identify the piece doing the least work and move it to a better square. Improving your 'worst piece' can drastically increase your overall board control and prepare you for a more effective offensive or defensive operation.",
-    "resourceUrl": null
-  },
-  {
-    "id": 12,
-    "category": "middlegame",
-    "title": "Create a Strategic Plan",
-    "explanation": "Moves should not be made in isolation. After the opening, assess the position and decide on a long-term goal. Whether it's a kingside pawn storm or central control, having a clear plan ensures your moves are purposeful and coherent.",
-    "resourceUrl": "https://www.youtube.com/watch?v=m7H0V1I06-M"
-  },
-  {
-    "id": 13,
-    "category": "middlegame",
-    "title": "Pawn Structure Matters",
-    "explanation": "Your pawn skeleton dictates the flow of the middlegame. Avoid creating unnecessary weaknesses like 'islands' or doubled pawns. A strong pawn structure provides safe squares for your pieces and restricts your opponent's potential for counterplay.",
-    "resourceUrl": "https://en.wikipedia.org/wiki/Pawn_structure"
-  },
-  {
-    "id": 14,
-    "category": "middlegame",
-    "title": "Exchange Pieces Strategically",
-    "explanation": "Don't trade just for the sake of it. Only exchange pieces if it benefits your position, such as trading off a strong enemy piece, simplifying a winning game, or removing a key defender from your opponent's camp.",
-    "resourceUrl": null
-  },
-  {
-    "id": 15,
-    "category": "middlegame",
-    "title": "Prophylaxis",
-    "explanation": "Prophylaxis involves making moves that prevent your opponent's intended plans. By constantly asking 'What does my opponent want to do?', you can make subtle adjustments that neutralize their threats before they even become dangerous.",
-    "resourceUrl": "https://www.chess.com/terms/prophylaxis-chess"
-  },
-  {
-    "id": 16,
-    "category": "middlegame",
-    "title": "Centralize Your Pieces",
-    "explanation": "Pieces in the center influence more of the board than those on the edges. Knights on the rim are dim, but centralized knights can jump to many critical squares. Keeping your pieces near the center ensures they can quickly transition to either flank.",
-    "resourceUrl": null
-  },
-  {
-    "id": 17,
-    "category": "endgame",
-    "title": "Activate the King",
-    "explanation": "In the endgame, the king ceases to be a liability and becomes a vital attacking force. Use your king to support your own pawns and block the enemy's. A more active king is often the deciding factor in winning endgame positions.",
-    "resourceUrl": "https://www.chess.com/article/view/the-king-in-the-endgame"
-  },
-  {
-    "id": 18,
-    "category": "endgame",
-    "title": "Push Passed Pawns",
-    "explanation": "A passed pawn is a pawn that has no enemy pawns ahead of it or on adjacent files. These pawns are extremely dangerous as they can promote to a queen. Pushing them forces your opponent to dedicate pieces to stop them, creating weaknesses elsewhere.",
-    "resourceUrl": null
-  },
-  {
-    "id": 19,
-    "category": "endgame",
-    "title": "Opposition in King Endgames",
-    "explanation": "Opposition occurs when two kings face each other on a file or rank with one square in between. Understanding who 'has the opposition' is critical for winning or drawing king and pawn endings, as it allows you to force the enemy king to move aside.",
-    "resourceUrl": "https://lichess.org/practice/king-and-pawn-endgames/opposition"
-  },
-  {
-    "id": 20,
-    "category": "endgame",
-    "title": "Rook Behind the Pawn",
-    "explanation": "In rook endgames, the standard rule is to place your rook behind your passed pawn to support its advance. Similarly, placing your rook behind an opponent's passed pawn allows you to maintain pressure and attack it as it moves forward.",
-    "resourceUrl": "https://en.wikipedia.org/wiki/Tarrasch_rule"
-  },
-  {
-    "id": 21,
-    "category": "endgame",
-    "title": "Trade Rooks if Winning",
-    "explanation": "If you have a significant advantage in a rook endgame (like being a pawn up), trading rooks often simplifies the position into a won king and pawn ending. Reducing the complexity of the position makes it much harder for your opponent to find defensive tricks.",
-    "resourceUrl": null
-  },
-  {
-    "id": 22,
-    "category": "endgame",
-    "title": "Zugzwang",
-    "explanation": "Zugzwang is a situation where any move your opponent makes will worsen their position. Creating Zugzwang is a primary goal in many endgames, allowing you to force the enemy king or pieces away from critical defending squares.",
-    "resourceUrl": "https://www.chess.com/terms/zugzwang-chess"
-  },
-  {
-    "id": 23,
-    "category": "endgame",
-    "title": "Knight vs Bishop in Endgames",
-    "explanation": "Bishops are usually superior to knights in open endgames where pawns are on both sides of the board due to their long-range capabilities. However, knights are better in closed positions or where all pawns are on one side, as they can hop over obstacles.",
-    "resourceUrl": null
-  },
-  {
-    "id": 24,
-    "category": "endgame",
-    "title": "Utilize Pawn Majorities",
-    "explanation": "Identify where you have more pawns than your opponent. Use this majority to create a passed pawn. This 'outside passed pawn' can serve as a powerful distraction, forcing the enemy king away from the rest of the action.",
-    "resourceUrl": null
-  },
-  {
-    "id": 25,
-    "category": "tactics",
-    "title": "Always Look for Checks",
-    "explanation": "Checks are the most forcing moves in chess. Even if a check doesn't lead to mate, it might force the enemy king into a worse square or disrupt their coordination. Always calculate checks first when looking for tactical opportunities.",
-    "resourceUrl": "https://www.chess.com/article/view/checks-captures-threats"
-  },
-  {
-    "id": 26,
-    "category": "tactics",
-    "title": "Pins are Powerful",
-    "explanation": "A pin restricts an enemy piece from moving because doing so would expose a more valuable piece behind it. Absolute pins (on the king) are the strongest. Use pins to paralyze defenders and then attack the pinned piece with pawns or other minor pieces.",
-    "resourceUrl": "https://lichess.org/practice/basic-tactics/the-pin"
-  },
-  {
-    "id": 27,
-    "category": "tactics",
-    "title": "Master the Fork",
-    "explanation": "A fork occurs when one piece attacks two or more enemy pieces at once. Knights are the most famous for forks, but any piece can do it. Forks are devastating because the opponent can usually only save one of the attacked pieces.",
-    "resourceUrl": null
-  },
-  {
-    "id": 28,
-    "category": "tactics",
-    "title": "Discovered Attacks",
-    "explanation": "A discovered attack happens when you move a piece and reveal an attack from a different piece behind it. These are extremely dangerous because the moving piece can create a second threat, making it almost impossible to defend both.",
-    "resourceUrl": "https://www.chess.com/terms/discovered-attack-chess"
-  },
-  {
-    "id": 29,
-    "category": "tactics",
-    "title": "The Skewer",
-    "explanation": "A skewer is like a reversed pin. You attack a valuable piece, and when it moves, it reveals a less valuable piece behind it. This tactic is common with long-range pieces like bishops, rooks, and queens.",
-    "resourceUrl": null
-  },
-  {
-    "id": 30,
-    "category": "tactics",
-    "title": "Sacrifice for Checkmate",
-    "explanation": "Don't be afraid to sacrifice material if you can see a clear path to checkmate. Often, giving up a rook or queen can draw the enemy king into a mating net. Precise calculation is necessary, but the rewards are game-ending.",
-    "resourceUrl": "https://www.youtube.com/watch?v=G9pY1p4x5O0"
-  },
-  {
-    "id": 31,
-    "category": "tactics",
-    "title": "Deflection",
-    "explanation": "Deflection is a tactic that forces an enemy piece away from its protective duty. By offering a sacrifice or creating a threat elsewhere, you can move a key defender and then strike at the now-unprotected target.",
-    "resourceUrl": null
-  },
-  {
-    "id": 32,
-    "category": "tactics",
-    "title": "Removing the Guard",
-    "explanation": "If a piece is defending a vital square or piece, look for ways to eliminate it. Capturing the 'guard' or forcing it to move allows you to carry out your primary objective without resistance. It is one of the most common tactical themes in high-level play.",
-    "resourceUrl": null
-  },
-  {
-    "id": 33,
-    "category": "mindset",
-    "title": "Stay Calm Under Pressure",
-    "explanation": "Chess is as much about psychological strength as it is about moves. When facing an attack or falling behind on the clock, keep your emotions in check. Panic leads to blunders, while composure allows you to find defensive resources.",
-    "resourceUrl": null
-  },
-  {
-    "id": 34,
-    "category": "mindset",
-    "title": "Analyze Every Loss",
-    "explanation": "Your losses are your best teachers. After every game, use an engine to find where you went wrong. Identifying patterns in your mistakes (e.g., missing forks or misplaying openings) is the fastest way to improve your rating.",
-    "resourceUrl": "https://www.chess.com/article/view/how-to-analyze-your-chess-games"
-  },
-  {
-    "id": 35,
-    "category": "mindset",
-    "title": "Manage Your Time Wisely",
-    "explanation": "Time is a resource just like your pieces. Avoid spending too long on simple moves, but take your time in critical positions. Extreme time pressure in the endgame is where most blunders occur, so try to keep a steady pace.",
-    "resourceUrl": null
-  },
-  {
-    "id": 36,
-    "category": "mindset",
-    "title": "Trust Your Intuition",
-    "explanation": "With experience, you develop a 'feeling' for the best move. While you should always verify with calculation, don't ignore your initial instincts. Intuition helps you narrow down candidate moves in complex positions.",
-    "resourceUrl": null
-  },
-  {
-    "id": 37,
-    "category": "mindset",
-    "title": "Maintain Total Focus",
-    "explanation": "One second of distraction can lose a game. Stay fully immersed in the board, even during your opponent's turn. Use that time to calculate their potential responses and refine your own plans.",
-    "resourceUrl": null
-  },
-  {
-    "id": 38,
-    "category": "mindset",
-    "title": "Respect Your Opponent",
-    "explanation": "Never assume your opponent won't find the best move. Overconfidence leads to lazy calculation and missed threats. Play as if your opponent is a grandmaster, and you will be much less likely to fall into traps.",
-    "resourceUrl": null
-  },
-  {
-    "id": 39,
-    "category": "mindset",
-    "title": "Consistent Daily Practice",
-    "explanation": "Improvement in chess comes from consistency. Solving even 5-10 tactics puzzles a day keeps your pattern recognition sharp. Regular play combined with study is the most effective way to build long-term skill.",
-    "resourceUrl": "https://lichess.org/training"
-  },
-  {
-    "id": 40,
-    "category": "mindset",
-    "title": "Enjoy the Game",
-    "explanation": "At its heart, chess is a beautiful and creative pursuit. Don't get too caught up in rating points. If you enjoy the process of learning and the thrill of the struggle, improvement will follow naturally.",
-    "resourceUrl": null
+    "title": {"en": "Control the Center", "km": "គ្រប់គ្រងចំណុចកណ្តាល"},
+    "explanation": {"en": "Controlling the four central squares (e4, d4, e5, d5) is crucial in the opening. It allows your pieces more mobility and restricts your opponent's options.", "km": "ការគ្រប់គ្រងការ៉េកណ្តាលទាំងបួន (e4, d4, e5, d5) គឺសំខាន់ណាស់ក្នុងការបើកឆាក។ វាអនុញ្ញាតឱ្យកូនអុករបស់អ្នកមានភាពចល័តកាន់តែច្រើន និងដាក់កម្រិតជម្រើសរបស់គូប្រកួតរបស់អ្នក។"}
   }
 ]

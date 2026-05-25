@@ -48,8 +48,11 @@ class TipsNotifier extends StateNotifier<TipsState> {
   Future<void> loadTips() async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
-      final jsonString = await rootBundle.loadString('assets/data/tips.json');
-      final List<Tip> tips = await compute(_parseTips, jsonString);
+      final jsonString =
+          await rootBundle.loadString('assets/data/tips_v2.json');
+      final List<dynamic> jsonList = json.decode(jsonString);
+      final List<Tip> tips =
+          jsonList.map((j) => Tip.fromJson(j as Map<String, dynamic>)).toList();
 
       final categorized = <TipCategory, List<Tip>>{};
       for (var category in TipCategory.values) {
@@ -63,6 +66,7 @@ class TipsNotifier extends StateNotifier<TipsState> {
         isLoading: false,
       );
     } catch (e) {
+      debugPrint("Error loading tips: $e");
       state = state.copyWith(
         isLoading: false,
         errorMessage: "Failed to load tips. Please restart the app.",
@@ -71,11 +75,6 @@ class TipsNotifier extends StateNotifier<TipsState> {
   }
 
   void reload() => loadTips();
-}
-
-List<Tip> _parseTips(String jsonString) {
-  final List<dynamic> jsonList = json.decode(jsonString);
-  return jsonList.map((j) => Tip.fromJson(j as Map<String, dynamic>)).toList();
 }
 
 final tipsProvider = StateNotifierProvider<TipsNotifier, TipsState>((ref) {

@@ -4,11 +4,18 @@ import '../constants/app_colors.dart';
 import '../constants/app_text_styles.dart';
 import '../constants/app_spacing.dart';
 
-/// Builds the Material 3 dark theme (Pure Black) for Stupid Brilliant.
+/// Builds the Material 3 dark theme (Pure Black) for Brilliant Movee.
 abstract final class AppTheme {
-  static ThemeData get darkTheme {
-    const primaryFont = 'StackSansNotch';
+  static ThemeData darkTheme(String languageCode) {
+    // Use GoogleSans for Khmer support and overall premium feel
+    final String primaryFont =
+        (languageCode == 'km') ? 'GoogleSans' : 'StackSansNotch';
     final colorScheme = AppColors.m3DarkScheme;
+
+    // FUI Style: Beveled corners (45-degree cuts)
+    final shape = BeveledRectangleBorder(
+      borderRadius: BorderRadius.circular(AppRadius.button / 2),
+    );
 
     return ThemeData(
       useMaterial3: true,
@@ -26,7 +33,10 @@ abstract final class AppTheme {
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: true,
-        titleTextStyle: AppTextStyles.headline.copyWith(fontSize: 20),
+        titleTextStyle: AppTextStyles.headline.copyWith(
+          fontSize: 20,
+          fontFamily: primaryFont,
+        ),
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.light,
@@ -49,8 +59,8 @@ abstract final class AppTheme {
       cardTheme: CardThemeData(
         color: AppColors.backgroundSurface,
         elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadius.card),
+        shape: BeveledRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.card / 2),
           side: const BorderSide(color: AppColors.divider, width: 1),
         ),
         margin: EdgeInsets.zero,
@@ -62,12 +72,11 @@ abstract final class AppTheme {
           backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,
           minimumSize: const Size(double.infinity, 50),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppRadius.button),
-          ),
+          shape: shape,
           textStyle: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w700,
             letterSpacing: 1.0,
+            fontFamily: primaryFont,
           ),
           elevation: 0,
         ),
@@ -77,7 +86,7 @@ abstract final class AppTheme {
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: AppColors.primary,
-          textStyle: AppTextStyles.bodyMedium,
+          textStyle: AppTextStyles.bodyMedium.copyWith(fontFamily: primaryFont),
         ),
       ),
 
@@ -86,18 +95,21 @@ abstract final class AppTheme {
         filled: true,
         fillColor: AppColors.backgroundSurface,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppRadius.md),
+          borderRadius: BorderRadius.circular(4),
           borderSide: const BorderSide(color: AppColors.divider),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppRadius.md),
+          borderRadius: BorderRadius.circular(4),
           borderSide: const BorderSide(color: AppColors.divider),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppRadius.md),
+          borderRadius: BorderRadius.circular(4),
           borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
         ),
-        hintStyle: AppTextStyles.body.copyWith(color: AppColors.textSecondary),
+        hintStyle: AppTextStyles.body.copyWith(
+          color: AppColors.textSecondary,
+          fontFamily: primaryFont,
+        ),
       ),
 
       // ── Divider ───────────────────────────────────────────────────────────
@@ -116,5 +128,5 @@ abstract final class AppTheme {
     );
   }
 
-  static ThemeData get lightTheme => darkTheme;
+  static ThemeData lightTheme(String languageCode) => darkTheme(languageCode);
 }

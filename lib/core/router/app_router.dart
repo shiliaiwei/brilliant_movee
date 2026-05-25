@@ -13,11 +13,12 @@ import '../../features/settings/settings_screen.dart';
 import '../../features/settings/board_selector_screen.dart';
 import '../../features/profile/brilliant_games_screen.dart';
 import '../../features/tips/tips_screen.dart';
+import '../../features/stoic/stoic_screen.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_text_styles.dart';
 import '../utils/responsive.dart';
 
-/// All named routes for Stupid Brilliant.
+/// All named routes for Brilliant Movee.
 abstract final class AppRoutes {
   static const String splash = '/';
   static const String onboarding = '/onboarding';
@@ -29,6 +30,7 @@ abstract final class AppRoutes {
   static const String settings = '/settings';
   static const String boardSelector = '/settings/board';
   static const String tips = '/tips';
+  static const String stoic = '/stoic';
   static const String brilliant = '/brilliant';
   static const String cyberDemo = '/cyber-demo';
 }
@@ -62,8 +64,14 @@ const _tabs = [
   _TabItem(
     icon: Icons.lightbulb_outline,
     selectedIcon: Icons.lightbulb_rounded,
-    label: 'Tip Menu',
+    label: 'Tips',
     route: AppRoutes.tips,
+  ),
+  _TabItem(
+    icon: Icons.account_tree_outlined,
+    selectedIcon: Icons.account_tree_rounded,
+    label: 'Stoic',
+    route: AppRoutes.stoic,
   ),
   _TabItem(
     icon: Icons.settings_outlined,
@@ -297,6 +305,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             GoRoute(
                 path: AppRoutes.tips,
                 builder: (context, state) => const TipsScreen())
+          ]),
+          StatefulShellBranch(routes: [
+            GoRoute(
+                path: AppRoutes.stoic,
+                builder: (context, state) => const StoicScreen())
           ]),
           StatefulShellBranch(routes: [
             GoRoute(

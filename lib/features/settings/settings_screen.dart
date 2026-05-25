@@ -7,9 +7,14 @@ import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_styles.dart';
 import '../../core/constants/app_spacing.dart';
 import '../../core/widgets/cht_card.dart';
+import '../../core/widgets/cht_button.dart';
 import '../../core/router/app_router.dart';
 import '../../core/services/storage_service.dart';
 import '../../core/services/settings_provider.dart';
+import '../../core/services/audio_service.dart';
+import '../../core/services/asset_service.dart';
+import '../../core/providers/language_provider.dart';
+import '../../core/localization/app_strings.dart';
 import '../../core/utils/responsive.dart';
 import '../../engine/stockfish_isolate.dart';
 
@@ -21,11 +26,13 @@ class SettingsScreen extends ConsumerWidget {
     final settings = ref.watch(settingsProvider);
     final notifier = ref.read(settingsProvider.notifier);
     final storage = ref.watch(storageServiceProvider);
+    final currentLanguage = ref.watch(languageProvider);
 
     return Scaffold(
       backgroundColor: AppColors.backgroundDeep,
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Text(AppStrings.getTranslation(
+            AppStrings.settingsTitle, currentLanguage)),
         centerTitle: true,
         backgroundColor: AppColors.backgroundDeep,
       ),
@@ -38,15 +45,39 @@ class SettingsScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const _SectionHeader(title: 'Account'),
+              // Language Section
+              _SectionHeader(
+                  title: AppStrings.getTranslation(
+                      AppStrings.languageLabel, currentLanguage)),
+              ChtCard(
+                padding: EdgeInsets.zero,
+                child: Column(
+                  children: [
+                    _LanguageSelector(
+                      currentLanguage: currentLanguage,
+                      onLanguageChanged: (lang) {
+                        ref
+                            .read(languageNotifierProvider.notifier)
+                            .setLanguage(lang);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xl),
+              _SectionHeader(
+                  title: AppStrings.getTranslation(
+                      AppStrings.accountSection, currentLanguage)),
               ChtCard(
                 padding: EdgeInsets.zero,
                 child: Column(
                   children: [
                     _SettingsTile(
                       icon: Icons.account_circle_rounded,
-                      title: 'My Profile',
-                      subtitle: 'View your chess stats and progress',
+                      title: AppStrings.getTranslation(
+                          AppStrings.myProfile, currentLanguage),
+                      subtitle: AppStrings.getTranslation(
+                          AppStrings.viewChessStats, currentLanguage),
                       onTap: () {
                         final username = storage.connectedUsername;
                         if (username != null) {
@@ -62,8 +93,11 @@ class SettingsScreen extends ConsumerWidget {
                     const Divider(height: 1, indent: 52),
                     _SettingsTile(
                       icon: Icons.person_rounded,
-                      title: 'Connected Username',
-                      subtitle: storage.connectedUsername ?? 'Not connected',
+                      title: AppStrings.getTranslation(
+                          AppStrings.connectedUsername, currentLanguage),
+                      subtitle: storage.connectedUsername ??
+                          AppStrings.getTranslation(
+                              AppStrings.notConnected, currentLanguage),
                       onTap: () => context.go(AppRoutes.search),
                       trailing: const Icon(Icons.sync_rounded,
                           size: 18, color: AppColors.textSecondary),
@@ -71,22 +105,28 @@ class SettingsScreen extends ConsumerWidget {
                     const Divider(height: 1, indent: 52),
                     _SettingsTile(
                       icon: Icons.delete_outline_rounded,
-                      title: 'Clear Cache',
-                      subtitle: 'Remove locally stored games',
-                      onTap: () => _showClearCacheDialog(context, ref, storage),
+                      title: AppStrings.getTranslation(
+                          AppStrings.clearCache, currentLanguage),
+                      subtitle: AppStrings.getTranslation(
+                          AppStrings.removeLoaclGames, currentLanguage),
+                      onTap: () => _showClearCacheDialog(
+                          context, ref, storage, currentLanguage),
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: AppSpacing.xl),
-              const _SectionHeader(title: 'Board & Pieces'),
+              _SectionHeader(
+                  title: AppStrings.getTranslation(
+                      AppStrings.boardPiecesSection, currentLanguage)),
               ChtCard(
                 padding: EdgeInsets.zero,
                 child: Column(
                   children: [
                     _SettingsTile(
                       icon: Icons.grid_on_rounded,
-                      title: 'Board & Piece Style',
+                      title: AppStrings.getTranslation(
+                          AppStrings.boardPieceStyle, currentLanguage),
                       subtitle:
                           '${_capitalize(settings.boardTheme)} board · ${_capitalize(settings.pieceSet)} pieces',
                       onTap: () => context.push(AppRoutes.boardSelector),
@@ -96,18 +136,53 @@ class SettingsScreen extends ConsumerWidget {
                     const Divider(height: 1, indent: 52),
                     _SwitchTile(
                       icon: Icons.grid_3x3_rounded,
-                      title: 'Show Coordinates',
-                      subtitle: 'Display a-h and 1-8 on edges',
+                      title: AppStrings.getTranslation(
+                          AppStrings.showCoordinates, currentLanguage),
+                      subtitle: AppStrings.getTranslation(
+                          AppStrings.displayCoordinates, currentLanguage),
                       value: settings.showCoordinates,
                       onChanged: notifier.toggleCoordinates,
                     ),
                     const Divider(height: 1, indent: 52),
                     _SwitchTile(
                       icon: Icons.highlight_rounded,
-                      title: 'Highlight Last Move',
-                      subtitle: 'Show markers for last played move',
+                      title: AppStrings.getTranslation(
+                          AppStrings.highlightLastMove, currentLanguage),
+                      subtitle: AppStrings.getTranslation(
+                          AppStrings.showLastMoveMarkers, currentLanguage),
                       value: settings.highlightLastMove,
                       onChanged: notifier.toggleHighlight,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xl),
+              _SectionHeader(
+                  title: AppStrings.getTranslation(
+                      AppStrings.soundSection, currentLanguage)),
+              ChtCard(
+                padding: EdgeInsets.zero,
+                child: Column(
+                  children: [
+                    _SwitchTile(
+                      icon: settings.soundEnabled
+                          ? Icons.volume_up_rounded
+                          : Icons.volume_off_rounded,
+                      title: 'Sound Enabled',
+                      subtitle: 'Play move and capture sounds',
+                      value: settings.soundEnabled,
+                      onChanged: notifier.toggleSound,
+                    ),
+                    const Divider(height: 1, indent: 52),
+                    _SettingsTile(
+                      icon: Icons.library_music_rounded,
+                      title: AppStrings.getTranslation(
+                          AppStrings.soundPack, currentLanguage),
+                      subtitle: _capitalize(settings.soundPack),
+                      onTap: () => _showSoundPackSelector(
+                          context, ref, settings.soundPack, notifier),
+                      trailing: const Icon(Icons.expand_more_rounded,
+                          size: 18, color: AppColors.textSecondary),
                     ),
                   ],
                 ),
@@ -116,22 +191,27 @@ class SettingsScreen extends ConsumerWidget {
               const _SectionHeader(title: 'Chess Engine'),
               const _EngineNetworkSelector(),
               const SizedBox(height: AppSpacing.xl),
-              const _SectionHeader(title: 'Engine & Analysis'),
+              _SectionHeader(
+                  title: AppStrings.getTranslation(
+                      AppStrings.engineAnalysisSection, currentLanguage)),
               ChtCard(
                 padding: EdgeInsets.zero,
                 child: Column(
                   children: [
                     _SwitchTile(
                       icon: Icons.psychology_rounded,
-                      title: 'Auto Deep Analysis',
-                      subtitle: 'Start Stockfish analysis automatically',
+                      title: AppStrings.getTranslation(
+                          AppStrings.autoDeepAnalysis, currentLanguage),
+                      subtitle: AppStrings.getTranslation(
+                          AppStrings.startStockfishAuto, currentLanguage),
                       value: settings.autoAnalyze,
                       onChanged: notifier.toggleAutoAnalyze,
                     ),
                     const Divider(height: 1, indent: 52),
                     _SettingsTile(
                       icon: Icons.bolt_rounded,
-                      title: 'Engine Version',
+                      title: AppStrings.getTranslation(
+                          AppStrings.engineProfile, currentLanguage),
                       subtitle: 'Stockfish-sf_${settings.engineVersion}',
                       onTap: () => _showEngineSelector(
                           context, ref, settings.engineVersion, notifier),
@@ -142,38 +222,26 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.xl),
-              const _SectionHeader(title: 'Social & Friends'),
+              _SectionHeader(
+                  title: AppStrings.getTranslation(
+                      AppStrings.aboutSection, currentLanguage)),
               ChtCard(
                 padding: EdgeInsets.zero,
                 child: Column(
                   children: [
                     _SettingsTile(
-                      icon: Icons.people_outline_rounded,
-                      title: 'Following & Friends',
-                      subtitle: 'Sync your Chess.com social data',
-                      onTap: () {},
-                      trailing: const Icon(Icons.lock_outline_rounded,
-                          size: 18, color: AppColors.textDisabled),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: AppSpacing.xl),
-              const _SectionHeader(title: 'About'),
-              const ChtCard(
-                padding: EdgeInsets.zero,
-                child: Column(
-                  children: [
-                    _SettingsTile(
                       icon: Icons.info_outline_rounded,
-                      title: 'App Version',
-                      subtitle: '1.0.0 (Stable)',
+                      title: AppStrings.getTranslation(
+                          AppStrings.appVersion, currentLanguage),
+                      subtitle: '1.3.0 (Stable)',
                     ),
-                    Divider(height: 1, indent: 52),
+                    const Divider(height: 1, indent: 52),
                     _SettingsTile(
                       icon: Icons.source_rounded,
-                      title: 'Open Source',
-                      subtitle: 'Powered by Stockfish-sf_18',
+                      title: AppStrings.getTranslation(
+                          AppStrings.openSource, currentLanguage),
+                      subtitle: AppStrings.getTranslation(
+                          AppStrings.poweredByStockfish, currentLanguage),
                     ),
                   ],
                 ),
@@ -181,6 +249,41 @@ class SettingsScreen extends ConsumerWidget {
               const SizedBox(height: AppSpacing.xxxl),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  void _showSoundPackSelector(BuildContext context, WidgetRef ref,
+      String current, SettingsNotifier notifier) {
+    final packs = AssetService.instance.soundPacks;
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.backgroundSurface,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+      builder: (context) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('SELECT SOUND PACK',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            const SizedBox(height: 16),
+            ...packs.map((p) => ListTile(
+                  title: Text(p.name),
+                  trailing: p.id == current
+                      ? const Icon(Icons.check_circle_rounded,
+                          color: AppColors.primary)
+                      : null,
+                  onTap: () {
+                    notifier.updateSoundPack(p.id);
+                    ref.read(audioServiceProvider).reloadPack();
+                    Navigator.pop(context);
+                  },
+                )),
+          ],
         ),
       ),
     );
@@ -323,21 +426,20 @@ class SettingsScreen extends ConsumerWidget {
   String _capitalize(String s) =>
       s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);
 
-  void _showClearCacheDialog(
-      BuildContext context, WidgetRef ref, StorageService storage) {
+  void _showClearCacheDialog(BuildContext context, WidgetRef ref,
+      StorageService storage, String lang) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor: Colors.white,
-        title: Text('Clear Cache?', style: AppTextStyles.title),
-        content: const Text(
-            'This will remove all locally stored games. This cannot be undone.'),
+        backgroundColor: AppColors.backgroundSurface,
+        title: Text(AppStrings.getTranslation(AppStrings.clearCache, lang),
+            style: AppTextStyles.title),
+        content:
+            Text(AppStrings.getTranslation(AppStrings.removeLoaclGames, lang)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: Text('Cancel',
-                style: AppTextStyles.bodyMedium
-                    .copyWith(color: AppColors.textSecondary)),
+            child: const Text('CANCEL'),
           ),
           TextButton(
             onPressed: () {
@@ -345,9 +447,8 @@ class SettingsScreen extends ConsumerWidget {
               ref.read(connectedUsernameProvider.notifier).state = null;
               Navigator.pop(ctx);
             },
-            child: Text('Clear All',
-                style:
-                    AppTextStyles.bodyMedium.copyWith(color: AppColors.error)),
+            child: const Text('CLEAR ALL',
+                style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -436,6 +537,103 @@ class _SwitchTile extends StatelessWidget {
         value: value,
         onChanged: onChanged,
         activeTrackColor: AppColors.primary,
+      ),
+    );
+  }
+}
+
+class _LanguageSelector extends StatelessWidget {
+  final String currentLanguage;
+  final Function(String) onLanguageChanged;
+
+  const _LanguageSelector({
+    required this.currentLanguage,
+    required this.onLanguageChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Language',
+            style: AppTextStyles.bodyMedium,
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(
+                child: _LanguageButton(
+                  label: 'English',
+                  code: 'en',
+                  isSelected: currentLanguage == 'en',
+                  onTap: () => onLanguageChanged('en'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _LanguageButton(
+                  label: 'ខ្មែរ',
+                  code: 'km',
+                  isSelected: currentLanguage == 'km',
+                  onTap: () => onLanguageChanged('km'),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LanguageButton extends StatelessWidget {
+  final String label;
+  final String code;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _LanguageButton({
+    required this.label,
+    required this.code,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          decoration: BoxDecoration(
+            color: isSelected
+                ? AppColors.primary.withValues(alpha: 0.1)
+                : AppColors.backgroundElevated,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: isSelected ? AppColors.primary : Colors.white10,
+              width: 1.5,
+            ),
+          ),
+          child: Center(
+            child: Text(
+              label,
+              style: TextStyle(
+                color: isSelected ? AppColors.primary : Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

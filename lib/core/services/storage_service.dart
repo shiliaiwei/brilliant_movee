@@ -24,6 +24,7 @@ abstract final class StorageKeys {
   static const String engineNetwork = 'engine_network';
   static const String fullNetPath = 'full_net_path';
   static const String brilliantGames = 'brilliant_games'; // List of JSON
+  static const String languageCode = 'language_code';
 }
 
 /// Service for all local key-value storage operations.
@@ -134,7 +135,12 @@ class StorageService {
   Future<void> setFullNetPath(String path) =>
       _prefs.setString(StorageKeys.fullNetPath, path);
 
-  // ── Analysis Stats ────────────────────────────────────────────────────────
+  // ── Localization ────────────────────────────────────────────────────────────
+  String get languageCode => _prefs.getString(StorageKeys.languageCode) ?? 'en';
+  Future<void> setLanguageCode(String code) =>
+      _prefs.setString(StorageKeys.languageCode, code);
+
+  // ── Analysis Stats ────────────────────────────────────────────────────────────
   List<String> get brilliantGamesData =>
       _prefs.getStringList(StorageKeys.brilliantGames) ?? [];
 

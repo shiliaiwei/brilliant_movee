@@ -7,6 +7,7 @@ import '../../core/constants/app_text_styles.dart';
 import '../../core/constants/app_spacing.dart';
 import '../../core/widgets/cht_button.dart';
 import '../../core/widgets/cht_card.dart';
+import '../../core/widgets/fui_loading.dart';
 import '../../core/widgets/cht_error_state.dart';
 import '../../core/services/storage_service.dart';
 import '../../core/router/app_router.dart';
@@ -168,8 +169,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
             Expanded(
               child: leaderboardAsync.when(
-                loading: () => const Center(
-                    child: CircularProgressIndicator(color: AppColors.primary)),
+                loading: () => Center(child: FuiLoading(label: 'LOADING HOME')),
                 error: (e, _) => ChtErrorState(
                   title: 'LEADERBOARD ERROR',
                   description: 'Failed to load top players from Chess.com',

@@ -98,12 +98,20 @@
             "name": "Piano"
         },
         {
-            "id": "robot",
-            "name": "Robot"
+            "id": "nes",
+            "name": "NES Retro"
         },
         {
-            "id": "nature",
-            "name": "Nature"
+            "id": "sfx",
+            "name": "Modern SFX"
+        },
+        {
+            "id": "futuristic",
+            "name": "Cybernetic"
+        },
+        {
+            "id": "lisp",
+            "name": "Voice Cues"
         }
     ]
 }

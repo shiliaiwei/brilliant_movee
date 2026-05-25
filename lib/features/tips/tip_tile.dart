@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_styles.dart';
+import '../../core/providers/language_provider.dart';
 import 'tip_model.dart';
 
-class TipTile extends StatelessWidget {
+class TipTile extends ConsumerWidget {
   final Tip tip;
   final bool isExpanded;
   final VoidCallback onToggle;
@@ -16,29 +17,12 @@ class TipTile extends StatelessWidget {
     required this.onToggle,
   });
 
-  Future<void> _launchURL(BuildContext context, String urlString) async {
-    final Uri url = Uri.parse(urlString);
-    try {
-      if (await canLaunchUrl(url)) {
-        await launchUrl(url, mode: LaunchMode.externalApplication);
-      } else {
-        if (!context.mounted) return;
-        _showErrorSnackBar(context);
-      }
-    } catch (e) {
-      if (!context.mounted) return;
-      _showErrorSnackBar(context);
-    }
-  }
-
-  void _showErrorSnackBar(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Could not open resource link")),
-    );
-  }
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final languageCode = ref.watch(languageProvider);
+    final title = tip.getTitle(languageCode);
+    final explanation = tip.getExplanation(languageCode);
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       shape: RoundedRectangleBorder(
@@ -63,7 +47,7 @@ class TipTile extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      tip.title,
+                      title,
                       style: AppTextStyles.title.copyWith(
                         fontWeight: FontWeight.bold,
                         color: isExpanded ? AppColors.primary : Colors.white,
@@ -89,28 +73,12 @@ class TipTile extends StatelessWidget {
                     const Divider(),
                     const SizedBox(height: 12),
                     Text(
-                      tip.explanation,
+                      explanation,
                       style: AppTextStyles.body.copyWith(
                         color: Colors.white.withValues(alpha: 0.8),
                         height: 1.6,
                       ),
                     ),
-                    if (tip.resourceUrl != null) ...[
-                      const SizedBox(height: 16),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton.icon(
-                          onPressed: () =>
-                              _launchURL(context, tip.resourceUrl!),
-                          icon: const Icon(Icons.launch_rounded, size: 18),
-                          label: const Text("ONLINE RESOURCE"),
-                          style: TextButton.styleFrom(
-                            foregroundColor: AppColors.primary,
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                          ),
-                        ),
-                      ),
-                    ],
                   ],
                 ),
                 crossFadeState: isExpanded
