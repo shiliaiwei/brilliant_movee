@@ -16,117 +16,65 @@ class StoicVisualCover extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 70,
+      height: 180,
       width: double.infinity,
       clipBehavior: Clip.antiAlias,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.backgroundDeep,
       ),
       child: Stack(
         fit: StackFit.expand,
         children: [
-          ColorFiltered(
-            colorFilter: const ColorFilter.matrix([
-              1.8,
-              0,
-              0,
-              0,
-              -20,
-              0,
-              1.8,
-              0,
-              0,
-              -20,
-              0,
-              0,
-              1.8,
-              0,
-              -20,
-              0,
-              0,
-              0,
-              1,
-              0,
-            ]), // Ultra-bright White Illustrator look
-            child: ColorFiltered(
-              colorFilter: const ColorFilter.matrix([
-                0.2126,
-                0.7152,
-                0.0722,
-                0,
-                0,
-                0.2126,
-                0.7152,
-                0.0722,
-                0,
-                0,
-                0.2126,
-                0.7152,
-                0.0722,
-                0,
-                0,
-                0,
-                0,
-                0,
-                1,
-                0,
-              ]),
-              child: CachedNetworkImage(
-                imageUrl: _getCategoryImageUrl(),
-                fit: BoxFit.cover,
-                color: Colors.white.withValues(alpha: 0.05),
-                colorBlendMode: BlendMode.lighten,
-                placeholder: (context, url) =>
-                    Container(color: AppColors.backgroundElevated),
-                errorWidget: (context, url, error) => _buildFallback(),
+          CachedNetworkImage(
+            imageUrl: _getCategoryImageUrl(),
+            fit: BoxFit.cover,
+            placeholder: (context, url) =>
+                Container(color: AppColors.backgroundElevated),
+            errorWidget: (context, url, error) => _buildFallback(),
+          ),
+          // Subtle dark gradient to improve text contrast on top
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.black.withValues(alpha: 0.18),
+                  Colors.black.withValues(alpha: 0.36)
+                ],
               ),
             ),
           ),
-          if (category == StoicCategory.pragmatism) _buildFinanceGraph(),
-          _buildIntensityIndicator(),
         ],
       ),
     );
   }
 
   String _getCategoryImageUrl() {
-    // 4K High-Contrast Illustrator/Minimalist Source Images
     switch (category) {
       case StoicCategory.dominance:
-        return 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000&auto=format'; // Dark Lightning
+        return 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000&auto=format';
       case StoicCategory.unshakeable:
-        return 'https://images.unsplash.com/photo-1494145904049-0dca59b4bbad?q=80&w=1000&auto=format'; // Brutalist Architecture
+        return 'https://images.unsplash.com/photo-1494145904049-0dca59b4bbad?q=80&w=1000&auto=format';
       case StoicCategory.theVoid:
-        return 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1000&auto=format'; // Deep Horizon
+        return 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1000&auto=format';
       case StoicCategory.pragmatism:
-        return 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format'; // Geometric Data
+        return 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format';
       case StoicCategory.humanNature:
-        return 'https://images.unsplash.com/photo-1549490349-8643362247b5?q=80&w=1000&auto=format'; // Classical Torso
+        return 'https://images.unsplash.com/photo-1549490349-8643362247b5?q=80&w=1000&auto=format';
       case StoicCategory.asceticism:
-        return 'https://images.unsplash.com/photo-1491843384429-30494622eb90?q=80&w=1000&auto=format'; // Ancient Scrolls
+        return 'https://images.unsplash.com/photo-1491843384429-30494622eb90?q=80&w=1000&auto=format';
       case StoicCategory.wisdom:
-        return 'https://images.unsplash.com/photo-1506318137071-a8e063b4b4bf?q=80&w=1000&auto=format'; // Cosmos Diagram
+        return 'https://images.unsplash.com/photo-1506318137071-a8e063b4b4bf?q=80&w=1000&auto=format';
       case StoicCategory.technology:
-        return 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format'; // Circuit Board
+        return 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format';
       case StoicCategory.modernSociety:
-        return 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=1000&auto=format'; // Urban Grid
+        return 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=1000&auto=format';
       case StoicCategory.purpose:
-        return 'https://images.unsplash.com/photo-1500673922987-e212871fec22?q=80&w=1000&auto=format'; // Target/Path
+        return 'https://images.unsplash.com/photo-1500673922987-e212871fec22?q=80&w=1000&auto=format';
       case StoicCategory.emotionalControl:
-        return 'https://images.unsplash.com/photo-1502481851512-e9e2529bbbf5?q=80&w=1000&auto=format'; // Still Lake
+        return 'https://images.unsplash.com/photo-1502481851512-e9e2529bbbf5?q=80&w=1000&auto=format';
     }
-  }
-
-  Widget _buildFinanceGraph() {
-    return Center(
-      child: Opacity(
-        opacity: 0.6,
-        child: CustomPaint(
-          size: const Size(200, 30),
-          painter: _GraphPainter(color: AppColors.primary),
-        ),
-      ),
-    );
   }
 
   Widget _buildFallback() {
@@ -142,56 +90,9 @@ class StoicVisualCover extends StatelessWidget {
         opacity: 0.2,
         child: Image.asset(
           'assets/pieces/cburnett/$piece',
-          height: 30,
+          height: 40,
         ),
       ),
     );
   }
-
-  Widget _buildIntensityIndicator() {
-    return Positioned(
-      right: 12,
-      top: 12,
-      child: Row(
-        children: List.generate(3, (index) {
-          final isActive = index < intensity;
-          return Container(
-            width: 3,
-            height: 3,
-            margin: const EdgeInsets.only(left: 3),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: isActive ? AppColors.primary : AppColors.textDisabled,
-            ),
-          );
-        }),
-      ),
-    );
-  }
-}
-
-class _GraphPainter extends CustomPainter {
-  final Color color;
-  _GraphPainter({required this.color});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = 1.2
-      ..style = PaintingStyle.stroke;
-
-    final path = Path();
-    path.moveTo(0, size.height * 0.8);
-    path.lineTo(size.width * 0.2, size.height * 0.6);
-    path.lineTo(size.width * 0.4, size.height * 0.9);
-    path.lineTo(size.width * 0.6, size.height * 0.3);
-    path.lineTo(size.width * 0.8, size.height * 0.4);
-    path.lineTo(size.width, size.height * 0.1);
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

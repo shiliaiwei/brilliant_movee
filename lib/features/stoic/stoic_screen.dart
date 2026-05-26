@@ -14,11 +14,24 @@ class StoicScreen extends ConsumerStatefulWidget {
 }
 
 class _StoicScreenState extends ConsumerState<StoicScreen> {
-  final PageController _pageController = PageController(viewportFraction: 0.92);
+  final PageController _pageController = PageController(viewportFraction: 0.96);
   final ScrollController _filterController = ScrollController();
   final Map<StoicCategory, GlobalKey> _categoryKeys = {
     for (var cat in StoicCategory.values) cat: GlobalKey(),
   };
+  int _currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController.addListener(() {
+      if (!_pageController.hasClients) return;
+      final nextPage = (_pageController.page ?? 0).round();
+      if (nextPage != _currentPage && mounted) {
+        setState(() => _currentPage = nextPage);
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -90,6 +103,7 @@ class _StoicScreenState extends ConsumerState<StoicScreen> {
                     onSelected: (_) {
                       notifier.selectCategory(category);
                       _scrollToCategory(category);
+                      setState(() => _currentPage = 0);
                       if (_pageController.hasClients) {
                         _pageController.jumpToPage(0);
                       }
@@ -105,7 +119,7 @@ class _StoicScreenState extends ConsumerState<StoicScreen> {
             ),
           ),
 
-          // Content Pager (Short Realistic Flashcard style)
+          // Reading-first content area
           Expanded(
             child: state.isLoading
                 ? const Center(
@@ -114,117 +128,41 @@ class _StoicScreenState extends ConsumerState<StoicScreen> {
                     ? Center(child: Text(state.error!))
                     : state.filteredLessons.isEmpty
                         ? const Center(child: Text("NO DATA IN THIS SECTOR"))
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height:
-                                    540, // Constrained height for Handheld Card feel
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Center(
+                              child: ConstrainedBox(
+                                constraints:
+                                    const BoxConstraints(maxWidth: 860),
                                 child: PageView.builder(
                                   controller: _pageController,
                                   itemCount: state.filteredLessons.length,
                                   physics: const BouncingScrollPhysics(),
                                   itemBuilder: (context, index) {
                                     final lesson = state.filteredLessons[index];
-                                    return AnimatedBuilder(
-                                      animation: _pageController,
-                                      builder: (context, child) {
-                                        double value = 1.0;
-                                        if (_pageController
-                                            .position.hasContentDimensions) {
-                                          value = _pageController.page! - index;
-                                          // Scale and Opacity effect for realistic depth
-                                          value = (1 - (value.abs() * 0.15))
-                                              .clamp(0.0, 1.0);
-                                        }
-                                        return Center(
-                                          child: Transform.scale(
-                                            scale: value,
-                                            child: Opacity(
-                                              opacity: value,
-                                              child: child,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      child: StoicFlashcard(lesson: lesson),
-                                    );
+                                    return StoicFlashcard(lesson: lesson);
                                   },
                                 ),
                               ),
-                            ],
+                            ),
                           ),
           ),
 
-          // Navigation Controls
+          // Simplified footer: only show page counter (removed prev/next buttons)
           if (state.filteredLessons.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(bottom: 24, top: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _NavButton(
-                    icon: Icons.keyboard_arrow_left_rounded,
-                    onPressed: () {
-                      _pageController.previousPage(
-                        duration: const Duration(milliseconds: 400),
-                        curve: Curves.easeOutCubic,
-                      );
-                    },
-                  ),
-                  const SizedBox(width: 40),
-                  ValueListenableBuilder<double>(
-                    valueListenable: ValueNotifier(_pageController.hasClients
-                        ? _pageController.page ?? 0
-                        : 0),
-                    builder: (context, page, _) {
-                      return Text(
-                        "${(page.round() + 1)} / ${state.filteredLessons.length}",
-                        style: AppTextStyles.monoSmall,
-                      );
-                    },
-                  ),
-                  const SizedBox(width: 40),
-                  _NavButton(
-                    icon: Icons.keyboard_arrow_right_rounded,
-                    onPressed: () {
-                      _pageController.nextPage(
-                        duration: const Duration(milliseconds: 400),
-                        curve: Curves.easeOutCubic,
-                      );
-                    },
+                  Text(
+                    "${_currentPage + 1} / ${state.filteredLessons.length}",
+                    style: AppTextStyles.monoSmall,
                   ),
                 ],
               ),
             ),
         ],
-      ),
-    );
-  }
-}
-
-class _NavButton extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback onPressed;
-
-  const _NavButton({required this.icon, required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onPressed,
-        borderRadius: BorderRadius.circular(40),
-        child: Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.white.withValues(alpha: 0.05),
-            border: Border.all(color: Colors.white10),
-          ),
-          child: Icon(icon, color: Colors.white, size: 28),
-        ),
       ),
     );
   }
