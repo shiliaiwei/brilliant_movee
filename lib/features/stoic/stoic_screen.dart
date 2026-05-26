@@ -4,7 +4,7 @@ import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_styles.dart';
 import 'stoic_provider.dart';
 import 'stoic_model.dart';
-import 'widgets/stoic_flashcard.dart';
+import 'widgets/stoic_detail_sheet.dart';
 
 class StoicScreen extends ConsumerStatefulWidget {
   const StoicScreen({super.key});
@@ -13,364 +13,17 @@ class StoicScreen extends ConsumerStatefulWidget {
   ConsumerState<StoicScreen> createState() => _StoicScreenState();
 }
 
-// Full-reading dialog that displays lessons in a PageView so the user
-// can read one-by-one like pages of a paper. Includes prev/next controls
-// and a close button. Kept inside this file for simplicity.
-class StoicReaderDialog extends StatefulWidget {
-  final List<StoicLesson> lessons;
-  final int initialIndex;
-
-  const StoicReaderDialog(
-      {super.key, required this.lessons, this.initialIndex = 0});
-
-  @override
-  State<StoicReaderDialog> createState() => _StoicReaderDialogState();
-}
-
-class _StoicReaderDialogState extends State<StoicReaderDialog> {
-  late final PageController _controller;
-  late int _index;
-
-  @override
-  void initState() {
-    super.initState();
-    _index = widget.initialIndex;
-    _controller = PageController(initialPage: _index);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _jumpTo(int newIndex) {
-    if (newIndex < 0 || newIndex >= widget.lessons.length) return;
-    _controller.animateToPage(newIndex,
-        duration: const Duration(milliseconds: 260), curve: Curves.easeInOut);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      insetPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 28),
-      backgroundColor: AppColors.backgroundDeep,
-      child: SizedBox(
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height * 0.78,
-        child: Column(
-          children: [
-            // Top bar with close and position
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.close, color: Colors.white),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      '${_index + 1} / ${widget.lessons.length}',
-                      style: AppTextStyles.monoSmall,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  const SizedBox(width: 48), // spacer for symmetry
-                ],
-              ),
-            ),
-
-            Expanded(
-              child: PageView.builder(
-                controller: _controller,
-                itemCount: widget.lessons.length,
-                onPageChanged: (p) => setState(() => _index = p),
-                itemBuilder: (context, i) {
-                  final lesson = widget.lessons[i];
-                  return Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Paper-like card
-                          Container(
-                            decoration: BoxDecoration(
-                              color: AppColors.backgroundSurface,
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.22),
-                                  blurRadius: 12,
-                                  offset: const Offset(0, 6),
-                                ),
-                              ],
-                            ),
-                            padding: const EdgeInsets.all(18),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  lesson.title.toUpperCase(),
-                                  style: AppTextStyles.headline.copyWith(
-                                      fontSize: 22,
-                                      letterSpacing: 2,
-                                      fontWeight: FontWeight.w900),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  '${lesson.category.label} • ${_estimateReadTime(lesson.content)}',
-                                  style: AppTextStyles.badge
-                                      .copyWith(color: AppColors.textSecondary),
-                                ),
-                                const SizedBox(height: 20),
-                                ..._buildFormattedContent(lesson.content),
-                                const SizedBox(height: 32),
-
-                                // Full Directive Block
-                                Container(
-                                  padding: const EdgeInsets.all(20),
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.backgroundDeep,
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: const Border(
-                                      left: BorderSide(
-                                          color: AppColors.primary, width: 4),
-                                    ),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          const Icon(Icons.psychology,
-                                              size: 18,
-                                              color: AppColors.primary),
-                                          const SizedBox(width: 10),
-                                          Text(
-                                            "SYSTEM DIRECTIVE",
-                                            style: AppTextStyles.badge.copyWith(
-                                              color: AppColors.primary,
-                                              letterSpacing: 2,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 12),
-                                      Text(
-                                        _clean(lesson.directive),
-                                        style: AppTextStyles.body.copyWith(
-                                          fontStyle: FontStyle.italic,
-                                          fontSize: 16,
-                                          height: 1.5,
-                                          color: AppColors.primary
-                                              .withValues(alpha: 0.9),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 20),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 24),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-
-            // bottom controls: prev / next
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: _index > 0 ? () => _jumpTo(_index - 1) : null,
-                    icon: Icon(Icons.chevron_left,
-                        color: _index > 0
-                            ? AppColors.primary
-                            : AppColors.textSecondary),
-                  ),
-                  Text(
-                    widget.lessons[_index].title,
-                    style: AppTextStyles.monoSmall,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  IconButton(
-                    onPressed: _index < widget.lessons.length - 1
-                        ? () => _jumpTo(_index + 1)
-                        : null,
-                    icon: Icon(Icons.chevron_right,
-                        color: _index < widget.lessons.length - 1
-                            ? AppColors.primary
-                            : AppColors.textSecondary),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  List<Widget> _buildFormattedContent(String content) {
-    final List<Widget> widgets = [];
-    final lines = content.split('\n');
-
-    final List<String> metaLines = [];
-    final List<String> bodyLines = [];
-
-    for (var line in lines) {
-      if (line.startsWith('[VISUAL]') ||
-          line.startsWith('[GRAMMAR]') ||
-          line.startsWith('[STRATEGY]') ||
-          line.startsWith('[GRAPH]') ||
-          line.startsWith('[DATA]')) {
-        metaLines.add(line);
-      } else {
-        bodyLines.add(line);
-      }
-    }
-
-    // Build Metadata Section
-    if (metaLines.isNotEmpty) {
-      widgets.add(
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.03),
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
-          ),
-          child: Column(
-            children: metaLines.map((meta) {
-              IconData icon = Icons.info_outline_rounded;
-              String label = "";
-              String value = "";
-
-              if (meta.startsWith('[VISUAL]')) {
-                icon = Icons.visibility_rounded;
-                label = "VISUAL";
-                value = meta.replaceFirst('[VISUAL]', '').trim();
-              } else if (meta.startsWith('[GRAMMAR]')) {
-                icon = Icons.spellcheck_rounded;
-                label = "GRAMMAR";
-                value = meta.replaceFirst('[GRAMMAR]', '').trim();
-              } else if (meta.startsWith('[STRATEGY]')) {
-                icon = Icons.account_tree_rounded;
-                label = "STRATEGY";
-                value = meta.replaceFirst('[STRATEGY]', '').trim();
-              } else if (meta.startsWith('[GRAPH]')) {
-                icon = Icons.auto_graph_rounded;
-                label = "DATA GRAPH";
-                value = meta.replaceFirst('[GRAPH]', '').trim();
-              } else if (meta.startsWith('[DATA]')) {
-                icon = Icons.analytics_rounded;
-                label = "DATA";
-                value = meta.replaceFirst('[DATA]', '').trim();
-              }
-
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(icon, size: 14, color: AppColors.primary),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: RichText(
-                        text: TextSpan(
-                          style: AppTextStyles.caption.copyWith(fontSize: 12),
-                          children: [
-                            TextSpan(
-                                text: "$label: ",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.primary)),
-                            TextSpan(text: _clean(value)),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }).toList(),
-          ),
-        ),
-      );
-      widgets.add(const SizedBox(height: 24));
-    }
-
-    // Body Content
-    if (bodyLines.isNotEmpty) {
-      widgets.add(
-        Text(
-          _clean(bodyLines.join('\n')),
-          textAlign: TextAlign.justify,
-          style: AppTextStyles.body.copyWith(
-            height: 1.8,
-            fontSize: 15,
-            color: AppColors.textPrimary.withValues(alpha: 0.95),
-            letterSpacing: 0.3,
-          ),
-        ),
-      );
-    }
-
-    return widgets;
-  }
-
-  String _clean(String text) {
-    final asciiOnly = String.fromCharCodes(text.runes.where((r) => r < 128));
-    return asciiOnly.replaceAll(RegExp(r"\[.*?\]"), '').trim();
-  }
-
-  String _estimateReadTime(String content) {
-    final words =
-        content.split(RegExp(r"\s+")).where((s) => s.isNotEmpty).length;
-    final minutes = (words / 200).ceil();
-    return '${minutes} min read';
-  }
-}
-
 class _StoicScreenState extends ConsumerState<StoicScreen> {
-  final PageController _pageController = PageController(viewportFraction: 0.96);
   final ScrollController _filterController = ScrollController();
+  final ScrollController _listController = ScrollController();
   final Map<StoicCategory, GlobalKey> _categoryKeys = {
     for (var cat in StoicCategory.values) cat: GlobalKey(),
   };
-  int _currentPage = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController.addListener(() {
-      if (!_pageController.hasClients) return;
-      final nextPage = (_pageController.page ?? 0).round();
-      if (nextPage != _currentPage && mounted) {
-        setState(() => _currentPage = nextPage);
-      }
-    });
-  }
 
   @override
   void dispose() {
-    _pageController.dispose();
     _filterController.dispose();
+    _listController.dispose();
     super.dispose();
   }
 
@@ -386,6 +39,24 @@ class _StoicScreenState extends ConsumerState<StoicScreen> {
       alignment: 0.5,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
+    );
+  }
+
+  void _showDetail(StoicLesson lesson) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      enableDrag: true,
+      useSafeArea: true,
+      builder: (_) => DraggableScrollableSheet(
+        initialChildSize: 0.94,
+        maxChildSize: 0.94,
+        minChildSize: 0.6,
+        expand: false,
+        builder: (context, scrollController) =>
+            StoicDetailSheet(lesson: lesson),
+      ),
     );
   }
 
@@ -410,7 +81,7 @@ class _StoicScreenState extends ConsumerState<StoicScreen> {
       ),
       body: Column(
         children: [
-          // Filter Chips with auto-centering
+          // Filter Chips
           SingleChildScrollView(
             controller: _filterController,
             scrollDirection: Axis.horizontal,
@@ -437,9 +108,8 @@ class _StoicScreenState extends ConsumerState<StoicScreen> {
                     onSelected: (_) {
                       notifier.selectCategory(category);
                       _scrollToCategory(category);
-                      setState(() => _currentPage = 0);
-                      if (_pageController.hasClients) {
-                        _pageController.jumpToPage(0);
+                      if (_listController.hasClients) {
+                        _listController.jumpTo(0);
                       }
                     },
                     shape: RoundedRectangleBorder(
@@ -453,7 +123,7 @@ class _StoicScreenState extends ConsumerState<StoicScreen> {
             ),
           ),
 
-          // Reading-first content area
+          // List area
           Expanded(
             child: state.isLoading
                 ? const Center(
@@ -462,54 +132,97 @@ class _StoicScreenState extends ConsumerState<StoicScreen> {
                     ? Center(child: Text(state.error!))
                     : state.filteredLessons.isEmpty
                         ? const Center(child: Text("NO DATA IN THIS SECTOR"))
-                        : Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Center(
-                              child: ConstrainedBox(
-                                constraints:
-                                    const BoxConstraints(maxWidth: 860),
-                                child: PageView.builder(
-                                  controller: _pageController,
-                                  itemCount: state.filteredLessons.length,
-                                  physics: const BouncingScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    final lesson = state.filteredLessons[index];
-                                    return GestureDetector(
-                                      onTap: () {
-                                        // open full-reading dialog that allows
-                                        // navigating lessons one-by-one like paper
-                                        showDialog(
-                                          context: context,
-                                          builder: (_) => StoicReaderDialog(
-                                            lessons: state.filteredLessons,
-                                            initialIndex: index,
-                                          ),
-                                        );
-                                      },
-                                      child: StoicFlashcard(lesson: lesson),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
+                        : ListView.separated(
+                            controller: _listController,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 12),
+                            itemCount: state.filteredLessons.length,
+                            separatorBuilder: (_, __) =>
+                                const SizedBox(height: 10),
+                            itemBuilder: (context, index) {
+                              final lesson = state.filteredLessons[index];
+                              return _StoicListItem(
+                                lesson: lesson,
+                                rank: index + 1,
+                                onTap: () => _showDetail(lesson),
+                              );
+                            },
                           ),
           ),
+        ],
+      ),
+    );
+  }
+}
 
-          // Simplified footer: only show page counter (removed prev/next buttons)
-          if (state.filteredLessons.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 24, top: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "${_currentPage + 1} / ${state.filteredLessons.length}",
-                    style: AppTextStyles.monoSmall,
+class _StoicListItem extends StatelessWidget {
+  const _StoicListItem({
+    required this.lesson,
+    required this.rank,
+    required this.onTap,
+  });
+
+  final StoicLesson lesson;
+  final int rank;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.backgroundSurface,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            )
+          ],
+        ),
+        child: Row(
+          children: [
+            // Rank Number
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.backgroundDeep,
+                border:
+                    Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
+              ),
+              child: Center(
+                child: Text(
+                  rank.toString().padLeft(2, '0'),
+                  style: AppTextStyles.monoSmall.copyWith(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.bold,
                   ),
-                ],
+                ),
               ),
             ),
-        ],
+            const SizedBox(width: 16),
+            // Title
+            Expanded(
+              child: Text(
+                lesson.title.toUpperCase(),
+                style: AppTextStyles.bodyMedium.copyWith(
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 1.2,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ),
+            const Icon(Icons.chevron_right_rounded,
+                color: AppColors.textSecondary, size: 20),
+          ],
+        ),
       ),
     );
   }

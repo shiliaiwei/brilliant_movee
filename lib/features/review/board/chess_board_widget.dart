@@ -498,60 +498,24 @@ class _PieceImage extends StatelessWidget {
       assetPath = 'assets/pieces/$pieceSetId/$color${type.toUpperCase()}.png';
     }
 
-    // Wrap in a Stack to add a subtle shadow for "lifted" 2D look
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        // Subtle offset shadow
-        if (isSvg)
-          Opacity(
-            opacity: 0.25,
-            child: Transform.translate(
-              offset: Offset(size * 0.04, size * 0.04),
-              child: SvgPicture.asset(
-                assetPath,
-                width: size,
-                height: size,
-                colorFilter:
-                    const ColorFilter.mode(Colors.black, BlendMode.srcIn),
-              ),
-            ),
+    // Main Piece (No shadow as requested)
+    return isSvg
+        ? SvgPicture.asset(
+            assetPath,
+            width: size,
+            height: size,
+            fit: BoxFit.contain,
+            placeholderBuilder: (_) => _FallbackPiece(piece: piece, size: size),
           )
-        else
-          Opacity(
-            opacity: 0.25,
-            child: Transform.translate(
-              offset: Offset(size * 0.04, size * 0.04),
-              child: Image.asset(
-                assetPath,
-                width: size,
-                height: size,
-                color: Colors.black,
-              ),
-            ),
-          ),
-
-        // Main Piece
-        isSvg
-            ? SvgPicture.asset(
-                assetPath,
-                width: size,
-                height: size,
-                fit: BoxFit.contain,
-                placeholderBuilder: (_) =>
-                    _FallbackPiece(piece: piece, size: size),
-              )
-            : Image.asset(
-                assetPath,
-                width: size,
-                height: size,
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) {
-                  return _FallbackPiece(piece: piece, size: size);
-                },
-              ),
-      ],
-    );
+        : Image.asset(
+            assetPath,
+            width: size,
+            height: size,
+            fit: BoxFit.contain,
+            errorBuilder: (context, error, stackTrace) {
+              return _FallbackPiece(piece: piece, size: size);
+            },
+          );
   }
 }
 

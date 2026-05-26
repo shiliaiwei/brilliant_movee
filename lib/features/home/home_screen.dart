@@ -169,7 +169,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
             Expanded(
               child: leaderboardAsync.when(
-                loading: () => Center(child: FuiLoading(label: 'LOADING HOME')),
+                loading: () =>
+                    const Center(child: FuiLoading(label: 'LOADING HOME')),
                 error: (e, _) => ChtErrorState(
                   title: 'LEADERBOARD ERROR',
                   description: 'Failed to load top players from Chess.com',

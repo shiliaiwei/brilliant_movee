@@ -19,7 +19,7 @@ class StoicVisualCover extends StatelessWidget {
       height: 180,
       width: double.infinity,
       clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.backgroundDeep,
       ),
       child: Stack(

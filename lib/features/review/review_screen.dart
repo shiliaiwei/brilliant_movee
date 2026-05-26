@@ -462,133 +462,116 @@ class _AnalysisPanelSimplifiedState
   Widget build(BuildContext context) {
     if (!widget.state.isAnalyzing) return const SizedBox(height: 16);
 
-    final storage = ref.read(storageServiceProvider);
-    final depth = storage.engineDepth;
-    final mode = depth >= 30
-        ? 'GRANDMASTER'
-        : depth >= 26
-            ? 'PREMIUM'
-            : depth >= 22
-                ? 'BALANCED'
-                : 'FAST';
-
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 24),
       decoration: BoxDecoration(
         color: AppColors.backgroundDeep,
         border: Border(
-          bottom: BorderSide(color: AppColors.primary.withValues(alpha: 0.1)),
+          bottom: BorderSide(color: AppColors.primary.withValues(alpha: 0.15)),
         ),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'ANALYZING...',
-                    style: TextStyle(
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 14,
-                      letterSpacing: 1.5,
-                    ),
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.primary.withValues(alpha: 0.05),
+                  border: Border.all(
+                      color: AppColors.primary.withValues(alpha: 0.2)),
+                ),
+                child: Center(
+                  child: RotationTransition(
+                    turns: _controller,
+                    child: const Icon(Icons.settings_suggest_rounded,
+                        color: AppColors.primary, size: 24),
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'SF-${widget.engineVersion} • $mode',
-                    style: const TextStyle(
-                      color: AppColors.textSecondary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 10,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                ],
+                ),
               ),
-              const Spacer(),
-              Text(
-                '${(widget.state.analysisProgress * 100).toInt()}%',
-                style: const TextStyle(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 28,
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Text(
+                          'SYSTEM ANALYSIS',
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 14,
+                            letterSpacing: 2,
+                            fontFamily: 'StackSansNotch',
+                          ),
+                        ),
+                        const Spacer(),
+                        Text(
+                          '${(widget.state.analysisProgress * 100).toInt()}%',
+                          style: const TextStyle(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 20,
+                            fontFamily: 'StackSansNotch',
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      'SF-${widget.engineVersion} • OPTIMIZED SPEED',
+                      style: TextStyle(
+                        color: AppColors.textSecondary.withValues(alpha: 0.6),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          // Thicker Fill Loading Bar
-          Container(
-            height: 12,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.05),
-              borderRadius: BorderRadius.circular(4),
-              border: Border.all(color: Colors.white10, width: 1),
-            ),
-            child: Stack(
-              children: [
-                // Progressive Fill
-                FractionallySizedBox(
-                  alignment: Alignment.centerLeft,
-                  widthFactor: widget.state.analysisProgress,
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 400),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [AppColors.primary, Color(0xFF00E5FF)],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
+          const SizedBox(height: 20),
+          // New Loading Bar Style: Glowing and slim
+          Stack(
+            children: [
+              Container(
+                height: 6,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.03),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              FractionallySizedBox(
+                alignment: Alignment.centerLeft,
+                widthFactor: widget.state.analysisProgress,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  height: 6,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [AppColors.primary, Color(0xFF00E5FF)],
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primary.withValues(alpha: 0.4),
+                        blurRadius: 12,
+                        spreadRadius: 1,
                       ),
-                      borderRadius: BorderRadius.circular(3),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.primary.withValues(alpha: 0.3),
-                          blurRadius: 10,
-                          spreadRadius: 2,
-                        ),
-                      ],
-                    ),
+                    ],
                   ),
                 ),
-                // Shimmer Effect Overlay
-                Positioned.fill(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(3),
-                    child: AnimatedBuilder(
-                      animation: _controller,
-                      builder: (context, child) {
-                        return Transform.translate(
-                          offset: Offset(
-                              (_controller.value * 2 - 1) *
-                                  MediaQuery.of(context).size.width,
-                              0),
-                          child: Container(
-                            width: 150,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Colors.white.withValues(alpha: 0),
-                                  Colors.white.withValues(alpha: 0.2),
-                                  Colors.white.withValues(alpha: 0),
-                                ],
-                                transform: const GradientRotation(0.5),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),

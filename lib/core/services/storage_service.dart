@@ -66,7 +66,7 @@ class StorageService {
   Future<void> setBoardTheme(String theme) =>
       _prefs.setString(StorageKeys.boardTheme, theme);
 
-  String get pieceSet => _prefs.getString(StorageKeys.pieceSet) ?? 'cburnett';
+  String get pieceSet => _prefs.getString(StorageKeys.pieceSet) ?? 'maestro';
   Future<void> setPieceSet(String set) =>
       _prefs.setString(StorageKeys.pieceSet, set);
 
@@ -75,7 +75,7 @@ class StorageService {
       _prefs.setString(StorageKeys.soundPack, pack);
 
   // ── Engine ────────────────────────────────────────────────────────────────
-  int get engineDepth => _prefs.getInt(StorageKeys.engineDepth) ?? 26;
+  int get engineDepth => _prefs.getInt(StorageKeys.engineDepth) ?? 18;
   Future<void> setEngineDepth(int depth) =>
       _prefs.setInt(StorageKeys.engineDepth, depth);
 
