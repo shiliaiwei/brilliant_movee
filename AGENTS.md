@@ -23,26 +23,7 @@
 
 
 
-  //////// PUSH ////////
-
-Please push the current source code to GitHub. Add all new resources and files, commit them with a professional message describing the changes, and push to the main branch."
-
-
-//////// PUSH  zpk taag averion////////
-
-Please create a new release on GitHub.
-1.
-Build a new release APK for Android.
-2.
-Create a new version tag (e.g., v1.4.1).
-3.
-Upload the APK to the GitHub Release page.
-4.
-Add a description for this version detailing the new features and fixes
-
-
-//////// PUSH one ////////
-
+ 
 I want to perform a full project release. Please do the following in order:
 1.
 Push Source: Add all current code and resources and push them to the GitHub repository.

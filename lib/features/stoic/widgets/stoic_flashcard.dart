@@ -56,25 +56,26 @@ class StoicFlashcard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: AppColors.primary,
-                          borderRadius: BorderRadius.circular(4),
+                      if (lesson.isPremium)
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Text(
+                            'PREMIUM',
+                            style: AppTextStyles.badge.copyWith(
+                                color: AppColors.backgroundDeep,
+                                fontSize: 9,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
-                        child: Text(
-                          'PREMIUM',
-                          style: AppTextStyles.badge.copyWith(
-                              color: AppColors.backgroundDeep,
-                              fontSize: 9,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
                     ],
                   ),
                   const SizedBox(height: 16),
-                  ..._buildPreviewContent(lesson.content),
+                  _buildPreviewContent(),
                   const SizedBox(height: 20),
 
                   // Directive Block Preview
@@ -93,7 +94,7 @@ class StoicFlashcard extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            const Icon(Icons.psychology,
+                            const Icon(Icons.bolt,
                                 size: 14, color: AppColors.primary),
                             const SizedBox(width: 8),
                             Text(
@@ -102,13 +103,14 @@ class StoicFlashcard extends StatelessWidget {
                                 color: AppColors.primary,
                                 letterSpacing: 1.5,
                                 fontSize: 10,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ],
                         ),
                         const SizedBox(height: 6),
                         Text(
-                          _cleanText(lesson.directive),
+                          lesson.directive,
                           style: AppTextStyles.bodyMedium.copyWith(
                             fontStyle: FontStyle.italic,
                             fontSize: 13,
@@ -150,48 +152,22 @@ class StoicFlashcard extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildPreviewContent(String content) {
-    final List<Widget> widgets = [];
-    final lines = content.split('\n');
+  Widget _buildPreviewContent() {
+    // Find first body section or fallback to first section or content
+    final bodySection = lesson.sections.firstWhere((s) => s.type == 'body',
+        orElse: () => lesson.sections.isNotEmpty
+            ? lesson.sections.first
+            : StoicSection(title: '', body: lesson.content));
 
-    final List<String> metaLines = [];
-    final List<String> bodyLines = [];
-
-    for (var line in lines) {
-      if (line.startsWith('[VISUAL]') ||
-          line.startsWith('[GRAMMAR]') ||
-          line.startsWith('[STRATEGY]') ||
-          line.startsWith('[GRAPH]') ||
-          line.startsWith('[DATA]')) {
-        metaLines.add(line);
-      } else {
-        bodyLines.add(line);
-      }
-    }
-
-    // Body Content Preview
-    if (bodyLines.isNotEmpty) {
-      widgets.add(
-        Text(
-          _cleanText(bodyLines.join('\n')),
-          maxLines: 4,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.body.copyWith(
-            height: 1.6,
-            fontSize: 14,
-            color: AppColors.textPrimary.withValues(alpha: 0.9),
-          ),
-        ),
-      );
-    }
-
-    return widgets;
-  }
-
-  String _cleanText(String text) {
-    // remove non-ascii (emoji) by keeping only runes < 128, then strip simple symbols
-    final asciiOnly = String.fromCharCodes(text.runes.where((r) => r < 128));
-    final cleaned = asciiOnly.replaceAll('#', '').replaceAll('@', '').trim();
-    return cleaned;
+    return Text(
+      bodySection.body,
+      maxLines: 4,
+      overflow: TextOverflow.ellipsis,
+      style: AppTextStyles.body.copyWith(
+        height: 1.6,
+        fontSize: 14,
+        color: AppColors.textPrimary.withValues(alpha: 0.9),
+      ),
+    );
   }
 }

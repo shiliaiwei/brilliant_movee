@@ -5,13 +5,13 @@ import 'stoic_model.dart';
 
 class StoicState {
   final List<StoicLesson> lessons;
-  final StoicCategory selectedCategory;
+  final StoicCategory? selectedCategory;
   final bool isLoading;
   final String? error;
 
   StoicState({
     required this.lessons,
-    required this.selectedCategory,
+    this.selectedCategory,
     this.isLoading = false,
     this.error,
   });
@@ -19,7 +19,6 @@ class StoicState {
   factory StoicState.initial() {
     return StoicState(
       lessons: [],
-      selectedCategory: StoicCategory.dominance,
       isLoading: true,
     );
   }
@@ -39,7 +38,8 @@ class StoicState {
   }
 
   List<StoicLesson> get filteredLessons {
-    return lessons.where((l) => l.category == selectedCategory).toList();
+    if (selectedCategory == null) return lessons;
+    return lessons.where((c) => c.category == selectedCategory).toList();
   }
 }
 
@@ -64,12 +64,12 @@ class StoicNotifier extends StateNotifier<StoicState> {
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
-        error: "THE SYSTEM FAILED TO LOAD WISDOM: $e",
+        error: "SYSTEM ERROR: FAILED TO LOAD ARCHIVE: $e",
       );
     }
   }
 
-  void selectCategory(StoicCategory category) {
+  void selectCategory(StoicCategory? category) {
     state = state.copyWith(selectedCategory: category);
   }
 }

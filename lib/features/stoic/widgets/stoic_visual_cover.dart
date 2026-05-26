@@ -74,6 +74,9 @@ class StoicVisualCover extends StatelessWidget {
         return 'https://images.unsplash.com/photo-1500673922987-e212871fec22?q=80&w=1000&auto=format';
       case StoicCategory.emotionalControl:
         return 'https://images.unsplash.com/photo-1502481851512-e9e2529bbbf5?q=80&w=1000&auto=format';
+      default:
+        // High-contrast professional abstract for other 30+ categories
+        return 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format';
     }
   }
 

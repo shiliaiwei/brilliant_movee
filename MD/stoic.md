@@ -1,0 +1,2415 @@
+
+**how to stop wasting your life: (the biological reset)
+
+what to avoid: circadian misalignment
+the mechanism: staying up late and waking up at random times destroys your circadian clock. this blunts your cortisol awakening response (car), the massive spike of cortisol you are supposed to get in the morning to drive alertness. without this hormonal pulse, residual melatonin lingers in your bloodstream. this biological mismatch destroys your morning drive, leaving you feeling apathetic, sluggish, and unmotivated for the entire first half of your day.
+the fix: the solar anchor. you must anchor your biology to the rotation of the planet. go to sleep and wake up at the exact same time every single day, including weekends. this synchronizes your endocrine system, guaranteeing a massive, natural spike of energy and focus the moment you wake up.
+scientific source: translational psychiatry - "circadian rhythm disruption and mental health."
+
+what to avoid: the morning dopamine spike
+the mechanism: reaching for your phone the second you wake up floods your reward circuitry with cheap dopamine before you have exerted any physical or cognitive effort. this alters your brain's "reward prediction error." your central nervous system registers that high-level stimulation can be achieved without work. this chemically destroys your motivation to pursue difficult, slow-compounding goals, leaving you in a state of chronic procrastination.
+the fix: you must biologically separate waking up from dopamine consumption. do not look at a screen for the first 60 minutes of your day. expose your eyes to natural sunlight to trigger a natural cortisol pulse, which wakes up the nervous system without frying your reward circuitry.
+scientific source: neuropharmacology - "the dopamine motive system: implications for drug and food addiction."
+
+what to avoid: supernormal stimuli
+the mechanism: consuming hyper-stimulating digital content (short-form videos, video games) provides a variable-ratio reward schedule that overloads the striatum. to protect itself from neurotoxicity, your brain downregulates (removes) d2 dopamine receptors. with fewer receptors, normal, everyday tasks (like studying, working, or building a business) fail to cross the chemical threshold required to trigger motivation. you waste your life because reality cannot compete with the algorithm.
+the fix: d2 receptor upregulation. you must starve the brain of synthetic stimulation. implement a strict 24-hour total dopamine fast weekly (no screens, no artificial stimuli). this biological boredom forces your brain to upregulate d2 receptors, restoring your chemical drive to achieve real-world goals.
+scientific source: molecular psychiatry - "addiction: decreased reward sensitivity and increased expectation sensitivity conspire to overwhelm the brain's control circuit."
+
+what to avoid: attentional fragmentation
+the mechanism: constantly switching between tasks, tabs, or apps forces your brain to constantly re-orient its neural networks. this "context switching" rapidly depletes glucose in the prefrontal cortex. you feel like you are wasting your life because your brain is too metabolically exhausted to enter "transient hypofrontality" (the flow state), the exact neurological condition required to produce deep work and make actual progress.
+the fix: the 90-minute deep work block. turn your phone to airplane mode and place it in another room. work on one single, high-friction task for 90 minutes. forcing your brain to process a single data stream prevents glucose depletion and physically rebuilds your attention span.
+scientific source: proceedings of the national academy of sciences (pnas) - "cognitive control in media multitaskers."
+
+what to avoid: sedentary hypoperfusion
+the mechanism: sitting in a chair for 8 hours a day physically reduces cerebral blood flow velocity. your brain experiences mild hypoperfusion, meaning it receives less oxygen and glucose. this downregulates mitochondrial atp (cellular energy) production in the cortex. you aren't lazy; your brain is literally starved of kinetic energy, forcing your body into a state of lethargy to conserve resources.
+the fix: you must force oxygenated blood back into your skull. every 45 minutes, stand up and perform 60 seconds of air squats or jumping jacks. this mechanically pumps blood from your legs back up to your brain, instantly restoring mitochondrial atp production and killing brain fog.
+scientific source: journal of applied physiology - "regular walking breaks prevent the decline in cerebral blood flow associated with prolonged sitting."
+
+---
+
+5 hobbies that will help you increase your fluid intelligence (for IQ)
+
+1 - Chess or strategy games:
+Trains pattern recognition, planning, working memory, and thinking several moves ahead.
+
+2 - Learning a musical instrument:
+Trains attention control, timing, memory, and cognitive switching. Research links music training with executive-function benefits.
+
+3 - Martial arts or complex sports
+Especially boxing, Muay Thai, tennis, climbing:
+They combine reaction speed, prediction, motor learning, and rapid decision-making. Physical activity interventions show small positive effects on fluid intelligence and working memory in some studies.
+
+4 - Programming / building small apps:
+Trains abstraction, logic, debugging, systems thinking, and breaking complex problems into rules.
+
+5 - Puzzle-solving: logic grids, math puzzles, cryptograms, escape rooms:
+Trains novel problem-solving and reasoning under uncertainty, which is closest to fluid-intelligence-style thinking.
+
+---
+
+The Art of Speaking
+9 rules that will change everything:-
+
+Rule 1: Slow Down
+- Speaking too fast signals anxiety and makes people work harder to follow you
+- Slowing down signals confidence - like your words are worth waiting for
+- The most powerful speakers in the world use pace like a weapon
+- Practice: Record yourself speaking for 60 seconds. If it feels uncomfortable to slow down - that's exactly why you need to.
+
+Rule 2: Say Less, Mean More
+- Rambling kills credibility faster than saying the wrong thing
+- People who over-explain come across as insecure - like they're begging to be believed
+- One clear sentence lands harder than five messy ones
+- Practice: Before you speak, ask yourself - what is the ONE thing I actually want to say? Lead with that. Everything else is noise.
+
+Rule 3: Never Fill Silence With Noise
+- Most people panic in silence and start talking just to fill the gap
+- That's where you lose your power - silence is not awkward, it's authoritative
+- The person comfortable with silence controls the conversation
+- Practice: When you finish making a point - stop. Let it land. Resist the urge to add "you know what I mean?" or "like..." Count to 3 in your head.
+
+Rule 6: Ask Better Questions
+- Weak speakers talk. Strong speakers ask.
+- A great question shows intelligence, curiosity and genuine interest all at once
+- People leave conversations feeling good about themselves - and credit you for it
+- Practice: In your next conversation replace one statement with a question. Not to interrogate - to understand. Watch the whole energy shift.
+
+Rule 7: Own Your Words
+- Hedging everything you say makes you forgettable _ "I think maybe possibly it could be..."
+- Speak in statements. Use "I believe" instead of "I don't know but maybe"
+- Conviction is magnetic. Vagueness is invisible.
+- Practice: Catch yourself every time you over-qualify a sentence today. Replace it with a direct, clean statement. Own what you think.
+
+Rule 8: Listen More Than You Speak
+- The best communicators are the best listeners - not the best talkers
+- People trust the ones who make them feel heard above everything else
+- You learn nothing while you're talking. You learn everything while you're listening.
+- Practice: In your next conversation - let the other person finish completely before you respond. No interrupting. No planning your reply mid-sentence. Just listen.
+
+Rule 9: Your Body Speaks Before You Do
+- Slouched posture, crossed arms, avoiding eye contact - all of it speaks loudly before a word leaves your mouth
+- People form an impression of you in seconds - mostly from how you carry yourself
+- Stand tall. Eye contact. Open body. You've already won half the conversation.
+- Practice: Every morning for 7 days - stand in front of a mirror and speak. Watch your posture, your eye contact, your expression. Fix what you see.
+
+
+Resources to help you become more knowledgeable
+
+1. General knowledge/ to become well rounded
+   YouTube:
+- CrashCourse
+- Kurzgesagt – In a Nutshell
+- MIT OpenCourseWare
+- EverythingProfessor
+  Podcast:
+- Stuff You Should Know
+- 99% invisible
+
+2. Learning a language
+   Apps:
+- Duolingo
+- Busuu
+- Babble
+- SpanishDict
+  Advice: watch your favourite film or cartoon in the language you want to learn
+
+3. Financial literacy
+   Apps:
+- Yahoo Finance
+- Vanguard website
+  Books:
+- The Psychology of money
+- Rich Dad Poor Dad
+
+4. Self-improvement + discipline
+   Books:
+- Atomic Habits
+- Ikigai
+- The mountain is you
+  Podcasts:
+- Diary of a CEO
+- Huberman Lab
+- Mel Robbins
+
+4. When reading use a dictionary to note down definitions of unfamiliar words and use them in your daily vocabulary. Regularly test yourself by trying to remember the definitions.
+
+5. Deep and philosophical thinking
+   Podcast:
+- Philosophize This!
+  YouTube
+- Academy of Ideas
+  Books:
+- The Brothers Karamazov
+- Thinking fast and slow
+- Republic by Plato
+
+
+
+
+how you become dangerously well educated
+
+strengthen foundational skills. you need this to understand complexer academic systems. -improve reading comprehension. -build strong writing habits. -master basic math and logic.
+
+study deply, not just widely. chose 1-2 subjects to become exceptional in. read academic books, papers or advanced articles. enter academic circles, labs or competitions.
+
+use active learning. -teach what you learned to someone else. -do practice problems instead of rereading. -summarize concepts in your own words. reach high competence!
+
+note it down. structured notes turn information into systems. Cornell method! -capture -connect -review
+
+listen to podcast. long-form podcast shows you how experts think. every normal answer has a system behind it. this improves your reasoning style and critical thinking.
+
+read. reading build layered thinking. history, science and psychology. recognize the connections and patterns.
+
+explain what you learned. speak or write in your own words. it exposes the gaps and turns input into something that sticks.
+
+writing. fiction, poetry, articles or journaling. writing improves vocabulary, communication skills, empathy (creating characters) and emotional processing.
+
+Discipline shapes everything. Understanding how your brain works makes it easier to build habits, stay consistent, and improve faster.
+
+Writing forces clarity. It helps you find knowledge gaps, organize thoughts, and remember information longer.
+
+Clear communication creates clear thinking. Learning to speak better improves confidence, persuasion, and how effectively you express ideas.
+
+History trains pattern recognition. Learning why civilizations rise and collapse helps you understand politics, society, and human behavior better.
+
+4 hobbies to become dangerously intelligent
+
+programming. trains logic and breaking complex problems into rules. also creativity and the obsession of perfection.
+
+chess / strategy games -trains pattern recognition. -improve thinking several steps ahead. -planning. -critical thinking. -social intelligence.
+
+martial arts. especially boxing. boxing combine reaction speed, motor learning, discipline and rapid decision making.
+
+develop mental endurance. you can train it! -reduce digital distractions. -try meditating to improve concentration.
+
+small daily improvements. improve 1% a day in a skill. track progress in a notebook. review every week. small improvements accumulate into mastery
+
+cultivate discipline, not obsession. healthy discipline: -sleep 7-8 hours. -take one full restday each week. -exercise regularly. -keep hobbies. your brain and body are a team!
+
+habbits to become a genius
+
+media that will increase your intelligence
+
+5 high value skills You should Learn
+
+Financial literacy: Knowing and understanding how money can work for you is very important. Start from the basics and build your knowledge from there. - Many resources and free ways to learn this.
+
+Trades: -Cleaning, electrical, plumbing etc. are services and skills that will always be required and may yield a great return.
+
+Communication: - Learning how to speak and engage in conversation is very important for gaining opportunity for your future. - A key networking skill. - Remember it's not just what you know but who you know. - Many podcasts and YouTube videos on this
+
+Digital and affiliate marketing: - These are great faceless ways to make money online. Join affiliate programmes with different companies for example Amazon.
+
+Coding and tech skills: - High yielding careers from this. - whether it is front end, back end, UI/ UX or Java script etc. There are so many different things to learn and skills to build through courses and free resources.
+
+Work so hard your future self is proud of your past decisions
+
+Work so hard there is no room for regret in your future
+
+Remember your only competition is your potential.
+
+5 Intentional habits of productive people
+
+1. Journal and set intentions for the day ahead. People spend on average 600 hours a year doing absolutely nothing. Plan and set intentions for your day with a journal.
+
+2. Protect their mornings. This is the time to refresh your mind for the day ahead. Read or create a to do list but do not go on your phone.
+
+3. They read. Reading wide and constantly to not only enhance their vocabulary but to gain a deeper understanding of the world and improve knowledge.
+
+4. Take care of their physical and mental health through regular exercise and movement. Whether it's daily walking or playing a sport.
+
+5. Journal and become aware of areas in their life they must improve at as well as acknowledging achievements. Setting achievable goals and creating strategic systems.
+
+4. Don't wait for motivation or inspiration. They go for it. When tired, when happy and when they feel like giving up.
+
+5. Habit track This is key. Not just the good ones but the bad ones they need to break as well.
+
+2. They don't wait for motivation and are instead disciplined. Remaining consistent and regularly practice skills until they have mastered it.
+
+3. Invest in continuous learning, learn with purpose and aim to do the best in all their tasks.
+
+5 habits of highly successful individuals
+
+1. Constant learning. Always seeking to know more whether it's about topics of their own interests or the world. Through podcasts, books and YouTube.
+
+1. Pick a topic and use podcasts, books, documentaries and YouTube videos to aid learning. Make notes and share this knowledge with others
+
+2. Surround yourself with like minded and intelligent individuals. Remember you are who you surround yourself with.
+
+3. Remain curious and keep track of your ideas. Try and understand a concept to its full extent.
+
+How to become more intellectual
+
+5. Learn a new language. This strengthens the brains cognitive reserve and enhances mental flexibility. Plenty of free resources to learn from.
+
+
+
+
+8 Terms Every Banker Knows By Heart
+
+TERM 01: EBITDA
+Earnings Before Interest, Taxes, Depreciation & Amortization
+Definition: A proxy for a company's core operating cash flow — before financing decisions, accounting choices, and tax jurisdiction affect the number.
+Formula: EBITDA = Revenue - COGS - OpEx (excl. D&A)
+Why Bankers Use It: It's the most common base for valuation multiples (EV/EBITDA). Lets you compare companies across different capital structures and tax rates.
+
+TERM 02: WACC
+Weighted Average Cost of Capital
+Definition: The blended rate a company must earn on its assets to satisfy both debt holders and equity investors. Used as the discount rate in a DCF.
+Formula: WACC = (E/V) * Ke + (D/V) * Kd * (1-t)
+Key Insight: Debt is cheaper than equity (tax shield). A higher WACC means higher risk — and a lower DCF valuation. Interviewers love asking what moves WACC.
+
+TERM 03 & 04: Two types of Free Cash Flow
+Unlevered FCF (UFCF): Cash flow before debt payments. Used in DCF to find Enterprise Value. Ignores capital structure.
+Levered FCF (LFCF): Cash flow after interest & debt repayment. What's left for equity holders. Used in equity valuation.
+Key Rule: A DCF always uses Unlevered FCF discounted at WACC -> gives Enterprise Value. Subtract net debt to get Equity Value.
+Quick Formula: UFCF = EBIT(1-t) + D&A - CapEx - NWC
+
+TERM 05: LBO (Leveraged Buyout)
+Definition: A private equity acquisition where the majority of the purchase price is financed with debt — typically 60-80%. The target company's cash flows service the debt.
+Returns driven by: leverage * multiple expansion * EBITDA growth
+Why it matters in IB Interviews: PE firms are major M&A clients. You need to know if a target is a good LBO candidate: stable cash flows, low CapEx, strong market position.
+
+TERM 06: Accretion vs Dilution
+Accretive: EPS goes up. The deal increases the acquirer's earnings per share. Good signal — creates value for shareholders.
+Dilutive: EPS goes down. The deal decreases EPS. May still be strategically justified, but harder to defend to investors.
+Key Rule: Deals paid with cash tend to be more accretive. Deals paid with stock at a low P/E tend to be dilutive.
+Interview Question: "When is a dilutive deal still worth doing?" — think strategic value, synergies, long-term growth.
+
+QUICK QUIZ: A company has no debt and no cash. What is its EV equal to?
+Answer: B. Its Market Capitalization.
+EV = Market Cap + Debt - Cash. With no debt and no cash, EV = Market Cap exactly. This is the bridge formula — know it cold.
+
+Master The Language: Bankers don't speak in sentences. They speak in acronyms.
+You covered the essentials. Now practice using them in context — not just defining them. The Finvestor app drills you on real IB terms with spaced repetition and deal examples.
+
+---
+
+how to build your MVP
+
+Problem/Idea
+The first step to building a product is to find the problem you want to solve.
+- Spot a pain point worth solving
+- Make the problem clear and measurable
+- Check if it's painful enough that people would pay for it
+
+Validate
+The key here is to validate the idea with the least amount of work put into the product. You want to either:
+- Find proof of a product already succeeding in this space
+- Build a waitlist and see if people sign up
+- Capture pre-orders (People giving you money is the ultimate validation)
+
+Landing Page
+Keep it simple, make it clear the problem you are solving and why they should choose your product over your competitors.
+- Explain problem + solution in plain language
+- Show the single core feature
+- Add a clear call-to-action (buy, sign up, waitlist)
+
+Core Feature
+Now you need to be the simplest version possible. This should really only include the core feature(s) required to make your app useable by your customers.
+You don't want to add too many shiny features here, it is important to get this thing in the hands of your customers as soon as possible.
+- Strip away nice-to-haves
+- Focus on solving the main pain point
+- One feature that actually changes the user's workflow
+
+Add Payments
+Make sure you are adding a paywall as soon as possible. Be it pre-orders as mentioned before, or offering an early access discount for your basic product, people giving you money makes it clear that you are on the right path.
+- Even $5 proves real demand
+- Use Stripe, Lemon Squeezy, or Gumroad
+- Early customers who pay = real validation
+
+Feedback & Iterate
+Now that you have paying customers, talk to them and work with them to find out what they like, what they don't like and what they would like to see in the product next. This is the easiest way to ensure you are building the right things.
+- Collect feedback from day one
+- Prioritize real pain over feature requests
+- Ship -> learn -> repeat until you nail product-market fit
+
+---
+
+How to Read a Stock Summary (Beginner's Guide - Part 2)
+Investing 101 for beginners. Stock summary explained in simple terms.
+
+3. Company Size & Risk
+   Market Cap (Intra-day): Company's total value based on current price. It helps to measure a company's size and gauge risk; larger companies are generally more stable than smaller companies (might have higher growth potential but will be more volatile).
+   = Current Share Price X Total no. of outstanding shares.
+   Categories:
+- Mega-cap: > $200 billion
+- Large-cap: $10 billion - $200 billion
+- Mid-cap: $2 billion - $10 billion
+- Small-cap: $250 million - $2 billion
+- Micro-cap: < $250 million
+  Note: MCD might be a mega-cap stock, but size doesn't equal stability. Big companies can still be volatile (e.g. Magnificent 7 lost $233 bil. in combined mkt value in 2024).
+
+Beta (5Y Monthly): Measures how volatile the stock is compared to the overall market (usually using S&P500) over 5 years.
+The market (e.g. S&P500) Beta = 1.0
+If:
+- Beta = 1.0, the stock moves in tandem with the market.
+- Beta > 1.0, the stock is more volatile than the market (=higher risk = higher potential returns)
+- Beta < 1.0, the stock is less volatile (more stable) than the market.
+  MCD = 0.53
+
+4. Valuation & Profitability
+   P/E Ratio (TTM): Price relative to earnings over the past 12 months.
+   It helps us decide if a stock is overvalued or undervalued by comparing the price paid for 1 share to the profit that MCD generated recently.
+   Simply put, how expensive or cheap is the stock compared to its earnings?
+   P/E Ratio = Current Stock Price / EPS (TTM)
+- You need to compare with competitors in the same sector.
+  Generally:
+- Low P/E (<15), potentially undervalued OR pessimistic future?
+- Average P/E (15-25), reasonable for mature companies
+- High P/E (>25-30), potential overvaluation OR high growth
+
+EPS (TTM): Earnings per share over the last 12 months.
+= Company's total profit / Total number of shares
+- For every share I own, MCD earns $11.91.
+- There is no fixed / good range for EPS, unlike P/E ratio.
+- Higher EPS generally means the company is more profitable.
+- Meta had a high EPS of $13.77 (2021) due to strong advertising profits (pandemic). Many assumed that growth would sustain. However, in 2022, rising costs and slowing ad growth caused profits to drop significantly, and the stock fell. This shows that a high EPS today does not guarantee future performance.
+  Look out for:
+- any consistent growth over the years. e.g. MCD's annual EPS were $11.56 (2023), $11.39 (2024), $11.95 (2025).
+- comparison with competitors in the same sector.
+- signs of slow growth.
+
+5. Earnings & Company Updates
+   Key Events: When you turn on / slide to the right, you will see both yellow and blue dots on the 1Y stock chart. It reflects the major announcements such as earnings, mergers etc.
+- Yellow dot - Analyst Rating (i.e. JP Morgan). Notice that there are more yellow dots clustering near a blue dot. This means analysts are updating their expectations of MCD before earnings are released.
+  Earnings Date (Est.): Expected date of next earnings report. MCD will reveal it's profitability for the quarter.
+- Blue dot - Earnings date.
+  Analysts' ratings can influence share prices.
+  Main Rating Types:
+- Buy/Outperform/Overweight: Expects the stock to perform better than the overall market or sector.
+- Hold/Neutral/Equal-Weight: Expects the stock to perform in line with the market.
+- Sell/Underperform/Underweight: Expects the stock to underperform.
+
+6. Dividends & Income
+   Forward Dividend & Yield: Expected dividend payout for the next year + percentage return. It tells me how much money I could earn from a stock next year through dividends. It also offers a projection of future potential investment income based on the most recent dividend.
+   Ex-Dividend Date: Deadline to own MCD stock to receive the next dividend (3 March 2026). This means if you purchase the stock after 3 March 2026, you will not be eligible for the upcoming dividend payment.
+   MCD is trading at $327.11, paying a forward dividend of $7.44/ year, with a dividend yield (= Forward Dividend / Stock Price) of 2.27%
+
+7. Forecasts
+   1Y Target Est (1-Year Target Estimate): the stock price that analysts expect to reach within the next 12 months.
+   It acts as a quick guide for investors; not a guarantee. e.g. MCD currently trades at $327.11. Analysts believe that the stock could rise to around $340 within a year.
+   It is based on:
+- Earnings projections (EPS)
+- Forward P/E (Price-to-Earnings)
+- Management quality
+- Growth prospects
+
+Rule of thumb for investing
+Rule of 110 (Asset Allocation): Rule of 110 is a quick way of deciding how much of your portfolio should be made up of stocks vs. safer assets (e.g. cash, bonds etc). As we get older, we tend to prefer lesser risks so that we would not suffer too much losses when the market turns bearish.
+How It Works (110 - Age = % in Stocks)
+At Age 30: 110 - 30 = 80% stocks / 20% bonds.
+At Age 50: 110 - 50 = 60% stocks / 40% bonds.
+At Age 70: 110 - 70 = 40% stocks / 60% bonds.
+This general rule helps to balance growth (stocks) and safety (bonds/ cash) as we age.
+
+---
+
+how to be dangerously well educated
+
+reading. not just fantasy or romance. REAL books, like classics or philosophy/ biography. books you learn from & that will need you to think. find a topic your interest in and get a book on it. old classics are really good for expanding your vocabulary.
+
+journaling. reflecting what you learned. writing ideas in your own words helps to process and retain them. stay consistent!
+
+journaling. i know you heard this often. but journaling is so good to expressing yourself/ emotions. seeing your life from the third perspective help you see things different and clear. this acts as a opportunity to release yourself.
+
+brain stimulating hobbies. chess/ crosswords/ soduko are great games for brain stimulation and problem solving. learning a new language or music instrument improve memory. this enhances strategic thinking, concentration and problem solving
+
+listen to podcasts about complex topics. expose you to different perspectives and reasoning styles. strengthen articulation and comprehension.
+
+spend 1 hour / week debating someone smarter. ( in person or online) this strengthens your speech skills and critical thinking.
+
+look up everything you don't understand. words/ references, concepts, ideas. curiosity turns into knowledge.
+
+exercise and diet. this is critical for your brain health. this stimulates neurogenesis. improve memory, mood and energy and lower stress.
+
+over consumption instead of doom scrolling. artificial-dopamine-detox, keep your hands busy. maybe go for a run or paint. start to write or build on something. do something that does not fry your brain. a few detox sessions will heal your attention span
+
+how to improve your social life
+
+became a conversation continuer. instead of a short answer, ask on extra question. add a related thought. react with an actual emotion. people will remember speaking to you.
+
+invite people casually. low pressure is the key. instead of asking: wanna hangout sometime? try: i'm going to the cafe later, wanna join?
+
+don't try to impress. people connect more with curiosity and listen than with someone trying to seem cooler. someone who listens is more liked.
+
+
+
+5 Stocks Under $20 to Watch in 2026 (Part 3)
+
+STOCK #1
+1. LUNR
+   Intuitive Machines
+   We are going back to the Moon, and Intuitive Machines is one of the longest-standing names in lunar missions. They just secured a $180.4 million NASA CLPS award. Combined with potential SpaceX IPO momentum this year, this could drive upside in LUNR stock.
+
+STOCK #2
+2. AMPX
+   Amprius Technologies
+   Battery demand is exploding, and Amprius is leading with its high-energy silicon-anode cells. They are moving into near-term mass production, and with EVs and aerospace needing lighter, denser batteries for things like drones, AMPX could see strong growth.
+
+STOCK #3
+3. SOFI
+   SoFi Technologies
+   While SoFi's lending segments carry risk if defaults rise, the recent pullback in a company expanding across banking, investing, and payments can create a really good opportunity in the fintech space.
+
+STOCK #4
+4. QBTS
+   D-Wave Quantum
+   Quantum computing is finally reaching commercial scale, and D-Wave is one of the first companies signing enterprise clients. With new contracts for optimization workloads and cloud access, QBTS could benefit as adoption spreads.
+
+STOCK #5
+5. ORLA
+   Orla Mining
+   If metals make a comeback, this stock should be a winner. Orla Mining just posted record output across Mexico and Nevada. Rising production and improving cash flow make ORLA an interesting play on gold.
+
+Follow for Part 4 with stocks under $30. Checkout Substack for full theses. Link in bio.
+Reminder: This is not financial advice. I do not own every stock I discuss and am not recommending any specific investment. This content is for informational and learning purposes only. My full portfolio is on my Substack, including the prices and every stock I own.
+
+---
+
+Principles of Personal Branding
+
+5 Position Yourself with Intention
+You don't need to be loved by all, neither do you need to solve every single human problem, you just need to find a problem you think you can solve and then solve that problem. Trying to do everything and be everywhere takes more effort and can be draining.
+
+1 Be Clear About What You Stand For
+Clarity means defining your core values, strengths, and purpose upfront, so others instantly grasp your unique identity. This involves crafting a personal mission and communicating it clearly. It prevents confusion and builds recognition quickly.
+
+2 Stay Consistent in Message and Visuals
+Consistency reinforces trust. For example, if your brand emphasizes purposeful content, avoid shifting styles; create a style guide to align visuals and words. This makes you memorable and professional over time.
+
+3 Share Value, Not Noise
+Prioritize content that educates, inspires, or solves problems over trends and noise. Build your brand on the foundation of real value and information that are needed In todays society, instead of just sharing things that would just boost your popularity.
+
+4 Be Authentic, Not Perfect
+Authenticity means showing your real self, which might include your passions, thought process and also your flaws instead of a polished facade. Authenticity builds genuine connections.
+
+Follow For More
+
+---
+
+How to read a 10-K like a banker in 20 minutes...
+
+What a 10-K actually is
+A 10-K is the annual report every US public company files with the SEC. It is the most comprehensive document a company produces. It contains the full financials, business description, risk factors, legal proceedings, and management commentary — everything an analyst needs to understand a business in one place.
+
+The 20-min playbook
+1-3: Item 1 — Business description
+Revenue model, customers, key products
+4-7: Item 1A — Risk factors
+Specific risks only. Compare to last year.
+8-13: Item 7 — MD&A
+What happened, why margins moved, forward outlook
+14-18: Financial statements + footnotes
+Key metrics, D&A, debt schedule, off-balance sheet
+19-20: Item 3 + related parties
+Litigation and insider transactions
+
+1. Business description (Item 1)
+   Read the first two to three pages of Item 1. This tells you what the company does, how it makes money, and who its customers are. You are looking for the revenue model, the key products or services, and whether the business is simple or complex to understand.
+
+2. Risk factors (Item 1A)
+   Do not read every risk. Scan for the ones that are specific to this company — not the generic boilerplate every company copies. Regulatory risk, customer concentration, technology obsolescence, key person dependency. These are the risks that actually move valuation.
+
+3. MD&A — this is the gold
+   Management Discussion and Analysis (Item 7) is where management explains what actually happened during the year in their own words. Revenue drivers, margin changes, one-off items, forward-looking commentary. This is where bankers spend the most time because it explains the numbers before you look at them.
+
+4. The financials and notes
+   Go straight to the three financial statements. You are not reading every line — you are anchoring the key numbers. Revenue, gross margin, EBITDA, capex, free cash flow, total debt, cash on hand. Write them down. Then scan the footnotes for D&A breakdown, debt maturity schedule, and any off-balance-sheet items.
+
+5. Legal and related party transactions
+   Two minutes. Scan Item 3 for any material litigation — lawsuits that could affect valuation or deal certainty. Then check related party transactions. Money flowing between the company and its executives or major shareholders outside normal compensation is always worth flagging.
+
+---
+
+What to do the summer before Investment Banking recruiting...
+
+Month by month
+June: Build target bank list. Research groups, cultures, timelines. Start reading markets daily. No exceptions.
+July: Start networking. Five conversations before August. Begin technical prep. Three statements, DCF basics.
+August: Write and lock your story. Practise out loud daily. Deep-dive one deal per target bank. Know it cold.
+Sept: Mock interviews only. Technicals and behaviourals. Applications open. You are ready. Everyone else is starting.
+
+1. Build your target list first
+   Before you prepare anything — know exactly which banks you are targeting, which groups, and why. Bulge bracket, elite boutique, or middle market? M&A, leveraged finance, or coverage? Each has a different culture, process, and timeline. You cannot prepare well for something you have not defined.
+   The Output: A list of 10 to 15 target banks ranked by preference, with the specific group and recruiting contact noted for each one.
+
+2. Start networking before you need to
+   The worst time to reach out to a banker is the week before applications open. Everyone else is doing the same thing. Reach out in June and July — when nobody else is. You get more time, more honest conversations, and you are already a known name when recruiting starts.
+   The Target: Five meaningful conversations with bankers at target firms before September. Quality over quantity.
+
+3. Master the technical foundations
+   The three financial statements and how they link. DCF methodology step by step. LBO basics. Valuation multiples and when to use each one. These are not advanced topics. They are the floor. Every candidate will know them. Your job is to know them so well that you can explain the logic, not just recite the answer.
+   How Long It Takes: Six weeks of one hour per day. That is all it takes to go from zero to technically solid — if you are consistent.
+
+4. Write your story once. Perfectly.
+   Your walk me through your resume answer is the first thing every interviewer hears. It sets the tone for the entire conversation. Write it this summer. Edit it ten times. Practise it out loud until it sounds natural. Then leave it alone. Do not keep rewriting it in September when you should be drilling technicals.
+   The Standard: Under 90 seconds. Present — past — future. One specific detail that makes it yours and only yours.
+
+5. Follow markets every single day
+   Not for two weeks before your first round. Starting now. Fifteen minutes every morning. Bloomberg, FT, or WSJ. One macro theme. One notable deal. One sector you are targeting. By September you will have months of context that a candidate who started yesterday simply cannot replicate.
+
+---
+
+Which are the best valuation methods?
+
+Top 5 valuation methods. Ranked.
+
+1. DCF
+   Discounted Cash Flow. Project the company's future cash flows. Discount them back to today at the cost of capital. The most rigorous method. The most assumptions. The most room to be wrong. Every banker knows it. Every banker questions its output.
+   The Banker's Truth: A DCF does not tell you what a company is worth. It tells you what it is worth if your assumptions are right.
+
+2. Trading Comps
+   EV / EBITDA Multiple. What the public market pays for similar businesses right now. Find comparable companies. Pull their EV/EBITDA. Apply to your target's EBITDA. Fast, market-based, and universally understood.
+
+3. Precedent Transactions
+   What acquirers actually paid. Look at similar companies that were acquired. Use those deal multiples. Includes the control premium — the extra price buyers pay to own 100% of a company. Always higher than trading comps.
+   The Key Number: Control premiums typically range 20 to 40% above the unaffected share price.
+
+4. LBO Analysis
+   Leveraged Buyout Floor. What a PE buyer can pay and still hit a 20%+ IRR. This sets the floor valuation in any sale process. If PE cannot make the returns work, they walk.
+   The Banker's Use: Tells the seller the minimum price the market will bear from a financial buyer.
+
+5. Sum-of-the-Parts (SOTP)
+   Value each business division separately using its own method. Then add them up. Used for conglomerates where one multiple does not fit the whole company.
+   When You See It: Whenever a company has unrelated divisions — energy + media + finance. Each needs its own lens.
+
+The full ranking:
+1. DCF - Intrinsic value. Most rigorous. Most assumptions.
+2. Trading Comps - What the market pays today. EV/EBITDA.
+3. Precedent Transactions - What acquirers paid. Includes control premium.
+4. LBO Analysis - What a PE buyer can pay. Sets the floor.
+5. Sum-of-the-Parts - Value each division separately. Add them up.
+
+---
+
+Top 10 largest M&A Deals Ever
+AOL/ Time Warner - $165 B
+Verizon/ Vodafone Aquisition - $130 B
+Dow Chemical/ DuPont - $130 B
+Gaz de France/ Suez - $120 B
+Vodafone/ Mannesman - +$190 B
+
+---
+
+FINVESTOR
+A gamified learning experience
+Use Finvestor web app Launching soon!
+
+
+
+
+
+These 6 documentaries will make you smarter and more interesting
+
+01/ Exit Through the Gift Shop. This film starts as a documentary about street art and turns into a hilarious lesson on how the art market is a massive joke. It shows how hype is created and why "talent" is often secondary to a good story. It will make you question what is actually valuable in our world and how much of "high culture" is just a clever marketing trick.
+
+02/ AlphaGo. If you want to understand the AI revolution of 2026, you have to see where it really began to beat us. This is a story about a computer playing a human master at the most complex game ever created. It is chilling, beautiful, and deeply emotional. It shows that intelligence is no longer a human monopoly and forces you to rethink what makes us unique.
+
+03/ Particle Fever. Imagine a group of geniuses building a machine the size of a city just to find one tiny particle. This film makes particle physics feel like a high-stakes thriller. You see the scientists panic, celebrate, and lose their minds as they try to figure out if the universe makes sense or if it is just a random glitch. It is a massive perspective shifter.
+
+04/ Three Identical Strangers. Three strangers accidentally discover they are identical triplets separated at birth. What starts as a feel-good story turns into a dark conspiracy about a secret psychological experiment. It tackles the ultimate question: are you who you are because of your genes or because of how you were raised? It is a wild ride that stays with you for weeks.
+
+05/ Fantastic Fungi. Mushrooms are not just things you put on a pizza—they are the literal internet of the forest. This film uses mind-blowing visuals to show how fungi connect everything on the planet. It explains how they can heal the environment and even fix human brains. After watching this, you will never look at the ground under your feet the same way again.
+
+06/ Abstract: The Art of Design. Pick any episode, but specifically the one about Tinker Hatfield (the guy who designed Jordans). It shows that design isn't about making things "pretty"—it is about solving problems and telling a story. It teaches you to notice the intentionality behind every chair, car, and app you use. It trains your eye to see the hidden logic in the chaos around you.
+
+---
+
+50 Backend Interview Q/A
+
+Top 10 Backend Interview Questions - Answered Like a Pro
+
+1. What is a server?
+   A server is a computer or system that provides resources, data, services, or programs to other computers, known as clients, over a network.
+
+2. What is REST?
+   REST (Representational State Transfer) is an architectural style for designing networked applications, relying on stateless, client-server communication.
+
+3. What is an API?
+   An API (Application Programming Interface) allows different software applications to communicate with each other.
+
+4. Explain CRUD operations.
+   CRUD stands for Create, Read, Update, Delete—basic operations for interacting with databases.
+
+5. What is a database?
+   A database is an organized collection of structured information or data, typically stored electronically.
+
+6. What is SQL?
+   SQL (Structured Query Language) is used for managing and manipulating relational databases.
+
+7. What is NoSQL?
+   NoSQL databases are non-relational databases designed for large-scale data storage and real-time web applications.
+
+8. Explain indexing in databases.
+   Indexing improves the speed of data retrieval operations on a database table at the cost of additional storage space.
+
+9. What is normalization?
+   Normalization is the process of organizing data to reduce redundancy and improve data integrity.
+
+10. What is ACID in databases?
+    ACID stands for Atomicity, Consistency, Isolation, Durability, ensuring reliable transaction processing.
+
+11. What is a primary key?
+    A primary key is a unique identifier for a record in a database table.
+
+12. What is a foreign key?
+    A foreign key is a field in a database table that creates a link between two tables.
+
+13. What is ORM?
+    ORM (Object-Relational Mapping) is a technique for converting data between incompatible type systems in object-oriented programming.
+
+14. What is a microservice?
+    Microservices are a software development technique where an application is composed of small, loosely coupled services.
+
+15. What is Docker?
+    Docker is a platform for developing, shipping, and running applications in containers.
+
+16. What is a container?
+    A container is a lightweight, portable, and self-sufficient environment that includes everything needed to run a piece of software.
+
+17. What is Kubernetes?
+    Kubernetes is an open-source platform for automating the deployment, scaling, and management of containerized applications.
+
+18. What is load balancing?
+    Load balancing distributes incoming network traffic across multiple servers to ensure no single server is overwhelmed.
+
+19. What is a reverse proxy?
+    A reverse proxy forwards client requests to backend servers and returns the server's response to the client.
+
+20. Explain the concept of middleware.
+    Middleware is software that sits between the client and server, handling requests and responses, often used for logging, authentication, etc.
+
+21. What is a web server?
+    A web server is software that serves web pages to users in response to their requests.
+
+22. What is caching?
+    Caching stores copies of files or data in a temporary storage location to reduce data access time.
+
+23. What is a session?
+    A session is a way to store information (in variables) to be used across multiple pages.
+
+24. Explain token-based authentication.
+    Token-based authentication involves generating a token that the user sends with each request for access to protected resources.
+
+25. What is JWT?
+    JWT (JSON Web Token) is an open standard for securely transmitting information between parties as a JSON object.
+
+26. What is OAuth?
+    OAuth is an open standard for access delegation, commonly used for token-based authentication and authorization.
+
+27. What is HTTPS?
+    HTTPS (Hypertext Transfer Protocol Secure) is an extension of HTTP for secure communication over a computer network.
+
+28. What is a firewall?
+    A firewall is a network security system that monitors and controls incoming and outgoing network traffic based on security rules.
+
+29. What is the purpose of SSL/TLS?
+    SSL/TLS protocols provide secure communication over a computer network by encrypting data in transit.
+
+30. What is a VPN?
+    A VPN (Virtual Private Network) extends a private network across a public network, allowing secure remote access.
+
+31. What is SQL injection?
+    SQL injection is a code injection technique that exploits vulnerabilities in an application's software by inserting malicious SQL statements.
+
+32. What is XSS?
+    Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to inject malicious scripts into web pages viewed by other users.
+
+33. What is CSRF?
+    Cross-Site Request Forgery (CSRF) is an attack that forces a user to execute unwanted actions on a web application in which they're authenticated.
+
+34. What is hashing?
+    Hashing transforms input data into a fixed-size string of characters, which is typically a digest that uniquely identifies the input.
+
+35. What is encryption?
+    Encryption converts data into a coded form to prevent unauthorized access.
+
+36. What is a RESTful API?
+    A RESTful API adheres to REST principles and is used to interact with RESTful web services.
+
+37. What is GraphQL?
+    GraphQL is a query language for APIs and a runtime for executing those queries by using a type system you define for your data.
+
+38. What is JSON?
+    JSON (JavaScript Object Notation) is a lightweight data interchange format that's easy for humans to read and write and for machines to parse and generate.
+
+39. What is RPC?
+    RPC (Remote Procedure Call) allows a program to cause a procedure to execute on another address space, often on another physical machine.
+
+40. What is gRPC?
+    gRPC is a high-performance, open-source framework for making remote procedure calls (RPCs) across machines, with features like authentication, load balancing, and more.
+
+41. What is message queue?
+    A message queue is a form of asynchronous service-to-service communication used in serverless and microservices architectures.
+
+42. What is RabbitMQ?
+    RabbitMQ is an open-source message broker software that facilitates the exchange of messages between different applications.
+
+43. What is Kafka?
+    Apache Kafka is a distributed event streaming platform capable of handling trillions of events a day, used for building real-time data pipelines and streaming apps.
+
+44. What is the difference between synchronous and asynchronous operations?
+    Synchronous operations wait for tasks to complete before moving on, while asynchronous operations can move to the next task before the previous one completes.
+
+45. What is middleware in Express.js?
+    Middleware in Express.js is a function that executes during the lifecycle of a request to the server, performing tasks like logging, authentication, and more.
+
+46. What is a RESTful endpoint?
+    A RESTful endpoint is a URL at which a RESTful web service accepts requests from clients and provides responses.
+
+47. What is the MVC architecture?
+    MVC (Model-View-Controller) is a software design pattern for developing web applications, dividing an application into three interconnected components.
+
+48. What is server-side rendering (SSR)?
+    SSR is the process of rendering web pages on the server and then sending the fully rendered page to the client.
+
+49. What is a WebSocket?
+    WebSocket is a protocol that provides full-duplex communication channels over a single TCP connection, allowing real-time data transfer.
+
+50. What is rate limiting?
+    Rate limiting controls the rate at which a user can make requests to a server, preventing abuse and ensuring fair usage.
+
+---
+
+six voices in your head. none of them are you.
+
+the critic. formed at 7, never updated
+the protector. anticipates everything, sleeps never
+the child. wants, fully, without apology
+the manager. believes the system will save you
+the exile. keeps what you couldn't carry
+the self. the one reading this
+
+you've never been alone in there. you just thought the loudest one was you.
+
+II. the critic.
+it grades everything. the email you just sent. the way you said hello. the choice you made at 14 that you're somehow still paying for.
+originally · inner judge
+formed around 7. it's the voice of the first adult who told you you were doing it wrong. you've been hearing them since.
+the critic gets very quiet when you're with someone who actually loves you. interesting, that.
+
+III. the protector.
+it scans rooms. it notices exits. it predicts the worst version of every conversation you're about to have. it's why you can't sleep on Sunday night.
+originally · anti-threat watch
+ancient anti-threat system. went into overdrive whenever something happened that you couldn't predict. has been on duty ever since.
+the protector has saved your life maybe three times. it's been on shift for thirty years. it's tired.
+
+IV. the child.
+hungry. tired. needs something. doesn't care about your meeting. will take over completely if ignored long enough.
+originally · original self
+the original you. before strategy, before language, before knowing what other people wanted. still here. still wanting.
+the child is why you cried at the dog advert. you're welcome.
+
+V. the manager.
+schedules, plans, optimises, lists. believes that if it gets the system right, the noise will stop. the noise has not stopped.
+originally · inner steward
+emerged when you realised you couldn't be the child anymore. it makes the appointments. it remembers the birthdays. it is exhausted.
+the manager is currently colour-coding your calendar. it thinks this will help.
+
+VI. the exile.
+the voice you don't want to hear. holds the grief. holds the shame. holds the things you decided at 12 that you weren't going to feel.
+originally · underworld self
+formed when feeling something fully would have been dangerous. so it was sent away. it's still down there. waiting.
+the exile speaks rarely. when it does, the others go quiet. they remember whose fault it is they exist.
+
+VII. the self.
+not a voice. the witness. the one who notices the others are talking. notices you've spent six slides cataloguing your own inner committee.
+originally · the witness
+hasn't aged. doesn't strategise. doesn't grade. notices.
+the self isn't louder than the others. it's quieter than all of them combined. that's how you find it.
+
+---
+
+She can look you in the eyes and say, "I love you. I'll never leave. I see a future with you." And in that moment, she probably means it.
+
+But here's the part nobody wants to admit: the second she meets someone she perceives as a better option... everything can change. Fast.
+
+It doesn't always come from logic. It's emotional. It's impulsive. It's driven by what she feels she's missing: excitement, validation, security, attraction, novelty... something.
+
+Meanwhile, you're left replaying everything: What changed? What did I do wrong? How did it fall apart so quickly? Were any of her words even real?
+
+This is why you can't just hope a relationship will last. You can't rely on promises. You can't assume love alone keeps someone invested.
+
+Emotions fluctuate. And if you don't understand what actually keeps a woman emotionally invested, you're always one "better option" away from losing everything.
+
+And when those emotions start working in someone else's favor, you can't negotiate with them. You can't argue with them. You can't "be a good guy" your way out of it.
+
+One day she's planning a future with you. Next week she's "confused." Then she "needs space." Then suddenly there's someone else.
+
+And the hardest part? She doesn't even feel like she's doing something wrong. In her mind, she's just "following her heart"... "doing what's best for her"... "not settling."
+
+That's the uncomfortable truth most guys learn only after getting blindsided.
+
+If you want to stop being the guy who gets replaced... If you want to understand what actually makes her stay... If you want to build something that doesn't collapse the moment another guy walks in...
+
+You need to understand how this actually works, from attraction, to emotional investment, to retention.
+
+I built a simple end-to-end process to help you learn the language of women, attract the ones you actually want, and keep the relationship from slipping through your fingers.
+
+It's in my bio.
+
+---
+
+Think Like a Scientist.
+
+Chess
+One of the most studied cognitive games in neuroscience.
+It trains pattern recognition, prediction, and multi step planning.
+Every move forces the brain to simulate future outcomes and evaluate consequences under pressure.
+Over time, it strengthens strategic thinking and reduces impulsive decision making.
+Instead of making hasty conclusions and decisions, I began to think things through more carefully and give myself time, rather than giving a knee jerk response.
+
+6 Hobbies That Will Help You Process Information and Understand Complex Topics More Easily (including my personal experience)
+
+Sudoku
+It helps you to strengthen working memory and pattern detection.
+Your brain learns to hold multiple possibilities at once while eliminating incorrect pathways efficiently.
+It's essentially training decision making under constrained information.
+This is still one of my favorite games I play in my free time. It's addictive (in a good way). Game - sudoku.com
+
+Learning languages or musical instruments
+Both require continuous memory retrieval, repetition, and adaptation.
+They increase neural connectivity between brain regions responsible for auditory processing, memory, and coordination.
+Over time, switching between rules becomes faster and more automatic.
+Languages and musical instruments aid with memory and concentration. I studied French and Japanese, and I used to play trombone. The second language I learned on my own was English. Take a look at the Sapir-Whorf hypothesis.
+
+Programming
+Writing code forces you to think in strict structures: input, process, output.
+Even small errors break entire systems, which trains attention to detail and logical consistency.
+Building functions often mirrors mathematical reasoning, where each step must follow from the previous one without contradiction.
+While I was writing my first code using ChatGPT, I nearly lost my mind trying to track down an error in the word "input." which I had written as "unput."
+
+1. Chaos Theory
+   Chaos theory studies systems that look random but actually follow precise mathematical rules. A tiny change in the starting point can lead to completely different outcomes, this is called the "butterfly effect." It's used to understand weather, ecosystems, and even financial markets.
+
+2. Quantum Superposition
+   In quantum physics, particles don't exist in just one state, they exist in multiple states at the same time. Only when we measure them do they "collapse" into a single result. This idea is the foundation of quantum computing and modern physics.
+
+3. Fibonacci Sequence
+   A sequence where each number is the sum of the two before it (1, 1, 2, 3, 5...). This pattern appears naturally in plants, shells, hurricanes, and spiral galaxies. It shows how mathematics can describe patterns in the real world.
+
+4. Relativity of Time
+   Einstein showed that time is not the same everywhere it depends on speed and gravity. The faster you move, or the closer you are to massive objects, the slower time passes. This effect is real and even affects satellites and GPS systems.
+
+5. Game Theory
+   Game theory analyzes how people make decisions when outcomes depend on others' choices. It explains cooperation, competition, and strategy in economics, politics, and daily life. Famous examples include the "Prisoner's Dilemma" and negotiation strategies.
+
+"Want to impress a professor?" Master these topics.
+
+---
+
+Depth Of Market Explained
+
+The DOM Anatomy
+The ladder every orderflow trader needs to understand.
+
+Volume Profile Buys / Sells
+Volume Profile Buys: The total number of contracts bought at each price level for the session - shows where buyers have been most active.
+Volume Profile Sells: The total number of contracts sold at each price level for the session - shows where sellers have been most active.
+
+Price & Volume Profile Delta / Session
+Volume Profile Delta: The difference between buys and sells at each price level - positive means buyers dominated, negative means sellers dominated.
+Session Volume Profile: The overall volume distribution for the entire session - shows where the most trading activity has taken place, highlighting the POC and Value Area.
+Price: The price ladder itself - every row represents a single tick increment on the instrument.
+
+Bid / Ask
+Bid: Resting limit buy orders sitting below the market - passive buyers waiting to be hit.
+Ask: Resting limit sell orders sitting above the market - passive sellers waiting to be lifted.
+Recent Bid Trades: Market sell orders that have just hit the bid - aggressive sellers entering the market in real time.
+Recent Ask Trades: Market buy orders that have just lifted the ask - aggressive buyers entering the market in real time.
+
+Reading Orderflow On The DOM
+What to actually watch for in real time:
+Absorption - Large limit order holds as market orders hit it. Price stalls. Reversal incoming.
+Spoofing - Large order appears then vanishes before getting hit. Don't trust size alone.
+Stacking - Multiple large orders building on one side. Directional bias forming.
+Sweeping - Price rips through multiple levels quickly. Aggressive momentum. Don't fade it.
+Fading liquidity - Bids or asks pulling as price approaches. Sign of weakness on that side.
+
+FINAL TAKEAWAY
+The DOM is the closest thing to seeing the market's intentions in real time.
+
+
+
+
+Born on 5, 14, 30
+Your Deep Trauma: Having your freedom restricted or feeling like you couldn't fully be yourself.
+Your Soulmate: Someone adventurous and open-minded who gives you space instead of control.
+Your Biggest Fear: Feeling trapped, limited, or emotionally confined.
+What You're Passionate About: Freedom, change, and experiencing everything life has to offer.
+
+Born on 3, 16, 28
+Your Deep Trauma: Not being taken seriously or feeling like people misunderstood your true self.
+Your Soulmate: Someone fun, quick-witted, and mentally stimulating who keeps up with your energy.
+Your Biggest Fear: Feeling stuck in a life that lacks excitement or meaning.
+What You're Passionate About: Self-expression, creativity, and living freely without limits.
+
+Born on 2, 17, 29
+Your Deep Trauma: Being overlooked or not receiving the same love and effort you gave.
+Your Soulmate: A gentle, emotionally intelligent person who makes you feel safe and truly chosen.
+Your Biggest Fear: Being abandoned or emotionally replaced.
+What You're Passionate About: Creating deep emotional bonds and making people feel understood.
+
+Born on 6, 19, 27
+Your Deep Trauma: Feeling emotionally responsible for others from a young age.
+Your Soulmate: A deeply caring person who nurtures you the way you nurture others.
+Your Biggest Fear: Giving everything and still not feeling loved back.
+What You're Passionate About: Caring for others and building emotional security.
+
+Born on 1, 13, 26
+Your Deep Trauma: Feeling like you always had to be “the strong one” growing up.
+Your Soulmate: Someone calm but strong, who understands your intensity without trying to change you.
+Your Biggest Fear: Losing control over your life or ending up feeling powerless.
+What You're Passionate About: Building something meaningful and proving your strength through actions.
+
+Born on 7, 10, 25
+Your Deep Trauma: Feeling alone even when surrounded by people who didn't truly understand you.
+Your Soulmate: Someone introspective and emotionally deep who connects with your inner world.
+Your Biggest Fear: Being misunderstood or emotionally disconnected.
+What You're Passionate About: Understanding life on a deeper, more meaningful level.
+
+Born on 8, 18, 22
+Your Deep Trauma: Feeling like you constantly had to prove your worth to be accepted.
+Your Soulmate: A strong, ambitious partner who stands beside you, not beneath or above you.
+Your Biggest Fear: Failure or not reaching your full potential.
+What You're Passionate About: Success, power, and leaving a lasting impact.
+
+Born on 4, 11, 23
+Your Deep Trauma: Growing up feeling like stability or security was never guaranteed.
+Your Soulmate: A loyal, dependable person who values consistency and long-term commitment.
+Your Biggest Fear: Losing everything you've built or falling into uncertainty.
+What You're Passionate About: Creating a stable, secure life that lasts.
+
+Your crush born on? Try Daily Horoscope Astrology App! link in bio!
+
+---
+
+4. THE LAW OF POLARITY
+   Everything has an opposite – love and hate, light and dark, order and chaos.
+   They're not enemies. They're extremes of the same force.
+
+1. THE LAW OF PERCEPTION
+   Reality doesn't exist the way you think it does. Your brain edits, filters, and fabricates most of what you see – not to deceive you, but to keep you sane.
+   Truth: You never see the world as it is. You only see what your mind allows.
+
+7. THE LAW OF ONE
+   There is no “you” and “them,” no “this” or “that.” Separation is the greatest illusion of all.
+   Everything – every sound, thought, atom – is one consciousness, pretending to be many.
+
+2. THE LAW OF ATTENTION
+   What you focus on expands. Your brain literally strengthens the neural pathways of what you notice – fear, love, opportunity, chaos.
+   They don't teach you this because it means your life is programmable. By you.
+
+6. THE LAW OF CORRESPONDENCE
+   “As above, so below. As within, so without.”
+   The outer world only mirrors your inner state.
+   Change your internal reality, and your external reality bends with it.
+
+5. THE LAW OF CAUSE AND VIBRATION
+   Every thought sends out a frequency. The universe doesn't read words – it reads energy.
+   You attract what you vibrate, not what you want.
+
+3. THE LAW OF MIRRORS
+   Every person you meet is a reflection of something you hide, deny, or crave within yourself.
+   You never meet others – you only meet yourself, in different disguises.
+
+You have settings you've never accessed
+THE RESTRICTED MANUAL
+Ready to access The Manual? Link in Bio
+No motivation. No filler.
+
+LAWS THEY DON'T WANT YOU TO FIGURE OUT
+
+---
+
+topics to research when you're bored
+
+Philosophy
+- Existentialism
+- Stoicism
+- Nihilism
+- Utilitarianism
+- The social contract
+- Determinism vs free will
+- Moral relativism
+- Absurdism
+- Dualism vs materialism
+- The trolley problems
+
+Technology
+- Technological singularity
+- Algorithmic bias
+- Surveillance capitalism
+- Moore's law
+- Network effects
+- Artificial general intelligence (AGI)
+- Blockchain decentralisation
+- Quantum computing
+- The attention economy
+- Automation displacement
+
+Culture
+- Cultural capital
+- Soft power
+- Orientalism
+- Collective vs individualist societies
+- Social stratification
+- Beauty standards evolution
+- Subcultures
+- Cultural relativism
+- Globalisation
+- Prestige signalling
+
+Science
+- Chaos theory
+- The Fermi paradox
+- Entropy
+- The double-slit experiment
+- String theory
+- Dark matter
+- The multiverse hypothesis
+- Schrödinger's cat
+- Plate tectonics
+- Evolutionary adaptation
+
+Finance
+- Inflation targeting
+- Quantitative easing
+- Asset bubbles
+- Opportunity cost
+- Network effects
+- Economies of scale
+- Market cycles
+- Behavioural finance
+- Risk premium
+- Compound interest
+
+Psychology
+- Projection
+- Scarcity mindset
+- Imposter syndrome
+- Learned helplessness
+- Cognitive dissonance
+- Confirmation bias
+- Attachment theory
+- Locus of control
+- Self-serving bias
+- Halo effect
+
+Neuroscience
+- Neuroplasticity
+- Dopamine reward pathways
+- Mirror neurons
+- The amygdala hijack
+- Default mode network
+- Synaptic pruning
+- Brain lateralisation
+- Neurogenesis
+- Fight-or-flight response
+- Cortisol regulation
+
+---
+
+Linux / DevOps Commands Reference
+
+1. File and Directory Management
+   ls – List directory contents
+   cd – Change directory
+   pwd – Print working directory
+   cp – Copy files and directories
+   mv – Move or rename files and directories
+   rm – Remove files or directories
+   mkdir – Make directories
+   rmdir – Remove empty directories
+   touch – Change file timestamps or create empty files
+   find – Search for files in a directory hierarchy
+   locate – Find files by name
+   tree – Display directories in a tree-like format
+   chmod – Change file permissions
+   chown – Change file owner and group
+   chgrp – Change group ownership
+   stat – Display file or file system status
+
+2. File Viewing and Editing
+   cat – Concatenate and display file content
+   tac – Concatenate and display file content in reverse
+   more – View file content interactively (page by page)
+   less – View file content interactively (scrollable)
+   head – Output the first part of a file
+   tail – Output the last part of a file
+   nano – Text editor (terminal-based)
+   vim / vi – Advanced text editors
+   emacs – Text editor
+   grep – Search text using patterns
+   sed – Stream editor for filtering and transforming text
+   awk – Pattern scanning and processing language
+   cut – Remove sections from each line of files
+   sort – Sort lines of text files
+
+3. Process Management
+   ps – Report a snapshot of current processes
+   top – Display Linux tasks
+   htop – Interactive process viewer (advanced top)
+   kill – Send a signal to a process, typically to terminate
+   killall – Terminate processes by name
+   bg – Resume a suspended job in the background
+   fg – Bring a job to the foreground
+   jobs – List active jobs
+   nice – Run a program with modified scheduling priority
+   renice – Alter priority of running processes
+   uptime – Show how long the system has been running
+   time – Measure program running time
+
+4. Disk Management
+   df – Report file system disk space usage
+   du – Estimate file space usage
+   fdisk – Partition table manipulator for Linux
+   lsblk – List information about block devices
+   mount – Mount a file system
+   umount – Unmount a file system
+   parted – A partition manipulation program
+   mkfs – Create a file system
+   fsck – File system consistency check and repair
+   blkid – Locate/print block device attributes
+
+5. Networking
+   ifconfig – Configure network interfaces
+   ip – Show/manipulate routing, devices, and tunnels
+   ping – Send ICMP Echo requests to network hosts
+   netstat – Network statistics
+   ss – Socket statistics (faster than netstat)
+   traceroute – Trace the route packets take to a network host
+   nslookup – Query Internet name servers interactively
+   dig – DNS lookup utility
+   wget – Non-interactive network downloader
+   curl – Transfer data with URLs
+   scp – Secure copy files between hosts
+   ssh – Secure shell for remote login
+   ftp – File Transfer Protocol client
+
+6. User and Group Management
+   useradd – Add a user to the system
+   usermod – Modify a user account
+   userdel – Delete a user account
+   groupadd – Add a group to the system
+   groupdel – Delete a group
+   passwd – Change user password
+   chage – Change user password expiry information
+   whoami – Print the current logged-in user
+   who – Show who is logged in
+   w – Show who is logged in and what they're doing
+   id – Display user and group information
+   groups – Show user's groups
+
+7. System Information and Monitoring
+   uname – Print system information
+   hostname – Show or set the system's hostname
+   uptime – How long the system has been running
+   dmesg – Boot and system messages
+   free – Display memory usage
+   top – Display Linux tasks
+   vmstat – Report virtual memory statistics
+
+8. Archiving and Compression
+   tar – Archive files
+   zip – Package and compress files into a ZIP archive
+   unzip – Extract files from a ZIP archive
+   gzip – Compress files using the gzip algorithm
+   gunzip – Decompress files compressed with gzip
+   bz2 – Compress files using the bzip2 algorithm
+   bunzip2 – Decompress files compressed with bzip2
+   xz – Compress files using the xz algorithm
+   unxz – Decompress files compressed with xz
+
+9. Package Management (Depends on Distribution)
+   Debian-based (e.g., Ubuntu)
+   apt-get – APT package handling utility
+   apt-cache – Query APT cache
+
+Red Hat-based (e.g., CentOS, Fedora)
+yum – Package manager for RPM-based systems
+dnf – Next-generation package manager (Fedora, CentOS 8+)
+
+General Commands
+rpm – RPM package manager
+dpkg – Debian package manager
+
+System Services and Daemon Management
+systemctl – Control the systemd system and service manager
+service – Older service management command (used in non-systemd systems)
+
+10. Scheduling Tasks
+    cron – Daemon for running scheduled commands
+    at – Run commands at a specified time
+    batch – Run commands when the system load is low
+    sleep – Delay for a specified time
+
+11. File Permissions and Security
+    chmod – Change file permissions
+    chown – Change file owner and group
+    chgrp – Change the group ownership of a file
+    umask – Set default permissions for new files
+    setfacl – Set access control lists (ACL) for file permissions
+    getfacl – Get file access control lists (ACL)
+    sudo – Execute a command as another user (usually root)
+    visudo – Edit the sudoers file safely
+    passwd – Change a user's password
+    sudoers – Manage sudo access for users
+    gpasswd – Administer group password
+    ss – Display socket statistics
+
+12. System Backup and Restore
+    rsync – Remote file and directory synchronization
+    cpio – Copy files to and from archives
+    dd – Low-level copying and backup of entire filesystems
+
+13. System Diagnostics and Troubleshooting
+    dmesg – Print the kernel ring buffer messages (system boot and hardware-related messages)
+    journalctl – Query and view logs from systemd's journal
+    strace – Trace system calls and signals
+    lsof – List open files (useful for debugging)
+    vmstat – Report virtual memory statistics
+    iostat – Report CPU and I/O statistics
+    mpstat – Report CPU usage statistics
+    pidstat – Report statistics by process
+    free – Display memory usage
+    uptime – How long the system has been running
+    watch – Execute a program periodically, showing output
+    lshw – List hardware configuration
+    htop – Interactive process viewer (better than top)
+    netstat – Network statistics (deprecated in favor of ss)
+    ss – Show socket statistics (more efficient than netstat)
+
+14. Networking & Remote Management
+    ifconfig – Configure network interfaces (older command, replaced by ip)
+    ip – A more modern alternative for managing network interfaces and routing
+    ss – Display socket statistics (useful for diagnosing network issues)
+    nmap – Network exploration tool (can be used for security auditing)
+    telnet – User interface to the TELNET protocol (less common nowadays)
+    nc (Netcat) – Network utility for reading and writing from network connections
+    iptables – Administration tool for IPv4 packet filtering and NAT (Network Address Translation)
+    firewalld – Frontend for managing firewall rules (used in some distros like Fedora and CentOS)
+    ufw – Uncomplicated firewall (front-end for iptables)
+    tcpdump – Command-line packet analyzer
+    curl – Transfer data from or to a server using various protocols (HTTP, FTP, etc.)
+    wget – Download files from the web via HTTP, HTTPS, FTP
+    scp – Secure copy over SSH (used to copy files between systems)
+    rsync – Remote file and directory synchronization (often used for backups)
+
+15. Text Processing Utilities
+    grep – Search for patterns within files
+    sed – Stream editor for filtering and transforming text
+    awk – A powerful text processing language
+    cut – Remove sections from each line of a file
+    sort – Sort lines of text files
+    uniq – Report or omit repeated lines in a file
+    tee – Read from standard input and write to standard output and files
+    tr – Translate or delete characters
+    paste – Merge lines of files
+    wc – Word, line, character, and byte count
+
+16. System Shutdown and Reboot
+    shutdown – Shut down the system
+    reboot – Reboot the system
+    halt – Halt the system immediately (equivalent to turning off power)
+    poweroff – Power off the system
+
+17. File System Mounting and Management
+    mount – Mount a file system
+    umount – Unmount a file system
+    fstab – File system table (configuration file for mounting file systems)
+    blkid – Display block device attributes
+    fsck – Check and repair a file system
+
+18. Filesystem Permissions and Security
+    chmod – Change file permissions
+    chown – Change file owner and group
+    chgrp – Change group ownership of a file
+    umask – Set default permissions for new files
+    setfacl – Set access control lists (ACL) for file permissions
+    getfacl – Get access control lists (ACL) for file permissions
+
+19. Containerization and Orchestration
+    Docker
+    docker run <image> – Run a container from an image
+    docker ps – List running containers
+    docker ps -a – List all containers, including stopped ones
+    docker build -t <image_name> . – Build an image from a Dockerfile
+    docker exec -it <container_id> bash – Start an interactive bash shell inside a running container
+    docker stop <container_id> – Stop a container
+    docker rm <container_id> – Remove a container
+    docker logs <container_id> – View logs of a container
+    docker images – List available images
+    docker rmi <image_name> – Remove an image
+    docker network ls – List Docker networks
+    docker-compose – Manage multi-container Docker applications
+
+Kubernetes (k8s)
+kubectl – Command-line tool for interacting with Kubernetes clusters
+kubectl get pods – List pods in the current namespace
+kubectl get nodes – List nodes in the cluster
+kubectl get services – List services in the cluster
+
+20. Automation and Configuration Management
+    Ansible
+    ansible all -m ping – Ping all hosts defined in the inventory
+    ansible-playbook playbook.yml – Run an Ansible playbook
+    ansible -m command -a 'command' <host> – Run a single command on a target host
+    ansible-playbook --check playbook.yml – Dry-run a playbook to see what would change
+    ansible-playbook --limit <host> playbook.yml – Run a playbook on a specific host or group
+    ansible-playbook --extra-vars "key=value" – Pass extra variables to a playbook
+
+Terraform
+terraform – Infrastructure as code tool for provisioning and managing cloud resources
+terraform init – Initialize a working directory for Terraform configuration
+terraform plan – Show an execution plan (preview of what changes will be made)
+terraform apply – Apply the changes described in a Terraform configuration
+terraform destroy – Destroy infrastructure created by Terraform
+terraform validate – Validate the configuration files
+terraform show – Show the current state of the infrastructure
+
+Puppet
+puppet – Configuration management tool
+puppet apply <manifest.pp> – Apply a Puppet manifest locally
+puppet agent --test – Test the Puppet agent (can be used to run a one-off run)
+puppet resource – Show the current state of resources (files, services, etc.)
+
+21. CI/CD Tools and Commands
+    Jenkins
+    java -jar jenkins.war – Start Jenkins from a WAR file
+    Access Jenkins through http://localhost:8080 by default
+
+GitLab CI
+.gitlab-ci.yml – Configuration file for GitLab CI/CD pipelines (typically resides in your repository)
+gitlab-runner register – Register a new runner with GitLab
+gitlab-runner run – Run the GitLab Runner to process jobs
+
+GitHub Actions
+GitHub Actions uses YAML configuration files (typically located in .github/workflows/)
+actions/checkout@v2 – Checkout the repository code in your CI pipeline
+actions/setup-node@v2 – Setup Node.js for use in a pipeline
+docker/setup-buildx-action@v1 – Set up Docker Buildx for building multi-platform images
+
+22. Cloud Services
+    AWS CLI (Amazon Web Services)
+    aws – Command-line tool for managing AWS services
+    aws configure – Configure AWS CLI with your credentials
+    aws s3 cp file.txt s3://bucket-name/ – Copy a file to an S3 bucket
+    aws ec2 describe-instances – Describe EC2 instances
+    aws ec2 start-instances --instance-ids <id> – Start an EC2 instance
+    aws ec2 stop-instances --instance-ids <id> – Stop an EC2 instance
+    aws s3 sync – Sync directories with an S3 bucket
+
+Azure CLI (Microsoft Azure)
+az – Command-line tool for managing Azure services
+az login – Log in to your Azure account
+az vm list – List all virtual machines
+az vm start --name <vm_name> --resource-group <resource_group> – Start an Azure VM
+az storage blob upload – Upload files to an Azure blob storage
+az group create – Create a new resource group in Azure
+
+Google Cloud SDK (gcloud)
+gcloud – Command-line tool for Google Cloud Platform
+gcloud auth login – Log in to Google Cloud
+gcloud compute instances list – List compute instances
+gcloud compute instances stop <instance_name> – Stop a Google Cloud VM instance
+gcloud app browse – Open the current Google App Engine application in a browser
+
+23. Logging and Monitoring
+    Prometheus
+    prometheus – Open-source system monitoring and alerting toolkit
+
+Grafana
+grafana-cli – Command-line interface for managing Grafana plugins
+
+ELK Stack (Elasticsearch, Logstash, Kibana)
+elasticsearch – Search engine for logging and data analytics
+logstash – Server-side data processing pipeline
+kibana – Web interface for visualizing Elasticsearch data
+
+
+"you don't have original thought"
+THE RANDOM TALK BY RITH
+A meditation on minds, mirrors, and the myth of pure originality
+Panha Rith | March 31st 2026
+"always plugged in."
+I am no doubt not the only one who writes in order to have no face. - Michel Foucault
+
+The Illusion of Originality
+There is a quiet belief most of us carry: that somewhere inside us exists something purely ours. A thought untouched, an idea born in isolation, a spark of originality that belongs to no one else.
+It is a comforting belief. It makes us feel unique, self-made, and independent.
+But what if it is not true?
+What if every thought you have is less like a creation and more like a reflection?
+From the moment we are born, we are immersed in a world that shapes us before we are even aware of it. We learn language that we did not invent, adopt beliefs we did not question, and absorb values we did not consciously choose. Our minds are not empty spaces waiting to create; they are active receivers, constantly collecting and organizing the world around us.
+Every conversation, every book, every influence leaves a trace. Over time, these traces form patterns. Those patterns become thoughts. And eventually, those thoughts begin to feel like identity.
+But feeling like something is yours does not necessarily make it original.
+
+The Mind as a Mirror
+We like to think of ourselves as originators, as people who generate ideas from within. In reality, we are often arrangers.
+We gather pieces from different places, a sentence from a book, a tone from a mentor, a belief from our upbringing, a perspective from the internet, and we rearrange them until they feel coherent enough to call our own.
+This process is so natural that we rarely question it.
+When you say, "This is what I believe," how often do you ask where that belief came from? If you trace it back far enough, you will likely find that it did not begin with you. It was passed down, influenced, or absorbed over time. Not intentionally, not forcefully, but inevitably.
+The idea of pure originality, of creating something entirely from nothing, is largely a myth. Human thinking has always been cumulative. Every idea builds on something that came before it. Even the most groundbreaking ideas are, at their core, recombinations of existing knowledge seen from a different angle.
+So no, you do not have completely original thoughts.
+But that does not make your thoughts meaningless. It makes them connected.
+
+Where Something Real Begins
+This realization is not something to resist. It is something to understand.
+Because the value of the human mind does not lie in its ability to be completely original. It lies in its ability to be aware.
+Awareness creates space. Space to question what you have absorbed, to examine what you have accepted without thinking, and to decide whether those ideas still serve you.
+Instead of asking, "Is this thought mine?" a better question might be, "Is this thought true to who I want to become?"
+Originality is not about creating something from nothing. It is about conscious selection. Choosing what to keep, what to discard, and what to reshape into something more intentional.
+Your mind is not a factory producing entirely new ideas. It is a mirror reflecting everything it has encountered. But unlike a passive mirror, you have the ability to adjust the angle, to decide what to reflect and what to let fade.
+You may not have original thoughts.
+But you do have the power to examine them, challenge them, and transform them.
+And maybe, in that process, something real finally begins.
+
+Every idea you've ever had arrived secondhand. The truly uncomfortable question isn't whether this is true — it is — but what we do with that knowledge. - Panharith Chhotchhong
+
+---
+
+30 STORYTELLING HOOKS
+
+RELATABLE STRUGGLE HOOKS
+1. POV: YOU KEEP POSTING BUT NOTHING'S WORKING
+2. THAT FEELING WHEN YOU _ _ _ AND STILL _ _ _
+3. ME: "I'LL START TOMORROW" ALSO ME: _ _ _
+4. TRYING TO _ _ _ WHILE _ _ _ BE LIKE
+5. EVERYONE ELSE: _ _ _ ME: STILL FIGURING OUT _ _ _
+
+TRANSFORMATION HOOKS
+1. 6 MONTHS AGO I COULDN'T _ _ _. TODAY I _ _ _
+2. I USED TO THINK _ _ _ WAS IMPOSSIBLE UNTIL _ _ _
+3. THE DAY I STOPPED _ _ _ EVERYTHING CHANGED
+4. BEFORE _ _ _ VS AFTER _ _ _ : HERE'S WHAT SHIFTED
+5. I WENT FROM _ _ _ TO _ _ _ BY DOING THIS ONE THING
+
+CURIOSITY HOOKS
+1. NOBODY TALKS ABOUT _ _ _ BUT IT'S THE REASON I _ _ _
+2. I IGNORED _ _ _ FOR MONTHS. THEN I TRIED IT AND _ _ _
+3. THE THING ABOUT _ _ _ NOBODY TELLS YOU: _ _ _
+4. HERE'S WHAT ACTUALLY HAPPENS WHEN YOU _ _ _
+5. I WISH SOMEONE TOLD ME _ _ _ BEFORE I STARTED _ _ _
+
+VULNERABLE HOOKS
+1. I WAS TERRIFIED TO SHARE _ _ _ BUT HERE'S WHY IT MATTERS
+2. MY BIGGEST FAILURE WITH _ _ _ TAUGHT ME _ _ _
+3. I ALMOST QUIT WHEN _ _ _ BUT THEN _ _ _
+4. NOBODY SEES THE PART WHERE I _ _ _
+5. I SPENT _ _ _ MONTHS STRUGGLING WITH _ _ _ BEFORE I FIGURED OUT _ _ _
+
+BOLD STATEMENT HOOKS
+1. EVERYONE SAYS _ _ _ BUT THE TRUTH IS _ _ _
+2. STOP DOING _ _ _ IF YOU WANT TO _ _ _
+3. _ _ _ IS DEAD. HERE'S WHAT ACTUALLY WORKS NOW
+4. THE REAL REASON YOU'RE NOT _ _ _ YET
+5. HOT TAKE: _ _ _ DOESN'T MATTER AS MUCH AS _ _ _
+
+---
+
+6 Types of Investments every beginner should know
+
+1: INDIVIDUAL STOCKS
+Owning a small piece of a company.
+- Apple Inc. (AAPL)
+- Microsoft (MSFT)
+- Amazon (AMZN)
+- NVIDIA (NVDA)
+  You choose the companies yourself (more control).
+  Best if you enjoy researching businesses (earnings, news, trends)
+  Pros: Higher returns (more money) if the company does well.
+  Cons: Riskier because you're betting on just one company to do well + more work to stay updated
+  -> Higher risk, higher reward
+
+2: DIVIDEND STOCKS
+Stocks that pay you just for owning it (small %).
+- Coca-Cola (KO)
+- Johnson & Johnson (JNJ)
+- Procter & Gamble (PG)
+  Paid quarterly (usually).
+  Great for building passive income over time.
+  It can be reinvested to compound faster
+  Pros: Passive income while your investment grows overtime.
+  Cons: May see slower returns (ROI) + your eggs are still in one basket
+  -> Popular for retirees+ income investors
+
+3: ETFS (EXCHANGE TRADED FUNDS)
+A bundle of companies traded like a single stock.
+- VOO - 500 largest US companies (S&P)
+- SCHD - high dividend yielding stocks
+- VTI - Every US stock
+- QQOM - 100 growth/tech companies (nasdaq)
+  You can hold 100–500+ companies in one fund. but can also track commodities or specific sectors/
+  You're instantly diversified.
+  Pros: Low risk, diversified, beginner-friendly and stress free.
+  Cons: Slower returns, more boring and less volatile
+  -> This is what most beginners start with, and smart investors stick with
+
+4: MUTUAL FUNDS
+A fund where experts choose and manage investments for you. (similar to etfs)
+- VFIAX
+- VTSAX
+- FXAIX
+  Actively managed (someone is trying to beat the market, or it just matches indexes).
+  Bought through brokers, not traded all day.
+  Pros: Hands-off and low stress as someone else does the work.
+  Cons: Can charge high fees (choose passive ones) and often need a bigger amount to start.
+  pro tip: invest in "passively" managed funds for less fees
+  -> You're paying for convenience
+
+5: INDEX FUNDS
+A fund that specifically tracks the performance of a market index (like the S&P 500).
+- VOO
+- VTI
+- QQQM
+  Outperforms most active investors long-term.
+  Similar to ETFS but only tracks certain indexes.
+  Pros: Low fees, diversified, long-term growth.
+  Cons: Slower growth and not as exciting to watch.
+  -> Best for beginners + passive investors
+
+6: TARGET DATE MUTUAL FUNDS
+Auto-adjusting investments for retirement.
+- Vanguard Target Retirement 2050 Fund
+- Fidelity Freedom 2060 Fund
+  Starts aggressive -> becomes safer over time.
+  Gets safer as you get closer to retirement.
+  Pros: Hands-off, "set and forget" retirement planning
+  Cons: High fees, less control
+  -> Set it once, let time do the work
+
+link in bio for my free beginner investing guide! + see my entire portfolio 👀👀👀👀
+
+---
+
+HOW TO READ SOMEONE'S CHARACTER WITHOUT THEM KNOWING:
+
+1. Life level: seen from shoes.
+2. Health: seen from nails.
+3. Family: seen from how they sit.
+4. Attitude: seen from the corner of the eye.
+5. Personality: seen from how they laugh.
+6. Self-confidence: seen from how they walk
+7. Loyalty: seen from how they look at their partner.
+8. Honesty: Seen when given a mandate (responsibility).
+
+Discipline: Your physique, style, finances and game will all EXPLODE when you master all 4 simultaneously. The Ultimate Men shows you how in 90 days. Tap the Link in Bio.
+
+---
+
+Chess Openings
+The most Controversial Chess openings Of all time:
+The French Defense (Too Passive/Slow)
+The Ruy Lopez (Too Aggressive/Tactical)
+The Dutch Defense (Too Aggressive/Not Dynamic)
+The Pirc Defense (Very Unambitious)
+
+
+
+"you don't have original thought"
+THE RANDOM TALK BY RITH
+A meditation on minds, mirrors, and the myth of pure originality
+Panha Rith | March 31st 2026
+"always plugged in."
+I am no doubt not the only one who writes in order to have no face. - Michel Foucault
+
+The Illusion of Originality
+There is a quiet belief most of us carry: that somewhere inside us exists something purely ours. A thought untouched, an idea born in isolation, a spark of originality that belongs to no one else.
+It is a comforting belief. It makes us feel unique, self-made, and independent.
+But what if it is not true?
+What if every thought you have is less like a creation and more like a reflection?
+From the moment we are born, we are immersed in a world that shapes us before we are even aware of it. We learn language that we did not invent, adopt beliefs we did not question, and absorb values we did not consciously choose. Our minds are not empty spaces waiting to create; they are active receivers, constantly collecting and organizing the world around us.
+Every conversation, every book, every influence leaves a trace. Over time, these traces form patterns. Those patterns become thoughts. And eventually, those thoughts begin to feel like identity.
+But feeling like something is yours does not necessarily make it original.
+
+The Mind as a Mirror
+We like to think of ourselves as originators, as people who generate ideas from within. In reality, we are often arrangers.
+We gather pieces from different places, a sentence from a book, a tone from a mentor, a belief from our upbringing, a perspective from the internet, and we rearrange them until they feel coherent enough to call our own.
+This process is so natural that we rarely question it.
+When you say, "This is what I believe," how often do you ask where that belief came from? If you trace it back far enough, you will likely find that it did not begin with you. It was passed down, influenced, or absorbed over time. Not intentionally, not forcefully, but inevitably.
+The idea of pure originality, of creating something entirely from nothing, is largely a myth. Human thinking has always been cumulative. Every idea builds on something that came before it. Even the most groundbreaking ideas are, at their core, recombinations of existing knowledge seen from a different angle.
+So no, you do not have completely original thoughts.
+But that does not make your thoughts meaningless. It makes them connected.
+
+Where Something Real Begins
+This realization is not something to resist. It is something to understand.
+Because the value of the human mind does not lie in its ability to be completely original. It lies in its ability to be aware.
+Awareness creates space. Space to question what you have absorbed, to examine what you have accepted without thinking, and to decide whether those ideas still serve you.
+Instead of asking, "Is this thought mine?" a better question might be, "Is this thought true to who I want to become?"
+Originality is not about creating something from nothing. It is about conscious selection. Choosing what to keep, what to discard, and what to reshape into something more intentional.
+Your mind is not a factory producing entirely new ideas. It is a mirror reflecting everything it has encountered. But unlike a passive mirror, you have the ability to adjust the angle, to decide what to reflect and what to let fade.
+You may not have original thoughts.
+But you do have the power to examine them, challenge them, and transform them.
+And maybe, in that process, something real finally begins.
+
+Every idea you've ever had arrived secondhand. The truly uncomfortable question isn't whether this is true — it is — but what we do with that knowledge. - Panharith Chhotchhong
+
+---
+
+30 STORYTELLING HOOKS
+
+RELATABLE STRUGGLE HOOKS
+1. POV: YOU KEEP POSTING BUT NOTHING'S WORKING
+2. THAT FEELING WHEN YOU _ _ _ AND STILL _ _ _
+3. ME: "I'LL START TOMORROW" ALSO ME: _ _ _
+4. TRYING TO _ _ _ WHILE _ _ _ BE LIKE
+5. EVERYONE ELSE: _ _ _ ME: STILL FIGURING OUT _ _ _
+
+TRANSFORMATION HOOKS
+1. 6 MONTHS AGO I COULDN'T _ _ _. TODAY I _ _ _
+2. I USED TO THINK _ _ _ WAS IMPOSSIBLE UNTIL _ _ _
+3. THE DAY I STOPPED _ _ _ EVERYTHING CHANGED
+4. BEFORE _ _ _ VS AFTER _ _ _ : HERE'S WHAT SHIFTED
+5. I WENT FROM _ _ _ TO _ _ _ BY DOING THIS ONE THING
+
+CURIOSITY HOOKS
+1. NOBODY TALKS ABOUT _ _ _ BUT IT'S THE REASON I _ _ _
+2. I IGNORED _ _ _ FOR MONTHS. THEN I TRIED IT AND _ _ _
+3. THE THING ABOUT _ _ _ NOBODY TELLS YOU: _ _ _
+4. HERE'S WHAT ACTUALLY HAPPENS WHEN YOU _ _ _
+5. I WISH SOMEONE TOLD ME _ _ _ BEFORE I STARTED _ _ _
+
+VULNERABLE HOOKS
+1. I WAS TERRIFIED TO SHARE _ _ _ BUT HERE'S WHY IT MATTERS
+2. MY BIGGEST FAILURE WITH _ _ _ TAUGHT ME _ _ _
+3. I ALMOST QUIT WHEN _ _ _ BUT THEN _ _ _
+4. NOBODY SEES THE PART WHERE I _ _ _
+5. I SPENT _ _ _ MONTHS STRUGGLING WITH _ _ _ BEFORE I FIGURED OUT _ _ _
+
+BOLD STATEMENT HOOKS
+1. EVERYONE SAYS _ _ _ BUT THE TRUTH IS _ _ _
+2. STOP DOING _ _ _ IF YOU WANT TO _ _ _
+3. _ _ _ IS DEAD. HERE'S WHAT ACTUALLY WORKS NOW
+4. THE REAL REASON YOU'RE NOT _ _ _ YET
+5. HOT TAKE: _ _ _ DOESN'T MATTER AS MUCH AS _ _ _
+
+---
+
+6 Types of Investments every beginner should know
+
+1: INDIVIDUAL STOCKS
+Owning a small piece of a company.
+- Apple Inc. (AAPL)
+- Microsoft (MSFT)
+- Amazon (AMZN)
+- NVIDIA (NVDA)
+  You choose the companies yourself (more control).
+  Best if you enjoy researching businesses (earnings, news, trends)
+  Pros: Higher returns (more money) if the company does well.
+  Cons: Riskier because you're betting on just one company to do well + more work to stay updated
+  -> Higher risk, higher reward
+
+2: DIVIDEND STOCKS
+Stocks that pay you just for owning it (small %).
+- Coca-Cola (KO)
+- Johnson & Johnson (JNJ)
+- Procter & Gamble (PG)
+  Paid quarterly (usually).
+  Great for building passive income over time.
+  It can be reinvested to compound faster
+  Pros: Passive income while your investment grows overtime.
+  Cons: May see slower returns (ROI) + your eggs are still in one basket
+  -> Popular for retirees+ income investors
+
+3: ETFS (EXCHANGE TRADED FUNDS)
+A bundle of companies traded like a single stock.
+- VOO - 500 largest US companies (S&P)
+- SCHD - high dividend yielding stocks
+- VTI - Every US stock
+- QQOM - 100 growth/tech companies (nasdaq)
+  You can hold 100–500+ companies in one fund. but can also track commodities or specific sectors/
+  You're instantly diversified.
+  Pros: Low risk, diversified, beginner-friendly and stress free.
+  Cons: Slower returns, more boring and less volatile
+  -> This is what most beginners start with, and smart investors stick with
+
+4: MUTUAL FUNDS
+A fund where experts choose and manage investments for you. (similar to etfs)
+- VFIAX
+- VTSAX
+- FXAIX
+  Actively managed (someone is trying to beat the market, or it just matches indexes).
+  Bought through brokers, not traded all day.
+  Pros: Hands-off and low stress as someone else does the work.
+  Cons: Can charge high fees (choose passive ones) and often need a bigger amount to start.
+  pro tip: invest in "passively" managed funds for less fees
+  -> You're paying for convenience
+
+5: INDEX FUNDS
+A fund that specifically tracks the performance of a market index (like the S&P 500).
+- VOO
+- VTI
+- QQQM
+  Outperforms most active investors long-term.
+  Similar to ETFS but only tracks certain indexes.
+  Pros: Low fees, diversified, long-term growth.
+  Cons: Slower growth and not as exciting to watch.
+  -> Best for beginners + passive investors
+
+6: TARGET DATE MUTUAL FUNDS
+Auto-adjusting investments for retirement.
+- Vanguard Target Retirement 2050 Fund
+- Fidelity Freedom 2060 Fund
+  Starts aggressive -> becomes safer over time.
+  Gets safer as you get closer to retirement.
+  Pros: Hands-off, "set and forget" retirement planning
+  Cons: High fees, less control
+  -> Set it once, let time do the work
+
+link in bio for my free beginner investing guide! + see my entire portfolio 👀👀👀👀
+
+---
+
+HOW TO READ SOMEONE'S CHARACTER WITHOUT THEM KNOWING:
+
+1. Life level: seen from shoes.
+2. Health: seen from nails.
+3. Family: seen from how they sit.
+4. Attitude: seen from the corner of the eye.
+5. Personality: seen from how they laugh.
+6. Self-confidence: seen from how they walk
+7. Loyalty: seen from how they look at their partner.
+8. Honesty: Seen when given a mandate (responsibility).
+
+Discipline: Your physique, style, finances and game will all EXPLODE when you master all 4 simultaneously. The Ultimate Men shows you how in 90 days. Tap the Link in Bio.
+
+---
+
+Chess Openings
+The most Controversial Chess openings Of all time:
+The French Defense (Too Passive/Slow)
+The Ruy Lopez (Too Aggressive/Tactical)
+The Dutch Defense (Too Aggressive/Not Dynamic)
+The Pirc Defense (Very Unambitious)
+
+
+
+
+
+
+How to Introduce Yourself
+
+1. Basic Introduction
+   Hello! My name is Ana.
+   I'm from beautiful Singapore.
+   I live in Woodlands.
+   I work as a passionate content creator.
+   It's a pleasure to meet you!
+
+2. Student Introduction
+   Hi! My name is Riya.
+   I am a dedicated student in Class 8.
+   My favorite subject is English because I love learning new words and ideas.
+   My dream is to become a doctor and help people live healthier lives.
+   Thank you for listening to my introduction.
+
+3. Job Interview Introduction
+   Good morning, and thank you for this opportunity.
+   My name is Emma.
+   I graduated in Business Studies.
+   I bring two years of hands-on experience in marketing.
+   I am hardworking, quick to learn, and always ready to embrace new challenges.
+   I'm excited about the opportunity to contribute and grow with your team.
+
+4. Casual Introduction (Friendly Style)
+   Hey there! I'm Shohel.
+   I create English learning videos on YouTube to help others improve their skills.
+   I'm passionate about storytelling, teaching, and sharing knowledge.
+   In my free time, I enjoy reading, exploring fresh ideas, and learning something new every day.
+   It's great to connect with you!
+
+---
+
+50 SMART ENGLISH WORDS
+
+Articulate – able to express ideas clearly
+Astute – clever and quick to understand
+Benevolent – kind and generous
+Candid – honest and direct
+Composed – calm and in control
+Conscientious – careful and responsible
+Cordial – warm and friendly
+Cynical – doubtful about people's sincerity
+Diligent – hardworking and careful
+Eloquent – fluent and persuasive in speaking
+Empathetic – understanding others' feelings
+Erudite – very knowledgeable
+Exquisite – extremely beautiful
+Humble – modest, not arrogant
+Impeccable – flawless
+Indispensable – absolutely necessary
+Ingenious – clever and inventive
+Insightful – showing deep understanding
+Intriguing – fascinating and mysterious
+Judicious – wise and fair
+Lucid – clear and easy to understand
+Meticulous – very careful and precise
+Plausible – seemingly reasonable
+Pragmatic – practical, concerned with results
+Proficient – skilled, competent
+Resilient – recovering quickly from difficulties
+
+---
+
+THE ALGORITHM OF DESTINY
+
+Yes, everything happens for a reason—but that reason is not to stay stuck, stay small, or silently suffer. The purpose behind every challenge is to awaken your power, not to keep you asleep. Life doesn't ask you to bypass pain, it invites you to transform through it. Wounds rise not to define you, but to guide you toward healing. Karmic cycles are not prisons—they are crossroads. You are not here to repeat the past—you are here to rewrite it. An awakened soul is always in motion—choosing evolution over comfort, freedom over fear. It no longer lives as a slave to fate, but walks the path with conscious choice, not by chance. It learns to stay in flow with alignment and awareness, moving with intention rather than reaction. This is how you enter the algorithm of the wheel of life—where every choice becomes a thread in your unfolding destiny. You are not just here to observe the cosmos—you are here to activate the cosmic body within you, to move in rhythm with your divine blueprint. You came to remember your role as a conscious creator, a soul who turns pain into wisdom, and resistance into growth. You are the living bridge between what has been and what could be. This path was never about passive acceptance—it was about alchemy. You were born to meet life with courage, to shape it with presence, to expand it through choice. Your story isn't over, and the power to change it lives in you. It begins now.
+
+---
+
+New World Order Organizational Chart
+
+Illuminati Royal Bloodlines: Rothschild, Collins, Dupont, Freeman, Astor, Bundy, Kennedy, Li, Onassis, Rockefeller, Disney, Russell, Van Duyn, Merovingian, Reynolds
+
+Foundation Nations of the New World Order
+America (Financial Groups): IHF, Central Banks, World Bank, Federal Reserve, Bank of International Settlement
+England (Research Institutions): Institute for Policy Studies, Stanford Research Institute, Brookings Institute, Tavistock Institute, Committee of 300, Aspen Institute, Jason Society
+Israel (Secret Societies): P2/Opus Dei, Rosicrucians, Freemasonry, Skull & Bones, Bohemian Club, The Knights of Malta
+Australia (Intelligence): MI5, CIA, NSA/FBI, KGB, Interpol, MOSSAD, Drug Cartels, Homeland Security, Military Intelligence
+China (Religious): World Parliament of Religions, National Council of Churches, Temple of Understanding, Universalist Churches, New Age Cults, Vatican, Satanists
+Educational: UNESCO, Lucius Trust, World Union, World Goodwill, Esalen Institute, Planetary Congress, Media Establishment, World Federalist Assoc., World Constitution Assoc.
+
+Corporations, Multinationals and Banks Supporting the New World Agenda
+Bechtel, Carlyle Group, TRW, Raytheon, Rand, Atlantic Richfield-Arco, Exxon-Esso-Mobil, Texaco, Shell Oil, Tenneco, Corning, Dow Jones, Citigroup, Chase Manhattan, Bank of America, Bankers Trust, Glaxo SmithKline, Archer Daniels Midland, Chemical Banking, Schering Plough, Goldman Sachs, American Express, AT&T, Philip Morris, Boeing, Amtrak, Nabisco, Coca-cola, PepsiCo, Anheuser Busch, Blackstone Group, Chevron-Texaco (Caltex), BP-Amoco, GE, Daimler/Chrysler, Unisys, ITT, Xerox, Intel, IBM, Motorola, Dell, Levi Strauss, Motorola, Bristol Myers, Squibb, Eli Lilli, Pfizer, Kissinger Assoc, Monsanto/Solutia, Dow Chemical, News Corp Limited Inc, Time Warner/AOL, Disney, CBS, NBC, PBS, AP, NCC, Reuters, Washington Times, Children's TV Workshop, U.S. News & World Report, New York Times, Newsweek, Washington Post, Wall Street
+
+---
+
+A Plan is Not a Strategy
+The Critical Difference Most CEOs Miss
+
+STRATEGY
+What is it? Your theory of how to win. Defines your competitive advantage and unique position in the market.
+The 5M Framework: Money, Means, Magic, Market, Meaning -> Strategic Goals
+• Market: Where will we compete? (target segments)
+• Means: What capabilities set us apart? (core competencies)
+• Money: How will we fund growth? (financial model)
+• Meaning: Why do we exist? (purpose/mission)
+• Magic: What's our unfair advantage? (secret sauce)
+Time Horizon: 3-5 years (until market conditions fundamentally shift)
+Flexibility: Stable unless market disruption occurs
+When to Use: Define the vision, Make directional choices, Say NO to opportunities, Say NO to distractions
+Best Practices: Start with "why" not "what", Keep it to 1-2 pages max, Review quarterly, revise annually
+Common Mistakes: Having 10+ priorities, Confusing goals with strategy, Changing strategy every quarter
+Example: Own 40% of the sustainable packaging market for mid-market retailers by offering the only 100% compostable solution at price parity with plastic.
+
+PLAN
+What is it? The roadmap. Breaks down how, when, and by whom you'll get there.
+Activities: What specific tasks need completion
+Timeline: When each milestone must be hit
+Resources: Who owns each deliverable
+Dependencies: What must happen in sequence
+Metrics: How we measure progress
+Time Horizon: Weeks to months (by project phase)
+Flexibility: Updates continuously as progress is made or missed
+When to Use: Coordinate execution, Break strategy into steps, Manage timelines clearly, Track accountability daily
+Best Practices: Update progress weekly, Assign clear owners, Stay aligned to strategy
+Common Mistakes: Planning without clear strategy, Too much detail too early, Ignoring dependencies
+Example: Q2: Launch pilots with Target, Whole Foods, Kroger. Q3: Scale to 10 retailers achieving 95% satisfaction. Q4: Hire VP Sales, secure $5M Series A funding.
+
+---
+
+TYPES OF RESEARCH QUESTIONS
+
+Type | Purpose | Question | Example
+Descriptive | To describe characteristics, patterns, or properties of a subject. | What are the properties of A? | What are the common symptoms reported by patients with post-COVID fatigue?
+Comparative | To identify similarities and differences between two or more entities. | What are the similarities & distinctions between A and B? | How do online and offline students differ in terms of academic performance?
+Correlational | To examine relationships or associations between two or more variables. | What can you do to correlate A and B? | Is there a relationship between daily screen time and sleep quality?
+Exploratory | To explore new, complex, or poorly understood phenomena or ideas. | What factors affect the rate of C's growth? Are A and B influencing C? | What factors influence AI adoption among university faculty in developing countries?
+Explanatory | To determine the causes or underlying reasons for a phenomenon. | What are the causes for C? What does A do to B? | What causes low voter turnout among young adults in urban areas?
+Evaluation | To assess the effectiveness, outcomes, or impact of a program or policy. | What is the impact of C? What role does B have? | What is the impact of telemedicine on patient satisfaction in rural areas?
+Action based | To find practical solutions or interventions for improvement. | What can you do to improve X? | What strategies can reduce employee burnout in remote work environments?
+
+---
+
+Tell Me About Yourself
+
+Thank you for giving me this opportunity to introduce myself.
+
+I come from a humble and supportive family that has always encouraged me to stay focused, disciplined and positive in every situation.
+
+I have completed my graduation and I am constantly working on improving my knowledge and skills. I believe in continuous learning and self-improvement.
+
+I am a dedicated, self-motivated and quick learner. I have good communication skills and I enjoy working both independently and as part of a team. I always try to give my best in everything I do.
+
+Talking about my hobbies, I enjoy reading books, listening to music and learning new things that help me grow personally and professionally.
+
+My short-term goal is to build a strong foundation in my career and gain practical experience. My long-term goal is to achieve a responsible position where I can contribute meaningfully and create a positive impact.
+
+That's all about me.
+Thank you.
+
+---
+
+System Design Concepts
+Scalability, Load Balancers, Object Storage, Message Queues, Microservices, Caching, Database, CAP Theorem, Rate Limiting, Partitioning, CDN, Stream Processing
+
+---
+
+Game Theory Prompt
+
+You are an expert game theorist who uses first principles thinking. I want to learn game theory from the ground up.
+
+Teaching approach:
+1. Start with fundamental questions and build concepts from basic assumptions
+2. Use the Socratic method - ask me questions to test understanding before moving forward
+3. Provide real-world examples I can immediately relate to
+4. Have me apply each concept to my own life situations
+5. Break down complex ideas into simple, logical steps
+
+First Principles Thinking:
+* Always ask "What are the most basic, undeniable truths here?"
+* Strip away assumptions and build from the ground up
+* Question everything: "Why is this true?" "What evidence supports this?" "What would happen if this weren't true?"
+* Derive complex concepts by combining simple, proven building blocks
+* When explaining anything, start with "Let's assume nothing except..." and build from there
+
+Session structure:
+* Begin each concept by asking "What is the most basic assumption we need to make here?"
+* Build definitions from first principles rather than giving me textbook definitions
+* After explaining each concept, give me a simple scenario and ask me to predict what will happen
+* Wait for my response before continuing
+* Correct misconceptions by walking back to first principles
+
+CRITICAL RULE: Do not move to any new concept or topic until I explicitly say "I understand." If I seem confused or give incorrect answers, keep working on the current concept using first principles until I truly grasp it.
+
+Start here:
+1. Ask me to describe a situation where my outcome depends on someone else's choice
+2. From my example, derive what a "game" is using first principles
+3. Help me identify the key elements (players, strategies, payoffs) from my real situation
+4. Ask me to predict what each person will do and why
+
+Important rules:
+* Don't move to the next concept until I demonstrate understanding of the current one
+* Always connect abstract concepts back to practical applications
+* When I seem confused, go back to first principles and rebuild the logic
+* End each session by having me identify one game-theoretic situation I'll encounter in the next 24 hours
+
+Begin by asking me about a recent situation where I had to consider what someone else might do before making my own decision.
+
+---
+
+Negative Online Vocabulary
+
+AI hallucination - false or misleading information made by AI
+catfishing - pretending to be someone else online
+clickbait - a misleading headline or thumbnail intended to gain clicks
+data harvesting - collecting large amounts of user data, often without clear consent
+deepfake - AI-generated fake video/audio that looks real
+dogpiling - many users attacking one person at once
+doomscrolling - endlessly scrolling through negative news or content
+enshittification - gradual decline in quality of online platforms as they prioritise profit
+ghosting - suddenly cutting off communication online
+parasocial relationship - one-sided emotional attachment to an online figure
+phishing - a deceptive cyberattack where attackers pose as legitimate entities
+ragebait - the manipulative tactic of eliciting outrage with the goal of increasing internet traffic
+rug pull - when developers abandon a project and take investors' money
+slop - mass-produced content with no real value
+technofeudalism - the idea that a few big companies own the digital landscape and profit from the work of content creators
+trolling - deliberately provoking or upsetting others online
+
+---
+
+DISCOVER THE POWER OF TIMEFRAMES
+
+4H
+- Direction
+- Liquidity
+- Supply and Demand
+
+1H
+- Trend
+- Breakout
+- Reversals
+- Order Blocks (OB)
+- FVG
+- Liquidity
+
+15M, 5M, 1M
+- Confirmations
+
+---
+
+1. INCOME ACCOUNT
+   Where your money lands
+- Job salary
+- Side hustle income
+- Business or asset cash flow
+  This is the entry point.
+  Nothing stays here for long.
+
+2. ESSENTIALS ACCOUNT
+   Covers your survival:
+- Rent or mortgage
+- Groceries
+- Utilities
+- Insurance
+  You live through this account - not from it.
+
+4 bank accounts you must have:
+
+3. INVESTMENT ACCOUNT
+   Your wealth engine.
+- Stocks & ETFs
+- Crypto
+- Real estate
+- Retirement funds
+  This is where money starts working harder than you do.
+
+4. FUN/ FREEDOM ACCOUNT
+- You enjoy life guilt free.
+- Vacations
+- Dates
+- Coffee
+- Streaming & lifestyle perks
+  This isn't waste. It's maintenance for your mind.
+
+---
+
+THE 12 LAWS OF THE UNIVERSE
+BY KENNETH WONG
+
+1. Law of Divine Oneness
+   The Law of Divine Oneness states that everything is connected. Everything in the Universe is an extension of Source energy which means nothing is separate on a spiritual level.
+
+2. Law of Vibration
+   The Law of Vibration states that everything in this world, whether tangible or intangible, is made up of energy that is vibrating at a specific frequency.
+
+3. Law of Correspondence
+   The Law of Correspondence states that your external reality is a direct reflection of your internal state. This law makes it easy to assess the alignment of your vibration.
+
+4. Law of Attraction
+   The Law of Attraction states that which is like unto itself is drawn. Your energy is constantly attracting things that are a vibrational match for it.
+
+5. Law of Inspired Action
+   The Law of Inspired Action states that inspiration will come about when you are aligned with who you are—an extension of Source.
+
+6. Law of Perpetual Transmutation of Energy
+   The Law of Perpetual Transmutation of Energy states that energy is constantly evolving or fluctuating.
+
+7. Law of Cause and Effect
+   The Law of Cause and Effect states that for every cause there's an effect. In life, our thinking is the cause and our experiences are the effects of our thinking.
+
+8. Law of Compensation
+   The Law of Compensation states that you reap what you sow. What you give to others shall be given to you. What you withhold from others shall be withheld from you.
+
+9. Law of Relativity
+   The Law of Relativity states that everything is relative because we all perceive reality in our own way. Prioritize inner peace over defending the truth because "truth" is relative.
+
+10. Law of Polarity
+    The Law of Polarity states that everything in life has an opposite. For every problem, there's a solution. For every obstacle, there's an opportunity.
+
+11. Law of Rhythm
+    The Law of Rhythm states that cycles are a natural part of the Universe. Just like the four seasons, your life has seasons too.
+
+12. Law of Gender
+    The Law of Gender states that life works best when your divine masculine and divine feminine energies are in alignment.
+
+READ MORE @ MILLENNIAL-GRIND.COM
+
+---
+
+LOCAL LLM CHEAT SHEET 32GB RAM
+
+CLASS A - FLAGSHIP | 18 GB+
+Qwen3.5 27B: 16.90 GB RAM, Medium speed, 262K context. Best for general assistant, research, writing, agent workflow.
+Qwen3.6-35B-A3B: 22.10 GB RAM, Medium-fast speed, 256K context. Best MoE flagship, agentic coding, tool use.
+Gemma 4 31B: 21.66 GB RAM, Heavy speed, 256K context. Best dense quality, writing, analysis, high-end local chat.
+
+CLASS B - FAST FLAGSHIPS | 16-22 GB
+Gemma 4 26B A4B: 21.15 GB RAM, Medium-fast speed, 256K context. Best fast flagship, general assistant, coding, agents, research.
+DeepSeek-R1 Distill Qwen 32B: 19.90 GB RAM, Medium speed, 32K context. Best reasoning, math, logic, deliberate analysis, offline problem solving.
+Mistral Small 24B: 16.80 GB RAM, Medium-fast speed, 32K context. Best tool caller, assistants, chat, local business workflows.
+
+CLASS C - COMPANIONS | 5-6.5 GB
+Qwen3.5 9B: 6.36 GB RAM, Fast speed, 262K context. Best sidekick, secondary agent, fast stuff, cheap retries.
+Llama 3.1 8B: 5.73 GB RAM, Fast speed, 128K context. Best long-doc sidekick, RAG, doc ingestion, codebase chat, long prompts.
+
+Bottom line: The strongest combo is usually one flagship plus one companion. Qwen3.5 27B + Qwen3.5 9B is the easy recommendation.
+
+---
+
+- 28 LAWS OF SEDUCTION BY ENTRE -
+
+Law #1 - Women are mirrors
+Law #2 - Attraction forms from insecurity
+Law #3 - Beat her at her own game
+Law #4 - She will reject you just to stroke her own ego
+Law #5 - Women don't date men better looking than them
+Law #6 - Acknowledge her attraction to you
+Law #7 - She'd rather be miserable than bored
+Law #8 - Talk more with your eyes than your mouth
+Law #9 - Always say less than necessary
+Laws #10 - Make her feel not think
+Law #11 - She is unconscious of her own nature
+Law #12 - Don't be her friend
+Law #13 - No woman is truly ever single
+Law #14 - Women hate men who understand female nature
+Law #15 - How to tell she is lying
+Law #16 - She doesn't want to be saved
+Law #17 - Confidence determines what you experience
+Law #18 - Energy speaks before you do
+Law #19 - Body language tells all
+Law #20 - Never say I love you first
+Law #21 - Never make her your top priority
+Law #22 - Don't play by her rules
+Law #23 - Only say sorry when necessary
+Law #24 - Take irrational amounts of action
+Law #25 - Never be afraid to lose her
+Law #26 - Golden ratio
+Law #27 - Dark side to being a playboy
+Law #28 - We all start as simps
+
+---
+
+Law #25 NEVER BE AFRAID TO LOSE HER
+
+Women are like cats, the more you chase them the more they run away. But when you just sit there calmly they come up and see you. The more you show her that you're afraid of losing her the more she will start to think you're unhappy and desperate. She desires the man who needs no one to be happy. If you aren't willing to show her the door when she misbehaves then you are programming her to walk all over you. You must set boundaries from the beginning and not hesitate to enforce them.
+
+Women are like children, they will test to see how much they can get away with. The more you allow her to disrespect you the more she will. Eventually she will realize you are a pushover and leave you. Never bend your knee to please her. Love forms from respect so before you seek love from her you must make her respect you. I see so many men avoid disciplining their girl or threatening to leave her simply because they want to avoid an argument. All they are doing is giving their power away. Stop making excuses for her actions and show her that she will not be in your life unless she meets these standards.
+
+Deep down all women want to be treated like a little girl who gets told what to do by a dominant figure. This is why women call their boyfriends "daddy". She wants you to replace the role of her father, not be her equal. She must know you are a man who will just go find another girl if she doesn't listen. Men think they will push her away if they do this and sometimes they will but that just means she was never that serious about you in the first place. This saves you time and heartbreak. The faster you convey the rules to being with you, the faster she will either leave you or submit to them. You are basically training a dog as bad as that sounds. Reward good behavior, discipline bad behavior. Otherwise she will never love you or be loyal. Why would she? She wants a man, not an equal. She will only respect you if she looks up to you.
+
+"You must not fear. Fear is the love-killer. Fear is the ego-triumph that brings abject loneliness. You will face your fear. You will permit it to pass over and through you. And when your ego-fear is gone you will turn and face your lover, and only your heart will remain. You will walk away from her when she has violated your integrity, and you will let her walk when her heart is closed to you. She who can destroy you, controls you. Don't give her that power over yourself. Love yourself before you love her." - Chateau Heartiste
+
+---
+
+Law #14 WOMEN HATE MEN WHO UNDERSTAND FEMALE NATURE
+
+Look at social media these days, these women lie to themselves constantly. She will preach for days about how she wants a good man but meanwhile she is going to the bar to find a new douchebag to fvck almost every week. But as soon as you call a girl out for this behavior all hell breaks loose. Women are pushing a narrative that men are trash when in reality they are attracted to trash. They refuse to face this reality so they lie to themselves. Some women are self aware enough to understand that she has certain dark tastes in men. But for the majority this is not the case.
+
+Another reason behind the title of this law is that women don't like when you mansplain. They hate being told why and when they are wrong. They want you to cater to their illusions of reality so they can maintain the emotions they feel. Truth does not matter to women. They will bend the truth to suit how they desire to feel. For example, women will tell a fat girl she is beautiful the way she is to her face but in her mind she is judging this girl. This highlights how women will lie to each other, pretend to be each other's friends, but behind closed doors they all hate each other. A man who will bring this truth to the surface immediately gets attacked by women.
+
+Women will go to any end to make sure their reputation is not damaged. She will have friends who are complete hOes, she knows they are hOes. But if a guy ever says one of her friends is a hOe she will scream bloody mvrdcr. You must be careful when talking to women as they cannot process the truth. All you will do is piss her off.
+
+---
+
+LAW #5 - WOMEN DON'T DATE MEN BETTER LOOKING THAN THEM
+
+If you've been paying attention over the last few years you'll notice a lot of ugly ass dudes are dating hot ass girls. You'll be sitting there wondering... how on god's green earth did he get her. The reason for this again.. Is women's egos. You see, some women don't want love, they want the upper hand. They want to be the star of the show, the one in charge of the relationship.
+
+This is due to the increase of the disease of f3minism and women desiring to be masculine. These women seek power instead of companionship because they have been brainwashed into thinking it will make them happy. On the other hand, women who have been heartbroken by the alpha will do this because they believe that the nice and not as good looking guy will never cheat on or hurt her. She will date betas until she realizes that he does not fulfill her needs. Yes these men treat her very well but these relationships are BORING. She wonders why she can't feel the same spark she felt with the uncontrollable alpha with the nice beta.
+
+She is unconscious of her addiction to drama and chasing after the man other women want. When the bad boys break their souls, they go to the good guys who act as a temporary comfort while she heals from the heartbreak of an alpha. She will stay in a relationship with a beta until going back to the alpha for more... repeating the same cycle over and over like a snake eating its own tail. The circle continues until she realizes her own infatuation with trying to control an uncontrollable man.
+
+---
+
+Video Editing Breakdown
+
+1. Story Clarity
+   Before you touch the timeline, understand the message.
+   What is the viewer supposed to feel, learn, or do?
+   If the story isn't clear, effects won't save it.
+
+2. Target Viewer
+   Who is this video for?
+   You don't edit the same way for business owners, church leaders, or Gen Z creators.
+   Different audience = different pacing, captions, music, and visuals.
+
+3. Emotional Direction
+   Editing controls emotion. Fast cuts create energy. Long pauses create tension. Music creates mood.
+   If you don't control emotion, the video feels random.
+
+4. Structure
+   Great edits follow structure:
+- Hook, Value, Reinforcement, Call to Action
+  Without structure, viewers scroll.
+
+5. Sound Design
+   Audio is 50% of the experience. Clean voice. Balanced background music. Intentional sound effects.
+   Bad audio kills good visuals.
+
+6. Visual Identity
+   Consistency builds recognition.
+   Fonts, colors, transitions, lower-thirds, and style should align with your brand.
+   If every video looks different, your brand feels unstable.
+
+7. Final Impact
+   Editing is about outcome.
+   Did the video:
+- Increase retention?
+- Drive engagement?
+- Push action?
+  If it doesn't move the viewer, it's just activity — not impact.
+
+
+
+Here is the text from the images in a clean, easy-to-copy plain text format:
+
+6 hobbies to make you smarter and more interesting
+
+01/ Learn a language through immersion. Stop using boring textbooks. Use the internet to see how people actually speak. What to do: Watch 20 minutes of English stand-up comedy or read Reddit threads about topics you like. Don't worry about every single word. Just try to understand the jokes and the slang.
+
+02/ Play strategic games. Games like chess or poker teach you how to read people and manage risks. What to do: Download a chess app or join a local board game club. Play at least one game a week. Focus on why your opponent made their move, not just your own.
+
+03/ Practice freestyle cooking. Cooking without a recipe forces you to be creative and understand how flavors work together. What to do: Once a week, make a meal using only what you already have in your fridge. Do not use Google or a cookbook. Try mixing two spices you usually do not use together.
+
+04/ Go on solo expeditions. Exploring new places alone makes you more independent and observant. What to do: Go to a part of your city where you have never been. Spend two hours walking around without looking at your phone. Look at the architecture and the people instead of your screen.
+
+05/ Write short notes. Writing helps you turn the chaos in your head into clear thoughts. What to do: Every time you watch a movie or read an article, write three sentences about it in a notebook or on your phone. Describe one thing you learned and one thing you hated.
+
+06/ Read about famous rebels. Study people who went against the system, like rock stars or great scientists. This gives you better topics for conversation than just talking about the weather. What to do: Pick one person you admire. Read their Wikipedia page or watch a documentary about their life. Try to find one specific decision they made that changed everything.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:dio/dio.dart';
-import 'package:path_provider/path_provider.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_styles.dart';
 import '../../core/constants/app_spacing.dart';
@@ -15,8 +13,6 @@ import '../../core/services/asset_service.dart';
 import '../../core/providers/language_provider.dart';
 import '../../core/localization/app_strings.dart';
 import '../../core/utils/responsive.dart';
-import '../../core/models/engine_profile.dart';
-import '../../engine/stockfish_isolate.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -196,11 +192,25 @@ class SettingsScreen extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.xl),
-                const _SectionHeader(title: 'Chess Engine'),
-                _EngineUnifiedSelector(
-                  currentVersion: settings.engineVersion,
-                  notifier: notifier,
-                  storage: storage,
+                const _SectionHeader(title: 'Deep Neural Analysis'),
+                ChtCard(
+                  padding: EdgeInsets.zero,
+                  child: Column(
+                    children: [
+                      _SettingsTile(
+                        icon: Icons.psychology_rounded,
+                        title: 'Stockfish 18 Engine',
+                        subtitle: storage.engineNetwork == 'lite'
+                            ? 'Standard (Lite)'
+                            : storage.engineNetwork == 'balanced'
+                                ? 'Balanced Neural'
+                                : 'Neural Pro (SF18 Max)',
+                        onTap: () => context.push(AppRoutes.engineManagement),
+                        trailing: const Icon(Icons.expand_more_rounded,
+                            size: 18, color: AppColors.textSecondary),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: AppSpacing.xl),
                 _SectionHeader(
@@ -234,7 +244,7 @@ class SettingsScreen extends ConsumerWidget {
                         icon: Icons.info_outline_rounded,
                         title: AppStrings.getTranslation(
                             AppStrings.appVersion, currentLanguage),
-                        subtitle: '1.4.0 (Stable)',
+                        subtitle: '1.7.0 (Neural Update)',
                       ),
                       const Divider(height: 1, indent: 52),
                       _SettingsTile(
@@ -501,285 +511,6 @@ class _LanguageButton extends StatelessWidget {
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _EngineUnifiedSelector extends ConsumerStatefulWidget {
-  const _EngineUnifiedSelector({
-    required this.currentVersion,
-    required this.notifier,
-    required this.storage,
-  });
-
-  final int currentVersion;
-  final SettingsNotifier notifier;
-  final StorageService storage;
-
-  @override
-  ConsumerState<_EngineUnifiedSelector> createState() =>
-      _EngineUnifiedSelectorState();
-}
-
-class _EngineUnifiedSelectorState
-    extends ConsumerState<_EngineUnifiedSelector> {
-  double _downloadProgress = 0;
-  bool _isDownloading = false;
-
-  Future<void> _downloadFullNet(EngineProfile profile) async {
-    setState(() {
-      _isDownloading = true;
-      _downloadProgress = 0;
-    });
-
-    try {
-      final dir = await getApplicationDocumentsDirectory();
-      final savePath = '${dir.path}/sf17_full.nnue';
-
-      const url =
-          'https://tests.stockfishchess.org/api/nn/nn-1c0000000000.nnue';
-
-      await Dio().download(
-        url,
-        savePath,
-        onReceiveProgress: (count, total) {
-          if (total != -1) {
-            setState(() => _downloadProgress = count / total);
-          }
-        },
-      );
-
-      await widget.storage.setFullNetPath(savePath);
-      await widget.notifier.updateEngineProfile(profile);
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text('High-performance engine network loaded')),
-        );
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text('Download failed: $e'),
-              backgroundColor: AppColors.error),
-        );
-      }
-    } finally {
-      if (mounted) setState(() => _isDownloading = false);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final engineState = ref.watch(engineLastResponseProvider);
-    String evalStr = '+0.00';
-    int currentDepth = 0;
-
-    engineState.whenData((resp) {
-      if (resp.lines.isNotEmpty) {
-        evalStr = resp.lines.first.evalDisplay;
-        currentDepth = resp.currentDepth;
-      }
-    });
-
-    return Column(
-      children: [
-        ChtCard(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Expanded(
-                    child: Text('Active Analysis Engine',
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16)),
-                  ),
-                  const SizedBox(width: 8),
-                  _StatusPill(eval: evalStr, depth: currentDepth),
-                ],
-              ),
-              const SizedBox(height: 20),
-              ...EngineProfile.availableProfiles.map((profile) {
-                final isSelected = widget.currentVersion == profile.version;
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: _ProfileTile(
-                    profile: profile,
-                    isSelected: isSelected,
-                    isDownloading: _isDownloading && isSelected,
-                    progress: _downloadProgress,
-                    onTap: () {
-                      if (profile.requiresFullNet &&
-                          widget.storage.fullNetPath == null) {
-                        _downloadFullNet(profile);
-                      } else {
-                        widget.notifier.updateEngineProfile(profile);
-                      }
-                    },
-                  ),
-                );
-              }),
-              if (_isDownloading) ...[
-                const SizedBox(height: 12),
-                LinearProgressIndicator(
-                  value: _downloadProgress,
-                  backgroundColor: Colors.white10,
-                  color: AppColors.primary,
-                  minHeight: 2,
-                ),
-              ],
-              const SizedBox(height: 16),
-              const Divider(),
-              const SizedBox(height: 16),
-              const Text('TECHNICAL IMPACT',
-                  style: TextStyle(
-                      color: AppColors.primary,
-                      fontSize: 10,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 1.2)),
-              const SizedBox(height: 8),
-              Text(
-                EngineProfile.getByVersion(widget.currentVersion)
-                    .technicalImpact,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.textPrimary.withValues(alpha: 0.7),
-                  height: 1.5,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _ProfileTile extends StatelessWidget {
-  const _ProfileTile({
-    required this.profile,
-    required this.isSelected,
-    required this.onTap,
-    this.isDownloading = false,
-    this.progress = 0,
-  });
-
-  final EngineProfile profile;
-  final bool isSelected;
-  final VoidCallback onTap;
-  final bool isDownloading;
-  final double progress;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: isDownloading ? null : onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: isSelected
-                ? AppColors.primary.withValues(alpha: 0.1)
-                : AppColors.backgroundElevated,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: isSelected ? AppColors.primary : Colors.white10,
-              width: 1.5,
-            ),
-          ),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: isSelected
-                      ? AppColors.primary.withValues(alpha: 0.2)
-                      : Colors.white.withValues(alpha: 0.05),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(profile.icon,
-                    color: isSelected ? AppColors.primary : Colors.white38,
-                    size: 20),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            profile.label,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color:
-                                  isSelected ? AppColors.primary : Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              letterSpacing: 0.5,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Depth ${profile.depth}',
-                          style: AppTextStyles.monoSmall.copyWith(
-                            color: isSelected
-                                ? AppColors.primary
-                                : AppColors.textSecondary,
-                            fontSize: 9,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      profile.description,
-                      style: AppTextStyles.caption.copyWith(fontSize: 11),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _StatusPill extends StatelessWidget {
-  const _StatusPill({required this.eval, required this.depth});
-  final String eval;
-  final int depth;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
-      ),
-      child: Text(
-        '$eval · D$depth',
-        style: const TextStyle(
-          color: AppColors.primary,
-          fontSize: 9,
-          fontWeight: FontWeight.w900,
         ),
       ),
     );

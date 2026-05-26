@@ -18,6 +18,8 @@ import '../constants/app_colors.dart';
 import '../constants/app_text_styles.dart';
 import '../utils/responsive.dart';
 
+import '../../features/engine_management/engine_dashboard_screen.dart';
+
 /// All named routes for Brilliant Movee.
 abstract final class AppRoutes {
   static const String splash = '/';
@@ -29,6 +31,7 @@ abstract final class AppRoutes {
   static const String review = '/review';
   static const String settings = '/settings';
   static const String boardSelector = '/settings/board';
+  static const String engineManagement = '/settings/engine';
   static const String tips = '/tips';
   static const String stoic = '/stoic';
   static const String brilliant = '/brilliant';
@@ -281,6 +284,9 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
           path: AppRoutes.boardSelector,
           builder: (context, state) => const BoardSelectorScreen()),
+      GoRoute(
+          path: AppRoutes.engineManagement,
+          builder: (context, state) => const EngineDashboardScreen()),
       GoRoute(
           path: AppRoutes.brilliant,
           builder: (context, state) => const BrilliantGamesScreen()),

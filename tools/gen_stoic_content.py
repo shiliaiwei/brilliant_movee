@@ -616,30 +616,53 @@ TITLE_MODIFIERS = [
 def generate_lessons() -> list[dict]:
     lessons: list[dict] = []
     for category, spec in CATEGORY_SPEC.items():
-        for idx in range(100):
+        for idx in range(65):  # Adjusted to 65 as per docstring
             i = idx + 1
             title = f"{category.title()} {TITLE_MODIFIERS[idx % len(TITLE_MODIFIERS)]} {i:02d}"
-            content = "\n".join(
-                [
-                    f"[VISUAL] {spec['visual'][idx % len(spec['visual'])]}",
-                    f"[GRAMMAR] {spec['grammar'][idx % len(spec['grammar'])]}",
-                    f"[STRATEGY] {spec['strategy'][idx % len(spec['strategy'])]}",
-                    f"[GRAPH] {spec['graph'][idx % len(spec['graph'])]}",
-                    f"[DATA] {spec['data'][idx % len(spec['data'])]}",
-                    "",
-                    spec["body"][idx % len(spec['body'])],
-                ]
-            )
+
+            sections = [
+                {
+                    "title": "VISUAL ARCHITECTURE",
+                    "type": "visual",
+                    "body": spec['visual'][idx % len(spec['visual'])]
+                },
+                {
+                    "title": "LEXICAL PRECISION",
+                    "type": "grammar",
+                    "body": spec['grammar'][idx % len(spec['grammar'])]
+                },
+                {
+                    "title": "STRATEGIC DEPTH",
+                    "type": "strategy",
+                    "body": spec['strategy'][idx % len(spec['strategy'])]
+                },
+                {
+                    "title": "NEURAL GRAPH",
+                    "type": "graph",
+                    "body": spec['graph'][idx % len(spec['graph'])]
+                },
+                {
+                    "title": "SYSTEM DATA",
+                    "type": "data",
+                    "body": spec['data'][idx % len(spec['data'])]
+                },
+                {
+                    "title": "CORE INSIGHT",
+                    "type": "body",
+                    "body": spec['body'][idx % len(spec['body'])]
+                }
+            ]
 
             lessons.append(
                 {
                     "id": f"{category.lower().replace(' ', '_')}_{i:02d}",
                     "title": title,
-                    "content": content,
+                    "content": spec["body"][idx % len(spec['body'])], # Fallback simple content
+                    "sections": sections,
                     "directive": spec["directive"][idx % len(spec['directive'])],
                     "category": category,
                     "intensity": (idx % 3) + 1,
-                    "icon": spec["icon"],
+                    "isPremium": True if idx % 5 == 0 else False
                 }
             )
     return lessons
