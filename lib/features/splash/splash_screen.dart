@@ -8,6 +8,8 @@ import '../../core/services/storage_service.dart';
 import '../../core/services/asset_service.dart';
 import '../../core/router/app_router.dart';
 
+import 'package:package_info_plus/package_info_plus.dart';
+
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
@@ -30,6 +32,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
   int _typewriterIndex = 0;
   bool _didNavigate = false;
+  String _version = '...';
   static const String _tagline = 'Replay. Analyze. Evolve.';
   final List<String> _displayedTagline = [];
 
@@ -37,13 +40,21 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   void initState() {
     super.initState();
     _setupAnimations();
+    _loadVersion();
     // Safety net: never allow startup to stay on splash indefinitely.
-    Future.delayed(const Duration(seconds: 8), () {
+    Future.delayed(const Duration(seconds: 10), () {
       if (mounted && !_didNavigate) {
         _navigate();
       }
     });
     _startSequence();
+  }
+
+  Future<void> _loadVersion() async {
+    try {
+      final info = await PackageInfo.fromPlatform();
+      if (mounted) setState(() => _version = 'v${info.version}');
+    } catch (_) {}
   }
 
   void _setupAnimations() {
@@ -239,9 +250,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
             left: 0,
             right: 0,
             child: Text(
-              'v1.0.0',
+              _version,
               textAlign: TextAlign.center,
-              style: AppTextStyles.caption,
+              style: AppTextStyles.caption.copyWith(
+                color: Colors.white24,
+                letterSpacing: 2,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],

@@ -45,7 +45,7 @@ class AssetService {
     if (_initialized) return;
     try {
       final manifestJson =
-          await rootBundle.loadString('assets/data/asset_manifest.json');
+          await rootBundle.loadString('assets/data/app_assets.json');
       final manifest = jsonDecode(manifestJson) as Map<String, dynamic>;
 
       _pieceSets = (manifest['piece_sets'] as List)
@@ -87,10 +87,10 @@ class AssetService {
       'assets/pieces/$pieceSetId/$piece.png';
 
   static const _defaultPieceSets = [
-    PieceSetInfo(id: 'defaultP', name: 'Professional (SVG)'),
+    PieceSetInfo(id: 'cburnett', name: 'CBurnett (Classic)'),
+    PieceSetInfo(id: 'alpha', name: 'Alpha (Professional)'),
+    PieceSetInfo(id: 'defaultP', name: 'Vector (SVG)'),
     PieceSetInfo(id: 'Merida15', name: 'Merida Vector'),
-    PieceSetInfo(id: 'cburnett', name: 'CBurnett'),
-    PieceSetInfo(id: 'alpha', name: 'Alpha'),
     PieceSetInfo(id: 'merida', name: 'Merida Classic'),
     PieceSetInfo(id: 'maestro', name: 'Maestro'),
     PieceSetInfo(id: 'tatiana', name: 'Tatiana'),

@@ -474,9 +474,8 @@ class _PieceImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Standard piece mapping for 2D assets
-    // We expect pieces like 'wP', 'wN', 'wB', 'wR', 'wQ', 'wK'
     final color = piece[0].toLowerCase();
-    final type = piece[1].toLowerCase(); // Use lower for easier mapping
+    final type = piece[1].toLowerCase();
 
     final bool isSvg = pieceSetId == 'defaultP' || pieceSetId == 'Merida15';
     String assetPath;
@@ -499,25 +498,59 @@ class _PieceImage extends StatelessWidget {
       assetPath = 'assets/pieces/$pieceSetId/$color${type.toUpperCase()}.png';
     }
 
-    return Container(
-      child: isSvg
-          ? SvgPicture.asset(
-              assetPath,
-              width: size,
-              height: size,
-              fit: BoxFit.contain,
-              placeholderBuilder: (_) =>
-                  _FallbackPiece(piece: piece, size: size),
-            )
-          : Image.asset(
-              assetPath,
-              width: size,
-              height: size,
-              fit: BoxFit.contain,
-              errorBuilder: (context, error, stackTrace) {
-                return _FallbackPiece(piece: piece, size: size);
-              },
+    // Wrap in a Stack to add a subtle shadow for "lifted" 2D look
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        // Subtle offset shadow
+        if (isSvg)
+          Opacity(
+            opacity: 0.25,
+            child: Transform.translate(
+              offset: Offset(size * 0.04, size * 0.04),
+              child: SvgPicture.asset(
+                assetPath,
+                width: size,
+                height: size,
+                colorFilter:
+                    const ColorFilter.mode(Colors.black, BlendMode.srcIn),
+              ),
             ),
+          )
+        else
+          Opacity(
+            opacity: 0.25,
+            child: Transform.translate(
+              offset: Offset(size * 0.04, size * 0.04),
+              child: Image.asset(
+                assetPath,
+                width: size,
+                height: size,
+                color: Colors.black,
+              ),
+            ),
+          ),
+
+        // Main Piece
+        isSvg
+            ? SvgPicture.asset(
+                assetPath,
+                width: size,
+                height: size,
+                fit: BoxFit.contain,
+                placeholderBuilder: (_) =>
+                    _FallbackPiece(piece: piece, size: size),
+              )
+            : Image.asset(
+                assetPath,
+                width: size,
+                height: size,
+                fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) {
+                  return _FallbackPiece(piece: piece, size: size);
+                },
+              ),
+      ],
     );
   }
 }

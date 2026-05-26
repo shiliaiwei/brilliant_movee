@@ -959,26 +959,45 @@ class _AnalysisPanelContent extends ConsumerWidget {
 class _ClassificationTinyBadge extends StatelessWidget {
   const _ClassificationTinyBadge({required this.quality});
   final MoveQuality quality;
+
   @override
   Widget build(BuildContext context) {
     final (asset, color, label) = _config();
+    final isPremium = quality == MoveQuality.brilliant ||
+        quality == MoveQuality.great ||
+        quality == MoveQuality.best;
+
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.15),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: color.withValues(alpha: 0.4))),
+        color: color.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: color.withValues(alpha: 0.3), width: 1.5),
+        boxShadow: isPremium
+            ? [
+                BoxShadow(
+                  color: color.withValues(alpha: 0.2),
+                  blurRadius: 8,
+                  spreadRadius: 1,
+                )
+              ]
+            : null,
+      ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildIcon(asset, color),
-          const SizedBox(width: 8),
-          Text(label,
-              style: TextStyle(
-                  color: color,
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1)),
+          const SizedBox(width: 10),
+          Text(
+            label,
+            style: TextStyle(
+              color: color,
+              fontSize: 12,
+              fontWeight: FontWeight.w900,
+              letterSpacing: 1.5,
+              fontFamily: 'StackSansNotch',
+            ),
+          ),
         ],
       ),
     );
@@ -987,8 +1006,8 @@ class _ClassificationTinyBadge extends StatelessWidget {
   Widget _buildIcon(String asset, Color color) {
     if (quality == MoveQuality.miss) {
       return Container(
-        width: 16,
-        height: 16,
+        width: 18,
+        height: 18,
         decoration: const BoxDecoration(
           color: Color(0xFF8E24AA),
           shape: BoxShape.circle,
@@ -996,11 +1015,16 @@ class _ClassificationTinyBadge extends StatelessWidget {
         child: const Icon(
           Icons.priority_high_rounded,
           color: Colors.white,
-          size: 12,
+          size: 14,
         ),
       );
     }
-    return Image.asset(asset, width: 16, height: 16, fit: BoxFit.contain);
+    return Image.asset(
+      asset,
+      width: 18,
+      height: 18,
+      fit: BoxFit.contain,
+    );
   }
 
   (String, Color, String) _config() {
@@ -1008,12 +1032,12 @@ class _ClassificationTinyBadge extends StatelessWidget {
       MoveQuality.brilliant => (
           'assets/classification/brilliant.png',
           AppColors.brilliant,
-          'BRILLIANT'
+          'BRILLIANT !!'
         ),
       MoveQuality.great => (
           'assets/classification/excellent.png',
           AppColors.great,
-          'GREAT'
+          'GREAT !'
         ),
       MoveQuality.best => (
           'assets/classification/best.png',

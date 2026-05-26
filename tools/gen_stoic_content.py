@@ -27,6 +27,8 @@ CATEGORY_SPEC = {
             "Priority matrix showing impact vs controllability.",
             "Competitive board with capability, leverage, and risk zones.",
             "Milestone path with checkpoints and fallback branches.",
+            "Execution funnel from broad intent to single action.",
+            "Governance model for decision rights and accountability.",
         ],
         "grammar": [
             "Use short active clauses to enforce ownership and clarity.",
@@ -34,6 +36,8 @@ CATEGORY_SPEC = {
             "Replace passive voice with decision verbs and deadlines.",
             "Keep one claim per sentence to reduce cognitive load.",
             "Use comparison language only when criteria are explicit.",
+            "Prefer specific nouns over abstract generalizations.",
+            "Use 'if-then' structures to define repeatable logic.",
         ],
         "strategy": [
             "Define one winning condition and align every task to it.",
@@ -41,6 +45,8 @@ CATEGORY_SPEC = {
             "Reject low-leverage tasks that do not move the main metric.",
             "Sequence execution by dependency, not urgency.",
             "Review assumptions weekly and update only when evidence changes.",
+            "Identify the bottleneck and concentrate force there.",
+            "Use inversion: solve for how to fail, then avoid it.",
         ],
         "graph": [
             "Lead indicator trend against weekly execution variance.",
@@ -610,18 +616,18 @@ TITLE_MODIFIERS = [
 def generate_lessons() -> list[dict]:
     lessons: list[dict] = []
     for category, spec in CATEGORY_SPEC.items():
-        for idx in range(65):
+        for idx in range(100):
             i = idx + 1
             title = f"{category.title()} {TITLE_MODIFIERS[idx % len(TITLE_MODIFIERS)]} {i:02d}"
             content = "\n".join(
                 [
-                    f"[VISUAL] {spec['visual'][idx % 5]}",
-                    f"[GRAMMAR] {spec['grammar'][idx % 5]}",
-                    f"[STRATEGY] {spec['strategy'][idx % 5]}",
-                    f"[GRAPH] {spec['graph'][idx % 5]}",
-                    f"[DATA] {spec['data'][idx % 5]}",
+                    f"[VISUAL] {spec['visual'][idx % len(spec['visual'])]}",
+                    f"[GRAMMAR] {spec['grammar'][idx % len(spec['grammar'])]}",
+                    f"[STRATEGY] {spec['strategy'][idx % len(spec['strategy'])]}",
+                    f"[GRAPH] {spec['graph'][idx % len(spec['graph'])]}",
+                    f"[DATA] {spec['data'][idx % len(spec['data'])]}",
                     "",
-                    spec["body"][idx % 5],
+                    spec["body"][idx % len(spec['body'])],
                 ]
             )
 
@@ -630,7 +636,7 @@ def generate_lessons() -> list[dict]:
                     "id": f"{category.lower().replace(' ', '_')}_{i:02d}",
                     "title": title,
                     "content": content,
-                    "directive": spec["directive"][idx % 5],
+                    "directive": spec["directive"][idx % len(spec['directive'])],
                     "category": category,
                     "intensity": (idx % 3) + 1,
                     "icon": spec["icon"],

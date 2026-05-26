@@ -66,7 +66,7 @@ class StorageService {
   Future<void> setBoardTheme(String theme) =>
       _prefs.setString(StorageKeys.boardTheme, theme);
 
-  String get pieceSet => _prefs.getString(StorageKeys.pieceSet) ?? 'defaultP';
+  String get pieceSet => _prefs.getString(StorageKeys.pieceSet) ?? 'cburnett';
   Future<void> setPieceSet(String set) =>
       _prefs.setString(StorageKeys.pieceSet, set);
 

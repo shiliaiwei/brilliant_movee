@@ -11,19 +11,17 @@ class StoicFlashcard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final excerpt = _excerpt(lesson.content, 220);
-
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 18),
       decoration: BoxDecoration(
         color: AppColors.backgroundSurface,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.28),
-            blurRadius: 14,
-            offset: const Offset(0, 6),
+            color: Colors.black.withValues(alpha: 0.5),
+            blurRadius: 24,
+            offset: const Offset(0, 12),
           )
         ],
       ),
@@ -31,63 +29,119 @@ class StoicFlashcard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Visual cover (image + subtle overlay)
+          // Visual Cover
           StoicVisualCover(
-              category: lesson.category, intensity: lesson.intensity),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 14, 16, 18),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        lesson.title,
-                        style: AppTextStyles.title.copyWith(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800,
+            category: lesson.category,
+            intensity: lesson.intensity,
+          ),
+
+          // Content Area
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(22.0),
+              physics:
+                  const NeverScrollableScrollPhysics(), // Card is teaser only
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          lesson.title.toUpperCase(),
+                          style: AppTextStyles.headline.copyWith(
+                            letterSpacing: 2,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w900,
+                          ),
                         ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          'PREMIUM',
+                          style: AppTextStyles.badge.copyWith(
+                              color: AppColors.backgroundDeep,
+                              fontSize: 9,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  ..._buildPreviewContent(lesson.content),
+                  const SizedBox(height: 20),
+
+                  // Directive Block Preview
+                  Container(
+                    padding: const EdgeInsets.all(14),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: AppColors.backgroundDeep.withValues(alpha: 0.5),
+                      borderRadius: BorderRadius.circular(8),
+                      border: const Border(
+                        left: BorderSide(color: AppColors.primary, width: 3),
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: Text(
-                        'PREMIUM',
-                        style: AppTextStyles.badge.copyWith(
-                            color: AppColors.backgroundDeep, fontSize: 10),
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(Icons.psychology,
+                                size: 14, color: AppColors.primary),
+                            const SizedBox(width: 8),
+                            Text(
+                              "DIRECTIVE",
+                              style: AppTextStyles.badge.copyWith(
+                                color: AppColors.primary,
+                                letterSpacing: 1.5,
+                                fontSize: 10,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          _cleanText(lesson.directive),
+                          style: AppTextStyles.bodyMedium.copyWith(
+                            fontStyle: FontStyle.italic,
+                            fontSize: 13,
+                            color: AppColors.textPrimary.withValues(alpha: 0.8),
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                const SizedBox(height: 8),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // Footer hint
+          Padding(
+            padding: const EdgeInsets.fromLTRB(22, 0, 22, 18),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
                 Text(
-                  excerpt,
-                  style: AppTextStyles.body.copyWith(
-                    fontSize: 15,
-                    height: 1.6,
-                    color: AppColors.textPrimary.withValues(alpha: 0.95),
-                  ),
-                  maxLines: 6,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 12),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    'Tap to open',
-                    style: AppTextStyles.badge
-                        .copyWith(fontSize: 12, color: AppColors.textSecondary),
+                  'TAP TO STUDY',
+                  style: AppTextStyles.monoSmall.copyWith(
+                    color: AppColors.primary.withValues(alpha: 0.7),
+                    letterSpacing: 1.5,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
+                const SizedBox(width: 6),
+                Icon(Icons.arrow_forward_ios_rounded,
+                    size: 12, color: AppColors.primary.withValues(alpha: 0.6)),
               ],
             ),
           ),
@@ -96,10 +150,42 @@ class StoicFlashcard extends StatelessWidget {
     );
   }
 
-  String _excerpt(String content, int maxChars) {
-    final cleaned = _cleanText(content).replaceAll('\n', ' ');
-    if (cleaned.length <= maxChars) return cleaned;
-    return '${cleaned.substring(0, maxChars).trim()}...';
+  List<Widget> _buildPreviewContent(String content) {
+    final List<Widget> widgets = [];
+    final lines = content.split('\n');
+
+    final List<String> metaLines = [];
+    final List<String> bodyLines = [];
+
+    for (var line in lines) {
+      if (line.startsWith('[VISUAL]') ||
+          line.startsWith('[GRAMMAR]') ||
+          line.startsWith('[STRATEGY]') ||
+          line.startsWith('[GRAPH]') ||
+          line.startsWith('[DATA]')) {
+        metaLines.add(line);
+      } else {
+        bodyLines.add(line);
+      }
+    }
+
+    // Body Content Preview
+    if (bodyLines.isNotEmpty) {
+      widgets.add(
+        Text(
+          _cleanText(bodyLines.join('\n')),
+          maxLines: 4,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.body.copyWith(
+            height: 1.6,
+            fontSize: 14,
+            color: AppColors.textPrimary.withValues(alpha: 0.9),
+          ),
+        ),
+      );
+    }
+
+    return widgets;
   }
 
   String _cleanText(String text) {

@@ -144,13 +144,15 @@ abstract final class MoveClassifier {
 
     // 3. Brilliant (!!)
     // Defined as a sacrifice that is a top engine move and results in a good position.
-    // We require a minimum depth of 20 to accurately confirm brilliance.
+    // We require a minimum depth of 18 (lowered from 20 for more reliability on mobile).
     bool isBrilliant = false;
     final maxDepth = engineLines.isNotEmpty
         ? engineLines.map((l) => l.depth).reduce(math.max)
         : 0;
 
-    if (isSacrifice && cpl <= 15 && evalAfter > -100 && maxDepth >= 20) {
+    // A brilliant move must be the best or near-best move (low CPL)
+    // AND it must be a sacrifice.
+    if (isSacrifice && cpl <= 20 && evalAfter > -50 && maxDepth >= 18) {
       isBrilliant = true;
     }
 
@@ -166,17 +168,27 @@ abstract final class MoveClassifier {
     }
 
     // 4. Great (!)
-    // Only move that maintains evaluation (eval swing detection).
-    // Or a move that significantly improves a bad position.
+    // A move that is the ONLY good move in the position (eval swing).
+    // OR a move that significantly improves a bad position.
     bool isGreat = false;
     if (engineLines.length >= 2) {
       final bestEval = engineLines[0].eval;
       final secondBestEval = engineLines[1].eval;
       final evalDiff = (bestEval - secondBestEval).abs();
 
+      // If the difference between the best and second best move is > 1.5 pawns,
+      // and we played the best move (low CPL), it's a "Great" move.
       if (cpl <= 5 && evalDiff >= 150) {
         isGreat = true;
       }
+    }
+
+    // Also "Great" if we find a very strong move in a drawn or losing position
+    if (!isGreat &&
+        evalBefore < 0 &&
+        evalAfter > evalBefore + 100 &&
+        cpl <= 5) {
+      isGreat = true;
     }
 
     if (isGreat) {

@@ -104,7 +104,7 @@ class _StoicReaderDialogState extends State<StoicReaderDialog> {
                               borderRadius: BorderRadius.circular(12),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.22),
+                                  color: Colors.black.withValues(alpha: 0.22),
                                   blurRadius: 12,
                                   offset: const Offset(0, 6),
                                 ),
@@ -115,10 +115,11 @@ class _StoicReaderDialogState extends State<StoicReaderDialog> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  lesson.title,
-                                  style: AppTextStyles.title.copyWith(
+                                  lesson.title.toUpperCase(),
+                                  style: AppTextStyles.headline.copyWith(
                                       fontSize: 22,
-                                      fontWeight: FontWeight.w800),
+                                      letterSpacing: 2,
+                                      fontWeight: FontWeight.w900),
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
@@ -126,18 +127,61 @@ class _StoicReaderDialogState extends State<StoicReaderDialog> {
                                   style: AppTextStyles.badge
                                       .copyWith(color: AppColors.textSecondary),
                                 ),
-                                const SizedBox(height: 12),
-                                Text(
-                                  _clean(lesson.content),
-                                  style: AppTextStyles.body.copyWith(
-                                      fontSize: 16,
-                                      height: 1.7,
-                                      color: AppColors.textPrimary),
+                                const SizedBox(height: 20),
+                                ..._buildFormattedContent(lesson.content),
+                                const SizedBox(height: 32),
+
+                                // Full Directive Block
+                                Container(
+                                  padding: const EdgeInsets.all(20),
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.backgroundDeep,
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: const Border(
+                                      left: BorderSide(
+                                          color: AppColors.primary, width: 4),
+                                    ),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Icon(Icons.psychology,
+                                              size: 18,
+                                              color: AppColors.primary),
+                                          const SizedBox(width: 10),
+                                          Text(
+                                            "SYSTEM DIRECTIVE",
+                                            style: AppTextStyles.badge.copyWith(
+                                              color: AppColors.primary,
+                                              letterSpacing: 2,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 12),
+                                      Text(
+                                        _clean(lesson.directive),
+                                        style: AppTextStyles.body.copyWith(
+                                          fontStyle: FontStyle.italic,
+                                          fontSize: 16,
+                                          height: 1.5,
+                                          color: AppColors.primary
+                                              .withValues(alpha: 0.9),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
+                                const SizedBox(height: 20),
                               ],
                             ),
                           ),
-                          const SizedBox(height: 18),
+                          const SizedBox(height: 24),
                         ],
                       ),
                     ),
@@ -180,6 +224,114 @@ class _StoicReaderDialogState extends State<StoicReaderDialog> {
         ),
       ),
     );
+  }
+
+  List<Widget> _buildFormattedContent(String content) {
+    final List<Widget> widgets = [];
+    final lines = content.split('\n');
+
+    final List<String> metaLines = [];
+    final List<String> bodyLines = [];
+
+    for (var line in lines) {
+      if (line.startsWith('[VISUAL]') ||
+          line.startsWith('[GRAMMAR]') ||
+          line.startsWith('[STRATEGY]') ||
+          line.startsWith('[GRAPH]') ||
+          line.startsWith('[DATA]')) {
+        metaLines.add(line);
+      } else {
+        bodyLines.add(line);
+      }
+    }
+
+    // Build Metadata Section
+    if (metaLines.isNotEmpty) {
+      widgets.add(
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.03),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
+          ),
+          child: Column(
+            children: metaLines.map((meta) {
+              IconData icon = Icons.info_outline_rounded;
+              String label = "";
+              String value = "";
+
+              if (meta.startsWith('[VISUAL]')) {
+                icon = Icons.visibility_rounded;
+                label = "VISUAL";
+                value = meta.replaceFirst('[VISUAL]', '').trim();
+              } else if (meta.startsWith('[GRAMMAR]')) {
+                icon = Icons.spellcheck_rounded;
+                label = "GRAMMAR";
+                value = meta.replaceFirst('[GRAMMAR]', '').trim();
+              } else if (meta.startsWith('[STRATEGY]')) {
+                icon = Icons.account_tree_rounded;
+                label = "STRATEGY";
+                value = meta.replaceFirst('[STRATEGY]', '').trim();
+              } else if (meta.startsWith('[GRAPH]')) {
+                icon = Icons.auto_graph_rounded;
+                label = "DATA GRAPH";
+                value = meta.replaceFirst('[GRAPH]', '').trim();
+              } else if (meta.startsWith('[DATA]')) {
+                icon = Icons.analytics_rounded;
+                label = "DATA";
+                value = meta.replaceFirst('[DATA]', '').trim();
+              }
+
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(icon, size: 14, color: AppColors.primary),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: RichText(
+                        text: TextSpan(
+                          style: AppTextStyles.caption.copyWith(fontSize: 12),
+                          children: [
+                            TextSpan(
+                                text: "$label: ",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.primary)),
+                            TextSpan(text: _clean(value)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+      );
+      widgets.add(const SizedBox(height: 24));
+    }
+
+    // Body Content
+    if (bodyLines.isNotEmpty) {
+      widgets.add(
+        Text(
+          _clean(bodyLines.join('\n')),
+          textAlign: TextAlign.justify,
+          style: AppTextStyles.body.copyWith(
+            height: 1.8,
+            fontSize: 15,
+            color: AppColors.textPrimary.withValues(alpha: 0.95),
+            letterSpacing: 0.3,
+          ),
+        ),
+      );
+    }
+
+    return widgets;
   }
 
   String _clean(String text) {
