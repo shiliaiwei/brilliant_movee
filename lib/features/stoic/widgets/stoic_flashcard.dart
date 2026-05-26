@@ -79,6 +79,15 @@ class StoicFlashcard extends StatelessWidget {
                   maxLines: 6,
                   overflow: TextOverflow.ellipsis,
                 ),
+                const SizedBox(height: 12),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    'Tap to open',
+                    style: AppTextStyles.badge
+                        .copyWith(fontSize: 12, color: AppColors.textSecondary),
+                  ),
+                ),
               ],
             ),
           ),
