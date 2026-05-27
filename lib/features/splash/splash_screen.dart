@@ -34,6 +34,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   int _typewriterIndex = 0;
   bool _didNavigate = false;
   String _version = '...';
+  String _startupStage = 'Starting…';
   static const String _tagline = 'Replay. Analyze. Evolve.';
   final List<String> _displayedTagline = [];
 
@@ -95,6 +96,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
   Future<void> _startSequence() async {
     try {
+      _setStage('Loading assets');
       // Keep startup resilient: continue even if asset manifest loading is slow.
       await AssetService.instance
           .initialize()
@@ -104,26 +106,36 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     }
 
     if (!mounted) return;
+    _setStage('Preparing splash');
     await Future.delayed(const Duration(milliseconds: 200));
     if (!mounted) return;
     _particleController.forward();
 
+    _setStage('Animating logo');
     await Future.delayed(const Duration(milliseconds: 400));
     if (!mounted) return;
     _logoController.forward();
 
+    _setStage('Showing title');
     await Future.delayed(const Duration(milliseconds: 700));
     if (!mounted) return;
     _textController.forward();
 
+    _setStage('Typing tagline');
     await Future.delayed(const Duration(milliseconds: 900));
     if (!mounted) return;
     _startTypewriter();
 
+    _setStage('Routing to app');
     await Future.delayed(const Duration(milliseconds: 2500));
     if (mounted && !_didNavigate) {
       _navigate();
     }
+  }
+
+  void _setStage(String stage) {
+    if (!mounted) return;
+    setState(() => _startupStage = stage);
   }
 
   void _startTypewriter() {
@@ -141,6 +153,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   void _navigate() {
     if (_didNavigate || !mounted) return;
     _didNavigate = true;
+    _setStage('Opening app');
     developer.log('splash: navigating', name: 'BrilliantMovee.startup');
 
     try {
@@ -215,6 +228,34 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                 ),
 
                 const SizedBox(height: AppSpacing.xxl),
+
+                AnimatedOpacity(
+                  opacity: _startupStage.isEmpty ? 0 : 1,
+                  duration: const Duration(milliseconds: 200),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.08),
+                      borderRadius: BorderRadius.circular(999),
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.12),
+                      ),
+                    ),
+                    child: Text(
+                      _startupStage,
+                      style: AppTextStyles.caption.copyWith(
+                        color: Colors.white70,
+                        fontSize: 11,
+                        letterSpacing: 0.4,
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: AppSpacing.lg),
 
                 // App name
                 AnimatedBuilder(
