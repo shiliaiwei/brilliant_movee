@@ -10,6 +10,37 @@ git add . && git commit -m "style: apply dart fix and clean up code" && git push
 
 
 
+Evaluation Bar
+Engine Lines
+Suggestion Arrow
+Move Feedback
+
+
+Chess Engine
+Stockfish 16
+Strength
+
+Standard (~5 sec, 3430 Rating)
+Analysis
+Chess Engine
+
+Stockfish 18 Lite (7MB download)
+Maximum Time
+
+5 sec
+Number of Lines
+
+3
+Cloud
+
+
+
+
+
+
+
+
+
 
 [Event "shiliaiwei vs. derverbuendete"]
 [Site "Chess.com"]

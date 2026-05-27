@@ -10,6 +10,7 @@ import '../../core/services/storage_service.dart';
 import '../../core/services/settings_provider.dart';
 import '../../core/services/audio_service.dart';
 import '../../core/services/asset_service.dart';
+import '../../core/models/engine_profile.dart';
 import '../../core/providers/language_provider.dart';
 import '../../core/localization/app_strings.dart';
 import '../../core/utils/responsive.dart';
@@ -23,6 +24,7 @@ class SettingsScreen extends ConsumerWidget {
     final notifier = ref.read(settingsProvider.notifier);
     final storage = ref.watch(storageServiceProvider);
     final currentLanguage = ref.watch(languageProvider);
+    final currentProfile = EngineProfile.getByVersion(settings.engineVersion);
 
     return Scaffold(
       backgroundColor: AppColors.backgroundDeep,
@@ -192,22 +194,68 @@ class SettingsScreen extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.xl),
-                const _SectionHeader(title: 'Deep Neural Analysis'),
+                const _SectionHeader(title: 'Chess Engine'),
                 ChtCard(
                   padding: EdgeInsets.zero,
                   child: Column(
                     children: [
                       _SettingsTile(
                         icon: Icons.psychology_rounded,
-                        title: 'Stockfish 18 Engine',
-                        subtitle: storage.engineNetwork == 'lite'
-                            ? 'Standard (Lite)'
-                            : storage.engineNetwork == 'balanced'
-                                ? 'Balanced Neural'
-                                : 'Neural Pro (SF18 Max)',
-                        onTap: () => context.push(AppRoutes.engineManagement),
+                        title: currentProfile.label,
+                        subtitle: currentProfile.description,
+                        onTap: () => _showEngineProfileSelector(
+                            context, currentProfile, notifier),
                         trailing: const Icon(Icons.expand_more_rounded,
                             size: 18, color: AppColors.textSecondary),
+                      ),
+                      const Divider(height: 1, indent: 52),
+                      _SettingsTile(
+                        icon: Icons.timeline_rounded,
+                        title: 'Maximum Time / Depth',
+                        subtitle:
+                            '${settings.engineDepth} depth • ${settings.multiPv} lines',
+                        onTap: () => _showEngineDepthSelector(
+                            context, settings.engineDepth, notifier),
+                        trailing: const Icon(Icons.chevron_right_rounded,
+                            color: AppColors.textSecondary),
+                      ),
+                      const Divider(height: 1, indent: 52),
+                      _SettingsTile(
+                        icon: Icons.layers_rounded,
+                        title: 'Engine Lines',
+                        subtitle:
+                            '${settings.multiPv} variation${settings.multiPv == 1 ? '' : 's'}',
+                        onTap: () => _showMultiPvSelector(
+                            context, settings.multiPv, notifier),
+                        trailing: const Icon(Icons.expand_more_rounded,
+                            size: 18, color: AppColors.textSecondary),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xl),
+                const _SectionHeader(title: 'Move Feedback'),
+                ChtCard(
+                  padding: EdgeInsets.zero,
+                  child: Column(
+                    children: [
+                      _SwitchTile(
+                        icon: Icons.alt_route_rounded,
+                        title: 'Suggestion Arrow',
+                        subtitle:
+                            'Show the best-move arrow on the board and in review',
+                        value: settings.showBestMoveArrows,
+                        onChanged: notifier.toggleBestMoveArrows,
+                      ),
+                      const Divider(height: 1, indent: 52),
+                      _SwitchTile(
+                        icon: Icons.highlight_rounded,
+                        title: AppStrings.getTranslation(
+                            AppStrings.highlightLastMove, currentLanguage),
+                        subtitle: AppStrings.getTranslation(
+                            AppStrings.showLastMoveMarkers, currentLanguage),
+                        value: settings.highlightLastMove,
+                        onChanged: notifier.toggleHighlight,
                       ),
                     ],
                   ),
@@ -303,6 +351,119 @@ class SettingsScreen extends ConsumerWidget {
 
   String _capitalize(String s) =>
       s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);
+
+  void _showEngineProfileSelector(BuildContext context,
+      EngineProfile currentProfile, SettingsNotifier notifier) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.backgroundSurface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (sheetContext) => Padding(
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('SELECT CHESS ENGINE',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            const SizedBox(height: 12),
+            ...EngineProfile.availableProfiles.map((profile) {
+              final selected = profile.version == currentProfile.version;
+              return ListTile(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                leading: Icon(profile.icon, color: AppColors.primary),
+                title: Text(profile.label),
+                subtitle: Text(profile.description),
+                trailing: selected
+                    ? const Icon(Icons.check_circle_rounded,
+                        color: AppColors.primary)
+                    : null,
+                onTap: () async {
+                  await notifier.updateEngineProfile(profile);
+                  if (sheetContext.mounted) Navigator.pop(sheetContext);
+                },
+              );
+            }),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showEngineDepthSelector(
+      BuildContext context, int currentDepth, SettingsNotifier notifier) {
+    const depths = [12, 18, 22, 26, 32, 40];
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.backgroundSurface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (sheetContext) => Padding(
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('SELECT ANALYSIS DEPTH',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            const SizedBox(height: 12),
+            ...depths.map((depth) {
+              final selected = depth == currentDepth;
+              return ListTile(
+                title: Text('$depth plies'),
+                trailing: selected
+                    ? const Icon(Icons.check_circle_rounded,
+                        color: AppColors.primary)
+                    : null,
+                onTap: () async {
+                  await notifier.updateEngineDepth(depth);
+                  if (sheetContext.mounted) Navigator.pop(sheetContext);
+                },
+              );
+            }),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showMultiPvSelector(
+      BuildContext context, int currentLines, SettingsNotifier notifier) {
+    const lines = [1, 3, 5];
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.backgroundSurface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (sheetContext) => Padding(
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('SELECT ENGINE LINES',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            const SizedBox(height: 12),
+            ...lines.map((count) {
+              final selected = count == currentLines;
+              return ListTile(
+                title: Text('$count line${count == 1 ? '' : 's'}'),
+                trailing: selected
+                    ? const Icon(Icons.check_circle_rounded,
+                        color: AppColors.primary)
+                    : null,
+                onTap: () async {
+                  await notifier.updateMultiPv(count);
+                  if (sheetContext.mounted) Navigator.pop(sheetContext);
+                },
+              );
+            }),
+          ],
+        ),
+      ),
+    );
+  }
 
   void _showClearCacheDialog(BuildContext context, WidgetRef ref,
       StorageService storage, String lang) {

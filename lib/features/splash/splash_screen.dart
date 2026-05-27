@@ -219,7 +219,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                       child: Column(
                         children: [
                           Text(
-                            'STUPID BRILLIANT',
+                            'BRILLIANT MOVEE',
                             style: AppTextStyles.appName,
                           ),
                           const SizedBox(height: AppSpacing.md),

@@ -15,6 +15,7 @@ class RecordingExportWidget extends StatelessWidget {
     required this.openingName,
     required this.moveNotation,
     required this.moveQuality,
+    required this.showBestMoveArrows,
     required this.isFlipped,
     required this.captureKey,
   });
@@ -25,6 +26,7 @@ class RecordingExportWidget extends StatelessWidget {
   final String openingName;
   final String moveNotation;
   final MoveQuality? moveQuality;
+  final bool showBestMoveArrows;
   final bool isFlipped;
   final GlobalKey captureKey;
 
@@ -62,6 +64,7 @@ class RecordingExportWidget extends StatelessWidget {
               boardThemeId: boardThemeId,
               showCoordinates: true,
               highlightLastMove: true,
+              showBestMoveArrows: showBestMoveArrows,
               moveQuality: moveQuality,
               isFlipped: isFlipped,
               animate: false,

@@ -14,6 +14,7 @@ import '../../features/settings/board_selector_screen.dart';
 import '../../features/profile/brilliant_games_screen.dart';
 import '../../features/tips/tips_screen.dart';
 import '../../features/stoic/stoic_screen.dart';
+import '../../features/openings/opening_explorer_screen.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_text_styles.dart';
 import '../utils/responsive.dart';
@@ -34,6 +35,7 @@ abstract final class AppRoutes {
   static const String engineManagement = '/settings/engine';
   static const String tips = '/tips';
   static const String stoic = '/stoic';
+  static const String openings = '/openings';
   static const String brilliant = '/brilliant';
   static const String cyberDemo = '/cyber-demo';
 }
@@ -71,10 +73,10 @@ const _tabs = [
     route: AppRoutes.tips,
   ),
   _TabItem(
-    icon: Icons.psychology_outlined,
-    selectedIcon: Icons.psychology_rounded,
-    label: 'Stoic',
-    route: AppRoutes.stoic,
+    icon: Icons.grid_view_outlined,
+    selectedIcon: Icons.grid_view_rounded,
+    label: 'Openings',
+    route: AppRoutes.openings,
   ),
   _TabItem(
     icon: Icons.settings_outlined,
@@ -314,8 +316,8 @@ final routerProvider = Provider<GoRouter>((ref) {
           ]),
           StatefulShellBranch(routes: [
             GoRoute(
-                path: AppRoutes.stoic,
-                builder: (context, state) => const StoicScreen())
+                path: AppRoutes.openings,
+                builder: (context, state) => const OpeningExplorerScreen())
           ]),
           StatefulShellBranch(routes: [
             GoRoute(

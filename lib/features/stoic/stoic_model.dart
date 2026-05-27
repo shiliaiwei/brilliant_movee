@@ -15,7 +15,7 @@ enum StoicCategory {
   emotionalControl('EMOTIONAL CONTROL', Icons.psychology),
 
   // Expansion to 44
-  psychology('PSYCHOLOGY', Icons.psychology_alt),
+  psychology('PSYCHOLOGY', Icons.psychology),
   neuroscience('NEUROSCIENCE', Icons.biotech),
   stoicism('STOICISM', Icons.self_improvement),
   philosophy('PHILOSOPHY', Icons.menu_book),
@@ -133,6 +133,7 @@ class StoicLesson {
       category: StoicCategory.fromString(json['category'] ?? ''),
       intensity: json['intensity'] ?? 1,
       sections: (json['sections'] as List? ?? [])
+          .whereType<Map<String, dynamic>>()
           .map((s) => StoicSection.fromJson(s))
           .toList(),
       tags: List<String>.from(json['tags'] ?? []),

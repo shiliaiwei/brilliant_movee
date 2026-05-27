@@ -23,6 +23,26 @@ class EngineProfile {
 
   static const List<EngineProfile> availableProfiles = [
     EngineProfile(
+      version: 16,
+      label: 'SF-16 Standard',
+      description: 'Standard (~5 sec, 3430 rating)',
+      depth: 18,
+      multiPv: 3,
+      icon: Icons.speed_rounded,
+      technicalImpact:
+          'Balanced cloud analysis preset for fast, dependable move review.',
+    ),
+    EngineProfile(
+      version: 18,
+      label: 'SF-18 Lite',
+      description: '7MB download • Maximum time 5 sec • Number of lines 3',
+      depth: 22,
+      multiPv: 3,
+      icon: Icons.flash_on_rounded,
+      technicalImpact:
+          'Mobile-friendly neural analysis with low latency and concise output.',
+    ),
+    EngineProfile(
       version: 18,
       label: 'SF-18 Neural Pro',
       description: 'Deep neural evaluation with tactical sacrifice detection.',
@@ -32,15 +52,6 @@ class EngineProfile {
       requiresFullNet: true,
       technicalImpact:
           'Utilizes correction history and parallel data flow (Text/Raw/Heap/Stack) for exponential strength increase.',
-    ),
-    EngineProfile(
-      version: 17,
-      label: 'SF-17 Balanced',
-      description: 'Optimized for mobile with strong positional vision.',
-      depth: 26,
-      multiPv: 3,
-      icon: Icons.scale_rounded,
-      technicalImpact: 'Standard NNUE evaluation with LMR refinements.',
     ),
     EngineProfile(
       version: 14,

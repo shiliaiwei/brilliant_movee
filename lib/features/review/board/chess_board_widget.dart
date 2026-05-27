@@ -15,6 +15,7 @@ class ChessBoardWidget extends StatelessWidget {
     required this.boardThemeId,
     required this.showCoordinates,
     required this.highlightLastMove,
+    this.showBestMoveArrows = true,
     this.moveQuality,
     this.onSquareTap,
     this.isFlipped = false,
@@ -27,6 +28,7 @@ class ChessBoardWidget extends StatelessWidget {
   final String boardThemeId;
   final bool showCoordinates;
   final bool highlightLastMove;
+  final bool showBestMoveArrows;
   final MoveQuality? moveQuality;
   final void Function(String square)? onSquareTap;
   final bool isFlipped;
@@ -90,7 +92,8 @@ class ChessBoardWidget extends StatelessWidget {
                           ),
 
                         // Best move arrow overlay
-                        if (boardState.bestMoveFrom != null &&
+                        if (showBestMoveArrows &&
+                            boardState.bestMoveFrom != null &&
                             boardState.bestMoveTo != null)
                           Positioned.fill(
                             child: _ArrowOverlay(

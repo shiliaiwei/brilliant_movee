@@ -8,6 +8,7 @@ class SettingsState {
     required this.pieceSet,
     required this.showCoordinates,
     required this.highlightLastMove,
+    required this.showBestMoveArrows,
     required this.autoAnalyze,
     required this.engineVersion,
     required this.engineDepth,
@@ -20,6 +21,7 @@ class SettingsState {
   final String pieceSet;
   final bool showCoordinates;
   final bool highlightLastMove;
+  final bool showBestMoveArrows;
   final bool autoAnalyze;
   final int engineVersion;
   final int engineDepth;
@@ -32,6 +34,7 @@ class SettingsState {
     String? pieceSet,
     bool? showCoordinates,
     bool? highlightLastMove,
+    bool? showBestMoveArrows,
     bool? autoAnalyze,
     int? engineVersion,
     int? engineDepth,
@@ -44,6 +47,7 @@ class SettingsState {
       pieceSet: pieceSet ?? this.pieceSet,
       showCoordinates: showCoordinates ?? this.showCoordinates,
       highlightLastMove: highlightLastMove ?? this.highlightLastMove,
+      showBestMoveArrows: showBestMoveArrows ?? this.showBestMoveArrows,
       autoAnalyze: autoAnalyze ?? this.autoAnalyze,
       engineVersion: engineVersion ?? this.engineVersion,
       engineDepth: engineDepth ?? this.engineDepth,
@@ -61,6 +65,7 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
           pieceSet: _storage.pieceSet,
           showCoordinates: _storage.showCoordinates,
           highlightLastMove: _storage.highlightLastMove,
+          showBestMoveArrows: _storage.showBestMoveArrows,
           autoAnalyze: _storage.autoAnalyze,
           engineVersion: _storage.engineVersion,
           engineDepth: _storage.engineDepth,
@@ -93,6 +98,16 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
     state = state.copyWith(engineVersion: version);
   }
 
+  Future<void> updateEngineDepth(int depth) async {
+    await _storage.setEngineDepth(depth);
+    state = state.copyWith(engineDepth: depth);
+  }
+
+  Future<void> updateMultiPv(int lines) async {
+    await _storage.setMultiPv(lines);
+    state = state.copyWith(multiPv: lines);
+  }
+
   Future<void> updateBoardTheme(String theme) async {
     await _storage.setBoardTheme(theme);
     state = state.copyWith(boardTheme: theme);
@@ -111,6 +126,11 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
   Future<void> toggleHighlight(bool value) async {
     await _storage.setHighlightLastMove(value);
     state = state.copyWith(highlightLastMove: value);
+  }
+
+  Future<void> toggleBestMoveArrows(bool value) async {
+    await _storage.setShowBestMoveArrows(value);
+    state = state.copyWith(showBestMoveArrows: value);
   }
 
   Future<void> toggleAutoAnalyze(bool value) async {

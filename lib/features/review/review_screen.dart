@@ -112,23 +112,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
         backgroundColor: AppColors.backgroundDeep,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(
-                'assets/brand/288bc158-5999-425d-846e-4c0824f2294e.png',
-                height: 24,
-                fit: BoxFit.contain,
-              ),
-              const SizedBox(height: 2),
-              Text('GAME REVIEW',
-                  style: AppTextStyles.badge.copyWith(
-                      fontSize: 8,
-                      letterSpacing: 2,
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.bold)),
-            ],
-          ),
+          title: const Text('ANALYSIS'),
           centerTitle: true,
           backgroundColor: AppColors.backgroundDeep,
           leading: IconButton(
@@ -137,6 +121,22 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
             onPressed: () => context.pop(),
           ),
           actions: [
+            TextButton.icon(
+              onPressed: state.game == null
+                  ? null
+                  : () => _showTotalReviewSheet(context, state),
+              icon: const Icon(Icons.assessment_rounded,
+                  size: 18, color: AppColors.primary),
+              label: const Text(
+                'TOTAL REVIEW',
+                style: TextStyle(
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 11,
+                  letterSpacing: 0.8,
+                ),
+              ),
+            ),
             IconButton(
               icon: Icon(
                   state.isExporting
@@ -180,6 +180,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                               moveQuality: state
                                   .classificationAt(state.currentPlyIndex)
                                   ?.quality,
+                              showBestMoveArrows: settings.showBestMoveArrows,
                               isFlipped: false,
                               captureKey: _exportKey,
                             ),
@@ -333,6 +334,7 @@ class _ReviewBody extends ConsumerWidget {
                           showCoordinates:
                               true, // Always show in review as requested
                           highlightLastMove: settings.highlightLastMove,
+                          showBestMoveArrows: settings.showBestMoveArrows,
                           moveQuality: classification?.quality,
                           isFlipped: boardFlipped,
                           animate: !state.isExporting,
@@ -773,6 +775,7 @@ class _WideReviewBody extends StatelessWidget {
                                 boardThemeId: settings.boardTheme,
                                 showCoordinates: settings.showCoordinates,
                                 highlightLastMove: settings.highlightLastMove,
+                                showBestMoveArrows: settings.showBestMoveArrows,
                                 moveQuality: classification?.quality,
                               )
                             : Container(color: AppColors.backgroundSurface),
@@ -1192,6 +1195,158 @@ class _ResChip extends StatelessWidget {
       selectedColor: AppColors.primary.withValues(alpha: 0.2),
       labelStyle:
           TextStyle(color: selected ? AppColors.primary : Colors.white70),
+    );
+  }
+}
+
+void _showTotalReviewSheet(BuildContext context, ReviewState state) {
+  showModalBottomSheet(
+    context: context,
+    backgroundColor: AppColors.backgroundSurface,
+    isScrollControlled: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+    ),
+    builder: (sheetContext) => SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 44,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.white24,
+                  borderRadius: BorderRadius.circular(99),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'TOTAL REVIEW',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w900,
+                fontSize: 18,
+                letterSpacing: 1.2,
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              'Move-quality summary for both sides',
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.textSecondary,
+              ),
+            ),
+            const SizedBox(height: 20),
+            _ReviewTotalsGrid(
+              label: state.game?.white ?? 'White',
+              totals: state.whiteTotals,
+            ),
+            const SizedBox(height: 12),
+            _ReviewTotalsGrid(
+              label: state.game?.black ?? 'Black',
+              totals: state.blackTotals,
+            ),
+            const SizedBox(height: 20),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () => Navigator.pop(sheetContext),
+                child: const Text('CLOSE'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+class _ReviewTotalsGrid extends StatelessWidget {
+  const _ReviewTotalsGrid({required this.label, required this.totals});
+
+  final String label;
+  final MoveQualityTotals totals;
+
+  @override
+  Widget build(BuildContext context) {
+    final items = [
+      ('Brilliant', totals.brilliant, const Color(0xFF24D1C7)),
+      ('Great', totals.great, const Color(0xFF7EA9FF)),
+      ('Best', totals.best, const Color(0xFF99D455)),
+      ('Good', totals.good, const Color(0xFFB0B0B0)),
+      ('Book', totals.book, const Color(0xFF8C8C8C)),
+      ('Mistake', totals.mistake, const Color(0xFFFFA35C)),
+      ('Miss', totals.miss, const Color(0xFFFF7B6B)),
+      ('Blunder', totals.blunder, const Color(0xFFE5514A)),
+    ];
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.backgroundDeep,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: Colors.white12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label.toUpperCase(),
+            style: AppTextStyles.badge.copyWith(color: AppColors.primary),
+          ),
+          const SizedBox(height: 12),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: items.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              childAspectRatio: 1.15,
+            ),
+            itemBuilder: (_, index) {
+              final (title, value, color) = items[index];
+              return Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: color.withValues(alpha: 0.08),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: color.withValues(alpha: 0.25)),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '$value',
+                      style: TextStyle(
+                        color: color,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.white70,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }
