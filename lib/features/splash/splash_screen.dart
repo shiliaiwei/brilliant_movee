@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'dart:developer' as developer;
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_styles.dart';
 import '../../core/constants/app_spacing.dart';
@@ -140,17 +141,23 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   void _navigate() {
     if (_didNavigate || !mounted) return;
     _didNavigate = true;
+    developer.log('splash: navigating', name: 'BrilliantMovee.startup');
 
     try {
       final storage = ref.read(storageServiceProvider);
       if (!storage.hasSeenOnboarding) {
+        developer.log('splash: onboarding route',
+            name: 'BrilliantMovee.startup');
         context.go(AppRoutes.onboarding);
       } else {
         // Direct to Home screen. If no username is set, Home shows "Connect Account".
+        developer.log('splash: home route', name: 'BrilliantMovee.startup');
         context.go(AppRoutes.home);
       }
     } catch (_) {
       // Last-resort fallback to keep the app usable after splash.
+      developer.log('splash: fallback home route',
+          name: 'BrilliantMovee.startup');
       context.go(AppRoutes.home);
     }
   }
